@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repositories version="1.0">
+  <repo priority="50" status="unofficial">
+    <name>Systole</name>
+    <description>
+      Overlay for the Gentoo GNU/Linux operating system with focus on
+      research and development of medical technologies
+    </description>
+    <owner>
+      <name>Rafael Palomar</name>
+      <email>rafael.palomar@rr-research.no</email>
+    </owner>
+    <source type="git">git://github.com/RafaelPalomar/systole.git</source>
+  </repo>
+</repositories>
