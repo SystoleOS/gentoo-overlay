@@ -20,7 +20,16 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
-DEPEND=""
+DEPEND="
+	dev-qt/qtcore
+	dev-qt/qtmultimedia
+	dev-qt/qtopengl
+	dev-qt/qtsql
+	dev-qt/qtxmlpatterns
+	dev-qt/qtwebengine
+	dev-qt/qtwebchannel
+	dev-qt/designer
+"
 
 RDEPEND="${DEPEND}"
 
