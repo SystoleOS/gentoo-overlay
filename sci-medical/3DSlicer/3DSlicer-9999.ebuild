@@ -31,7 +31,7 @@ src_unpack() {
 		unpack ${A}
 	fi
 
-	mv ${WORKDIR}/Slicer-${PV} ${WORKDIR}/${PN}-${PV}
+	mv ${WORKDIR}/Slicer-master ${WORKDIR}/${PN}-${PV}
 }
 
 src_prepare() {
@@ -50,7 +50,7 @@ src_configure(){
 		-DSlicer_BUILD_CLI_SUPPORT=OFF
 		-DSlicer_BUILD_CLI=OFF
 		-DCMAKE_CXX_STANDARD=11
-		-DSlicer_REQUIRED_QT_VERSION=5.9.6
+		-DSlicer_REQUIRED_QT_VERSION=5
 		-DSlicer_BUILD_DICOM_SUPPORT=OFF
 		-DSlicer_BUILD_ITKPython=OFF
 		-DSlicer_BUILD_QTLOADABLEMODULES=OFF
