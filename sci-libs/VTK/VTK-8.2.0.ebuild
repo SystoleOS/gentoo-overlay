@@ -22,7 +22,11 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND=">dev-cpp/eigen-3.3"
+DEPEND="
+	>dev-cpp/eigen-3.3
+	dev-qt/qtx11extras
+"
+
 RDEPEND="${DEPEND}"
 
 PATCHES=( )
