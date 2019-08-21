@@ -22,7 +22,7 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND="sci-medical/gdcm
+DEPEND="sci-medical/GDCM
 		sci-libs/hdf5
 		sci-libs/VTK"
 RDEPEND="${DEPEND}"
