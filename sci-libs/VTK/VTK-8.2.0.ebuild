@@ -61,6 +61,7 @@ src_configure(){
 		-DModule_vtkGUISupportQt=ON
 		-DModule_vtkGUISupportQtOpenGL=ON
 		-DModule_vtkGUISupportQtSQL=ON
+		-DModule_vtkGUISupportQtWebkit=ON
 		-DModule_vtkIOExport=ON
 		-DModule_vtkIOGeometry=ON
 		-DModule_vtkIOInfovis=ON
