@@ -25,6 +25,8 @@ IUSE=""
 DEPEND="
 	>dev-cpp/eigen-3.3
 	dev-qt/qtx11extras
+	dev-qt/qtwebengine[widgets]
+	dev-qt/designer[webkit]
 "
 
 RDEPEND="${DEPEND}"
