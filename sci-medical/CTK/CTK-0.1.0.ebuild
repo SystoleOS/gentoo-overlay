@@ -72,6 +72,7 @@ src_configure(){
 		-DCTK_LIB_Visualization/VTK/Widgets=ON
 		-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
 		-DCTK_SUPERBUILD=OFF
+		-DCTK_INSTALL_LIB_DIR=/lib64
 	)
 
 	cmake-utils_src_configure
