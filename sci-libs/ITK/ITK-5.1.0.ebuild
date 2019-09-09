@@ -10,7 +10,7 @@ DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/ITK/"
 
-COMMIT="a44f430b3edb5fff62671b4ba87cf41c60ee272b"
+COMMIT="ff48670261e3bd16ee1c6f5494834f65183a98dd"
 
 SRC_URI="https://github.com/Slicer/ITK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -31,11 +31,16 @@ PATCHES=(
 	)
 
 src_unpack() {
+
+	# Unpack ITK source code
 	if [ "${A}"  != "" ]; then
 		unpack ${A}
 	fi
-
 	mv ${WORKDIR}/${PN}-${COMMIT} ${WORKDIR}/${PN}-${PV}
+
+	# Inject ITKImageIO remote module
+	unpack ${FILESDIR}/itkMGHImageIO-master.zip
+	mv ${WORKDIR}/itkMGHImageIO-master ${WORKDIR}/${PN}-${PV}/Modules/Remote
 }
 
 src_prepare() {
@@ -49,17 +54,19 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DITK_BUILD_DEFAULT_MODULES=ON
+		-DBUILD_SHARED_LIBS=ON
 		-DITK_DOXYGEN_HTML=OFF
 		-DITK_LEGACY_REMOVE=ON
 		-DITK_LEGACY_SILENT=ON
 		-DModule_ITKReview=ON
 		-DModule_ITKVtkGlue=ON
-		-DModule_MGHIO=ON
+		-DModule_MGHIO=OFF
 		-DBUILD_EXAMPLES=OFF
 		-DBUILD_TESTING=OFF
 		-DITK_USE_SYSTEM_JPEG=ON
 		-DITK_USE_SYSTEM_GDCM=ON
 		-DITK_USE_SYSTEM_HDF5=ON
+		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64
 	)
 
 	cmake-utils_src_configure
