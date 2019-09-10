@@ -28,6 +28,7 @@ DEPEND="sci-medical/GDCM
 RDEPEND="${DEPEND}"
 
 PATCHES=(
+	${FILESDIR}/001-${PN}-${PV}-Change_itkMGHImageIO_repo_to_local.patch
 	)
 
 src_unpack() {
@@ -40,7 +41,9 @@ src_unpack() {
 
 	# Inject ITKImageIO remote module
 	unpack ${FILESDIR}/itkMGHImageIO-master.zip
-	mv ${WORKDIR}/itkMGHImageIO-master ${WORKDIR}/${PN}-${PV}/Modules/Remote
+	pushd ${WORKDIR}/itkMGHImageIO || die
+	git init
+	popd || die
 }
 
 src_prepare() {
@@ -60,13 +63,14 @@ src_configure(){
 		-DITK_LEGACY_SILENT=ON
 		-DModule_ITKReview=ON
 		-DModule_ITKVtkGlue=ON
-		-DModule_MGHIO=OFF
+		-DModule_MGHIO=ON
 		-DBUILD_EXAMPLES=OFF
 		-DBUILD_TESTING=OFF
 		-DITK_USE_SYSTEM_JPEG=ON
 		-DITK_USE_SYSTEM_GDCM=ON
 		-DITK_USE_SYSTEM_HDF5=ON
 		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64
+		-DWORKDIR=${WORKDIR}
 	)
 
 	cmake-utils_src_configure
