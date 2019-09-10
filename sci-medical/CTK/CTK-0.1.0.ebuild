@@ -10,7 +10,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="0e1d94593d900fd144f50af38e3240063ab30484"
+COMMIT="20a9195338ad3b84402fc7058f9d049189280912"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -38,7 +38,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=( )
+PATCHES=(
+	"${FILESDIR}"/001-${PN}-${PV}-include_missing_files.patch
+)
 
 src_unpack() {
 	if [ "${A}"  != "" ]; then
@@ -72,6 +74,7 @@ src_configure(){
 		-DCTK_LIB_Visualization/VTK/Widgets=ON
 		-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
 		-DCTK_SUPERBUILD=OFF
+		-DCTK_INSTALL_LIB_DIR=/lib64
 	)
 
 	cmake-utils_src_configure
