@@ -63,6 +63,7 @@ src_configure(){
 		-DITK_LEGACY_SILENT=ON
 		-DModule_ITKReview=ON
 		-DModule_ITKVtkGlue=ON
+		-DModule_ITKDeprecated=ON
 		-DModule_MGHIO=ON
 		-DBUILD_EXAMPLES=OFF
 		-DBUILD_TESTING=OFF
