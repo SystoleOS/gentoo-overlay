@@ -1,0 +1,25 @@
+From f6cf9313784730801b9fdf6aabbd9b183e57508d Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Tue, 10 Sep 2019 08:22:17 +0200
+Subject: [PATCH] 002-teem-1.12.10-Remove_creation_of_TeemLibraryDepends_cmake
+
+---
+ CMake/TeemConfig.cmake.in | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/CMake/TeemConfig.cmake.in b/CMake/TeemConfig.cmake.in
+index 2d7c87b7..561dfcfa 100644
+--- a/CMake/TeemConfig.cmake.in
++++ b/CMake/TeemConfig.cmake.in
+@@ -60,7 +60,4 @@ set(Teem_BUILD_SHARED_LIBS "@BUILD_SHARED_LIBS@")
+ # The list of tools in teem
+ set(Teem_TOOLS "@Teem_TOOLS@")
+ 
+-# The Teem library dependencies.
+-if(NOT TARGET teem)
+-  include("@Teem_CV_LIBRARY_DEPENDS_FILE@")
+-endif()
++
+-- 
+2.21.0
+
