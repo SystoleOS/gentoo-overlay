@@ -24,7 +24,9 @@ IUSE=""
 
 DEPEND="sci-medical/GDCM
 		sci-libs/hdf5
-		sci-libs/VTK"
+		sci-libs/VTK
+		dev-cpp/eigen"
+
 RDEPEND="${DEPEND}"
 
 PATCHES=(
@@ -70,6 +72,7 @@ src_configure(){
 		-DITK_USE_SYSTEM_JPEG=ON
 		-DITK_USE_SYSTEM_GDCM=ON
 		-DITK_USE_SYSTEM_HDF5=ON
+		-DITK_USE_SYSTEM_EIGEN=ON
 		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64
 		-DWORKDIR=${WORKDIR}
 	)
