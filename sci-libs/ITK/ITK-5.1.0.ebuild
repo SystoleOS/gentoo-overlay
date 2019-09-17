@@ -30,6 +30,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	${FILESDIR}/001-${PN}-${PV}-Change_itkMGHImageIO_repo_to_local.patch
+	${FILESDIR}/002-${PN}-${PV}-Delete_eigen_library_from_targets.patch
 	)
 
 src_unpack() {
