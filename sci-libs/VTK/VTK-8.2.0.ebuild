@@ -64,7 +64,7 @@ src_configure(){
 		-DModule_vtkGUISupportQt=ON
 		-DModule_vtkGUISupportQtOpenGL=ON
 		-DModule_vtkGUISupportQtSQL=ON
-		-DModule_vtkGUISupportQtWebkit=ON
+		-DModule_vtkGUISupportQtWebkit=OFF
 		-DModule_vtkIOExport=ON
 		-DModule_vtkIOGeometry=ON
 		-DModule_vtkIOInfovis=ON
@@ -80,7 +80,6 @@ src_configure(){
 		-DModule_vtkTestingRendering=ON
 		-DModule_vtkViewsContext2D=ON
 		-DModule_vtkFiltersFlowPaths=ON
-		-DModule_vtkGUISupportQtWebkit=ON
 		-DModule_vtkGUISupportQtOpenGL=ON
 		-DVTK_USE_SYSTEM_EIGEN=ON
 	)
