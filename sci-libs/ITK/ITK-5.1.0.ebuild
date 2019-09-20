@@ -24,7 +24,8 @@ IUSE=""
 
 DEPEND="sci-medical/GDCM
 		sci-libs/hdf5
-		sci-libs/VTK"
+		sci-libs/VTK
+		dev-cpp/eigen"
 
 RDEPEND="${DEPEND}"
 
@@ -74,6 +75,7 @@ src_configure(){
 		-DITK_USE_SYSTEM_HDF5=ON
 		-DITK_USE_SYSTEM_EIGEN=OFF
 		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64
+		-DITK_USE_SYSTEM_EIGEN=ON
 		-DWORKDIR=${WORKDIR}
 	)
 
