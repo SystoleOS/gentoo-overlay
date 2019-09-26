@@ -76,6 +76,7 @@ src_configure(){
 		-DITK_USE_SYSTEM_EIGEN=ON
 		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64/${PN}-${PV}
 		-DITKGDCM_INSTALL_LIB_DIR=/usr/lib64
+		-DCMAKE_INSTALL_RPATH=/usr/lib64/${PN}-${PV}
 		-DWORKDIR=${WORKDIR}
 	)
 
