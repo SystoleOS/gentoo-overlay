@@ -32,7 +32,9 @@ DEPEND="
 
 RDEPEND="${DEPEND}"
 
-PATCHES=( )
+PATCHES=(
+	${FILESDIR}/${PN}-${PV}-0001-ENH-Include-vtkEventData.h-in-module-headers-vtkComm.patch
+)
 
 src_unpack() {
 	if [ "${A}"  != "" ]; then
