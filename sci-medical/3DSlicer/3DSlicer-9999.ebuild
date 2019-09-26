@@ -73,7 +73,7 @@ src_configure(){
 		-DSlicer_VTK_RENDERING_BACKEND=OpenGL2
 		-DSlicer_VTK_VERSION_MAJOR=8
 		-DSlicer_INSTALL_DEVELOPMENT=ON
-		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.10:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.10/qt-loadable-modules
+		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-DSlicer_USE_SYSTEM_LibArchive=ON
 		-DTeem_DIR=/usr/lib64
