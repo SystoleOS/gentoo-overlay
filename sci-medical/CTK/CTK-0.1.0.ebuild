@@ -40,6 +40,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	"${FILESDIR}"/001-${PN}-${PV}-include_missing_files.patch
+	#	"${FILESDIR}"/002-${PN}-${PV}-Remove_ITK_libraries_as_target.patch
 )
 
 src_unpack() {
