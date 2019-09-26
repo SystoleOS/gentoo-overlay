@@ -30,6 +30,7 @@ DEPEND="
 	dev-qt/qtwebengine
 	dev-qt/qtwebchannel
 	dev-qt/designer
+	sci-medical/CTK
 "
 
 RDEPEND="${DEPEND}"
