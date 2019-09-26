@@ -76,6 +76,8 @@ src_configure(){
 		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.10:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.10/qt-loadable-modules
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-DSlicer_USE_SYSTEM_LibArchive=ON
+		-DTeem_DIR=/usr/lib64
+		-DjqPlot_DIR=/usr/share/jqPlot
 	)
 	cmake-utils_src_configure
 }
