@@ -2,17 +2,18 @@
 
 EAPI=6
 
-inherit cmake-utils multilib
+inherit cmake-utils multilib git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
 image processing, and three-dimensional visualization. This package is a
 live-build which will pull the master branch of the official 3D Slicer repository."
 
+EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
+EGIT_BRANCH="master"
+
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.slicer.org/"
-
-SRC_URI="https://github.com/Slicer/Slicer/archive/master.zip"
 
 LICENSE="BSD"
 
