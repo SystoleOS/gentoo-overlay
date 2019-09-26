@@ -1,0 +1,37 @@
+From b0b9680128d746ab0d91bfa6459e87acda7d11c4 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Fri, 20 Sep 2019 13:37:30 +0200
+Subject: [PATCH] ENH: Add CTKImageProcessingITKCore link library for QTGUI
+
+---
+ Base/QTGUI/CMakeLists.txt | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Base/QTGUI/CMakeLists.txt b/Base/QTGUI/CMakeLists.txt
+index 1fedfef0d..99d2ae163 100644
+--- a/Base/QTGUI/CMakeLists.txt
++++ b/Base/QTGUI/CMakeLists.txt
+@@ -4,6 +4,11 @@ project(qSlicerBaseQTGUI)
+ # See CMake/SlicerMacroBuildBaseQtLibrary.cmake for details
+ #
+ 
++#
++# ITK
++#
++find_package(ITK COMPONENTS ITKCommon REQUIRED)
++
+ set(KIT_export_directive "Q_SLICER_BASE_QTGUI_EXPORT")
+ 
+ # Additional directories to include
+@@ -353,7 +358,7 @@ SlicerMacroBuildBaseQtLibrary(
+ # Slicer icon engine
+ #-----------------------------------------------------------------------------
+ 
+-set(CTK_LIBRARIES CTKWidgets)
++set(CTK_LIBRARIES CTKWidgets CTKImageProcessingITKCore)
+ ctkMacroBuildQtIconEnginesPlugin(
+   NAME qSlicerIconEnginePlugin
+   EXPORT_DIRECTIVE "Q_SLICER_BASE_QTGUI_ICON_ENGINE_EXPORT"
+-- 
+2.21.0
+

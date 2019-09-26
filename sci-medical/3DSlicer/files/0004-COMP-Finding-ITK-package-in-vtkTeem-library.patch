@@ -1,0 +1,29 @@
+From a053bdd9c1a7a663bb8a44d3482642017396918f Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Tue, 17 Sep 2019 15:22:44 +0200
+Subject: [PATCH] COMP: Finding ITK package in vtkTeem library
+
+This is needed for building 3DSlicer with Slicer_SUPERBUILD=OFF.
+---
+ Libs/vtkTeem/CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
+index dc0e0e68c..f53229f94 100644
+--- a/Libs/vtkTeem/CMakeLists.txt
++++ b/Libs/vtkTeem/CMakeLists.txt
+@@ -21,6 +21,11 @@ endif()
+ #find_package(VTK REQUIRED)
+ #include(${VTK_USE_FILE})
+ 
++#
++# ITK
++#
++find_package(ITK COMPONENTS ITKCommon ITKVNL REQUIRED)
++
+ #
+ # Teem
+ #
+-- 
+2.21.0
+

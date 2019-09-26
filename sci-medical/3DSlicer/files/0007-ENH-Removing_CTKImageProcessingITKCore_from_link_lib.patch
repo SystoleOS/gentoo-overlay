@@ -1,0 +1,26 @@
+From 53348b3a6edc3ba6fe453136355a94595ec7059f Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 19 Sep 2019 07:48:40 +0200
+Subject: [PATCH] ENH: Removing CTKImageProcessingITKCore from link libraries
+ QTCore
+
+---
+ Base/QTCore/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Base/QTCore/CMakeLists.txt b/Base/QTCore/CMakeLists.txt
+index 6288ec5f2..7828d5534 100644
+--- a/Base/QTCore/CMakeLists.txt
++++ b/Base/QTCore/CMakeLists.txt
+@@ -186,7 +186,7 @@ set(KIT_target_libraries
+   MRMLDisplayableManager
+   ${CTKAppLauncherLib_LIBRARIES}
+   CTKCore
+-  CTKImageProcessingITKCore
++  #CTKImageProcessingITKCore
+   CTKVisualizationVTKCore
+   )
+ 
+-- 
+2.21.0
+

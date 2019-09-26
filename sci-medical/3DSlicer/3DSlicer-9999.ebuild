@@ -35,15 +35,19 @@ DEPEND="
 
 RDEPEND="${DEPEND}"
 
-PATCHES=( )
-
-src_unpack() {
-	if [ "${A}"  != "" ]; then
-		unpack ${A}
-	fi
-
-	mv ${WORKDIR}/Slicer-master ${WORKDIR}/${PN}-${PV}
-}
+PATCHES=(
+	${FILESDIR}/0001-ENH-Add-check-for-finding-CTKAppLauncherLib.patch
+	${FILESDIR}/0002-ENH-Adding-missing-include-of-SlicerCheckModuleEnable.patch
+	${FILESDIR}/0003-ENH-Adding-ITK-to-Base-QtCore.patch
+	${FILESDIR}/0004-COMP-Finding-ITK-package-in-vtkTeem-library.patch
+	${FILESDIR}/0005-ENH-Add-condition-to-include-ctkAppLauncher-.h-on-qS.patch
+	${FILESDIR}/0006-ENH-Add-conditional-for-using-ctkAppLauncherEnvironm.patch
+	${FILESDIR}/0007-ENH-Removing_CTKImageProcessingITKCore_from_link_lib.patch
+	${FILESDIR}/0008-ENH-Add-CTKImageProcessingITKCore-link-library-for-Q.patch
+	${FILESDIR}/0009-ENH-Adding-ITK-libraries-to-vtkAddon.patch
+	${FILESDIR}/0010-ENH-Remove-ITK_LIBRARIES.patch
+	${FILESDIR}/0011-ENH-Fix-linking-of-libraries-in-Base-QTGUI.patch
+)
 
 src_prepare() {
 

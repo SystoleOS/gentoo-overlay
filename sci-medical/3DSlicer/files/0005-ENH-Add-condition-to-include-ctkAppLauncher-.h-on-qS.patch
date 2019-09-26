@@ -1,0 +1,28 @@
+From 4c9f4027da2daad000d6c8919d6b54569146a0ff Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Wed, 18 Sep 2019 09:28:10 +0200
+Subject: [PATCH] ENH: Add condition to include ctkAppLauncher*.h on
+ qSlicerCoreApplication
+
+---
+ Base/QTCore/qSlicerCoreApplication.cxx | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Base/QTCore/qSlicerCoreApplication.cxx b/Base/QTCore/qSlicerCoreApplication.cxx
+index 610c0d52a..5dd13799b 100644
+--- a/Base/QTCore/qSlicerCoreApplication.cxx
++++ b/Base/QTCore/qSlicerCoreApplication.cxx
+@@ -93,8 +93,10 @@
+ #include <vtkMRMLScene.h>
+ 
+ // CTKLauncherLib includes
++#ifdef Slicer_USE_CTKAPPLAUNCHER
+ #include <ctkAppLauncherEnvironment.h>
+ #include <ctkAppLauncherSettings.h>
++#endif
+ 
+ // VTK includes
+ #include <vtkNew.h>
+-- 
+2.21.0
+
