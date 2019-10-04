@@ -10,7 +10,7 @@ DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/VTK/"
 
-COMMIT="c5b10020712c892c33fdfa848231a956bdf67ba7"
+COMMIT="ee1da272ad629bfb9cbf86c51336ee361d095022"
 
 SRC_URI="https://github.com/Slicer/VTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -37,11 +37,17 @@ PATCHES=(
 )
 
 src_unpack() {
+
+	# Un pack source  code package
 	if [ "${A}"  != "" ]; then
 		unpack ${A}
 	fi
 
 	mv ${WORKDIR}/${PN}-${COMMIT} ${WORKDIR}/${PN}-${PV}
+
+	# Unpack SplineDrivenImageSlicer
+	unpack ${FILESDIR}/SplineDrivenImageSlicer.zip
+	mv ${WORKDIR}/SplineDrivenImageSlicer ${WORKDIR}/${PN}-${PV}/Remote
 }
 
 src_prepare() {
@@ -83,6 +89,7 @@ src_configure(){
 		-DModule_vtkViewsContext2D=ON
 		-DModule_vtkFiltersFlowPaths=ON
 		-DModule_vtkGUISupportQtOpenGL=ON
+		-DModule_SplineDrivenImageSlicer=ON
 		-DVTK_USE_SYSTEM_EIGEN=ON
 	)
 
