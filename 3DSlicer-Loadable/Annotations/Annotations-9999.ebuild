@@ -23,6 +23,7 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	sci-medical/3DSlicer
+	3DSlicer-Loadable/SubjectHierarchy
 "
 
 RDEPEND="${DEPEND}"
@@ -48,29 +49,12 @@ src_configure(){
 	local mycmakeargs=()
 
 	mycmakeargs+=(
-		-DSlicer_SUPERBUILD=OFF
 		-DBUILD_TESTING=OFF
-		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT=OFF
-		-DSlicer_BUILD_CLI_SUPPORT=OFF
-		-DSlicer_BUILD_CLI=OFF
 		-DCMAKE_CXX_STANDARD=11
-		-DSlicer_REQUIRED_QT_VERSION=5
-		-DSlicer_BUILD_DICOM_SUPPORT=OFF
-		-DSlicer_BUILD_ITKPython=OFF
-		-DSlicer_BUILD_QTLOADABLEMODULES=OFF
-		-DSlicer_BUILD_QT_DESIGNER_PLUGINS=OFF
-		-DSlicer_USE_CTKAPPLAUNCHER=OFF
-		-DSlicer_USE_PYTHONQT=OFF
-		-DSlicer_USE_QtTesting=OFF
-		-DSlicer_USE_SimpleITK=OFF
-		-DSlicer_VTK_RENDERING_BACKEND=OpenGL2
-		-DSlicer_VTK_VERSION_MAJOR=8
-		-DSlicer_INSTALL_DEVELOPMENT=ON
 		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-		-DSlicer_USE_SYSTEM_LibArchive=ON
-		-DTeem_DIR=/usr/lib64
-		-DjqPlot_DIR=/usr/share/jqPlot
+		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
+		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
 	)
 	cmake-utils_src_configure
 }
