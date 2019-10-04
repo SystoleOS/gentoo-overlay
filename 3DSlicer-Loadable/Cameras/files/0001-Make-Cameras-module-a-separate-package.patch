@@ -1,0 +1,58 @@
+From 58d572a4cc25260933aac19ebbd671b7fc4695ed Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Fri, 4 Oct 2019 20:38:29 +0200
+Subject: [PATCH] Make Cameras module a separate package
+
+---
+ Modules/Loadable/Cameras/CMakeLists.txt       | 18 ++++++++++++++++++
+ Modules/Loadable/Cameras/Logic/CMakeLists.txt |  7 +++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/Modules/Loadable/Cameras/CMakeLists.txt b/Modules/Loadable/Cameras/CMakeLists.txt
+index f877439b9..72b072390 100644
+--- a/Modules/Loadable/Cameras/CMakeLists.txt
++++ b/Modules/Loadable/Cameras/CMakeLists.txt
+@@ -1,4 +1,22 @@
++project(Annotations)
+ 
++cmake_minimum_required(VERSION 3.0)
++
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
++find_package(Qt5 COMPONENTS Widgets Network Xml PrintSupport REQUIRED)
++find_package(VTK REQUIRED)
++include(${VTK_USE_FILE})
++
++find_package(CTK REQUIRED)
++include(${CTK_USE_FILE})
++
++find_package(ITK REQUIRED)
++include(${ITK_USE_FILE})
++
++link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
++ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME Cameras)
+ set(MODULE_TITLE "${MODULE_NAME}")
+diff --git a/Modules/Loadable/Cameras/Logic/CMakeLists.txt b/Modules/Loadable/Cameras/Logic/CMakeLists.txt
+index acfdf3b74..6c74268a5 100644
+--- a/Modules/Loadable/Cameras/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Cameras/Logic/CMakeLists.txt
+@@ -13,6 +13,13 @@ set(${KIT}_SRCS
+   )
+ 
+ set(${KIT}_TARGET_LIBRARIES
++  ${VTK_LIBRARIES}
++  MRMLCore
++  MRMLLogic
++  qSlicerBaseQTCore
++  qSlicerBaseQTGUI
++  ${CTK_LIBRARIES}
++  qMRMLWidgets
+   )
+ 
+ #-----------------------------------------------------------------------------
+-- 
+2.21.0
+
