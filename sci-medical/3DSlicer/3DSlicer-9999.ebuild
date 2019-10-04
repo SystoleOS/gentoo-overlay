@@ -30,23 +30,29 @@ DEPEND="
 	dev-qt/qtwebengine
 	dev-qt/qtwebchannel
 	dev-qt/designer
+	dev-libs/rapidjson
+	dev-libs/jsoncpp
 	sci-medical/CTK
+	sci-medical/CTKAppLauncherLib
 "
 
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Add-check-for-finding-CTKAppLauncherLib.patch
-	${FILESDIR}/0002-ENH-Adding-missing-include-of-SlicerCheckModuleEnable.patch
-	${FILESDIR}/0003-ENH-Adding-ITK-to-Base-QtCore.patch
-	${FILESDIR}/0004-COMP-Finding-ITK-package-in-vtkTeem-library.patch
-	${FILESDIR}/0005-ENH-Add-condition-to-include-ctkAppLauncher-.h-on-qS.patch
-	${FILESDIR}/0006-ENH-Add-conditional-for-using-ctkAppLauncherEnvironm.patch
-	${FILESDIR}/0007-ENH-Removing_CTKImageProcessingITKCore_from_link_lib.patch
-	${FILESDIR}/0008-ENH-Add-CTKImageProcessingITKCore-link-library-for-Q.patch
-	${FILESDIR}/0009-ENH-Adding-ITK-libraries-to-vtkAddon.patch
-	${FILESDIR}/0010-ENH-Remove-ITK_LIBRARIES.patch
-	${FILESDIR}/0011-ENH-Fix-linking-of-libraries-in-Base-QTGUI.patch
+	${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
+	${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
+	${FILESDIR}/0003-COMP-Enable-Slicer_INSTALL_DEVELOPMENT-option.patch
+	${FILESDIR}/0004-COMP-Fix-path-for-slicer-installation-headers.patch
+	${FILESDIR}/0005-COMP-Adding-conditional-for-including-python-testing.patch
+	${FILESDIR}/0006-COMP-Change-path-for-installing-qSlicerUtilsTest1.cx.patch
+	${FILESDIR}/0007-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
+	${FILESDIR}/0008-COMP-Setting-CMAKE_MODULE_PATH-to-account-for-CTK-an.patch
+	${FILESDIR}/0009-COMP-Adding-conditional-to-SlicerBlockAdditionalLaun.patch
+	${FILESDIR}/0010-COMP-Add-installation-of-missing-files.patch
+	${FILESDIR}/0011-COMP-Enable-install-of-development-files-in-Slicer-l.patch
+	${FILESDIR}/0012-COMP-Adding-MRML_LIBRARIES-variable-to-install-confi.patch
+	${FILESDIR}/0013-COMP-Change-Slicer_ROOT-by-Slicer_HOME-in-UseSlicer..patch
+	${FILESDIR}/0014-COMP-Add-QTLOADABLEMODULES-dirs-in-intall-tree-confi.patch
 )
 
 src_prepare() {
@@ -82,6 +88,8 @@ src_configure(){
 		-DSlicer_USE_SYSTEM_LibArchive=ON
 		-DTeem_DIR=/usr/lib64
 		-DjqPlot_DIR=/usr/share/jqPlot
+		-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
+
 	)
 	cmake-utils_src_configure
 }

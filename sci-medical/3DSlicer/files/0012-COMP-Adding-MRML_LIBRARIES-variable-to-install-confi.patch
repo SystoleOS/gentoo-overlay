@@ -1,0 +1,24 @@
+From 5a83f38831e96744f19c13627f1414858f6bc8ef Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 3 Oct 2019 13:03:13 +0200
+Subject: [PATCH 12/14] COMP: Adding MRML_LIBRARIES variable to install
+ configuration
+
+---
+ CMake/SlicerInstallConfig.cmake.in | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
+index b00440acb..2be8cee6f 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/CMake/SlicerInstallConfig.cmake.in
+@@ -142,3 +142,6 @@ set(CTK_CMAKE_DIR "@CTK_CMAKE_DIR@")
+ 
+ set(Slicer_EXPORT_HEADER_TEMPLATE "${Slicer_CMAKE_DIR}/qSlicerExport.h.in")
+ set(Slicer_LOGOS_RESOURCE "${Slicer_HOME}/${Slicer_INSTALL_SHARE_DIR}/Resources/qSlicer.qrc")
++
++# MRML libraries - This variable regroup all related MRML libraries
++set(MRML_LIBRARIES @MRML_LIBRARIES@)
+-- 
+2.21.0
+

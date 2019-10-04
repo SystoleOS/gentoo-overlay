@@ -1,0 +1,26 @@
+From 03847353cace428b9fa75628a22e9754d44db36e Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Tue, 1 Oct 2019 14:45:07 +0200
+Subject: [PATCH 01/14] COMP: Remove uneccessary link libraries for QTCore
+
+---
+ Base/QTCore/CMakeLists.txt | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/Base/QTCore/CMakeLists.txt b/Base/QTCore/CMakeLists.txt
+index 6c55787ee..4930d9056 100644
+--- a/Base/QTCore/CMakeLists.txt
++++ b/Base/QTCore/CMakeLists.txt
+@@ -171,9 +171,7 @@ set(KIT_target_libraries
+   MRMLDisplayableManager
+   ${CTKAppLauncherLib_LIBRARIES}
+   CTKCore
+-  CTKImageProcessingITKCore
+   CTKVisualizationVTKCore
+-  ${ITK_LIBRARIES}
+   )
+ 
+ if(Slicer_BUILD_DICOM_SUPPORT)
+-- 
+2.21.0
+

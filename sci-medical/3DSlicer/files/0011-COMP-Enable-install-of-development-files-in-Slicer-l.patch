@@ -1,0 +1,249 @@
+From 7e9836e41f9ea1603457e6a2402286dc4277ed90 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 3 Oct 2019 12:41:56 +0200
+Subject: [PATCH 11/14] COMP: Enable install of development files in Slicer
+ libraries
+
+---
+ Base/CLI/CMakeLists.txt                     | 2 +-
+ Base/Logic/CMakeLists.txt                   | 2 +-
+ Libs/FreeSurfer/CMakeLists.txt              | 4 ++--
+ Libs/ITKFactoryRegistration/CMakeLists.txt  | 2 +-
+ Libs/MRML/CLI/CMakeLists.txt                | 2 +-
+ Libs/MRML/Core/CMakeLists.txt               | 4 ++--
+ Libs/MRML/DisplayableManager/CMakeLists.txt | 2 +-
+ Libs/MRML/IDImageIO/CMakeLists.txt          | 2 +-
+ Libs/MRML/Logic/CMakeLists.txt              | 2 +-
+ Libs/MRML/Widgets/CMakeLists.txt            | 2 +-
+ Libs/RemoteIO/CMakeLists.txt                | 2 +-
+ Libs/vtkAddon/CMakeLists.txt                | 9 +++++++--
+ Libs/vtkITK/CMakeLists.txt                  | 2 +-
+ Libs/vtkSegmentationCore/CMakeLists.txt     | 2 +-
+ Libs/vtkTeem/CMakeLists.txt                 | 2 +-
+ 15 files changed, 23 insertions(+), 18 deletions(-)
+
+diff --git a/Base/CLI/CMakeLists.txt b/Base/CLI/CMakeLists.txt
+index 2918ef6cb..74025e389 100644
+--- a/Base/CLI/CMakeLists.txt
++++ b/Base/CLI/CMakeLists.txt
+@@ -68,7 +68,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
+index 35da75bb0..a31cfe73b 100644
+--- a/Base/Logic/CMakeLists.txt
++++ b/Base/Logic/CMakeLists.txt
+@@ -98,7 +98,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/FreeSurfer/CMakeLists.txt b/Libs/FreeSurfer/CMakeLists.txt
+index 5c0d51876..697cd9edf 100644
+--- a/Libs/FreeSurfer/CMakeLists.txt
++++ b/Libs/FreeSurfer/CMakeLists.txt
+@@ -49,7 +49,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+@@ -192,7 +192,7 @@ install(
+ # Install Test Data
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   #file(GLOB_RECURSE PNGFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.png")
+diff --git a/Libs/ITKFactoryRegistration/CMakeLists.txt b/Libs/ITKFactoryRegistration/CMakeLists.txt
+index 036898459..31f63b69c 100644
+--- a/Libs/ITKFactoryRegistration/CMakeLists.txt
++++ b/Libs/ITKFactoryRegistration/CMakeLists.txt
+@@ -68,7 +68,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
+diff --git a/Libs/MRML/CLI/CMakeLists.txt b/Libs/MRML/CLI/CMakeLists.txt
+index 24661d094..195fb776c 100644
+--- a/Libs/MRML/CLI/CMakeLists.txt
++++ b/Libs/MRML/CLI/CMakeLists.txt
+@@ -60,7 +60,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
+index a608adcb2..7a3e6b301 100644
+--- a/Libs/MRML/Core/CMakeLists.txt
++++ b/Libs/MRML/Core/CMakeLists.txt
+@@ -89,7 +89,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+@@ -349,7 +349,7 @@ endif()
+ # Install Test Data
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   #file(GLOB_RECURSE MRMLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.mrml")
+diff --git a/Libs/MRML/DisplayableManager/CMakeLists.txt b/Libs/MRML/DisplayableManager/CMakeLists.txt
+index dc13e9bbe..f81bdc798 100644
+--- a/Libs/MRML/DisplayableManager/CMakeLists.txt
++++ b/Libs/MRML/DisplayableManager/CMakeLists.txt
+@@ -57,7 +57,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/MRML/IDImageIO/CMakeLists.txt b/Libs/MRML/IDImageIO/CMakeLists.txt
+index bb323c057..d09395c41 100644
+--- a/Libs/MRML/IDImageIO/CMakeLists.txt
++++ b/Libs/MRML/IDImageIO/CMakeLists.txt
+@@ -58,7 +58,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/MRML/Logic/CMakeLists.txt b/Libs/MRML/Logic/CMakeLists.txt
+index 737b3e260..5d7aec2f6 100644
+--- a/Libs/MRML/Logic/CMakeLists.txt
++++ b/Libs/MRML/Logic/CMakeLists.txt
+@@ -54,7 +54,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
+index 649c1af2f..881127654 100644
+--- a/Libs/MRML/Widgets/CMakeLists.txt
++++ b/Libs/MRML/Widgets/CMakeLists.txt
+@@ -445,7 +445,7 @@ include_directories(${include_dirs})
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/RemoteIO/CMakeLists.txt b/Libs/RemoteIO/CMakeLists.txt
+index 65bd1b618..89405e451 100644
+--- a/Libs/RemoteIO/CMakeLists.txt
++++ b/Libs/RemoteIO/CMakeLists.txt
+@@ -68,7 +68,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+diff --git a/Libs/vtkAddon/CMakeLists.txt b/Libs/vtkAddon/CMakeLists.txt
+index 2b11c769a..aaa36a28e 100644
+--- a/Libs/vtkAddon/CMakeLists.txt
++++ b/Libs/vtkAddon/CMakeLists.txt
+@@ -36,10 +36,15 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
++  file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
++  install(
++    FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
++    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++
++    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.txx")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+     DESTINATION include/${PROJECT_NAME} COMPONENT Development)
+diff --git a/Libs/vtkITK/CMakeLists.txt b/Libs/vtkITK/CMakeLists.txt
+index a1b077f2c..d7b543f9e 100644
+--- a/Libs/vtkITK/CMakeLists.txt
++++ b/Libs/vtkITK/CMakeLists.txt
+@@ -79,7 +79,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
+diff --git a/Libs/vtkSegmentationCore/CMakeLists.txt b/Libs/vtkSegmentationCore/CMakeLists.txt
+index 5df064da7..3b332fc2f 100644
+--- a/Libs/vtkSegmentationCore/CMakeLists.txt
++++ b/Libs/vtkSegmentationCore/CMakeLists.txt
+@@ -17,7 +17,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
+diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
+index f1eb4791b..5106e7e4a 100644
+--- a/Libs/vtkTeem/CMakeLists.txt
++++ b/Libs/vtkTeem/CMakeLists.txt
+@@ -58,7 +58,7 @@ configure_file(
+ # Install headers
+ # --------------------------------------------------------------------------
+ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
+-- 
+2.21.0
+
