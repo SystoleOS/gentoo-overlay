@@ -55,6 +55,8 @@ src_configure(){
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
+		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL=ON
+		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL=ON
 	)
 	cmake-utils_src_configure
 }
