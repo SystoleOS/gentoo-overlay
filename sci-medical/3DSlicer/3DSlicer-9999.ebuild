@@ -53,6 +53,9 @@ PATCHES=(
 	${FILESDIR}/0012-COMP-Adding-MRML_LIBRARIES-variable-to-install-confi.patch
 	${FILESDIR}/0013-COMP-Change-Slicer_ROOT-by-Slicer_HOME-in-UseSlicer..patch
 	${FILESDIR}/0014-COMP-Add-QTLOADABLEMODULES-dirs-in-intall-tree-confi.patch
+	${FILESDIR}/0015-COMP-Adding-conditional-for-installation-of-QT-desig.patch
+	${FILESDIR}/0016-COMP-Enable-installation-of-generated-.h-files-for-B.patch
+	${FILESDIR}/0017-COMP-Enable-installation-of-header-files-for-qMRMLWi.patch
 )
 
 src_prepare() {
@@ -75,7 +78,7 @@ src_configure(){
 		-DSlicer_BUILD_DICOM_SUPPORT=OFF
 		-DSlicer_BUILD_ITKPython=OFF
 		-DSlicer_BUILD_QTLOADABLEMODULES=OFF
-		-DSlicer_BUILD_QT_DESIGNER_PLUGINS=OFF
+		-DSlicer_BUILD_QT_DESIGNER_PLUGINS=ON
 		-DSlicer_USE_CTKAPPLAUNCHER=OFF
 		-DSlicer_USE_PYTHONQT=OFF
 		-DSlicer_USE_QtTesting=OFF

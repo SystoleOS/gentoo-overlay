@@ -1,0 +1,28 @@
+From 2831fcd65b3695c49701e1f1175d1cb507a96d92 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 7 Oct 2019 14:40:08 +0200
+Subject: [PATCH] COMP: Enable installation of header files for qMRMLWidgets
+
+---
+ Libs/MRML/Widgets/CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
+index 881127654..d27ffc497 100644
+--- a/Libs/MRML/Widgets/CMakeLists.txt
++++ b/Libs/MRML/Widgets/CMakeLists.txt
+@@ -452,6 +452,11 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   install(
+     FILES ${headers}
+     DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++
++  install(FILES
++    ${MRMLWidgets_UI_CXX}
++    DESTINATION include/${PROJECT_NAME} COMPONENT Development
++    )
+ endif()
+ 
+   # --------------------------------------------------------------------------
+-- 
+2.21.0
+
