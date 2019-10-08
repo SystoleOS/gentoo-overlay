@@ -23,6 +23,7 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	sci-medical/Slicer
+	Slicer-Loadable/SubjectHierarchy
 "
 
 RDEPEND="${DEPEND}"
