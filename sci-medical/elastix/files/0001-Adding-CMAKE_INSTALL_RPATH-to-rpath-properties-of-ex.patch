@@ -1,0 +1,25 @@
+From 4083f8304f2508a9f2ef408e3e41b1df695ed730 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Fri, 11 Oct 2019 10:09:34 +0200
+Subject: [PATCH] Adding CMAKE_INSTALL_RPATH to rpath properties of executables
+
+---
+ Core/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Core/CMakeLists.txt b/Core/CMakeLists.txt
+index d4aef7c3..1b3938b7 100644
+--- a/Core/CMakeLists.txt
++++ b/Core/CMakeLists.txt
+@@ -222,7 +222,7 @@ endif()
+ if( NOT WIN32 )
+   # Tell the executables where to find the required .so files.
+   set_target_properties( elastix transformix
+-    PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib:${ITK_DIR}" )
++    PROPERTIES INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib:${ITK_DIR}:${CMAKE_INSTALL_RPATH}" )
+ endif()
+ 
+ install( TARGETS elastix transformix elxCore
+-- 
+2.21.0
+
