@@ -2,7 +2,7 @@
 
 EAPI=6
 
-inherit cmake-utils
+inherit cmake-utils git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="A set of common support code for medical imaging, surgical navigation, and related purposes"
@@ -12,7 +12,10 @@ HOMEPAGE="https://www.commontk.org/"
 
 COMMIT="20a9195338ad3b84402fc7058f9d049189280912"
 
-SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
+#SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
+
+EGIT_REPO_URI="https://github.com/commontk/CTK"
+EGIT_BRANCH="master"
 
 LICENSE="Apache-2.0"
 
@@ -39,18 +42,10 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}"/001-${PN}-${PV}-include_missing_files.patch
+	#"${FILESDIR}"/001-${PN}-${PV}-include_missing_files.patch
 	#	"${FILESDIR}"/002-${PN}-${PV}-Remove_ITK_libraries_as_target.patch
 	${FILESDIR}/003-Add-utility-files-for-PythonQt.patch
 )
-
-src_unpack() {
-	if [ "${A}"  != "" ]; then
-		unpack ${A}
-	fi
-
-	mv ${WORKDIR}/${PN}-${COMMIT} ${WORKDIR}/${PN}-${PV}
-}
 
 src_prepare() {
 

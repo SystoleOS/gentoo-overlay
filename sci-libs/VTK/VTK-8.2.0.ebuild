@@ -69,6 +69,7 @@ src_configure(){
 		-DVTK_LEGACY_REMOVE=OFF
 		-DVTK_QT_VERSION=5
 		-DVTK_RENDERING_BACKEND=OpenGL2
+		-DVTK_WRAP_PYTHON=ON
 		-DModule_vtkGUISupportQt=ON
 		-DModule_vtkGUISupportQtOpenGL=ON
 		-DModule_vtkGUISupportQtSQL=ON
@@ -90,6 +91,7 @@ src_configure(){
 		-DModule_vtkFiltersFlowPaths=ON
 		-DModule_vtkGUISupportQtOpenGL=ON
 		-DModule_SplineDrivenImageSlicer=ON
+		-DModule_vtkWrappingPythonCore=ON
 		-DVTK_USE_SYSTEM_EIGEN=ON
 	)
 

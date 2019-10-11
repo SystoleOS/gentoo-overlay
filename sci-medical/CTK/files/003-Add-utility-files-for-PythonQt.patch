@@ -1,0 +1,30 @@
+From ca1bc95e332fa64eb5b52e9b81092c0fd8d456ab Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 10 Oct 2019 18:03:17 +0200
+Subject: [PATCH] Add utility files for PythonQt
+
+---
+ CMakeLists.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7545c2ec..18cb5e2a 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -269,6 +269,13 @@ install(FILES
+   COMPONENT Development
+   )
+ 
++install(FILES
++  Utilities/CMake/FindPythonQt.cmake
++  Utilities/CMake/FindPythonQtGenerator.cmake
++  DESTINATION ${CTK_INSTALL_CMAKE_DIR}
++  COMPONENT Development
++  )
++
+ #-----------------------------------------------------------------------------
+ # Testing
+ #
+-- 
+2.21.0
+
