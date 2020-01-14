@@ -1,7 +1,8 @@
-From 9003f9d76a5ee4ea217c35b785a068f017ec1710 Mon Sep 17 00:00:00 2001
+From 1687d8951d0dea4adb243a84633e2ffb189eb42f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:41:56 +0200
-Subject: [PATCH] COMP: Enable install of development files in Slicer libraries
+Subject: [PATCH 11/19] COMP: Enable install of development files in Slicer
+ libraries
 
 ---
  Base/CLI/CMakeLists.txt                     | 2 +-
@@ -256,5 +257,5 @@ index f1eb4791b..5106e7e4a 100644
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
 -- 
-2.21.0
+2.24.1
 

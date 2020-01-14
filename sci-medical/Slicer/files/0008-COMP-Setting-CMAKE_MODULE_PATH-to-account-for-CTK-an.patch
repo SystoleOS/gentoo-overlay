@@ -1,7 +1,7 @@
-From 97c1eac06cfc7e1b68f1d4968d5047ca4e7460af Mon Sep 17 00:00:00 2001
+From 5e117e2d564cceaa4488db32b0373588c4316d24 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:33:44 +0200
-Subject: [PATCH 08/14] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
+Subject: [PATCH 08/19] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
  Slicer
 
 ---
@@ -44,10 +44,10 @@ index 2062df98b..9309966e3 100644
    _slicer_skip_message("Slicer_ExternalData")
  endif()
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index efb815382..f77277ad5 100644
+index 24fa0b5b7..53bf8ff57 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -952,7 +952,7 @@ add_subdirectory(
+@@ -953,7 +953,7 @@ add_subdirectory(
  set(Slicer_USE_FILE ${Slicer_BINARY_DIR}/UseSlicer.cmake)
  configure_file(
    ${Slicer_SOURCE_DIR}/CMake/UseSlicer.cmake.in
@@ -57,5 +57,5 @@ index efb815382..f77277ad5 100644
  configure_file(
    ${Slicer_SOURCE_DIR}/CMake/SlicerConfigVersion.cmake.in
 -- 
-2.21.0
+2.24.1
 

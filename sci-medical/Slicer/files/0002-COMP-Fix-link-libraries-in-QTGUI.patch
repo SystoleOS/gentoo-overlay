@@ -1,14 +1,14 @@
-From 17af560bfaedc3ce800cece2b0f3b6ef6fd57833 Mon Sep 17 00:00:00 2001
+From 7cec4974d2da02382879098516eb14a74ed4fe16 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 14:56:16 +0200
-Subject: [PATCH 02/14] COMP: Fix link libraries in QTGUI
+Subject: [PATCH 02/19] COMP: Fix link libraries in QTGUI
 
 ---
  Base/QTGUI/CMakeLists.txt | 6 ++++++
  1 file changed, 6 insertions(+)
 
 diff --git a/Base/QTGUI/CMakeLists.txt b/Base/QTGUI/CMakeLists.txt
-index 1fedfef0d..d08424975 100644
+index e7752a745..f2133ac15 100644
 --- a/Base/QTGUI/CMakeLists.txt
 +++ b/Base/QTGUI/CMakeLists.txt
 @@ -4,6 +4,11 @@ project(qSlicerBaseQTGUI)
@@ -23,7 +23,7 @@ index 1fedfef0d..d08424975 100644
  set(KIT_export_directive "Q_SLICER_BASE_QTGUI_EXPORT")
  
  # Additional directories to include
-@@ -306,6 +311,7 @@ endif()
+@@ -308,6 +313,7 @@ endif()
  set(KIT_target_libraries
    qSlicerBaseQTCore
    qMRMLWidgets
@@ -32,5 +32,5 @@ index 1fedfef0d..d08424975 100644
  
  # Python wrap
 -- 
-2.21.0
+2.24.1
 

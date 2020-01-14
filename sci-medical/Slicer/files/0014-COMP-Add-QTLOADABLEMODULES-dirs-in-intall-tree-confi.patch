@@ -1,7 +1,7 @@
-From 0b921a6af89c53bda3a62619d46351bf58c0eb05 Mon Sep 17 00:00:00 2001
+From 8488cb8bd74f65630ffa523c9d283a8194d0267f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 4 Oct 2019 13:31:59 +0200
-Subject: [PATCH 14/14] COMP: Add QTLOADABLEMODULES dirs in intall tree
+Subject: [PATCH 14/19] COMP: Add QTLOADABLEMODULES dirs in intall tree
  configuration
 
 ---
@@ -39,5 +39,5 @@ index 2be8cee6f..f5c89ec03 100644
  # Components needed to build modules from outside a Slicer build tree or
  # from outside a Slicer installation tree
 -- 
-2.21.0
+2.24.1
 
