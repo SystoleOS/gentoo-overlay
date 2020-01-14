@@ -56,6 +56,8 @@ PATCHES=(
 	${FILESDIR}/0015-COMP-Adding-conditional-for-installation-of-QT-desig.patch
 	${FILESDIR}/0016-COMP-Enable-installation-of-generated-.h-files-for-B.patch
 	${FILESDIR}/0017-COMP-Enable-installation-of-header-files-for-qMRMLWi.patch
+	${FILESDIR}/0018-COMP-Change-JsonCpp-by-jsoncpp.patch
+	${FILESDIR}/0019-COMP-Adding-link-directories-for-ModuleParser.patch
 )
 
 src_prepare() {
@@ -71,7 +73,7 @@ src_configure(){
 		-DSlicer_SUPERBUILD=OFF
 		-DBUILD_TESTING=OFF
 		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT=OFF
-		-DSlicer_BUILD_CLI_SUPPORT=OFF
+		-DSlicer_BUILD_CLI_SUPPORT=ON
 		-DSlicer_BUILD_CLI=OFF
 		-DCMAKE_CXX_STANDARD=11
 		-DSlicer_REQUIRED_QT_VERSION=5

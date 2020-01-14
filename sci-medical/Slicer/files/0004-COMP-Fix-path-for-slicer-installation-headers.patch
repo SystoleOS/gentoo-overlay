@@ -1,7 +1,7 @@
-From 3b0ed846b3e039f44094322f8e6500bff1d7ede3 Mon Sep 17 00:00:00 2001
+From 0463d9f768e915f73ca355f819aab2c02df2be57 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 22:07:51 +0200
-Subject: [PATCH 04/14] COMP: Fix path for slicer installation headers
+Subject: [PATCH 04/19] COMP: Fix path for slicer installation headers
 
 With the following options:
 
@@ -44,10 +44,10 @@ This is due an error on the specification of the origin/destination paths.
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b6e56ffc2..6cdfb5596 100644
+index 9edb8a8bb..59b10b359 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1062,13 +1062,15 @@ include(SlicerConfigureVersionHeaderTarget)
+@@ -1063,13 +1063,15 @@ include(SlicerConfigureVersionHeaderTarget)
  add_dependencies(SlicerBaseLogic SlicerConfigureVersionHeader)
  add_dependencies(MRMLCore SlicerConfigureVersionHeader)
  
@@ -66,5 +66,5 @@ index b6e56ffc2..6cdfb5596 100644
  
  #-----------------------------------------------------------------------------
 -- 
-2.21.0
+2.24.1
 

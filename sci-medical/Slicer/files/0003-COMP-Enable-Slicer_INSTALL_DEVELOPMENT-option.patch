@@ -1,7 +1,7 @@
-From afc712412d06057795c158a746fb2a16e2e97093 Mon Sep 17 00:00:00 2001
+From 65774378f0e298e7902e5f10fe3de516c1b18ef8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 22:01:34 +0200
-Subject: [PATCH 03/14] COMP: Enable Slicer_INSTALL_DEVELOPMENT option
+Subject: [PATCH 03/19] COMP: Enable Slicer_INSTALL_DEVELOPMENT option
 
 Currently the Slicer_INSTALL_DEVELOPMENT option is set to OFF. These
 changes will enable Slicer_INSTALL_DEVELOPMENT as an option that can
@@ -11,10 +11,10 @@ be set ON/OFF.
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index b40b1a628..b6e56ffc2 100644
+index 5f4df0c64..9edb8a8bb 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -340,9 +340,9 @@ mark_as_superbuild(Slicer_USE_SimpleITK_SHARED)
+@@ -350,9 +350,9 @@ mark_as_superbuild(Slicer_USE_SimpleITK_SHARED)
  # Install no development files by default, but allow the user to get
  # them installed by setting Slicer_INSTALL_DEVELOPMENT to true.
  #-----------------------------------------------------------------------------
@@ -28,5 +28,5 @@ index b40b1a628..b6e56ffc2 100644
    set(Slicer_INSTALL_NO_DEVELOPMENT 1)
  else()
 -- 
-2.21.0
+2.24.1
 

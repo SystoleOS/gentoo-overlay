@@ -1,7 +1,7 @@
-From 48bccdf1cf0e951c88b820d6f29365a893695b24 Mon Sep 17 00:00:00 2001
+From 27876cb14ac3c3411bd2017b83564d72d5e762c0 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 2 Oct 2019 20:34:57 +0200
-Subject: [PATCH 06/14] COMP: Change path for installing qSlicerUtilsTest1.cxx
+Subject: [PATCH 06/19] COMP: Change path for installing qSlicerUtilsTest1.cxx
 
 Using the following configuration:
 
@@ -47,7 +47,7 @@ specified as source for the install command
  1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/Base/QTGUI/Testing/Cxx/CMakeLists.txt b/Base/QTGUI/Testing/Cxx/CMakeLists.txt
-index 9a578c13e..37e59c767 100644
+index 8c9b6956a..d812cfb3d 100644
 --- a/Base/QTGUI/Testing/Cxx/CMakeLists.txt
 +++ b/Base/QTGUI/Testing/Cxx/CMakeLists.txt
 @@ -118,9 +118,9 @@ set(Slicer_CXX_MODULE_TEST_TEMPLATES_DIR ${CMAKE_CURRENT_SOURCE_DIR}
@@ -67,5 +67,5 @@ index 9a578c13e..37e59c767 100644
 +#     )
 +# endif()
 -- 
-2.21.0
+2.24.1
 
