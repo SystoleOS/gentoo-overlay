@@ -76,7 +76,6 @@ PATCHES=(
 	${FILESDIR}/0017-COMP-Enable-installation-of-header-files-for-qMRMLWi.patch
 	${FILESDIR}/0018-COMP-Change-JsonCpp-by-jsoncpp.patch
 	${FILESDIR}/0019-COMP-Adding-link-directories-for-ModuleParser.patch
-
 )
 
 src_prepare() {
