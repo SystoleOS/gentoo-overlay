@@ -24,6 +24,8 @@ KEYWORDS="~amd64"
 DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
+	Slicer-Loadable/Cameras
+	Slicer-Loadable/Colors
 "
 
 RDEPEND="${DEPEND}"

@@ -1,12 +1,12 @@
-From e2102aa573b686ebae3e1c8f629163713cea8cce Mon Sep 17 00:00:00 2001
+From a4603dd98364672ef56609b9b69212e88ce5ddf6 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 5 Oct 2019 19:59:55 +0200
 Subject: [PATCH] Make Data a separate module
 
 ---
  Modules/Loadable/Data/CMakeLists.txt       | 29 +++++++++++++++++++++-
- Modules/Loadable/Data/Logic/CMakeLists.txt |  5 ++++
- 2 files changed, 33 insertions(+), 1 deletion(-)
+ Modules/Loadable/Data/Logic/CMakeLists.txt |  6 +++++
+ 2 files changed, 34 insertions(+), 1 deletion(-)
 
 diff --git a/Modules/Loadable/Data/CMakeLists.txt b/Modules/Loadable/Data/CMakeLists.txt
 index 0714a4464..387734c8d 100644
@@ -67,15 +67,16 @@ index 0714a4464..387734c8d 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Data/Logic/CMakeLists.txt b/Modules/Loadable/Data/Logic/CMakeLists.txt
-index 06f563eb8..96c4965ce 100644
+index 06f563eb8..47b881b28 100644
 --- a/Modules/Loadable/Data/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Data/Logic/CMakeLists.txt
-@@ -14,8 +14,13 @@ set(${KIT}_SRCS
+@@ -14,8 +14,14 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
 +  MRMLLogic
 +  MRMLCore
++  SlicerBaseLogic
 +  Qt5::Gui
    )
  
@@ -85,5 +86,5 @@ index 06f563eb8..96c4965ce 100644
  SlicerMacroBuildModuleLogic(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 
