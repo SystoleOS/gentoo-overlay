@@ -60,6 +60,7 @@ PATCHES=(
 	${FILESDIR}/0019-COMP-Adding-link-directories-for-ModuleParser.patch
 	${FILESDIR}/0020-COMP-Change-installation-destination.patch
 	${FILESDIR}/0021-COMP-Change-GLOB-filter-for-installing-vtkITK-dev-co.patch
+	${FILESDIR}/0022-COMP-Add-Slicer_USE_PYTHONQT-as-condition-for-Module.patch
 )
 
 src_prepare() {
