@@ -39,7 +39,7 @@ src_prepare() {
 	mv Modules/Loadable/${PN} .
 	rm -rf ${to_delete}
 	mv ${PN}/* .
-	rm ${PN}
+	rm ${PN} -rf
 
 }
 
