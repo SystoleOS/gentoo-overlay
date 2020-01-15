@@ -10,9 +10,9 @@ DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/ITK/"
 
-COMMIT="c4011006034be69a732fd519fe42e5966c52dedf"
+COMMIT="d2e511437d3d9480ae1ab7ea8beb210696b6ceee"
 
-SRC_URI="https://github.com/Slicer/ITK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
+SRC_URI="https://github.com/InsightSoftwareConsortium/ITK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
 LICENSE="Apache-2.0"
 
@@ -74,6 +74,8 @@ src_configure(){
 		-DITK_USE_SYSTEM_GDCM=ON
 		-DITK_USE_SYSTEM_HDF5=ON
 		-DITK_USE_SYSTEM_EIGEN=ON
+		-DITK_USE_CONCEPT_CHECKING=OFF
+		-DVNL_CONFIG_LEGACY_METHODS=ON
 		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64/${PN}-${PV}
 		-DITKGDCM_INSTALL_LIB_DIR=/usr/lib64
 		-DCMAKE_INSTALL_RPATH=/usr/lib64/${PN}-${PV}
