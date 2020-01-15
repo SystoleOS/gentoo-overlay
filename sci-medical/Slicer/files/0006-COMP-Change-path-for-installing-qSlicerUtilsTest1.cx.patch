@@ -1,7 +1,7 @@
-From 27876cb14ac3c3411bd2017b83564d72d5e762c0 Mon Sep 17 00:00:00 2001
+From fbf688252420cdfc2e094cf5798088a7170cc5ad Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 2 Oct 2019 20:34:57 +0200
-Subject: [PATCH 06/19] COMP: Change path for installing qSlicerUtilsTest1.cxx
+Subject: [PATCH 06/23] COMP: Change path for installing qSlicerUtilsTest1.cxx
 
 Using the following configuration:
 

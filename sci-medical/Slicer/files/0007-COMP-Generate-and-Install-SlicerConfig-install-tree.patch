@@ -1,7 +1,7 @@
-From 849918cb94f41a41c432256bf0e7be5f429aad27 Mon Sep 17 00:00:00 2001
+From ee44c5173199c5f1801325bcf587497811d7ef38 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:13:12 +0200
-Subject: [PATCH 07/19] COMP: Generate and Install SlicerConfig (install tree)
+Subject: [PATCH 07/23] COMP: Generate and Install SlicerConfig (install tree)
 
 ---
  CMake/SlicerGenerateSlicerConfig.cmake | 5 +++++

@@ -1,7 +1,7 @@
-From fb97db62dc03d830a9692d9cc0e9bf4d92fdd89d Mon Sep 17 00:00:00 2001
+From a048e608318e03b8cfc5036fb18ea70381de7d7e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 13:03:13 +0200
-Subject: [PATCH 12/19] COMP: Adding MRML_LIBRARIES variable to install
+Subject: [PATCH 12/23] COMP: Adding MRML_LIBRARIES variable to install
  configuration
 
 ---

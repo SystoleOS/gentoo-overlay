@@ -1,7 +1,7 @@
-From 5e117e2d564cceaa4488db32b0373588c4316d24 Mon Sep 17 00:00:00 2001
+From 05c33249065f7de6bf8aa88ac67d0c0d6e4204e9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:33:44 +0200
-Subject: [PATCH 08/19] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
+Subject: [PATCH 08/23] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
  Slicer
 
 ---

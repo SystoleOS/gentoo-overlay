@@ -1,7 +1,7 @@
-From 1687d8951d0dea4adb243a84633e2ffb189eb42f Mon Sep 17 00:00:00 2001
+From dda25b757f6934617e7f9f1b744ad91ae70732b0 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:41:56 +0200
-Subject: [PATCH 11/19] COMP: Enable install of development files in Slicer
+Subject: [PATCH 11/23] COMP: Enable install of development files in Slicer
  libraries
 
 ---

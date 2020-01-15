@@ -1,7 +1,7 @@
-From d7cb31cc00debf5acb761d79c2f041783166cf53 Mon Sep 17 00:00:00 2001
+From 1b7981dd6d237cb5a6df890254443b03896ef90d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 11:47:42 +0200
-Subject: [PATCH 15/19] COMP: Adding conditional for installation of QT
+Subject: [PATCH 15/23] COMP: Adding conditional for installation of QT
  designer launcher
 
 ---
