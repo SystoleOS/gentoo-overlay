@@ -1,14 +1,14 @@
-From 39ea4ba31c262e8f2654f6df9d2c52f02ac9b073 Mon Sep 17 00:00:00 2001
+From e8c3d160a4b7297d57481b943aaca29bf06b359e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 4 Oct 2019 22:06:34 +0200
 Subject: [PATCH] Make Volumes a separate module
 
 ---
  Modules/Loadable/Volumes/CMakeLists.txt       | 23 ++++++++++++++++++-
- Modules/Loadable/Volumes/Logic/CMakeLists.txt |  6 +++++
+ Modules/Loadable/Volumes/Logic/CMakeLists.txt |  7 ++++++
  .../SubjectHierarchyPlugins/CMakeLists.txt    | 17 +++++++++++++-
  .../Loadable/Volumes/Widgets/CMakeLists.txt   |  9 ++++++++
- 4 files changed, 53 insertions(+), 2 deletions(-)
+ 4 files changed, 54 insertions(+), 2 deletions(-)
 
 diff --git a/Modules/Loadable/Volumes/CMakeLists.txt b/Modules/Loadable/Volumes/CMakeLists.txt
 index 4a0f8b398..c697e322f 100644
@@ -56,15 +56,16 @@ index 4a0f8b398..c697e322f 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Volumes/Logic/CMakeLists.txt b/Modules/Loadable/Volumes/Logic/CMakeLists.txt
-index d6f0ceed8..1665b1d91 100644
+index d6f0ceed8..8c2d2103d 100644
 --- a/Modules/Loadable/Volumes/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Volumes/Logic/CMakeLists.txt
-@@ -14,8 +14,14 @@ set(${KIT}_SRCS
+@@ -14,8 +14,15 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
 +  MRMLCore
 +  MRMLLogic
++  SlicerBaseLogic
 +  ${VTK_LIBRARIES}
 +  vtkAddon
    )
@@ -143,5 +144,5 @@ index b238094b3..a83051d0f 100644
  SlicerMacroBuildModuleWidgets(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 

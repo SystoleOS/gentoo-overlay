@@ -25,6 +25,7 @@ DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
 	Slicer-Loadable/Units
+	Slicer-Loadable/Colors
 "
 
 RDEPEND="${DEPEND}"
