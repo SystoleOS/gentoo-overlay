@@ -28,7 +28,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-COMP-Make-the-module-a-separate-project.patch
+	${FILESDIR}/0001-COMP-Make-terminologies-a-separate-module.patch
 )
 
 src_prepare() {
