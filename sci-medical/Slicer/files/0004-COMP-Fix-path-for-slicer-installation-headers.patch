@@ -1,7 +1,7 @@
 From 25d55fa051b0997bfeb322425a98ab6869c4847c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 22:07:51 +0200
-Subject: [PATCH 04/23] COMP: Fix path for slicer installation headers
+Subject: [PATCH 04/24] COMP: Fix path for slicer installation headers
 
 With the following options:
 

@@ -1,7 +1,7 @@
 From 4e572163e80abe8ce2545137eab8ec77dd0a189e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 22:01:34 +0200
-Subject: [PATCH 03/23] COMP: Enable Slicer_INSTALL_DEVELOPMENT option
+Subject: [PATCH 03/24] COMP: Enable Slicer_INSTALL_DEVELOPMENT option
 
 Currently the Slicer_INSTALL_DEVELOPMENT option is set to OFF. These
 changes will enable Slicer_INSTALL_DEVELOPMENT as an option that can

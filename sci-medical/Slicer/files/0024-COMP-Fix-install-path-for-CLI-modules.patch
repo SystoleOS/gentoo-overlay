@@ -1,0 +1,46 @@
+From d2bd271e2d3dc6994df7dca2fa02496db480a1f5 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 16 Jan 2020 12:43:27 +0100
+Subject: [PATCH 24/24] COMP: Fix install path for CLI modules
+
+---
+ CMake/SlicerInstallConfig.cmake.in | 5 +++++
+ CMake/UseSlicer.cmake.in           | 6 +++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
+index 2e62fb68f..fe3f5d407 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/CMake/SlicerInstallConfig.cmake.in
+@@ -114,6 +114,11 @@ set(Slicer_INSTALL_INCLUDE_DIR "@Slicer_INSTALL_INCLUDE_DIR@")
+ set(Slicer_INSTALL_SHARE_DIR "@Slicer_INSTALL_SHARE_DIR@")
+ set(Slicer_INSTALL_ITKFACTORIES_DIR "@Slicer_INSTALL_ITKFACTORIES_DIR@")
+ 
++set(Slicer_CLIMODULES_SUBDIR "@Slicer_CLIMODULES_SUBDIR@")
++set(Slicer_CLIMODULES_BIN_DIR "@Slicer_CLIMODULES_BIN_DIR@")
++set(Slicer_CLIMODULES_LIB_DIR "@Slicer_CLIMODULES_LIB_DIR@")
++set(Slicer_CLIMODULES_SHARE_DIR "@Slicer_CLIMODULES_SHARE_DIR@")
++
+ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
+ set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
+ set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "@Slicer_INSTALL_CLIMODULES_SHARE_DIR@")
+diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
+index c4f8e6386..9efd2b48b 100644
+--- a/CMake/UseSlicer.cmake.in
++++ b/CMake/UseSlicer.cmake.in
+@@ -316,9 +316,9 @@ endif()
+ # Set Slicer_INSTALL_*MODULE_*_DIR variables
+ #-----------------------------------------------------------------------------
+ if(Slicer_BUILD_CLI_SUPPORT)
+-  set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_BIN_DIR}")
+-  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_LIB_DIR}")
+-  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_SHARE_DIR}")
++  set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${Slicer_HOME}/${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_BIN_DIR}")
++  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${Slicer_HOME}/${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_LIB_DIR}")
++  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_HOME}/${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_SHARE_DIR}")
+   if(APPLE)
+     set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION "${Slicer_INSTALL_CLIMODULES_BIN_DIR}")
+     set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION "${Slicer_INSTALL_CLIMODULES_LIB_DIR}")
+-- 
+2.24.1
+

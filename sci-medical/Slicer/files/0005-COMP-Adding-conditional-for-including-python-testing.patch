@@ -1,7 +1,7 @@
 From b091fca4fa4e8c4fce8c113969e8b3f39a89f5aa Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 2 Oct 2019 20:10:11 +0200
-Subject: [PATCH 05/23] COMP: Adding conditional for including python testing
+Subject: [PATCH 05/24] COMP: Adding conditional for including python testing
  in QTCore
 
 With the following configuration:

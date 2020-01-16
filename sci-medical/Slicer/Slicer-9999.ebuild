@@ -62,6 +62,7 @@ PATCHES=(
 	${FILESDIR}/0021-COMP-Change-GLOB-filter-for-installing-vtkITK-dev-co.patch
 	${FILESDIR}/0022-COMP-Add-Slicer_USE_PYTHONQT-as-condition-for-Module.patch
 	${FILESDIR}/0023-COMP-Adding-MRMLCLI-include-directories-to-Slicer_Ba.patch
+	${FILESDIR}/0024-COMP-Fix-install-path-for-CLI-modules.patch
 )
 
 src_prepare() {
