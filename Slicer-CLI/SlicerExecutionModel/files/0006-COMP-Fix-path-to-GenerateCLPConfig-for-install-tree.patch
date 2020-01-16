@@ -1,0 +1,25 @@
+From c5a2444ac3bbe09f0d9c5cda147c4289b2cfa68d Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 16 Dec 2019 05:40:22 +0100
+Subject: [PATCH] COMP: Fix path to GenerateCLPConfig for install tree
+
+---
+ GenerateCLP/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/GenerateCLP/CMakeLists.txt b/GenerateCLP/CMakeLists.txt
+index 4bf8e94..60473c2 100644
+--- a/GenerateCLP/CMakeLists.txt
++++ b/GenerateCLP/CMakeLists.txt
+@@ -240,7 +240,7 @@ include(GenerateGenerateCLPConfig.cmake)
+ # --------------------------------------------------------------------------
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   install(FILES
+-    ${GenerateCLP_BINARY_DIR}/install/GenerateCLPConfig.cmake
++    ${GenerateCLP_BINARY_DIR}/install/GenerateInstallCLPConfig.cmake
+     DESTINATION ${SlicerExecutionModel_INSTALL_LIB_DIR}/${lib_name} COMPONENT Development)
+ endif()
+ 
+-- 
+2.24.1
+

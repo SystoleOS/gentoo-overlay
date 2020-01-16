@@ -1,0 +1,40 @@
+From 5766291dfca07cc5216ca72df3906950cf3b6b8a Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Tue, 17 Dec 2019 06:57:16 +0100
+Subject: [PATCH] COMP: Install GenerateCLP.cmake, GenerateCLP and
+ GenerateCLPLauncher
+
+---
+ GenerateCLP/CMakeLists.txt | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/GenerateCLP/CMakeLists.txt b/GenerateCLP/CMakeLists.txt
+index 1cccaf6..46cc526 100644
+--- a/GenerateCLP/CMakeLists.txt
++++ b/GenerateCLP/CMakeLists.txt
+@@ -232,8 +232,21 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   install(FILES ${GenerateCLP_BINARY_DIR}/UseGenerateCLP.cmake
+     DESTINATION ${SlicerExecutionModel_INSTALL_LIB_DIR}/${PROJECT_NAME}
+     COMPONENT Development
+-    RENAME UseGenerateCLP.cmake
+     )
++
++  install(FILES ${GenerateCLP_BINARY_DIR}/GenerateCLP.cmake
++    DESTINATION ${SlicerExecutionModel_INSTALL_LIB_DIR}/${PROJECT_NAME}
++    COMPONENT Development
++    )
++
++  install(FILES
++    ${GenerateCLP_BINARY_DIR}/bin/GenerateCLP
++    ${GenerateCLP_BINARY_DIR}/bin/GenerateCLPLauncher
++    DESTINATION bin
++    COMPONENT Runtime
++    )
++
++
+ endif()
+ 
+ # --------------------------------------------------------------------------
+-- 
+2.24.1
+

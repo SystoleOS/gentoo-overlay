@@ -1,0 +1,27 @@
+From 9b5f11984f46739fd59c110924f1f8065c51d9d6 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 16 Dec 2019 20:12:09 +0100
+Subject: [PATCH 1/2] COMP: Remove not needed SlicerExecutionModel_INCLUDE_DIRS
+
+---
+ SlicerExecutionModelInstallConfig.cmake.in | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/SlicerExecutionModelInstallConfig.cmake.in b/SlicerExecutionModelInstallConfig.cmake.in
+index 7e2adf2..6e41bf6 100644
+--- a/SlicerExecutionModelInstallConfig.cmake.in
++++ b/SlicerExecutionModelInstallConfig.cmake.in
+@@ -53,10 +53,6 @@ if(SlicerExecutionModel_USE_SERIALIZER AND NOT SlicerExecutionModel_USE_JSONCPP)
+   Make sure SlicerExecutionModel_USE_JSONCPP is ON.")
+ endif()
+ 
+-# Set SlicerExecutionModel variables
+-set(SlicerExecutionModel_INCLUDE_DIRS
+-  "@SlicerExecutionModel_INCLUDE_DIRS_CONFIG@"
+-  )
+ set(SlicerExecutionModel_LIBRARIES
+   @SlicerExecutionModel_LIBRARIES_CONFIG@
+   )
+-- 
+2.24.1
+

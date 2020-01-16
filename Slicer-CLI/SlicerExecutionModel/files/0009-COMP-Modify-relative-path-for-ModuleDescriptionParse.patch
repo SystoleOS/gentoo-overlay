@@ -1,0 +1,29 @@
+From 63ff11ff06df09b7179ba040cc95182856f9e85c Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 16 Dec 2019 20:12:42 +0100
+Subject: [PATCH] COMP: Modify relative path for ModuleDescriptionParser
+
+---
+ .../ModuleDescriptionParserInstallConfig.cmake.in             | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ModuleDescriptionParser/ModuleDescriptionParserInstallConfig.cmake.in b/ModuleDescriptionParser/ModuleDescriptionParserInstallConfig.cmake.in
+index 0490599..f314464 100644
+--- a/ModuleDescriptionParser/ModuleDescriptionParserInstallConfig.cmake.in
++++ b/ModuleDescriptionParser/ModuleDescriptionParserInstallConfig.cmake.in
+@@ -7,10 +7,10 @@ get_filename_component(ModuleDescriptionParser_CONFIG_DIR
+ 
+ #
+ set(ModuleDescriptionParser_INCLUDE_DIRS
+-  "${ModuleDescriptionParser_CONFIG_DIR}/../../include/ModuleDescriptionParser"
++  "${ModuleDescriptionParser_CONFIG_DIR}/../../../include/ModuleDescriptionParser"
+   )
+ set(ModuleDescriptionParser_LIBRARY_DIRS
+-  "${ModuleDescriptionParser_CONFIG_DIR}"
++  "${ModuleDescriptionParser_CONFIG_DIR}/../"
+   )
+ set(ModuleDescriptionParser_USE_FILE
+   "${ModuleDescriptionParser_CONFIG_DIR}/UseModuleDescriptionParser.cmake"
+-- 
+2.24.1
+
