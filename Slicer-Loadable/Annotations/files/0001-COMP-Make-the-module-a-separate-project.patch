@@ -1,14 +1,18 @@
-From 31ab8046a87a253df6c38f7c5bccfb266c6f1713 Mon Sep 17 00:00:00 2001
+From 84c5d342886699ab9f478c054a5eee5e82c27284 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:07:31 +0200
 Subject: [PATCH] COMP: Make the module a separate project
 
 ---
  Modules/Loadable/Annotations/CMakeLists.txt   | 22 ++++++++++++++++++-
- .../Loadable/Annotations/MRML/CMakeLists.txt  |  3 +++
+ .../Loadable/Annotations/Logic/CMakeLists.txt |  1 +
+ .../Loadable/Annotations/MRML/CMakeLists.txt  |  8 +++++++
  .../Annotations/Widgets/CMakeLists.txt        |  2 ++
  .../Annotations/qSlicerAnnotationsModule.h    |  2 ++
- 4 files changed, 28 insertions(+), 1 deletion(-)
+ Modules/Loadable/Terminologies/CMakeLists.txt | 19 ++++++++++++++++
+ .../Terminologies/Logic/CMakeLists.txt        |  4 ++++
+ .../Terminologies/Widgets/CMakeLists.txt      |  3 +++
+ 8 files changed, 60 insertions(+), 1 deletion(-)
 
 diff --git a/Modules/Loadable/Annotations/CMakeLists.txt b/Modules/Loadable/Annotations/CMakeLists.txt
 index 57125cac2..e550d44ef 100644
@@ -61,8 +65,20 @@ index 57125cac2..e550d44ef 100644
    SRCS ${MODULE_SRCS}
    MOC_SRCS ${MODULE_MOC_SRCS}
    UI_SRCS ${MODULE_UI_SRCS}
+diff --git a/Modules/Loadable/Annotations/Logic/CMakeLists.txt b/Modules/Loadable/Annotations/Logic/CMakeLists.txt
+index 0080a1850..a60b80a23 100644
+--- a/Modules/Loadable/Annotations/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Annotations/Logic/CMakeLists.txt
+@@ -14,6 +14,7 @@ set(${KIT}_SRCS
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerAnnotationsModuleMRML
++  SlicerBaseLogic
+   )
+ 
+ #-----------------------------------------------------------------------------
 diff --git a/Modules/Loadable/Annotations/MRML/CMakeLists.txt b/Modules/Loadable/Annotations/MRML/CMakeLists.txt
-index 5411e670b..fea59fd46 100644
+index 5411e670b..de8763e53 100644
 --- a/Modules/Loadable/Annotations/MRML/CMakeLists.txt
 +++ b/Modules/Loadable/Annotations/MRML/CMakeLists.txt
 @@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
@@ -73,7 +89,7 @@ index 5411e670b..fea59fd46 100644
    )
  
  set(${KIT}_SRCS
-@@ -60,6 +61,8 @@ set(${KIT}_SRCS
+@@ -60,10 +61,17 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${MRML_LIBRARIES}
@@ -81,7 +97,16 @@ index 5411e670b..fea59fd46 100644
 +  ${ITK_LIBRARIES}
    )
  
++if(NOT Slicer_USE_PYTHONQT)
++  set(DISABLE_PYTHON DISABLE_WRAP_PYTHON)
++endif()
++
  #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
++  ${DISABLE_PYTHON}
+   NAME ${KIT}
+   EXPORT_DIRECTIVE ${${KIT}_EXPORT_DIRECTIVE}
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
 diff --git a/Modules/Loadable/Annotations/Widgets/CMakeLists.txt b/Modules/Loadable/Annotations/Widgets/CMakeLists.txt
 index a456d0d74..50a84a3ab 100644
 --- a/Modules/Loadable/Annotations/Widgets/CMakeLists.txt
@@ -108,6 +133,62 @@ index a504e7a03..cb503f20f 100644
  #include "qSlicerLoadableModule.h"
  
  // CTK includes
+diff --git a/Modules/Loadable/Terminologies/CMakeLists.txt b/Modules/Loadable/Terminologies/CMakeLists.txt
+index 50e4ca553..25ba774b6 100644
+--- a/Modules/Loadable/Terminologies/CMakeLists.txt
++++ b/Modules/Loadable/Terminologies/CMakeLists.txt
+@@ -1,3 +1,22 @@
++project(Annotations)
++
++cmake_minimum_required(VERSION 3.0)
++
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
++find_package(Qt5 COMPONENTS Widgets Network Xml PrintSupport REQUIRED)
++find_package(VTK REQUIRED)
++include(${VTK_USE_FILE})
++
++find_package(CTK REQUIRED)
++include(${CTK_USE_FILE})
++
++find_package(ITK REQUIRED)
++include(${ITK_USE_FILE})
++
++link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME "Terminologies")
+ set(MODULE_TITLE ${MODULE_NAME})
+diff --git a/Modules/Loadable/Terminologies/Logic/CMakeLists.txt b/Modules/Loadable/Terminologies/Logic/CMakeLists.txt
+index 2c87302ff..474ba290d 100644
+--- a/Modules/Loadable/Terminologies/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Terminologies/Logic/CMakeLists.txt
+@@ -22,6 +22,10 @@ set(${KIT}_SRCS
+   )
+ 
+ set(${KIT}_TARGET_LIBRARIES
++  MRMLLogic
++  MRMLCore
++  ${CTK_LIBRARIES}
++  ${VTK_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Terminologies/Widgets/CMakeLists.txt b/Modules/Loadable/Terminologies/Widgets/CMakeLists.txt
+index 0e2909a2b..3655f0f56 100644
+--- a/Modules/Loadable/Terminologies/Widgets/CMakeLists.txt
++++ b/Modules/Loadable/Terminologies/Widgets/CMakeLists.txt
+@@ -36,6 +36,9 @@ set(${KIT}_RESOURCES
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerTerminologiesModuleLogic
++  qMRMLWidgets
++  qSlicerBaseQTCore
++  qSlicerBaseQTGUI
+   )
+ 
+ #-----------------------------------------------------------------------------
 -- 
-2.21.0
+2.24.1
 
