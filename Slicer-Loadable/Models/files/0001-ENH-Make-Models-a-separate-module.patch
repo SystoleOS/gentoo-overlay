@@ -1,14 +1,14 @@
-From 859003f59ccd291a387bf292a806379fe9d7ffdb Mon Sep 17 00:00:00 2001
+From a8bf4c49613669ae42369b36784aba459765bb13 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
-Date: Mon, 7 Oct 2019 09:29:30 +0200
-Subject: [PATCH] Make Models a separate module
+Date: Sun, 19 Jan 2020 10:16:25 +0100
+Subject: [PATCH] ENH: Make Models a separate module
 
 ---
  Modules/Loadable/Models/CMakeLists.txt        | 27 ++++++++++++++++++-
- Modules/Loadable/Models/Logic/CMakeLists.txt  |  5 ++++
+ Modules/Loadable/Models/Logic/CMakeLists.txt  |  6 +++++
  .../SubjectHierarchyPlugins/CMakeLists.txt    | 27 +++++++++++++------
  .../Loadable/Models/Widgets/CMakeLists.txt    | 13 ++++++++-
- 4 files changed, 62 insertions(+), 10 deletions(-)
+ 4 files changed, 63 insertions(+), 10 deletions(-)
 
 diff --git a/Modules/Loadable/Models/CMakeLists.txt b/Modules/Loadable/Models/CMakeLists.txt
 index b30d82047..45a4577b1 100644
@@ -66,7 +66,7 @@ index b30d82047..45a4577b1 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Models/Logic/CMakeLists.txt b/Modules/Loadable/Models/Logic/CMakeLists.txt
-index d6f0ceed8..d3a7e9f67 100644
+index d6f0ceed8..03f265f39 100644
 --- a/Modules/Loadable/Models/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Models/Logic/CMakeLists.txt
 @@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
@@ -77,12 +77,13 @@ index d6f0ceed8..d3a7e9f67 100644
    )
  
  set(${KIT}_SRCS
-@@ -14,8 +15,12 @@ set(${KIT}_SRCS
+@@ -14,8 +15,13 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
 +  MRMLLogic
 +  MRMLCore
++  SlicerBaseLogic
    )
  
 +link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
@@ -167,5 +168,5 @@ index 2647d7a9c..5e8db4e75 100644
  
  #-----------------------------------------------------------------------------
 -- 
-2.21.0
+2.24.1
 
