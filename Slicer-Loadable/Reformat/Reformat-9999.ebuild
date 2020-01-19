@@ -28,7 +28,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-Make-Reformat-a-separate-module.patch
+	${FILESDIR}/0001-ENH-Make-Reformat-a-separate-module.patch
 )
 
 src_prepare() {

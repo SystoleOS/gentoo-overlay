@@ -1,12 +1,12 @@
-From 2f90ec41e20823bdb1dd3c7ff525bfa82e5fc5ec Mon Sep 17 00:00:00 2001
+From 66edda7eb5e0c946333cdaeaac896d46bfd6768f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
-Date: Mon, 7 Oct 2019 15:12:17 +0200
-Subject: [PATCH] Make Reformat a separate module
+Date: Sun, 19 Jan 2020 13:06:46 +0100
+Subject: [PATCH] ENH: Make Reformat a separate module
 
 ---
  Modules/Loadable/Reformat/CMakeLists.txt      | 28 +++++++++++++++++--
- .../Loadable/Reformat/Logic/CMakeLists.txt    |  4 +++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ .../Loadable/Reformat/Logic/CMakeLists.txt    |  5 ++++
+ 2 files changed, 31 insertions(+), 2 deletions(-)
 
 diff --git a/Modules/Loadable/Reformat/CMakeLists.txt b/Modules/Loadable/Reformat/CMakeLists.txt
 index 967941042..0404dd89b 100644
@@ -67,15 +67,16 @@ index 967941042..0404dd89b 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Reformat/Logic/CMakeLists.txt b/Modules/Loadable/Reformat/Logic/CMakeLists.txt
-index d6f0ceed8..b9750ad1d 100644
+index d6f0ceed8..9d2f1fb21 100644
 --- a/Modules/Loadable/Reformat/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Reformat/Logic/CMakeLists.txt
-@@ -14,8 +14,12 @@ set(${KIT}_SRCS
+@@ -14,8 +14,13 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
 +  MRMLLogic
 +  MRMLCore
++  SlicerBaseLogic
    )
  
 +link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
@@ -84,5 +85,5 @@ index d6f0ceed8..b9750ad1d 100644
  SlicerMacroBuildModuleLogic(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 
