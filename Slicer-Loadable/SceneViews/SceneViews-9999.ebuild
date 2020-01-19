@@ -29,7 +29,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-Make-SceneViews-a-separate-module.patch
+	${FILESDIR}/0001-ENH-Make-SceneViews-a-separate-module.patch
 )
 
 src_prepare() {
