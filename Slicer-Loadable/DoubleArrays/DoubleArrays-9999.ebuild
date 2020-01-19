@@ -28,7 +28,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-Make-DoubleArrays-a-separate-module.patch
+	${FILESDIR}/0001-ENH-Make-DoubleArrays-a-separate-module.patch
 )
 
 src_prepare() {

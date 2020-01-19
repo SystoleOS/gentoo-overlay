@@ -1,12 +1,12 @@
-From da5958816cce290a65313ed6779a5222624bce65 Mon Sep 17 00:00:00 2001
+From 1ab48a2bb38158301a692103ac560cf3f53e7f1c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 5 Oct 2019 21:06:52 +0200
-Subject: [PATCH] Make DoubleArrays a separate module
+Subject: [PATCH] ENH: Make DoubleArrays a separate module
 
 ---
  Modules/Loadable/DoubleArrays/CMakeLists.txt  | 28 ++++++++++++++++---
- .../DoubleArrays/Logic/CMakeLists.txt         |  4 +++
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ .../DoubleArrays/Logic/CMakeLists.txt         |  5 ++++
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
 diff --git a/Modules/Loadable/DoubleArrays/CMakeLists.txt b/Modules/Loadable/DoubleArrays/CMakeLists.txt
 index 7433d1ae4..0b13cf993 100644
@@ -69,15 +69,16 @@ index 7433d1ae4..0b13cf993 100644
 -  include(${Slicer_EXTENSION_CPACK})
 -endif()
 diff --git a/Modules/Loadable/DoubleArrays/Logic/CMakeLists.txt b/Modules/Loadable/DoubleArrays/Logic/CMakeLists.txt
-index d6f0ceed8..a799b8c99 100644
+index d6f0ceed8..b9961f34f 100644
 --- a/Modules/Loadable/DoubleArrays/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/DoubleArrays/Logic/CMakeLists.txt
-@@ -14,8 +14,12 @@ set(${KIT}_SRCS
+@@ -14,8 +14,13 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
 +  MRMLCore
 +  MRMLLogic
++  SlicerBaseLogic
    )
  
 +link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
@@ -86,5 +87,5 @@ index d6f0ceed8..a799b8c99 100644
  SlicerMacroBuildModuleLogic(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 
