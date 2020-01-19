@@ -1,14 +1,14 @@
-From 2333b083e968451940d038ae0b668cf70a8749c9 Mon Sep 17 00:00:00 2001
+From 8286e2d716654575f9e5fa8290cef20a37614f3a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 10:44:08 +0200
 Subject: [PATCH] Make Plots a separate module
 
 ---
  Modules/Loadable/Plots/CMakeLists.txt         | 23 ++++++++++++++++++-
- Modules/Loadable/Plots/Logic/CMakeLists.txt   | 11 +++++++++
+ Modules/Loadable/Plots/Logic/CMakeLists.txt   | 12 ++++++++++
  .../SubjectHierarchyPlugins/CMakeLists.txt    | 13 +++++++----
  Modules/Loadable/Plots/Widgets/CMakeLists.txt |  2 ++
- 4 files changed, 43 insertions(+), 6 deletions(-)
+ 4 files changed, 44 insertions(+), 6 deletions(-)
 
 diff --git a/Modules/Loadable/Plots/CMakeLists.txt b/Modules/Loadable/Plots/CMakeLists.txt
 index ae88facf7..af225bc3e 100644
@@ -56,7 +56,7 @@ index ae88facf7..af225bc3e 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Plots/Logic/CMakeLists.txt b/Modules/Loadable/Plots/Logic/CMakeLists.txt
-index d6f0ceed8..d6e668d6e 100644
+index d6f0ceed8..bea62fc95 100644
 --- a/Modules/Loadable/Plots/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Plots/Logic/CMakeLists.txt
 @@ -5,6 +5,9 @@ set(KIT ${PROJECT_NAME})
@@ -69,7 +69,7 @@ index d6f0ceed8..d6e668d6e 100644
    )
  
  set(${KIT}_SRCS
-@@ -14,8 +17,16 @@ set(${KIT}_SRCS
+@@ -14,8 +17,17 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
@@ -79,6 +79,7 @@ index d6f0ceed8..d6e668d6e 100644
 +  qSlicerBaseQTGUI
 +  qSlicerBaseQTCore
 +  ${CTK_LIBRARIES}
++  SlicerBaseLogic
    )
  
 +link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
@@ -132,5 +133,5 @@ index c56ea83ec..28e59e1dc 100644
  SlicerMacroBuildModuleWidgets(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 
