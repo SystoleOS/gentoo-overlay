@@ -29,7 +29,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-Make-Tables-a-separate-module.patch
+	${FILESDIR}/0001-ENH-Make-Tables-a-separate-module.patch
 )
 
 src_prepare() {

@@ -1,14 +1,14 @@
-From ed2acb5a6b78bf6f5304e3e1ad9bbfef6537b599 Mon Sep 17 00:00:00 2001
+From 1ebdc194773d4df151259701ddae497ab2638bab Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 8 Oct 2019 06:45:18 +0200
-Subject: [PATCH] Make Tables a separate module
+Subject: [PATCH] ENH: Make Tables a separate module
 
 ---
  Modules/Loadable/Tables/CMakeLists.txt        | 24 ++++++++++++++++++-
- Modules/Loadable/Tables/Logic/CMakeLists.txt  |  5 ++++
+ Modules/Loadable/Tables/Logic/CMakeLists.txt  |  6 +++++
  .../SubjectHierarchyPlugins/CMakeLists.txt    | 12 ++++++++++
  .../Loadable/Tables/Widgets/CMakeLists.txt    |  6 +++++
- 4 files changed, 46 insertions(+), 1 deletion(-)
+ 4 files changed, 47 insertions(+), 1 deletion(-)
 
 diff --git a/Modules/Loadable/Tables/CMakeLists.txt b/Modules/Loadable/Tables/CMakeLists.txt
 index f585e290a..e35e48c88 100644
@@ -57,15 +57,16 @@ index f585e290a..e35e48c88 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Tables/Logic/CMakeLists.txt b/Modules/Loadable/Tables/Logic/CMakeLists.txt
-index d6f0ceed8..fe1f16572 100644
+index d6f0ceed8..e2d332b46 100644
 --- a/Modules/Loadable/Tables/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Tables/Logic/CMakeLists.txt
-@@ -14,8 +14,13 @@ set(${KIT}_SRCS
+@@ -14,8 +14,14 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
 +  MRMLCore
 +  MRMLLogic
++  SlicerBaseLogic
 +  Qt5::Widgets
    )
  
@@ -126,5 +127,5 @@ index 0f5fd5ab5..de5500d63 100644
  SlicerMacroBuildModuleWidgets(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 
