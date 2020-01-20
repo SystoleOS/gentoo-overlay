@@ -28,7 +28,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-Make-ViewControllers-a-separate-module.patch
+	${FILESDIR}/0001-ENH-Make-ViewControllers-a-separate-module.patch
 )
 
 src_prepare() {
