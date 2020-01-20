@@ -1,15 +1,15 @@
-From 463f34e8fe4933e6c1005cc16a5722933c1d2b7e Mon Sep 17 00:00:00 2001
+From 851c0f68824e9ef68518917bdb0b20a5d3a801be Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 8 Oct 2019 12:08:39 +0200
-Subject: [PATCH] Make Transforms a separate module
+Subject: [PATCH] ENH: Make Transforms a separate module
 
 ---
  Modules/Loadable/Transforms/CMakeLists.txt    | 26 ++++++++++++++++++-
- .../Loadable/Transforms/Logic/CMakeLists.txt  | 10 +++++++
+ .../Loadable/Transforms/Logic/CMakeLists.txt  | 11 ++++++++
  .../Loadable/Transforms/MRMLDM/CMakeLists.txt |  6 +++++
  .../SubjectHierarchyPlugins/CMakeLists.txt    | 18 ++++++++++---
  .../Transforms/Widgets/CMakeLists.txt         | 11 ++++++++
- 5 files changed, 66 insertions(+), 5 deletions(-)
+ 5 files changed, 67 insertions(+), 5 deletions(-)
 
 diff --git a/Modules/Loadable/Transforms/CMakeLists.txt b/Modules/Loadable/Transforms/CMakeLists.txt
 index f86c91485..9f3edb601 100644
@@ -66,7 +66,7 @@ index f86c91485..9f3edb601 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Transforms/Logic/CMakeLists.txt b/Modules/Loadable/Transforms/Logic/CMakeLists.txt
-index affa5e496..591b25e32 100644
+index affa5e496..af7fe10c1 100644
 --- a/Modules/Loadable/Transforms/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Transforms/Logic/CMakeLists.txt
 @@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
@@ -77,11 +77,12 @@ index affa5e496..591b25e32 100644
    ${vtkSlicerMarkupsModuleMRML_INCLUDE_DIRS}
    )
  
-@@ -15,9 +16,18 @@ set(${KIT}_SRCS
+@@ -15,9 +16,19 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    MRMLCore
 +  MRMLLogic
++  SlicerBaseLogic
 +  ${VTK_LIBRARIES}
 +  ${ITK_LIBRARIES}
 +  vtkAddon
@@ -195,5 +196,5 @@ index 1fe36ecd8..6593ce292 100644
  SlicerMacroBuildModuleWidgets(
    NAME ${KIT}
 -- 
-2.21.0
+2.24.1
 
