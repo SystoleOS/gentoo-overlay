@@ -1,4 +1,4 @@
-From f226de0e3fa12698aa0d1886d71add9ba3bebc43 Mon Sep 17 00:00:00 2001
+From 0f077281a1a627180daa71e458e6d087f01a3560 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 12:25:55 +0100
 Subject: [PATCH] COMP: Make ModelMaker a separate module
@@ -8,7 +8,7 @@ Subject: [PATCH] COMP: Make ModelMaker a separate module
  1 file changed, 22 insertions(+), 4 deletions(-)
 
 diff --git a/Modules/CLI/ModelMaker/CMakeLists.txt b/Modules/CLI/ModelMaker/CMakeLists.txt
-index 9a455a619..6afe8ec85 100644
+index 9a455a619..6a232db47 100644
 --- a/Modules/CLI/ModelMaker/CMakeLists.txt
 +++ b/Modules/CLI/ModelMaker/CMakeLists.txt
 @@ -1,25 +1,43 @@
@@ -47,7 +47,7 @@ index 9a455a619..6afe8ec85 100644
 +  INSTALL_RUNTIME_DESTINATION ${Slicer_INSTALL_CLIMODULES_BIN_DIR}
 +  INSTALL_LIBRARY_DESTINATION ${Slicer_INSTALL_CLIMODULES_LIB_DIR}
 +  INSTALL_ARCHIVE_DESTINATION ${Slicer_INSTALL_CLIMODULES_SHARE_DIR}
-+  TARGET_LIBRARIES vtkITK ModuleDescriptionParser MRMLCore SlicerBaseLogic SlicerBaseCLI ${VTK_LIBRARIES} ${ITK_LIBRARIES}
++  TARGET_LIBRARIES vtkITK ModuleDescriptionParser MRMLCore SlicerBaseLogic SlicerBaseCLI ${VTK_LIBRARIES} ${ITK_LIBRARIES} ITKFactoryRegistration
    INCLUDE_DIRECTORIES
 -    ${vtkITK_INCLUDE_DIRS}
 -    ${MRMLCore_INCLUDE_DIRS}
