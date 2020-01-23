@@ -1,7 +1,7 @@
-From dda25b757f6934617e7f9f1b744ad91ae70732b0 Mon Sep 17 00:00:00 2001
+From d15e7aac5ec716aa33576ad5fe4726c500188fef Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:41:56 +0200
-Subject: [PATCH 11/24] COMP: Enable install of development files in Slicer
+Subject: [PATCH 06/20] COMP: Enable install of development files in Slicer
  libraries
 
 ---
@@ -206,10 +206,10 @@ index 2b11c769a..aaa36a28e 100644
      FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
      DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 diff --git a/Libs/vtkITK/CMakeLists.txt b/Libs/vtkITK/CMakeLists.txt
-index a1b077f2c..d7b543f9e 100644
+index 3e0770680..abcd499f0 100644
 --- a/Libs/vtkITK/CMakeLists.txt
 +++ b/Libs/vtkITK/CMakeLists.txt
-@@ -79,7 +79,7 @@ configure_file(
+@@ -80,7 +80,7 @@ configure_file(
  # Install headers
  # --------------------------------------------------------------------------
  if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)

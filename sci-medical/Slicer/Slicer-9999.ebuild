@@ -39,33 +39,31 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
+
+
 	${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
-	${FILESDIR}/0003-COMP-Enable-Slicer_INSTALL_DEVELOPMENT-option.patch
-	${FILESDIR}/0004-COMP-Fix-path-for-slicer-installation-headers.patch
-	${FILESDIR}/0005-COMP-Adding-conditional-for-including-python-testing.patch
-	${FILESDIR}/0006-COMP-Change-path-for-installing-qSlicerUtilsTest1.cx.patch
-	${FILESDIR}/0007-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
-	${FILESDIR}/0008-COMP-Setting-CMAKE_MODULE_PATH-to-account-for-CTK-an.patch
-	${FILESDIR}/0009-COMP-Adding-conditional-to-SlicerBlockAdditionalLaun.patch
-	${FILESDIR}/0010-COMP-Add-installation-of-missing-files.patch
-	${FILESDIR}/0011-COMP-Enable-install-of-development-files-in-Slicer-l.patch
-	${FILESDIR}/0012-COMP-Adding-MRML_LIBRARIES-variable-to-install-confi.patch
-	${FILESDIR}/0013-COMP-Change-Slicer_ROOT-by-Slicer_HOME-in-UseSlicer..patch
-	${FILESDIR}/0014-COMP-Add-QTLOADABLEMODULES-dirs-in-intall-tree-confi.patch
-	${FILESDIR}/0015-COMP-Adding-conditional-for-installation-of-QT-desig.patch
-	${FILESDIR}/0016-COMP-Enable-installation-of-generated-.h-files-for-B.patch
-	${FILESDIR}/0017-COMP-Enable-installation-of-header-files-for-qMRMLWi.patch
-	${FILESDIR}/0018-COMP-Change-JsonCpp-by-jsoncpp.patch
-	${FILESDIR}/0019-COMP-Adding-link-directories-for-ModuleParser.patch
-	${FILESDIR}/0020-COMP-Change-installation-destination.patch
-	${FILESDIR}/0021-COMP-Change-GLOB-filter-for-installing-vtkITK-dev-co.patch
-	${FILESDIR}/0022-COMP-Add-Slicer_USE_PYTHONQT-as-condition-for-Module.patch
-	${FILESDIR}/0023-COMP-Adding-MRMLCLI-include-directories-to-Slicer_Ba.patch
-	${FILESDIR}/0024-COMP-Fix-install-path-for-CLI-modules.patch
+	${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
+	${FILESDIR}/0004-COMP-Setting-CMAKE_MODULE_PATH-to-account-for-CTK-an.patch
+	${FILESDIR}/0005-COMP-Add-installation-of-missing-files.patch
+	${FILESDIR}/0006-COMP-Enable-install-of-development-files-in-Slicer-l.patch
+	${FILESDIR}/0007-COMP-Adding-MRML_LIBRARIES-variable-to-install-confi.patch
+	${FILESDIR}/0008-COMP-Change-Slicer_ROOT-by-Slicer_HOME-in-UseSlicer..patch
+	${FILESDIR}/0009-COMP-Add-QTLOADABLEMODULES-dirs-in-intall-tree-confi.patch
+	${FILESDIR}/0010-COMP-Adding-conditional-for-installation-of-QT-desig.patch
+	${FILESDIR}/0011-COMP-Enable-installation-of-generated-.h-files-for-B.patch
+	${FILESDIR}/0012-COMP-Enable-installation-of-header-files-for-qMRMLWi.patch
+	${FILESDIR}/0013-COMP-Change-JsonCpp-by-jsoncpp.patch
+	${FILESDIR}/0014-COMP-Adding-link-directories-for-ModuleParser.patch
+	${FILESDIR}/0015-COMP-Change-installation-destination.patch
+	${FILESDIR}/0016-COMP-Change-GLOB-filter-for-installing-vtkITK-dev-co.patch
+	${FILESDIR}/0017-COMP-Add-Slicer_USE_PYTHONQT-as-condition-for-Module.patch
+	${FILESDIR}/0018-COMP-Adding-MRMLCLI-include-directories-to-Slicer_Ba.patch
+	${FILESDIR}/0019-COMP-Fix-install-path-for-CLI-modules.patch
+	${FILESDIR}/0020-COMP-Fix-ITKFactoryRegistration-issues-on-install-tr.patch
 )
 
-src_prepare() {
+Src_prepare() {
 
 	cmake-utils_src_prepare
 }

@@ -1,7 +1,7 @@
-From 13766a3c6ef2e27fd0e51f195162681dc23115ac Mon Sep 17 00:00:00 2001
+From 1caf0c2b4a632f74d2078827aefbbb9699340524 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:05:50 +0200
-Subject: [PATCH 10/24] COMP: Add installation of missing files
+Subject: [PATCH 05/20] COMP: Add installation of missing files
 
 ---
  CMake/SlicerInstallConfig.cmake.in | 14 +++++++++++---

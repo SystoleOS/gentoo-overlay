@@ -1,7 +1,7 @@
-From 05c33249065f7de6bf8aa88ac67d0c0d6e4204e9 Mon Sep 17 00:00:00 2001
+From 47e1d30c1a2225ed8234e7ca28ed860b9282c3c5 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:33:44 +0200
-Subject: [PATCH 08/24] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
+Subject: [PATCH 04/20] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
  Slicer
 
 ---
@@ -20,7 +20,7 @@ index 5f1c679f2..1bac8abe2 100644
  set(PYTHON_INCLUDE_PATH "${Slicer_HOME}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
 +set(CTK_CMAKE_DIR "@CTK_CMAKE_DIR@")
 diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
-index 2062df98b..9309966e3 100644
+index ae9341d8f..f91316904 100644
 --- a/CMake/UseSlicer.cmake.in
 +++ b/CMake/UseSlicer.cmake.in
 @@ -39,6 +39,10 @@
