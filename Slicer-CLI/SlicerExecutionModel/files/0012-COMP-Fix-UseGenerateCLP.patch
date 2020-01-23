@@ -1,7 +1,7 @@
-From 7677aa0a56d48f63481334c9cd67219c46c6b9e9 Mon Sep 17 00:00:00 2001
+From 36b3a255aaf3d9a359d5b8f444594b876778e9e4 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 17 Dec 2019 06:57:36 +0100
-Subject: [PATCH 2/2] COMP: Fix UseGenerateCLP
+Subject: [PATCH 12/17] COMP: Fix UseGenerateCLP
 
 ---
  GenerateCLP/UseGenerateCLP.cmake.in | 4 ++--

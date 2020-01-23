@@ -1,7 +1,7 @@
-From c5a2444ac3bbe09f0d9c5cda147c4289b2cfa68d Mon Sep 17 00:00:00 2001
+From 742d85ac359abe0555c3a87ec0da3e737a39a182 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 16 Dec 2019 05:40:22 +0100
-Subject: [PATCH] COMP: Fix path to GenerateCLPConfig for install tree
+Subject: [PATCH 06/17] COMP: Fix path to GenerateCLPConfig for install tree
 
 ---
  GenerateCLP/CMakeLists.txt | 2 +-

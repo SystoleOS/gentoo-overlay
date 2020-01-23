@@ -43,6 +43,7 @@ PATCHES=(
 	${FILESDIR}/0014-COMP-Enable-automatic-inclusion-of-use-file-and-link.patch
 	${FILESDIR}/0015-COMP-Fix-path-to-SEMCommandLineLibraryWrapper.cxx.patch
 	${FILESDIR}/0016-COMP-Add-INSTALL_RPATH-property-to-CLI-exes-to-be-ab.patch
+	${FILESDIR}/0017-ENH-Adding-path-to-libITKFactoryRegistration.so-CLP-.patch
 )
 
 src_unpack() {

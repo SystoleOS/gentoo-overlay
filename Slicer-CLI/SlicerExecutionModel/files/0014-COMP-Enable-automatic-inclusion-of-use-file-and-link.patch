@@ -1,7 +1,7 @@
-From 732f07636af6f8fe96ff4fc0c171d7f1e39043d6 Mon Sep 17 00:00:00 2001
+From f1577acee7b6be858ad12f82a52f09eea277092e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 13 Jan 2020 09:21:55 +0100
-Subject: [PATCH] COMP: Enable automatic inclusion of use file and
+Subject: [PATCH 14/17] COMP: Enable automatic inclusion of use file and
  link_directories
 
 ---

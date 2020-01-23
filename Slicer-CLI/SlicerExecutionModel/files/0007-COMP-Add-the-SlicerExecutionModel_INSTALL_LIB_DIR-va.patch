@@ -1,7 +1,8 @@
-From 9486281bd6e077c8279ea936358645b2a7ba0302 Mon Sep 17 00:00:00 2001
+From 72a71db0c767a49e02f77c7bd2cf01865f6b10e0 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 16 Dec 2019 06:06:42 +0100
-Subject: [PATCH] COMP: Add the SlicerExecutionModel_INSTALL_LIB_DIR variable
+Subject: [PATCH 07/17] COMP: Add the SlicerExecutionModel_INSTALL_LIB_DIR
+ variable
 
 ---
  SlicerExecutionModelInstallConfig.cmake.in | 5 ++++-

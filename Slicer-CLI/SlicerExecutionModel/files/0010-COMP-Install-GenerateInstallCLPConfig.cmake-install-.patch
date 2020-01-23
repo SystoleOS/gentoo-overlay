@@ -1,7 +1,8 @@
-From c3edb50a821849c4e76e9ce1102aead44ea40ef1 Mon Sep 17 00:00:00 2001
+From 897397ee2f524e03f99f86aa757333e60e2a0a1e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 17 Dec 2019 06:39:12 +0100
-Subject: [PATCH] COMP: Install GenerateInstallCLPConfig.cmake (install tree)
+Subject: [PATCH 10/17] COMP: Install GenerateInstallCLPConfig.cmake (install
+ tree)
 
 ---
  GenerateCLP/CMakeLists.txt | 30 +++++++++++-------------------

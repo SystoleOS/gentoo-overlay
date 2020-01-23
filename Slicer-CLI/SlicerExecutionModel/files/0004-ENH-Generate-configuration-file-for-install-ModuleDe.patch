@@ -1,7 +1,7 @@
-From ffdac9cc5d3fba3ba84782bbfcd3c6963ff570a1 Mon Sep 17 00:00:00 2001
+From 7fbdee7546cbeafaba4ff3e6d5f60f269ef34a54 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 21:50:53 +0200
-Subject: [PATCH] ENH: Generate configuration file for install
+Subject: [PATCH 04/17] ENH: Generate configuration file for install
  ModuleDescriptionParser
 
 ---

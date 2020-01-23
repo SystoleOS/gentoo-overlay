@@ -1,0 +1,26 @@
+From 13c2403498bd25378352b47ce38fb115417c8bde Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 23 Jan 2020 15:26:25 +0100
+Subject: [PATCH 17/17] ENH: Adding path to libITKFactoryRegistration.so CLP
+ properties
+
+---
+ CMake/SEMMacroBuildCLI.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMake/SEMMacroBuildCLI.cmake b/CMake/SEMMacroBuildCLI.cmake
+index c2fffd1..d4be146 100644
+--- a/CMake/SEMMacroBuildCLI.cmake
++++ b/CMake/SEMMacroBuildCLI.cmake
+@@ -158,7 +158,7 @@ macro(SEMMacroBuildCLI)
+ 
+   add_executable(${CLP} ${LOCAL_SEM_CLI_LIBRARY_WRAPPER_CXX})
+   set_target_properties(${CLP} PROPERTIES COMPILE_FLAGS "${cli_executable_compile_flags}")
+-    set_target_properties(${CLP} PROPERTIES INSTALL_RPATH "${LOCAL_SEM_INSTALL_RUNTIME_DESTINATION}")
++    set_target_properties(${CLP} PROPERTIES INSTALL_RPATH "${LOCAL_SEM_INSTALL_RUNTIME_DESTINATION};${Slicer_Base_LIBRARY_DIRS}")
+   set(cli_executable_libraries ${CLP}Lib)
+   if(DEFINED SlicerExecutionModel_EXTRA_EXECUTABLE_TARGET_LIBRARIES)
+     list(APPEND cli_executable_libraries ${SlicerExecutionModel_EXTRA_EXECUTABLE_TARGET_LIBRARIES})
+-- 
+2.24.1
+

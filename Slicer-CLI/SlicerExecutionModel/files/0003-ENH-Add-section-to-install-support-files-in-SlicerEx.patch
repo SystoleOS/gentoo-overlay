@@ -1,7 +1,7 @@
-From 95a4fe80c45d3eac57071c7863d049fde4ee5939 Mon Sep 17 00:00:00 2001
+From a587b1fda0bc1556c7f61f38f96549cf1b7eaf5d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 21:12:05 +0200
-Subject: [PATCH] ENH: Add section to install support files in
+Subject: [PATCH 03/17] ENH: Add section to install support files in
  SlicerExecutionModel
 
 ---
@@ -268,5 +268,5 @@ index 0000000..c81dac1
 +  ${TCLAP_LIBRARY_DIRS}
 +  )
 -- 
-2.21.0
+2.24.1
 

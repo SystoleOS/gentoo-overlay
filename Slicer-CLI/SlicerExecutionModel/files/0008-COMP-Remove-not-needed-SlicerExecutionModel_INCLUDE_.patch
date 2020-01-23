@@ -1,7 +1,8 @@
-From 9b5f11984f46739fd59c110924f1f8065c51d9d6 Mon Sep 17 00:00:00 2001
+From 54be347424aa9c63503f591c6f9bc930f6b83779 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 16 Dec 2019 20:12:09 +0100
-Subject: [PATCH 1/2] COMP: Remove not needed SlicerExecutionModel_INCLUDE_DIRS
+Subject: [PATCH 08/17] COMP: Remove not needed
+ SlicerExecutionModel_INCLUDE_DIRS
 
 ---
  SlicerExecutionModelInstallConfig.cmake.in | 4 ----

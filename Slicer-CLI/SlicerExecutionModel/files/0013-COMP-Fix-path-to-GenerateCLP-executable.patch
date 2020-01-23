@@ -1,7 +1,7 @@
-From 713c1afd1527d5841a61034d80eeb4644377dede Mon Sep 17 00:00:00 2001
+From baf00a06499653a090f3b9611b40a6c308b82817 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 17 Dec 2019 08:05:25 +0100
-Subject: [PATCH] COMP: Fix path to GenerateCLP executable
+Subject: [PATCH 13/17] COMP: Fix path to GenerateCLP executable
 
 ---
  GenerateCLP/CMakeLists.txt                    | 8 +++++---

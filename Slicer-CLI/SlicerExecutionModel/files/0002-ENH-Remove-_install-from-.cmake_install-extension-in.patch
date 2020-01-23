@@ -1,8 +1,8 @@
-From 552bc94790dfb4e8dd52deec3f918ad0180f73f0 Mon Sep 17 00:00:00 2001
+From 94f5a251fb389bc3f9c3cd7f2fc24beca5fe9396 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 21:02:38 +0200
-Subject: [PATCH] ENH: Remove _install from .cmake_install extension in some
- files
+Subject: [PATCH 02/17] ENH: Remove _install from .cmake_install extension in
+ some files
 
 ---
  GenerateCLP/CMakeLists.txt                  | 17 +++++++++++++----
@@ -59,5 +59,5 @@ index 18faa77..6da504a 100644
 +  ${GenerateCLP_BINARY_DIR}/install/GenerateInstallCLPConfig.cmake @ONLY)
  
 -- 
-2.21.0
+2.24.1
 
