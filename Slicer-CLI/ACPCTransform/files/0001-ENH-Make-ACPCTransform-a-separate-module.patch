@@ -1,0 +1,58 @@
+From 7d517d6adb8033bda19814d95fa3e7492aaee124 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Fri, 24 Jan 2020 13:32:00 +0100
+Subject: [PATCH] ENH: Make ACPCTransform a separate module
+
+---
+ Modules/CLI/ACPCTransform/CMakeLists.txt | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/Modules/CLI/ACPCTransform/CMakeLists.txt b/Modules/CLI/ACPCTransform/CMakeLists.txt
+index 4d92554ff..a5c664ebc 100644
+--- a/Modules/CLI/ACPCTransform/CMakeLists.txt
++++ b/Modules/CLI/ACPCTransform/CMakeLists.txt
+@@ -1,3 +1,4 @@
++cmake_minimum_required(VERSION 3.0.2)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME ACPCTransform)
+@@ -10,10 +11,27 @@ set(MODULE_NAME ACPCTransform)
+ find_package(SlicerExecutionModel REQUIRED)
+ include(${SlicerExecutionModel_USE_FILE})
+ 
++#
++# Slicer
++#
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
++#
++# VTK
++#
++find_package(VTK REQUIRED)
++include(${VTK_USE_FILE})
++
++link_directories(${Slicer_Base_LIBRARY_DIRS})
++
+ #-----------------------------------------------------------------------------
+ SEMMacroBuildCLI(
+   NAME ${MODULE_NAME}
+   LOGO_HEADER ${Slicer_SOURCE_DIR}/Resources/NAMICLogo.h
++  INSTALL_RUNTIME_DESTINATION ${Slicer_INSTALL_CLIMODULES_BIN_DIR}
++  INSTALL_LIBRARY_DESTINATION ${Slicer_INSTALL_CLIMODULES_LIB_DIR}
++  INSTALL_ARCHIVE_DESTINATION ${Slicer_INSTALL_CLIMODULES_SHARE_DIR}
+   ADDITIONAL_SRCS
+     vtkPrincipalAxesAlign.cxx
+   TARGET_LIBRARIES ModuleDescriptionParser ${ITK_LIBRARIES} vtkTeem MRMLCore SlicerBaseCLI ${VTK_LIBRARIES}
+@@ -21,6 +39,8 @@ SEMMacroBuildCLI(
+     ${vtkTeem_INCLUDE_DIRS}
+     ${MRMLCore_INCLUDE_DIRS}
+     ${vtkITK_INCLUDE_DIRS}
++    ${Slicer_Base_INCLUDE_DIRS}
++    ${Slicer_Libs_INCLUDE_DIRS}
+     ${SlicerBaseCLI_SOURCE_DIR} ${SlicerBaseCLI_BINARY_DIR}
+   )
+ 
+-- 
+2.24.1
+
