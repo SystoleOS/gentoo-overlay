@@ -1,17 +1,17 @@
-From 3b14d6c7e6e151b89bc75853d55f45ab6c43038a Mon Sep 17 00:00:00 2001
+From 2725a967d6c1b7bd2dc410e88fb3908ec558d817 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
-Date: Wed, 18 Apr 2018 16:32:20 +0200
-Subject: [PATCH] Add files to install
+Date: Tue, 10 Sep 2019 06:50:30 +0200
+Subject: [PATCH 1/2] ENH: Include missing files
 
 ---
  CMakeLists.txt | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 50d9ca9f..6a82a1e9 100644
+index 97b4b983..ba8dcbda 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -244,6 +244,12 @@ foreach(file
+@@ -245,6 +245,12 @@ foreach(file
    CMake/ctkFunctionGetGccVersion.cmake
    CMake/ctkFunctionGetCompilerVisibilityFlags.cmake
    CMake/ctkFunctionCompileSnippets.cmake
@@ -24,7 +24,7 @@ index 50d9ca9f..6a82a1e9 100644
    )
    include(${file})
    install(FILES ${file} DESTINATION ${CTK_INSTALL_CMAKE_DIR} COMPONENT Development)
-@@ -254,6 +260,8 @@ foreach(file
+@@ -255,6 +261,8 @@ foreach(file
    CMake/ctkLinkerAsNeededFlagCheck.cmake
    CMake/ctk_compile_python_scripts.cmake.in
    CMake/CMakeFindDependencyMacro.cmake
@@ -34,5 +34,5 @@ index 50d9ca9f..6a82a1e9 100644
    install(FILES ${file} DESTINATION ${CTK_INSTALL_CMAKE_DIR} COMPONENT Development)
  endforeach()
 -- 
-2.16.1
+2.24.1
 
