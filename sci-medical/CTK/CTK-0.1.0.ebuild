@@ -77,7 +77,7 @@ src_configure(){
 			-DCTK_LIB_Visualization/VTK/Widgets=ON
 			-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
 			-DCTK_SUPERBUILD=OFF
-			-DCTK_INSTALL_LIB_DIR=/lib64
+			-DCTK_INSTALL_LIB_DIR=/usr/lib64
 			# PythonQt wrapping
 			-DCTK_LIB_Scripting/Python/Core:BOOL=ON
 			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL=ON
@@ -88,7 +88,7 @@ src_configure(){
 			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL=ON
 			-DCTK_LIB_Scripting/Python/Widgets:BOOL=ON
 			-DCTK_ENABLE_Python_Wrapping:BOOL=ON
-			-DPYTON_SITE_DIR=$(python_get_sitedir)
+			-DPYTHON_SITE_DIR=$(python_get_sitedir)
 		)
 
 		cmake-utils_src_configure

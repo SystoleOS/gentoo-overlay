@@ -1,14 +1,91 @@
-From f8666c03d62ccbd7c6a8fcafce5b45cd964e46c8 Mon Sep 17 00:00:00 2001
+From 0b384e575824c9f648a327c586dac96f95c2767d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 27 Jan 2020 13:34:36 +0100
 Subject: [PATCH 2/2] ENH: Change installation path for python wrapped files
 
 ---
- Libs/Scripting/Python/Core/Python/CMakeLists.txt | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ Libs/Core/CMakeLists.txt                         |  8 ++++++++
+ Libs/ImageProcessing/ITK/Core/CMakeLists.txt     | 10 +++++++++-
+ Libs/PluginFramework/CMakeLists.txt              |  8 +++++++-
+ Libs/Scripting/Python/Core/Python/CMakeLists.txt |  7 ++++++-
+ Libs/Scripting/Python/Widgets/CMakeLists.txt     | 10 +++++++++-
+ Libs/Visualization/VTK/Core/CMakeLists.txt       |  9 ++++++++-
+ Libs/Visualization/VTK/Widgets/CMakeLists.txt    | 10 +++++++++-
+ Libs/Widgets/CMakeLists.txt                      | 10 +++++++++-
+ 8 files changed, 65 insertions(+), 7 deletions(-)
 
+diff --git a/Libs/Core/CMakeLists.txt b/Libs/Core/CMakeLists.txt
+index 722de099..7de20191 100644
+--- a/Libs/Core/CMakeLists.txt
++++ b/Libs/Core/CMakeLists.txt
+@@ -159,10 +159,18 @@ elseif(WIN32 AND NOT MINGW)
+ endif()
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++
++  if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++  
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+     WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR
+     )
+ endif()
+ 
+diff --git a/Libs/ImageProcessing/ITK/Core/CMakeLists.txt b/Libs/ImageProcessing/ITK/Core/CMakeLists.txt
+index 856b7f44..1345b250 100644
+--- a/Libs/ImageProcessing/ITK/Core/CMakeLists.txt
++++ b/Libs/ImageProcessing/ITK/Core/CMakeLists.txt
+@@ -59,11 +59,19 @@ ctkMacroBuildLib(
+   )
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++
++    if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+-    WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR    
+     )
++  
+ endif()
+ 
+ # Plugins
+diff --git a/Libs/PluginFramework/CMakeLists.txt b/Libs/PluginFramework/CMakeLists.txt
+index 3bea9ed7..fafebbdf 100644
+--- a/Libs/PluginFramework/CMakeLists.txt
++++ b/Libs/PluginFramework/CMakeLists.txt
+@@ -181,10 +181,16 @@ ctkMacroBuildLib(
+   )
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++    if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+-    WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR    
+     )
+ endif()
+ 
 diff --git a/Libs/Scripting/Python/Core/Python/CMakeLists.txt b/Libs/Scripting/Python/Core/Python/CMakeLists.txt
-index e8c33769..2f978e09 100644
+index e8c33769..0f52c18d 100644
 --- a/Libs/Scripting/Python/Core/Python/CMakeLists.txt
 +++ b/Libs/Scripting/Python/Core/Python/CMakeLists.txt
 @@ -38,11 +38,16 @@ list(APPEND KIT_PYTHON_SCRIPTS ${CMAKE_CURRENT_BINARY_DIR}/ctk/__init__.py)
@@ -25,10 +102,108 @@ index e8c33769..2f978e09 100644
    RESOURCES "${KIT_PYTHON_RESOURCES}"
    DESTINATION_DIR ${CTK_BINARY_DIR}/bin/Python
 -  INSTALL_DIR ${CTK_INSTALL_BIN_DIR}
-+  INSTALL_DIR ${PYTON_SITE_DIR}
++  INSTALL_DIR ${PYTHON_SITE_DIR}
 +  NO_INSTALL_SUBDIR
    )
  
+diff --git a/Libs/Scripting/Python/Widgets/CMakeLists.txt b/Libs/Scripting/Python/Widgets/CMakeLists.txt
+index 1fa0a990..3165b8e8 100644
+--- a/Libs/Scripting/Python/Widgets/CMakeLists.txt
++++ b/Libs/Scripting/Python/Widgets/CMakeLists.txt
+@@ -43,11 +43,19 @@ ctkMacroBuildLib(
+   )
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++
++  if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+-    WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR    
+     )
++  
+ endif()
+ 
+ # Plugins
+diff --git a/Libs/Visualization/VTK/Core/CMakeLists.txt b/Libs/Visualization/VTK/Core/CMakeLists.txt
+index 35e07179..7f7e05bc 100644
+--- a/Libs/Visualization/VTK/Core/CMakeLists.txt
++++ b/Libs/Visualization/VTK/Core/CMakeLists.txt
+@@ -178,10 +178,17 @@ ctkMacroBuildLib(
+   )
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++
++  if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+-    WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR    
+     )
+ endif()
+ 
+diff --git a/Libs/Visualization/VTK/Widgets/CMakeLists.txt b/Libs/Visualization/VTK/Widgets/CMakeLists.txt
+index 077162e5..aeb6ebc1 100644
+--- a/Libs/Visualization/VTK/Widgets/CMakeLists.txt
++++ b/Libs/Visualization/VTK/Widgets/CMakeLists.txt
+@@ -263,11 +263,19 @@ if(_has_QVTKOpenGLNativeWidget_h)
+ endif()
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++
++  if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+-    WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR    
+     )
++  
+ endif()
+ 
+ # Plugins
+diff --git a/Libs/Widgets/CMakeLists.txt b/Libs/Widgets/CMakeLists.txt
+index c272782f..61a602fa 100644
+--- a/Libs/Widgets/CMakeLists.txt
++++ b/Libs/Widgets/CMakeLists.txt
+@@ -458,11 +458,19 @@ ctkMacroBuildLib(
+   )
+ 
+ if(CTK_WRAP_PYTHONQT_LIGHT)
++
++  if(NOT DEFINED PYTHON_SITE_DIR)
++    set(PYTHON_SITE_DIR "${CTK_INSTALL_LIB_DIR}")
++  endif()
++
+   ctkMacroBuildLibWrapper(
+     TARGET ${PROJECT_NAME}
+     SRCS ${KIT_SRCS}
+-    WRAPPER_LIBRARY_TYPE ${CTK_LIBRARY_MODE}
++    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${CTK_INSTALL_BIN_DIR}
++    NO_INSTALL_SUBDIR    
+     )
++  
+ endif()
+ 
+ # Plugins
 -- 
 2.24.1
 
