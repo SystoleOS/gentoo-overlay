@@ -2,7 +2,9 @@
 
 EAPI=6
 
-inherit cmake-utils multilib git-r3
+PYTHON_COMPAT=( python3_6 )
+
+inherit cmake-utils multilib python-r1 qmake-utils git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -39,8 +41,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-
-
 	${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
 	${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
@@ -61,43 +61,49 @@ PATCHES=(
 	${FILESDIR}/0018-COMP-Adding-MRMLCLI-include-directories-to-Slicer_Ba.patch
 	${FILESDIR}/0019-COMP-Fix-install-path-for-CLI-modules.patch
 	${FILESDIR}/0020-COMP-Fix-ITKFactoryRegistration-issues-on-install-tr.patch
+	${FILESDIR}/0021-ENH-Enable-Python.patch
 )
 
-Src_prepare() {
+src_prepare() {
 
 	cmake-utils_src_prepare
+	cp ${FILESDIR}/FindPythonQt.cmake ${S}/CMake
 }
 
 src_configure(){
 
-	local mycmakeargs=()
+	configure() {
+		local mycmakeargs=()
 
-	mycmakeargs+=(
-		-DSlicer_SUPERBUILD=OFF
-		-DBUILD_TESTING=OFF
-		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT=OFF
-		-DSlicer_BUILD_CLI_SUPPORT=ON
-		-DSlicer_BUILD_CLI=OFF
-		-DCMAKE_CXX_STANDARD=11
-		-DSlicer_REQUIRED_QT_VERSION=5
-		-DSlicer_BUILD_DICOM_SUPPORT=OFF
-		-DSlicer_BUILD_ITKPython=OFF
-		-DSlicer_BUILD_QTLOADABLEMODULES=OFF
-		-DSlicer_BUILD_QT_DESIGNER_PLUGINS=ON
-		-DSlicer_USE_CTKAPPLAUNCHER=OFF
-		-DSlicer_USE_PYTHONQT=OFF
-		-DSlicer_USE_QtTesting=OFF
-		-DSlicer_USE_SimpleITK=OFF
-		-DSlicer_VTK_RENDERING_BACKEND=OpenGL2
-		-DSlicer_VTK_VERSION_MAJOR=8
-		-DSlicer_INSTALL_DEVELOPMENT=ON
-		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
-		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-		-DSlicer_USE_SYSTEM_LibArchive=ON
-		-DTeem_DIR=/usr/lib64
-		-DjqPlot_DIR=/usr/share/jqPlot
-		-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
+		mycmakeargs+=(
+			-DSlicer_SUPERBUILD=OFF
+			-DBUILD_TESTING=OFF
+			-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT=OFF
+			-DSlicer_BUILD_CLI_SUPPORT=ON
+			-DSlicer_BUILD_CLI=OFF
+			-DCMAKE_CXX_STANDARD=11
+			-DSlicer_REQUIRED_QT_VERSION=5
+			-DSlicer_BUILD_DICOM_SUPPORT=OFF
+			-DSlicer_BUILD_ITKPython=OFF
+			-DSlicer_BUILD_QTLOADABLEMODULES=OFF
+			-DSlicer_BUILD_QT_DESIGNER_PLUGINS=ON
+			-DSlicer_USE_CTKAPPLAUNCHER=OFF
+			-DSlicer_USE_PYTHONQT=ON
+			-DSlicer_USE_QtTesting=OFF
+			-DSlicer_USE_SimpleITK=OFF
+			-DSlicer_VTK_RENDERING_BACKEND=OpenGL2
+			-DSlicer_VTK_VERSION_MAJOR=8
+			-DSlicer_INSTALL_DEVELOPMENT=ON
+			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
+			-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
+			-DSlicer_USE_SYSTEM_LibArchive=ON
+			-DTeem_DIR=/usr/lib64
+			-DjqPlot_DIR=/usr/share/jqPlot
+			-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
+			-DPYTHON_SITE_DIR=$(python_get_sitedir)
+		)
+		cmake-utils_src_configure
+	}
 
-	)
-	cmake-utils_src_configure
+	python_foreach_impl run_in_build_dir configure
 }

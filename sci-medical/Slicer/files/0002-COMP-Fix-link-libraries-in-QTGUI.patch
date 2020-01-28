@@ -1,7 +1,7 @@
-From 060875ce6cb4e2210854e267cb58730fb7fd22c1 Mon Sep 17 00:00:00 2001
+From b034dee6a76ea61b8c43713d81c2c48a21731b3f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 14:56:16 +0200
-Subject: [PATCH 02/20] COMP: Fix link libraries in QTGUI
+Subject: [PATCH 02/21] COMP: Fix link libraries in QTGUI
 
 ---
  Base/QTGUI/CMakeLists.txt | 6 ++++++

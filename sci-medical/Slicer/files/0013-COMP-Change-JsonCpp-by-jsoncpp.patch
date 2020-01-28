@@ -1,7 +1,7 @@
-From 09401c284b6b49d8ea45a581cf07322b9adf081f Mon Sep 17 00:00:00 2001
+From ddcc6f25db328930a3f2912ef7966060433a4cf9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 18 Dec 2019 07:46:25 +0100
-Subject: [PATCH 13/20] COMP: Change JsonCpp by jsoncpp
+Subject: [PATCH 13/21] COMP: Change JsonCpp by jsoncpp
 
 This makes it work with own external packages
 ---
