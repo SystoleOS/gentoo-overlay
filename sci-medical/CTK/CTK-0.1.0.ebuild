@@ -1,6 +1,7 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
 EAPI=6
+
 PYTHON_COMPAT=( python3_6 )
 
 inherit multibuild python-r1 qmake-utils cmake-utils
@@ -21,9 +22,12 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
-IUSE=""
+IUSE="python"
 
-DEPEND="
+RDEPEND="
+	python? ( ${PYTHON_DEPS}
+			  dev-python/PythonQt_CTK
+			  sci-libs/VTK[python] )
 	dev-qt/qtconcurrent
 	dev-qt/qtcore
 	dev-qt/designer
@@ -36,8 +40,9 @@ DEPEND="
 	dev-qt/qtxmlpatterns
 	dev-qt/qtxml
 	sci-libs/ITK
+	python? ( dev-python/PythonQt_CTK )
 "
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Include-missing-files.patch
@@ -79,17 +84,20 @@ src_configure(){
 			-DCTK_SUPERBUILD=OFF
 			-DCTK_INSTALL_LIB_DIR=/usr/lib64
 			# PythonQt wrapping
-			-DCTK_LIB_Scripting/Python/Core:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTCORE:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTGUI:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTUITOOLS:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTNETWORK:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL=ON
-			-DCTK_LIB_Scripting/Python/Widgets:BOOL=ON
-			-DCTK_ENABLE_Python_Wrapping:BOOL=ON
-			-DPYTHON_SITE_DIR=$(python_get_sitedir)
+			-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTCORE:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTGUI:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTUITOOLS:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTNETWORK:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL="$(usex python)"
+			-DCTK_LIB_Scripting/Python/Widgets:BOOL="$(usex python)"
+			-DCTK_ENABLE_Python_Wrapping:BOOL="$(usex python)"
 		)
+
+		if use python;then
+			mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
+		fi
 
 		cmake-utils_src_configure
 	}
