@@ -23,7 +23,7 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
-DEPEND="
+RDEPEND="
 	dev-qt/qtcore
 	dev-qt/qtmultimedia
 	dev-qt/qtopengl
@@ -38,7 +38,9 @@ DEPEND="
 	sci-medical/CTKAppLauncherLib
 "
 
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}"
+
+IUSE="python cli"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
@@ -79,7 +81,7 @@ src_configure(){
 			-DSlicer_SUPERBUILD=OFF
 			-DBUILD_TESTING=OFF
 			-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT=OFF
-			-DSlicer_BUILD_CLI_SUPPORT=ON
+			-DSlicer_BUILD_CLI_SUPPORT="$(usex cli)"
 			-DSlicer_BUILD_CLI=OFF
 			-DCMAKE_CXX_STANDARD=11
 			-DSlicer_REQUIRED_QT_VERSION=5
@@ -88,7 +90,7 @@ src_configure(){
 			-DSlicer_BUILD_QTLOADABLEMODULES=OFF
 			-DSlicer_BUILD_QT_DESIGNER_PLUGINS=ON
 			-DSlicer_USE_CTKAPPLAUNCHER=OFF
-			-DSlicer_USE_PYTHONQT=ON
+			-DSlicer_USE_PYTHONQT="$(usex python)"
 			-DSlicer_USE_QtTesting=OFF
 			-DSlicer_USE_SimpleITK=OFF
 			-DSlicer_VTK_RENDERING_BACKEND=OpenGL2
@@ -96,12 +98,15 @@ src_configure(){
 			-DSlicer_INSTALL_DEVELOPMENT=ON
 			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
 			-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-			-DSlicer_USE_SYSTEM_LibArchive=ON
 			-DTeem_DIR=/usr/lib64
 			-DjqPlot_DIR=/usr/share/jqPlot
 			-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
-			-DPYTHON_SITE_DIR=$(python_get_sitedir)
 		)
+
+		if use python; then
+			mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
+		fi
+
 		cmake-utils_src_configure
 	}
 

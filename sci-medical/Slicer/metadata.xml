@@ -6,6 +6,7 @@
     <name>Rafael Palomar (The Intervention Centre)</name>
   </maintainer>
   <use>
-    <flag name="qtloadablemodules">Build all qt-loadable modules</flag>
+    <flag name="python">Build python support</flag>
+    <flag name="cli">Builld command-line-interface support</flag>
   </use>
 </pkgmetadata>
