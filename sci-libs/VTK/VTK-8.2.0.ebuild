@@ -2,10 +2,12 @@
 
 EAPI=6
 
-inherit cmake-utils
+PYTHON_COMPAT=( python3_6 )
+
+inherit multibuild python-r1 qmake-utils cmake-utils
 
 # Short one-line description of this package.
-DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
+DESCRIPTION="The Visualization Toolkit"
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/VTK/"
@@ -20,9 +22,10 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
-IUSE=""
+IUSE="python"
 
-DEPEND="
+RDEPEND="
+	${PYTHON_DEPS}
 	>dev-cpp/eigen-3.3
 	dev-qt/qtx11extras
 	dev-qt/qtwebengine[widgets]
@@ -30,7 +33,9 @@ DEPEND="
 	dev-qt/designer[webkit]
 "
 
-RDEPEND="${DEPEND}"
+DEPEND="${RDEPEND}"
+
+IUSE="python"
 
 PATCHES=(
 	${FILESDIR}/${PN}-${PV}-0001-ENH-Include-vtkEventData.h-in-module-headers-vtkComm.patch
@@ -57,42 +62,45 @@ src_prepare() {
 
 src_configure(){
 
-	local mycmakeargs=()
+	configure() {
 
-	mycmakeargs+=(
-		-DBUILD_EXAMPLES=OFF
-		-DBUILD_TESTING=OFF
-		-DBUILD_SHARED_LIBS=ON
-		-DVTK_BUILD_ALL_MODULES=OFF
-		-DVTK_ENABLE_KITS=ON
-		-DVTK_Group_Qt=ON
-		-DVTK_LEGACY_REMOVE=OFF
-		-DVTK_QT_VERSION=5
-		-DVTK_RENDERING_BACKEND=OpenGL2
-		-DVTK_WRAP_PYTHON=ON
-		-DModule_vtkGUISupportQt=ON
-		-DModule_vtkGUISupportQtOpenGL=ON
-		-DModule_vtkGUISupportQtSQL=ON
-		-DModule_vtkGUISupportQtWebkit=OFF
-		-DModule_vtkIOExport=ON
-		-DModule_vtkIOGeometry=ON
-		-DModule_vtkIOInfovis=ON
-		-DModule_vtkIOPLY=On
-		-DVTK_Group_StandAlone=ON
-		-DVTK_Group_Rendering=OFF
-		-DModule_vtkImagingMorphological=ON
-		-DModule_vtkImagingStatistics=ON
-		-DModule_vtkImagingStencil=ON
-		-DModule_vtkInteractionImage=ON
-		-DModule_vtkRenderingFreeTypeFontConfig=ON
-		-DModule_vtkRenderingQt=ON
-		-DModule_vtkTestingRendering=ON
-		-DModule_vtkViewsContext2D=ON
-		-DModule_vtkFiltersFlowPaths=ON
-		-DModule_vtkGUISupportQtOpenGL=ON
-		-DModule_SplineDrivenImageSlicer=ON
-		-DVTK_USE_SYSTEM_EIGEN=ON
-	)
+		local mycmakeargs=(
+			-DBUILD_EXAMPLES=OFF
+			-DBUILD_TESTING=OFF
+			-DBUILD_SHARED_LIBS=ON
+			-DVTK_BUILD_ALL_MODULES=OFF
+			-DVTK_ENABLE_KITS=ON
+			-DVTK_Group_Qt=ON
+			-DVTK_LEGACY_REMOVE=OFF
+			-DVTK_QT_VERSION=5
+			-DVTK_RENDERING_BACKEND=OpenGL2
+			-DVTK_WRAP_PYTHON="$(usex python)"
+			-DModule_vtkGUISupportQt=ON
+			-DModule_vtkGUISupportQtOpenGL=ON
+			-DModule_vtkGUISupportQtSQL=ON
+			-DModule_vtkGUISupportQtWebkit=OFF
+			-DModule_vtkIOExport=ON
+			-DModule_vtkIOGeometry=ON
+			-DModule_vtkIOInfovis=ON
+			-DModule_vtkIOPLY=On
+			-DVTK_Group_StandAlone=ON
+			-DVTK_Group_Rendering=OFF
+			-DModule_vtkImagingMorphological=ON
+			-DModule_vtkImagingStatistics=ON
+			-DModule_vtkImagingStencil=ON
+			-DModule_vtkInteractionImage=ON
+			-DModule_vtkRenderingFreeTypeFontConfig=ON
+			-DModule_vtkRenderingQt=ON
+			-DModule_vtkTestingRendering=ON
+			-DModule_vtkViewsContext2D=ON
+			-DModule_vtkFiltersFlowPaths=ON
+			-DModule_vtkGUISupportQtOpenGL=ON
+			-DModule_SplineDrivenImageSlicer=ON
+			-DVTK_USE_SYSTEM_EIGEN=ON
+		)
 
-	cmake-utils_src_configure
+		cmake-utils_src_configure
+	}
+
+	python_foreach_impl run_in_build_dir configure
 }
