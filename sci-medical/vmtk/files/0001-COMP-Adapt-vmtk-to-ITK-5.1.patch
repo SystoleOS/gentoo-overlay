@@ -1,0 +1,195 @@
+From 60fb4f6d79a2dad97bb0f7201d71d83da7a50310 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Fri, 25 Oct 2019 10:24:29 +0200
+Subject: [PATCH 1/2] COMP: Adapt vmtk to ITK-5.1
+
+---
+ ...cDiffusionVesselEnhancementImageFilter.txx | 10 ++--
+ ...stMarchingDirectionalFreezeImageFilter.txx |  2 +-
+ ...kFastMarchingUpwindGradientImageFilter.txx |  2 +-
+ ...oothed3DToVesselnessMeasureImageFilter.txx | 46 +++++++++----------
+ .../vtkvmtkITKArchetypeImageSeriesReader.cxx  |  2 +-
+ 5 files changed, 31 insertions(+), 31 deletions(-)
+
+diff --git a/vtkVmtk/Segmentation/itkAnisotropicDiffusionVesselEnhancementImageFilter.txx b/vtkVmtk/Segmentation/itkAnisotropicDiffusionVesselEnhancementImageFilter.txx
+index 6799e23..70341fa 100644
+--- a/vtkVmtk/Segmentation/itkAnisotropicDiffusionVesselEnhancementImageFilter.txx
++++ b/vtkVmtk/Segmentation/itkAnisotropicDiffusionVesselEnhancementImageFilter.txx
+@@ -111,7 +111,7 @@ AnisotropicDiffusionVesselEnhancementImageFilter<TInputImage, TOutputImage, TVes
+     }
+ 
+   double ratio = 
+-     minSpacing /vcl_pow(2.0, static_cast<double>(ImageDimension) + 1);
++     minSpacing /std::pow(2.0, static_cast<double>(ImageDimension) + 1);
+ 
+   if ( m_TimeStep > ratio ) 
+     {
+@@ -287,8 +287,8 @@ AnisotropicDiffusionVesselEnhancementImageFilter<TInputImage, TOutputImage, TVes
+ 
+     double vesselnessValue = static_cast<double> (iv.Get());
+     
+-    Lambda1 = 1 + ( m_WStrength - 1 ) * vcl_pow ( vesselnessValue, iS ); 
+-    Lambda2 = Lambda3 = 1 + ( m_Epsilon - 1 ) * vcl_pow ( vesselnessValue, iS ); 
++    Lambda1 = 1 + ( m_WStrength - 1 ) * std::pow ( vesselnessValue, iS ); 
++    Lambda2 = Lambda3 = 1 + ( m_Epsilon - 1 ) * std::pow ( vesselnessValue, iS ); 
+ //    Lambda1 = m_Epsilon + (1 - m_Epsilon) * vesselnessValue; 
+ //    Lambda2 = Lambda3 = m_Epsilon; 
+ 
+@@ -366,7 +366,7 @@ AnisotropicDiffusionVesselEnhancementImageFilter<TInputImage, TOutputImage, TVes
+     str->Filter->ThreadedApplyUpdate(str->TimeStep, splitRegion, splitRegionDiffusionImage, threadId);
+     }
+ 
+-  return ITK_THREAD_RETURN_VALUE;
++  return ITK_THREAD_RETURN_DEFAULT_VALUE;
+ }
+ 
+ template <class TInputImage, class TOutputImage, class TVesselnessFilter>
+@@ -443,7 +443,7 @@ AnisotropicDiffusionVesselEnhancementImageFilter<TInputImage, TOutputImage, TVes
+     str->ValidTimeStepList[threadId] = true;
+     }
+ 
+-  return ITK_THREAD_RETURN_VALUE;  
++  return ITK_THREAD_RETURN_DEFAULT_VALUE;  
+ }
+ 
+ template <class TInputImage, class TOutputImage, class TVesselnessFilter>
+diff --git a/vtkVmtk/Segmentation/itkFastMarchingDirectionalFreezeImageFilter.txx b/vtkVmtk/Segmentation/itkFastMarchingDirectionalFreezeImageFilter.txx
+index c2f27a8..286a644 100644
+--- a/vtkVmtk/Segmentation/itkFastMarchingDirectionalFreezeImageFilter.txx
++++ b/vtkVmtk/Segmentation/itkFastMarchingDirectionalFreezeImageFilter.txx
+@@ -213,7 +213,7 @@ FastMarchingDirectionalFreezeImageFilter<TLevelSet,TSpeedImage>
+       }
+ 
+     // Compute upwind finite differences
+-    if (vnl_math_max(dx_backward,-dx_forward) < ZERO)
++    if (std::max(dx_backward,-dx_forward) < ZERO)
+       {
+       gradientPixel[j] = ZERO;
+       }
+diff --git a/vtkVmtk/Segmentation/itkFastMarchingUpwindGradientImageFilter.txx b/vtkVmtk/Segmentation/itkFastMarchingUpwindGradientImageFilter.txx
+index 22d8540..4d9acfa 100644
+--- a/vtkVmtk/Segmentation/itkFastMarchingUpwindGradientImageFilter.txx
++++ b/vtkVmtk/Segmentation/itkFastMarchingUpwindGradientImageFilter.txx
+@@ -305,7 +305,7 @@ FastMarchingUpwindGradientImageFilter<TLevelSet,TSpeedImage>
+       }
+ 
+     // Compute upwind finite differences
+-    if (vnl_math_max(dx_backward,-dx_forward) < ZERO)
++    if (std::max(dx_backward,-dx_forward) < ZERO)
+       {
+       gradientPixel[j] = ZERO;
+       }
+diff --git a/vtkVmtk/Segmentation/itkHessianSmoothed3DToVesselnessMeasureImageFilter.txx b/vtkVmtk/Segmentation/itkHessianSmoothed3DToVesselnessMeasureImageFilter.txx
+index 35ec6b6..c9bd5cb 100644
+--- a/vtkVmtk/Segmentation/itkHessianSmoothed3DToVesselnessMeasureImageFilter.txx
++++ b/vtkVmtk/Segmentation/itkHessianSmoothed3DToVesselnessMeasureImageFilter.txx
+@@ -89,28 +89,28 @@ HessianSmoothed3DToVesselnessMeasureImageFilter< TPixel >
+ 
+ 
+     // Find the smallest eigenvalue
+-    double smallest = vnl_math_abs( eigenValue[0] );
++    double smallest = std::abs( eigenValue[0] );
+     double Lambda1 = eigenValue[0];
+  
+     for ( unsigned int i=1; i <=2; i++ )
+       {
+-      if ( vnl_math_abs( eigenValue[i] ) < smallest )
++      if ( std::abs( eigenValue[i] ) < smallest )
+         {
+         Lambda1 = eigenValue[i];
+-        smallest = vnl_math_abs( eigenValue[i] );
++        smallest = std::abs( eigenValue[i] );
+         }
+       }
+ 
+     // Find the largest eigenvalue
+-    double largest = vnl_math_abs( eigenValue[0] );
++    double largest = std::abs( eigenValue[0] );
+     double Lambda3 = eigenValue[0];
+  
+     for ( unsigned int i=1; i <=2; i++ )
+       {
+-      if (  vnl_math_abs( eigenValue[i] > largest ) )
++      if (  std::abs( eigenValue[i] > largest ) )
+         {
+         Lambda3 = eigenValue[i];
+-        largest = vnl_math_abs( eigenValue[i] );
++        largest = std::abs( eigenValue[i] );
+         }
+       }
+ 
+@@ -128,41 +128,41 @@ HessianSmoothed3DToVesselnessMeasureImageFilter< TPixel >
+       }
+ 
+     if ( Lambda2 >= 0.0 ||  Lambda3 >= 0.0 || 
+-         vnl_math_abs( Lambda2) < EPSILON  || 
+-         vnl_math_abs( Lambda3 ) < EPSILON )
++         std::abs( Lambda2) < EPSILON  || 
++         std::abs( Lambda3 ) < EPSILON )
+       {
+       oit.Set( NumericTraits< OutputPixelType >::Zero );
+       } 
+     else
+       {
+    
+-      double Lambda1Abs = vnl_math_abs( Lambda1 );
+-      double Lambda2Abs = vnl_math_abs( Lambda2 );
+-      double Lambda3Abs = vnl_math_abs( Lambda3 );
++      double Lambda1Abs = std::abs( Lambda1 );
++      double Lambda2Abs = std::abs( Lambda2 );
++      double Lambda3Abs = std::abs( Lambda3 );
+ 
+-      double Lambda1Sqr = vnl_math_sqr( Lambda1 );
+-      double Lambda2Sqr = vnl_math_sqr( Lambda2 );
+-      double Lambda3Sqr = vnl_math_sqr( Lambda3 );
++      double Lambda1Sqr = std::sqrt( Lambda1 );
++      double Lambda2Sqr = std::sqrt( Lambda2 );
++      double Lambda3Sqr = std::sqrt( Lambda3 );
+ 
+-      double AlphaSqr = vnl_math_sqr( m_Alpha );
+-      double BetaSqr = vnl_math_sqr( m_Beta );
+-      double GammaSqr = vnl_math_sqr( m_Gamma );
++      double AlphaSqr = std::sqrt( m_Alpha );
++      double BetaSqr = std::sqrt( m_Beta );
++      double GammaSqr = std::sqrt( m_Gamma );
+ 
+       double A  = Lambda2Abs / Lambda3Abs; 
+-      double B  = Lambda1Abs / vcl_sqrt ( vnl_math_abs( Lambda2 * Lambda3 )); 
+-      double S  = vcl_sqrt( Lambda1Sqr + Lambda2Sqr + Lambda3Sqr );
++      double B  = Lambda1Abs / std::sqrt ( std::abs( Lambda2 * Lambda3 )); 
++      double S  = std::sqrt( Lambda1Sqr + Lambda2Sqr + Lambda3Sqr );
+ 
+       double vesMeasure_1  = 
+-         ( 1 - vcl_exp(-1.0*(( vnl_math_sqr(A) ) / ( 2.0 * ( AlphaSqr)))));
++         ( 1 - std::exp(-1.0*(( std::sqrt(A) ) / ( 2.0 * ( AlphaSqr)))));
+ 
+       double vesMeasure_2  = 
+-         vcl_exp ( -1.0 * ((vnl_math_sqr( B )) /  ( 2.0 * (BetaSqr))));
++         std::exp ( -1.0 * ((std::sqrt( B )) /  ( 2.0 * (BetaSqr))));
+ 
+       double vesMeasure_3  = 
+-         ( 1 - vcl_exp( -1.0 * (( vnl_math_sqr( S )) / ( 2.0 * ( GammaSqr)))));
++         ( 1 - std::exp( -1.0 * (( std::sqrt( S )) / ( 2.0 * ( GammaSqr)))));
+ 
+       double vesMeasure_4  = 
+-         vcl_exp ( -1.0 * ( 2.0 * vnl_math_sqr( m_C )) / 
++         std::exp ( -1.0 * ( 2.0 * std::sqrt( m_C )) / 
+                                    ( Lambda2Abs * (Lambda3Sqr))); 
+ 
+       double vesselnessMeasure = 
+diff --git a/vtkVmtk/Utilities/vtkvmtkITK/vtkvmtkITKArchetypeImageSeriesReader.cxx b/vtkVmtk/Utilities/vtkvmtkITK/vtkvmtkITKArchetypeImageSeriesReader.cxx
+index a884135..fc134fd 100644
+--- a/vtkVmtk/Utilities/vtkvmtkITK/vtkvmtkITKArchetypeImageSeriesReader.cxx
++++ b/vtkVmtk/Utilities/vtkvmtkITK/vtkvmtkITKArchetypeImageSeriesReader.cxx
+@@ -406,7 +406,7 @@ int vtkvmtkITKArchetypeImageSeriesReader::RequestInformation(
+   double origin[3];
+ 
+ 
+-  itk::ImageIOBase::Pointer imageIO = NULL;
++  itk::ImageIOBase::Pointer imageIO = nullptr;
+ 
+   try
+     {
+-- 
+2.24.1
+
