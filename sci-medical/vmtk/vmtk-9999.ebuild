@@ -2,7 +2,9 @@
 
 EAPI=6
 
-inherit cmake-utils multilib git-r3
+PYTHON_COMPAT=( python3_6 )
+
+inherit cmake-utils multilib python-r1 qmake-utils git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -52,8 +54,23 @@ src_configure(){
 		-DVMTK_SCRIPTS_ENABLED=ON
 		-DVMTK_MINIMAL_INSTALL=ON
 		-DVTK_VMTK_WRAP_PYTHON=ON
-		-DVTK_VMTK_CONTRIB=ONo
+		-DVTK_VMTK_CONTRIB=ON
 	)
 
 	cmake-utils_src_configure
+}
+
+pkg_postinst() {
+
+	vmtk_python_files=$(find /usr/lib64 -name "vmtk*.py")
+
+	pushd /usr/bin
+
+	for i in "${vmtk_python_files}"
+	do
+		chmod +x ${i}
+		ln -sf ${i} /usr/bin/$(basename ${i}) || die
+	done
+
+	popd
 }
