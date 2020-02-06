@@ -24,7 +24,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 RDEPEND="
-	${PYTHON_DEPS}
+	python? ( ${PYTHON_DEPS}
+			  sci-medical/CTK[python] )
+	!python? ( sci-medical/CTK )
 	dev-qt/qtcore
 	dev-qt/qtmultimedia
 	dev-qt/qtopengl
@@ -35,8 +37,10 @@ RDEPEND="
 	dev-qt/designer
 	dev-libs/rapidjson
 	dev-libs/jsoncpp
-	sci-medical/CTK[${PYTHON_USEDEP}]
 	sci-medical/CTKAppLauncherLib
+	sci-medical/teem
+	dev-python/PythonQt_CTK
+	sci-libs/jqPlot
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 "
 
