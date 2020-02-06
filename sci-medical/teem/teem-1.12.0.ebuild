@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -21,9 +21,11 @@ DEPEND="sys-libs/zlib"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}"/001-${P}-Fix_install_when_TEEM_LIB_INSTALL_DIR_is_set.patch
-	"${FILESDIR}"/002-${P}-Remove_creation_of_TeemLibraryDepends_cmake.patch
-	)
+
+	${FILESDIR}/0002-ENH-Remove_creation_of_TeemLibraryDepends_cmake.patch
+	${FILESDIR}/0001-ENH-Fix_install_when_TEEM_LIB_INSTALL_DIR_is_set.patch
+	${FILESDIR}/test.patch
+)
 
 
 src_unpack(){
@@ -40,7 +42,7 @@ src_configure() {
 	mycmakeargs+=(
 		-DBUILD_SHARED_LIBS=ON
 		-DBUILD_TESTING=OFF
-		-DTEEM_LIB_INSTALL_DIR=$(get_libdir)
+		-DTeem_LIB_INSTALL_DIR=$(get_libdir)
 	)
 
 	cmake-utils_src_configure

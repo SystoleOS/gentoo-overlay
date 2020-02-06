@@ -1,0 +1,76 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 533a9b60..519b2cd6 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -404,7 +404,7 @@ add_library(teem ${Teem_SOURCES})
+ # macs to set BUILD_WITH_INSTALL_RPATH OFF and set INSTALL_NAME_DIR.
+ # I belive INSTALL_NAME_DIR will be ignored on linux.
+ 
+-if(NOT TEEM_LIB_INSTALL_DIR)
++if(NOT Teem_LIB_INSTALL_DIR)
+ set_target_properties(teem PROPERTIES
+   BUILD_WITH_INSTALL_RPATH OFF
+   INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/lib
+@@ -415,8 +415,8 @@ set_target_properties(teem PROPERTIES
+ else()
+ set_target_properties(teem PROPERTIES
+   BUILD_WITH_INSTALL_RPATH OFF
+-  INSTALL_RPATH ${TEEM_LIB_INSTALL_DIR}
+-  INSTALL_NAME_DIR ${TEEM_LIB_INSTALL_DIR}
++  INSTALL_RPATH ${Teem_LIB_INSTALL_DIR}
++  INSTALL_NAME_DIR ${Teem_LIB_INSTALL_DIR}
+   SOVERSION 1
+   VERSION ${Teem_VERSION_STRING}
+   )
+@@ -455,7 +455,7 @@ else()
+   set(EXTRA_INSTALL_PATH "")
+ endif()
+ 
+-if(NOT TEEM_LIB_INSTALL_DIR)
++if(NOT Teem_LIB_INSTALL_DIR)
+ install(TARGETS teem
+   RUNTIME DESTINATION bin COMPONENT RuntimeLibraries
+   LIBRARY DESTINATION lib${EXTRA_INSTALL_PATH} COMPONENT RuntimeLibraries
+@@ -464,8 +464,8 @@ install(TARGETS teem
+ else()
+ install(TARGETS teem
+   RUNTIME DESTINATION bin COMPONENT RuntimeLibraries
+-  LIBRARY DESTINATION ${TEEM_LIB_INSTALL_DIR}${EXTRA_INSTALL_PATH} COMPONENT RuntimeLibraries
+-  ARCHIVE DESTINATION ${TEEM_LIB_INSTALL_DIR}{EXTRA_INSTALL_PATH} COMPONENT Development
++  LIBRARY DESTINATION ${Teem_LIB_INSTALL_DIR}${EXTRA_INSTALL_PATH} COMPONENT RuntimeLibraries
++  ARCHIVE DESTINATION ${Teem_LIB_INSTALL_DIR}{EXTRA_INSTALL_PATH} COMPONENT Development
+   )
+ endif()
+ 
+@@ -556,10 +556,10 @@ else()
+   set(Teem_CV_CONFIG_TO_ROOT "..")
+ endif()
+ 
+-set(Teem_CV_LIBRARY_DEPENDS_FILE "\${Teem_ROOT_DIR}/lib${EXTRA_INSTALL_PATH}/TeemLibraryDepends.cmake")
++set(Teem_CV_LIBRARY_DEPENDS_FILE "\${Teem_ROOT_DIR}/${Teem_LIB_INSTALL_DIR}/${EXTRA_INSTALL_PATH}/TeemLibraryDepends.cmake")
+ set(Teem_CV_EXECUTABLE_DIRS "\${Teem_ROOT_DIR}/bin")
+-set(Teem_CV_LIBRARY_DIRS "\${Teem_ROOT_DIR}/lib${EXTRA_INSTALL_PATH}")
+-set(Teem_CV_USE_FILE "\${Teem_ROOT_DIR}/lib${EXTRA_INSTALL_PATH}/TeemUse.cmake")
++set(Teem_CV_LIBRARY_DIRS "\${Teem_ROOT_DIR}/${Teem_LIB_INSTALL_DIR}/${EXTRA_INSTALL_PATH}")
++set(Teem_CV_USE_FILE "\${Teem_ROOT_DIR}/${Teem_LIB_INSTALL_DIR}/${EXTRA_INSTALL_PATH}/TeemUse.cmake")
+ set(Teem_CV_INCLUDE_DIRS "\${Teem_ROOT_DIR}/include")
+ set(Teem_CV_BUILT_LIBRARIES teem) # The libraries built by teem.  Currently we only build the mega library.
+ 
+@@ -571,7 +571,7 @@ install(FILES ${Teem_INSTALLED_HEADER_FILES}
+   COMPONENT Development
+   )
+ 
+-if(NOT TEEM_LIB_INSTALL_DIR)
++if(NOT Teem_LIB_INSTALL_DIR)
+ install(FILES
+   "${Teem_BINARY_DIR}/CMake/TeemConfig.cmake"
+   "${Teem_SOURCE_DIR}/CMake/TeemUse.cmake"
+@@ -586,7 +586,7 @@ install(FILES
+   "${Teem_SOURCE_DIR}/CMake/TeemUse.cmake"
+   "${Teem_BINARY_DIR}/TeemBuildSettings.cmake"
+   "${Teem_BINARY_DIR}/TeemLibraryDepends.cmake"
+-  DESTINATION ${TEEM_LIB_INSTALL_DIR}${EXTRA_INSTALL_PATH}
++  DESTINATION ${Teem_LIB_INSTALL_DIR}${EXTRA_INSTALL_PATH}
+   COMPONENT Development
+   )
+ endif()

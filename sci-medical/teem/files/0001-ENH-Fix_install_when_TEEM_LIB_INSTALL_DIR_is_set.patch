@@ -1,7 +1,7 @@
-From 539360bf98836a6773d7db106dddaa69d361fda3 Mon Sep 17 00:00:00 2001
+From cb7ac73012b0df906beec97c5b881bec71400e97 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 10 Sep 2019 08:13:42 +0200
-Subject: [PATCH] 001-teem-1.12.0-Fix_install_when_TEEM_LIB_INSTALL_DIR_is_set
+Subject: [PATCH 1/2] ENH: Fix_install_when_TEEM_LIB_INSTALL_DIR_is_set
 
 ---
  CMakeLists.txt | 30 ++++++++++++++++++++++++++++++
@@ -79,5 +79,5 @@ index 8185cc90..533a9b60 100644
 +  )
 +endif()
 -- 
-2.21.0
+2.24.1
 
