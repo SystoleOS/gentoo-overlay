@@ -30,8 +30,9 @@ DEPEND="sci-medical/GDCM
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/001-${PN}-${PV}-Change_itkMGHImageIO_repo_to_local.patch
-	${FILESDIR}/002-${PN}-${PV}-Delete_eigen_library_from_targets.patch
+	${FILESDIR}/0001-ENH-Add-MGHIO-module-as-local.patch
+	${FILESDIR}/0002-COMP-Remove-ITKEigen3.patch
+	${FILESDIR}/0003-ENH-Add-ITKThickness3D-as-local-module.patch
 	)
 
 src_unpack() {
@@ -45,6 +46,12 @@ src_unpack() {
 	# Inject ITKImageIO remote module
 	unpack ${FILESDIR}/itkMGHImageIO-master.zip
 	pushd ${WORKDIR}/itkMGHImageIO || die
+	git init
+	popd || die
+
+	# Inject ITKThickness3D remote module
+	unpack ${FILESDIR}/ITKThickness3D.zip
+	pushd ${WORKDIR}/ITKThickness3D || die
 	git init
 	popd || die
 }
@@ -68,6 +75,7 @@ src_configure(){
 		-DModule_ITKVtkGlue=ON
 		-DModule_ITKDeprecated=ON
 		-DModule_MGHIO=ON
+		-DModule_Thickness3D=ON
 		-DBUILD_EXAMPLES=OFF
 		-DBUILD_TESTING=OFF
 		-DITK_USE_SYSTEM_JPEG=ON
