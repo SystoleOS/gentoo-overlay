@@ -24,10 +24,12 @@ KEYWORDS="~amd64"
 
 IUSE="python"
 
+
 RDEPEND="
 	python? ( ${PYTHON_DEPS}
 			  dev-python/PythonQt_CTK
 			  sci-libs/VTK[python] )
+	!python? ( sci-libs/VTK )
 	dev-qt/qtconcurrent
 	dev-qt/qtcore
 	dev-qt/designer
@@ -40,7 +42,6 @@ RDEPEND="
 	dev-qt/qtxmlpatterns
 	dev-qt/qtxml
 	sci-libs/ITK
-	python? ( dev-python/PythonQt_CTK )
 "
 DEPEND="${RDEPEND}"
 
