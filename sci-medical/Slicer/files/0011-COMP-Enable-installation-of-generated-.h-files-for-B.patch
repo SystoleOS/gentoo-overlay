@@ -1,7 +1,7 @@
 From 2d1422741ef03b53b79a95d9aea797b79db2393a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 12:22:52 +0200
-Subject: [PATCH 11/21] COMP: Enable installation of generated .h files for
+Subject: [PATCH 11/23] COMP: Enable installation of generated .h files for
  BaseQTLibraries
 
 Some SlicerBaseQT libraries generate ui_*.h files. With this, these

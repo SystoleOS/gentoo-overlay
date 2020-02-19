@@ -1,31 +1,30 @@
-From 39bf35cb17bc7b9943ace01840bd8a2127293bce Mon Sep 17 00:00:00 2001
+From 92ad74405f801350998934240cd846dab20fc950 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 28 Jan 2020 13:14:57 +0100
-Subject: [PATCH 21/21] ENH: Enable Python
+Subject: [PATCH 21/23] ENH: Enable Python
 
 ---
- Base/Logic/CMakeLists.txt                           | 7 ++++++-
+ Base/Logic/CMakeLists.txt                           | 4 ++++
  Base/Python/CMakeLists.txt                          | 7 ++++++-
- Base/QTCLI/CMakeLists.txt                           | 6 +++++-
+ Base/QTCLI/CMakeLists.txt                           | 4 ++++
  Base/QTCore/CMakeLists.txt                          | 5 ++++-
  CMake/LastConfigureStep/CMakeLists.txt              | 4 +++-
  CMake/SlicerBlockInstallExternalPythonModules.cmake | 6 +++++-
  CMake/SlicerMacroBuildBaseQtLibrary.cmake           | 7 ++++++-
  CMake/SlicerMacroBuildScriptedModule.cmake          | 6 +++++-
  CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake   | 6 +++++-
- Libs/MRML/CLI/CMakeLists.txt                        | 6 +++++-
- Libs/MRML/Core/CMakeLists.txt                       | 7 ++++++-
+ Libs/MRML/CLI/CMakeLists.txt                        | 4 ++++
+ Libs/MRML/Core/CMakeLists.txt                       | 5 +++++
  Libs/MRML/Widgets/CMakeLists.txt                    | 8 +++++++-
- Libs/vtkAddon/CMakeLists.txt                        | 6 +++++-
- Libs/vtkSegmentationCore/CMakeLists.txt             | 6 +++++-
- Libs/vtkTeem/CMakeLists.txt                         | 7 ++++++-
- 15 files changed, 79 insertions(+), 15 deletions(-)
+ Libs/vtkSegmentationCore/CMakeLists.txt             | 4 ++++
+ Libs/vtkTeem/CMakeLists.txt                         | 5 +++++
+ 14 files changed, 67 insertions(+), 8 deletions(-)
 
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
-index 2a81b9a71..884f17374 100644
+index 2a81b9a71..827dc93bf 100644
 --- a/Base/Logic/CMakeLists.txt
 +++ b/Base/Logic/CMakeLists.txt
-@@ -196,13 +196,18 @@ install(TARGETS ${lib_name}
+@@ -196,6 +196,10 @@ install(TARGETS ${lib_name}
  if(VTK_WRAP_PYTHON)
    include(vtkMacroKitPythonWrap)
  
@@ -36,15 +35,6 @@ index 2a81b9a71..884f17374 100644
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${SlicerBaseLogic_SRCS}
-     KIT_PYTHON_LIBRARIES MRMLLogicPythonD
-     KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     )
-+  
-   # Export target
-   set_property(GLOBAL APPEND PROPERTY Slicer_TARGETS ${lib_name}Python ${lib_name}PythonD)
- 
 diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
 index 9331ad9c9..dc096066a 100644
 --- a/Base/Python/CMakeLists.txt
@@ -69,10 +59,10 @@ index 9331ad9c9..dc096066a 100644
  
  #-----------------------------------------------------------------------------
 diff --git a/Base/QTCLI/CMakeLists.txt b/Base/QTCLI/CMakeLists.txt
-index ec60bb195..b058a69cb 100644
+index ec60bb195..8fb538f4f 100644
 --- a/Base/QTCLI/CMakeLists.txt
 +++ b/Base/QTCLI/CMakeLists.txt
-@@ -127,11 +127,15 @@ endif()
+@@ -127,6 +127,10 @@ endif()
  if(VTK_WRAP_PYTHON)
    include(vtkMacroKitPythonWrap)
  
@@ -83,12 +73,6 @@ index ec60bb195..b058a69cb 100644
    vtkMacroKitPythonWrap(
      KIT_NAME ${PROJECT_NAME}
      KIT_SRCS ${KIT_VTK_SRCS}
-     KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     KIT_PYTHON_LIBRARIES SlicerBaseLogicPythonD
-     )
-   set_property(GLOBAL APPEND PROPERTY Slicer_TARGETS ${PROJECT_NAME}Python ${PROJECT_NAME}PythonD)
 diff --git a/Base/QTCore/CMakeLists.txt b/Base/QTCore/CMakeLists.txt
 index 4930d9056..aaa0e3c1b 100644
 --- a/Base/QTCore/CMakeLists.txt
@@ -199,10 +183,10 @@ index fdd967794..c1c6fa5e9 100644
      )
  
 diff --git a/Libs/MRML/CLI/CMakeLists.txt b/Libs/MRML/CLI/CMakeLists.txt
-index b9f641518..7881ca46d 100644
+index b9f641518..4be910f47 100644
 --- a/Libs/MRML/CLI/CMakeLists.txt
 +++ b/Libs/MRML/CLI/CMakeLists.txt
-@@ -135,12 +135,16 @@ install(TARGETS ${lib_name}
+@@ -135,6 +135,10 @@ install(TARGETS ${lib_name}
  if(VTK_WRAP_PYTHON)
    include(vtkMacroKitPythonWrap)
  
@@ -213,18 +197,11 @@ index b9f641518..7881ca46d 100644
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${MRMLCLI_SRCS}
-     KIT_PYTHON_LIBRARIES MRMLCorePythonD
-     KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     )
-   # Export target
-   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
-index 7a3e6b301..7b3a3d9ec 100644
+index 7a3e6b301..d8cfb8dc9 100644
 --- a/Libs/MRML/Core/CMakeLists.txt
 +++ b/Libs/MRML/Core/CMakeLists.txt
-@@ -320,11 +320,16 @@ install(TARGETS ${lib_name}
+@@ -320,6 +320,11 @@ install(TARGETS ${lib_name}
  # Python Wrapping
  # --------------------------------------------------------------------------
  if(VTK_WRAP_PYTHON)
@@ -236,12 +213,6 @@ index 7a3e6b301..7b3a3d9ec 100644
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${MRMLCore_SRCS}
-     KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     )
-   # Export target
-   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
 index d27ffc497..6a4c2eaea 100644
 --- a/Libs/MRML/Widgets/CMakeLists.txt
@@ -267,32 +238,11 @@ index d27ffc497..6a4c2eaea 100644
    # Folder
    if(NOT "${${PROJECT_NAME}_FOLDER}" STREQUAL "")
      set_target_properties(${lib_name}PythonQt PROPERTIES FOLDER ${${PROJECT_NAME}_FOLDER})
-diff --git a/Libs/vtkAddon/CMakeLists.txt b/Libs/vtkAddon/CMakeLists.txt
-index aaa36a28e..5972bdd61 100644
---- a/Libs/vtkAddon/CMakeLists.txt
-+++ b/Libs/vtkAddon/CMakeLists.txt
-@@ -174,11 +174,15 @@ install(TARGETS ${lib_name}
- if(VTK_WRAP_PYTHON)
-   include(vtkMacroKitPythonWrap)
- 
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${${PROJECT_NAME}_INSTALL_LIB_DIR}")
-+  endif()
-+
-   vtkMacroKitPythonWrap(
-     KIT_NAME ${lib_name}
-     KIT_SRCS ${vtkAddon_SRCS}
-     KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     )
-   # Export target
-   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/vtkSegmentationCore/CMakeLists.txt b/Libs/vtkSegmentationCore/CMakeLists.txt
-index 46ecf37d3..d59aba8db 100644
+index 46ecf37d3..fc5e96cde 100644
 --- a/Libs/vtkSegmentationCore/CMakeLists.txt
 +++ b/Libs/vtkSegmentationCore/CMakeLists.txt
-@@ -153,11 +153,15 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
+@@ -153,6 +153,10 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
  
    include(vtkMacroKitPythonWrap)
  
@@ -303,17 +253,11 @@ index 46ecf37d3..d59aba8db 100644
    vtkMacroKitPythonWrap(
      KIT_NAME ${PROJECT_NAME}
      KIT_SRCS ${vtkSegmentationCore_SRCS}
-     KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     )
- 
-   # Export target
 diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
-index 5106e7e4a..3767c75e1 100644
+index 5106e7e4a..0ce0b9fea 100644
 --- a/Libs/vtkTeem/CMakeLists.txt
 +++ b/Libs/vtkTeem/CMakeLists.txt
-@@ -146,13 +146,18 @@ install(TARGETS ${lib_name}
+@@ -146,8 +146,13 @@ install(TARGETS ${lib_name}
  # Python Wrapping
  # --------------------------------------------------------------------------
  if(VTK_WRAP_PYTHON)
@@ -327,12 +271,6 @@ index 5106e7e4a..3767c75e1 100644
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${vtkTeem_SRCS}
-     KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     )
-   # Export target
-   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 -- 
 2.24.1
 

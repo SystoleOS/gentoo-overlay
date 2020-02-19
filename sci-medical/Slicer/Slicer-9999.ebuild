@@ -4,7 +4,7 @@ EAPI=6
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils multilib python-r1 qmake-utils git-r3
+inherit cmake-utils python-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -70,6 +70,8 @@ PATCHES=(
 	${FILESDIR}/0019-COMP-Fix-install-path-for-CLI-modules.patch
 	${FILESDIR}/0020-COMP-Fix-ITKFactoryRegistration-issues-on-install-tr.patch
 	${FILESDIR}/0021-ENH-Enable-Python.patch
+	${FILESDIR}/0022-ENH-Enable-external-definition-of-directories.patch
+	${FILESDIR}/0023-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
 )
 
 src_prepare() {
@@ -104,9 +106,12 @@ src_configure(){
 			-DSlicer_INSTALL_DEVELOPMENT=ON
 			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
 			-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-			-DTeem_DIR=/usr/lib64
+			-DTeem_DIR="/usr/lib64"
+			-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
 			-DjqPlot_DIR=/usr/share/jqPlot
 			-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
+			-DSlicer_VTK_WRAP_HIERARCHY_DIR=${BUILD_DIR}
+			-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
 		)
 
 		if use python; then
@@ -117,4 +122,19 @@ src_configure(){
 	}
 
 	python_foreach_impl run_in_build_dir configure
+}
+
+pkg_postinst(){
+
+	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*PythonD.so")
+	for i in ${pythond_libraries}
+	do
+		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
+
+	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*Python.so")
+	for i in ${python_libraries}
+	do
+		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
+	done
 }
