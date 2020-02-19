@@ -55,6 +55,19 @@ src_configure(){
 		-D${PN}_DEVELOPMENT_INSTALL=ON
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
+		-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
+		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
 	)
 	cmake-utils_src_configure
+}
+
+pkg_postinst(){
+
+	module_libraries=$(find /usr/lib64/Slicer-4.11/qt-loadable-modules -name "*${PN}*.so")
+	for i in ${module_libraries}
+	do
+		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
+
 }
