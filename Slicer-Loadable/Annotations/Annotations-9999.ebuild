@@ -32,6 +32,7 @@ PATCHES=(
 	${FILESDIR}/0001-COMP-Make-the-module-a-separate-project.patch
 	${FILESDIR}/0002-COMP-Add-PythonQt-include-directory.patch
 	${FILESDIR}/0003-COMP-Fix-compilation-error-on-wrapping.patch
+	${FILESDIR}/0004-COMP-Change-destination-dir-for-SubjectHierarchy-in-.patch
 )
 
 src_prepare() {
@@ -62,7 +63,7 @@ src_configure(){
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 		-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=${WORKDIR}/qt-scripted-modules
+		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
@@ -89,10 +90,9 @@ pkg_postinst(){
 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
 	done
 
-	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Plugin.py")
-	for i in ${python_libraries}
+	plugin_python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Plugin.py")
+	for i in ${plugin_python_libraries}
 	do
 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
 	done
-
 }
