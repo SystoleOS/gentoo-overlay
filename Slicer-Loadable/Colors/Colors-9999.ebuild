@@ -58,6 +58,7 @@ src_configure(){
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 		-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
+		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
 	cmake-utils_src_configure
 }
