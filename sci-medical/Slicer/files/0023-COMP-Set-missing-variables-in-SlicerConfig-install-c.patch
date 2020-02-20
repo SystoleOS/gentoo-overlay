@@ -1,7 +1,7 @@
 From 2ff8e1514ca84fc7747a61079cbc77744d0b1980 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 19 Feb 2020 09:39:24 +0100
-Subject: [PATCH 23/23] COMP: Set missing variables in SlicerConfig (install
+Subject: [PATCH 23/24] COMP: Set missing variables in SlicerConfig (install
  configuration)
 
 ---

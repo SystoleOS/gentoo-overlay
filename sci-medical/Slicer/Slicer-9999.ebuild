@@ -72,6 +72,7 @@ PATCHES=(
 	${FILESDIR}/0021-ENH-Enable-Python.patch
 	${FILESDIR}/0022-ENH-Enable-external-definition-of-directories.patch
 	${FILESDIR}/0023-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
+	${FILESDIR}/0024-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
 )
 
 src_prepare() {
@@ -137,4 +138,5 @@ pkg_postinst(){
 	do
 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
 	done
+
 }
