@@ -30,6 +30,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Making-the-module-a-separate-project.patch
+	${FILESDIR}/0002-COMP-Change-destination-directory-SubjectHierarchy-p.patch
 )
 
 src_prepare() {
@@ -58,8 +59,9 @@ src_configure(){
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 		-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=${WORKDIR}/qt-scripted-modules
+		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
+		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
 	cmake-utils_src_configure
 }
@@ -82,5 +84,11 @@ pkg_postinst(){
 	for i in ${module_libraries}
 	do
 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
+
+	plugin_python_libraries=$(find /usr/lib64/Slicer-4.11 -type d -name "*${PN}*Plugins")
+	for i in ${plugin_python_libraries}
+	do
+		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
 	done
 }
