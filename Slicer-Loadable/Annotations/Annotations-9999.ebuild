@@ -30,6 +30,8 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-the-module-a-separate-project.patch
+	${FILESDIR}/0002-COMP-Add-PythonQt-include-directory.patch
+	${FILESDIR}/0003-COMP-Fix-compilation-error-on-wrapping.patch
 )
 
 src_prepare() {
@@ -57,6 +59,40 @@ src_configure(){
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL=ON
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
+		-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
+		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
+		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=${WORKDIR}/qt-scripted-modules
+		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
+		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
 	cmake-utils_src_configure
+}
+
+pkg_postinst(){
+
+	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*PythonD.so")
+	for i in ${pythond_libraries}
+	do
+		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
+
+	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Python*.so" ! -name "*${PN}*PythonD.so")
+	for i in ${python_libraries}
+	do
+		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
+	done
+
+	module_libraries=$(find /usr/lib64/Slicer-4.11/qt-loadable-modules -name "*${PN}*.so" ! -name "*${PN}*Python*")
+	for i in ${module_libraries}
+	do
+		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
+
+	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Plugin.py")
+	for i in ${python_libraries}
+	do
+		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
+	done
+
 }
