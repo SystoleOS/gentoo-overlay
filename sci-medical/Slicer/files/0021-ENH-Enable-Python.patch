@@ -1,7 +1,7 @@
-From 92ad74405f801350998934240cd846dab20fc950 Mon Sep 17 00:00:00 2001
+From 34c53587b00ce88e28ef056f4bb5af9ec7fe5d6c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 28 Jan 2020 13:14:57 +0100
-Subject: [PATCH 21/24] ENH: Enable Python
+Subject: [PATCH 21/25] ENH: Enable Python
 
 ---
  Base/Logic/CMakeLists.txt                           | 4 ++++
@@ -239,10 +239,10 @@ index d27ffc497..6a4c2eaea 100644
    if(NOT "${${PROJECT_NAME}_FOLDER}" STREQUAL "")
      set_target_properties(${lib_name}PythonQt PROPERTIES FOLDER ${${PROJECT_NAME}_FOLDER})
 diff --git a/Libs/vtkSegmentationCore/CMakeLists.txt b/Libs/vtkSegmentationCore/CMakeLists.txt
-index 46ecf37d3..fc5e96cde 100644
+index e6cb0439e..d3fc30b7d 100644
 --- a/Libs/vtkSegmentationCore/CMakeLists.txt
 +++ b/Libs/vtkSegmentationCore/CMakeLists.txt
-@@ -153,6 +153,10 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
+@@ -155,6 +155,10 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
  
    include(vtkMacroKitPythonWrap)
  

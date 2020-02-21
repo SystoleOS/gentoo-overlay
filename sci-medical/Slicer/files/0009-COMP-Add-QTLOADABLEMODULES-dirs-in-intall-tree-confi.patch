@@ -1,7 +1,7 @@
-From aab08b462bdce03a1fde77b02480998839081c43 Mon Sep 17 00:00:00 2001
+From deb80103bb4187699349c252dfeed2bd10b30321 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 4 Oct 2019 13:31:59 +0200
-Subject: [PATCH 09/24] COMP: Add QTLOADABLEMODULES dirs in intall tree
+Subject: [PATCH 09/25] COMP: Add QTLOADABLEMODULES dirs in intall tree
  configuration
 
 ---

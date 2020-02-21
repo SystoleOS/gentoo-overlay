@@ -1,7 +1,7 @@
-From 1500051b1ba80f4d2a81a326a0c22941ae7c2b77 Mon Sep 17 00:00:00 2001
+From cf78bcbb213b941aac8a6c103e8f580f1c691fe6 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:41:56 +0200
-Subject: [PATCH 06/24] COMP: Enable install of development files in Slicer
+Subject: [PATCH 06/25] COMP: Enable install of development files in Slicer
  libraries
 
 ---
@@ -206,7 +206,7 @@ index 2b11c769a..aaa36a28e 100644
      FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
      DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 diff --git a/Libs/vtkITK/CMakeLists.txt b/Libs/vtkITK/CMakeLists.txt
-index 3e0770680..abcd499f0 100644
+index eeb295757..577f97291 100644
 --- a/Libs/vtkITK/CMakeLists.txt
 +++ b/Libs/vtkITK/CMakeLists.txt
 @@ -80,7 +80,7 @@ configure_file(
@@ -219,7 +219,7 @@ index 3e0770680..abcd499f0 100644
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
 diff --git a/Libs/vtkSegmentationCore/CMakeLists.txt b/Libs/vtkSegmentationCore/CMakeLists.txt
-index 5df064da7..46ecf37d3 100644
+index a57ec07ef..e6cb0439e 100644
 --- a/Libs/vtkSegmentationCore/CMakeLists.txt
 +++ b/Libs/vtkSegmentationCore/CMakeLists.txt
 @@ -17,13 +17,18 @@ configure_file(

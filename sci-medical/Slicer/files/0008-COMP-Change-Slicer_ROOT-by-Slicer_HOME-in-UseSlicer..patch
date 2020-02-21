@@ -1,7 +1,7 @@
-From 35b689dc1953a17fbd5410a99307a5c56a63763d Mon Sep 17 00:00:00 2001
+From 51863d7a3317523d93c4699cde9937c26e4bf5c7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 4 Oct 2019 13:30:26 +0200
-Subject: [PATCH 08/24] COMP: Change Slicer_ROOT by Slicer_HOME in
+Subject: [PATCH 08/25] COMP: Change Slicer_ROOT by Slicer_HOME in
  UseSlicer.cmak.in
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 08/24] COMP: Change Slicer_ROOT by Slicer_HOME in
  1 file changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
-index f91316904..c4f8e6386 100644
+index ecadb9c48..52b89c175 100644
 --- a/CMake/UseSlicer.cmake.in
 +++ b/CMake/UseSlicer.cmake.in
-@@ -316,9 +316,9 @@ endif()
+@@ -317,9 +317,9 @@ endif()
  # Set Slicer_INSTALL_*MODULE_*_DIR variables
  #-----------------------------------------------------------------------------
  if(Slicer_BUILD_CLI_SUPPORT)
@@ -25,7 +25,7 @@ index f91316904..c4f8e6386 100644
    if(APPLE)
      set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION "${Slicer_INSTALL_CLIMODULES_BIN_DIR}")
      set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION "${Slicer_INSTALL_CLIMODULES_LIB_DIR}")
-@@ -330,17 +330,17 @@ if(Slicer_BUILD_CLI_SUPPORT)
+@@ -331,17 +331,17 @@ if(Slicer_BUILD_CLI_SUPPORT)
    endif()
  endif()
  
@@ -52,7 +52,7 @@ index f91316904..c4f8e6386 100644
  endif()
  
  # These variables can be used when configuring extension external projects in
-@@ -348,21 +348,21 @@ endif()
+@@ -349,21 +349,21 @@ endif()
  #
  # The values set below corresponds to scenario (2). Value for scenario (1) are set
  # in SlicerDirectories.cmake.

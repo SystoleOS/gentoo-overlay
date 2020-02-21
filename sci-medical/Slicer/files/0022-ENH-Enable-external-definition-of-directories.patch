@@ -1,7 +1,7 @@
-From 78fdfcefe95e3ad3659a82309941cd53ab46d7d2 Mon Sep 17 00:00:00 2001
+From 293df06c8115115cd32b74a943af23d5eb2889ce Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 13 Feb 2020 15:27:04 +0100
-Subject: [PATCH 22/24] ENH: Enable external definition of directories
+Subject: [PATCH 22/25] ENH: Enable external definition of directories
 
 ---
  CMake/SlicerDirectories.cmake | 173 +++++++++++++++++++++++++---------

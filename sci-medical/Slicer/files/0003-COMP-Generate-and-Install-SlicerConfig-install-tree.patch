@@ -1,7 +1,7 @@
-From ddfc936b49f3d831c4c343bae2ad27027c2aea3d Mon Sep 17 00:00:00 2001
+From 175588d95fda3ce144218c73204f0ab248a9d4c7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:13:12 +0200
-Subject: [PATCH 03/24] COMP: Generate and Install SlicerConfig (install tree)
+Subject: [PATCH 03/25] COMP: Generate and Install SlicerConfig (install tree)
 
 ---
  CMake/SlicerGenerateSlicerConfig.cmake | 5 +++++
@@ -22,10 +22,10 @@ index c9eb8f0c2..3d1f31030 100644
 +  ${Slicer_SOURCE_DIR}/CMake/SlicerInstallConfig.cmake.in
 +  ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake @ONLY)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 59b10b359..24fa0b5b7 100644
+index fbc16a521..bd485fe13 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1131,7 +1131,7 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1136,7 +1136,7 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
  
    install(FILES
      ${Slicer_BINARY_DIR}/UseSlicer.cmake

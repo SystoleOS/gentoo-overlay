@@ -1,7 +1,7 @@
-From 87d803d1094a01ee08c76a27442e83d00e4dc678 Mon Sep 17 00:00:00 2001
+From e4f8d6a8053b2cf6f9cc8bbe8c94546873bb28bd Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:33:44 +0200
-Subject: [PATCH 04/24] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
+Subject: [PATCH 04/25] COMP: Setting CMAKE_MODULE_PATH to account for CTK and
  Slicer
 
 ---
@@ -20,7 +20,7 @@ index 5f1c679f2..1bac8abe2 100644
  set(PYTHON_INCLUDE_PATH "${Slicer_HOME}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
 +set(CTK_CMAKE_DIR "@CTK_CMAKE_DIR@")
 diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
-index ae9341d8f..f91316904 100644
+index f974ce4c4..ecadb9c48 100644
 --- a/CMake/UseSlicer.cmake.in
 +++ b/CMake/UseSlicer.cmake.in
 @@ -39,6 +39,10 @@
@@ -44,10 +44,10 @@ index ae9341d8f..f91316904 100644
    _slicer_skip_message("Slicer_ExternalData")
  endif()
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 24fa0b5b7..53bf8ff57 100644
+index bd485fe13..66430cfb8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -953,7 +953,7 @@ add_subdirectory(
+@@ -958,7 +958,7 @@ add_subdirectory(
  set(Slicer_USE_FILE ${Slicer_BINARY_DIR}/UseSlicer.cmake)
  configure_file(
    ${Slicer_SOURCE_DIR}/CMake/UseSlicer.cmake.in

@@ -1,7 +1,7 @@
-From 51f657dfb95d75978e5a4698d2ae49bf0166c29b Mon Sep 17 00:00:00 2001
+From d4934d694237eb791f045bf9a5ce88cea5048518 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 10:50:12 +0100
-Subject: [PATCH 16/24] COMP: Change GLOB filter for installing vtkITK dev
+Subject: [PATCH 16/25] COMP: Change GLOB filter for installing vtkITK dev
  components
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 16/24] COMP: Change GLOB filter for installing vtkITK dev
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/Libs/vtkITK/CMakeLists.txt b/Libs/vtkITK/CMakeLists.txt
-index abcd499f0..9e7106e19 100644
+index 577f97291..391a0e04c 100644
 --- a/Libs/vtkITK/CMakeLists.txt
 +++ b/Libs/vtkITK/CMakeLists.txt
 @@ -83,10 +83,15 @@ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)

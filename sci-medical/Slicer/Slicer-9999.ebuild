@@ -73,6 +73,7 @@ PATCHES=(
 	${FILESDIR}/0022-ENH-Enable-external-definition-of-directories.patch
 	${FILESDIR}/0023-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
 	${FILESDIR}/0024-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
+	${FILESDIR}/0025-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
 )
 
 src_prepare() {

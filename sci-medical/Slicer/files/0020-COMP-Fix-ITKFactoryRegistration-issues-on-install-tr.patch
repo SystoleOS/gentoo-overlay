@@ -1,7 +1,7 @@
-From 4046776b65cddd5336f52f65ba987ea7d035b59c Mon Sep 17 00:00:00 2001
+From 7aa4c8f3f33df381b6f6b265dea7992c7d374e61 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 23 Jan 2020 15:46:09 +0100
-Subject: [PATCH 20/24] COMP: Fix ITKFactoryRegistration issues on install tree
+Subject: [PATCH 20/25] COMP: Fix ITKFactoryRegistration issues on install tree
 
 ---
  Base/CLI/CMakeLists.txt                    | 4 ++++

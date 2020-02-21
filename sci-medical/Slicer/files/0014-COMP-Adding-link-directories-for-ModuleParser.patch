@@ -1,7 +1,7 @@
-From 13ce561910f1e996debd26acd2d1d9ca86f2ca99 Mon Sep 17 00:00:00 2001
+From b541352585d85f33d3f3a17ce5b3966d33666f2f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 13 Jan 2020 16:46:08 +0100
-Subject: [PATCH 14/24] COMP: Adding link directories for ModuleParser
+Subject: [PATCH 14/25] COMP: Adding link directories for ModuleParser
 
 ---
  Applications/SlicerApp/CMakeLists.txt     | 2 ++
