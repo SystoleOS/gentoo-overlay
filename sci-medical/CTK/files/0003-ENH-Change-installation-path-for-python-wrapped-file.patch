@@ -1,7 +1,7 @@
-From 0b384e575824c9f648a327c586dac96f95c2767d Mon Sep 17 00:00:00 2001
+From 23185b97e935f84dae4e092613635e2f0231a35b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 27 Jan 2020 13:34:36 +0100
-Subject: [PATCH 2/2] ENH: Change installation path for python wrapped files
+Subject: [PATCH 3/3] ENH: Change installation path for python wrapped files
 
 ---
  Libs/Core/CMakeLists.txt                         |  8 ++++++++
@@ -132,10 +132,10 @@ index 1fa0a990..3165b8e8 100644
  
  # Plugins
 diff --git a/Libs/Visualization/VTK/Core/CMakeLists.txt b/Libs/Visualization/VTK/Core/CMakeLists.txt
-index 35e07179..7f7e05bc 100644
+index c293a839..7ac982e9 100644
 --- a/Libs/Visualization/VTK/Core/CMakeLists.txt
 +++ b/Libs/Visualization/VTK/Core/CMakeLists.txt
-@@ -178,10 +178,17 @@ ctkMacroBuildLib(
+@@ -179,10 +179,17 @@ ctkMacroBuildLib(
    )
  
  if(CTK_WRAP_PYTHONQT_LIGHT)

@@ -12,7 +12,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="20a9195338ad3b84402fc7058f9d049189280912"
+COMMIT="daa513fdc86347c7ec7712974991db0fd8343a32"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -46,8 +46,9 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Include-missing-files.patch
-	${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
+	${FILESDIR}/0001-COMP-Fix-Unknown-CMake-command-ctk_add_executable_ut.patch
+	${FILESDIR}/0002-ENH-Include-missing-files.patch
+	${FILESDIR}/0003-ENH-Change-installation-path-for-python-wrapped-file.patch
 )
 
 src_unpack() {
