@@ -1,0 +1,45 @@
+From ef9e5c35c3ac0a8f7493b00e39b3e8d42edc4c36 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Fri, 21 Feb 2020 09:54:56 +0100
+Subject: [PATCH 3/3] COMP: Add missing include dirs and libraries
+
+---
+ Modules/Loadable/Segmentations/CMakeLists.txt               | 2 ++
+ Modules/Loadable/Segmentations/EditorEffects/CMakeLists.txt | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/Modules/Loadable/Segmentations/CMakeLists.txt b/Modules/Loadable/Segmentations/CMakeLists.txt
+index 5bb1e2718..c1962d52c 100644
+--- a/Modules/Loadable/Segmentations/CMakeLists.txt
++++ b/Modules/Loadable/Segmentations/CMakeLists.txt
+@@ -15,6 +15,7 @@ include(${CTK_USE_FILE})
+ find_package(ITK REQUIRED)
+ include(${ITK_USE_FILE})
+ 
++find_package(PythonQt REQUIRED)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME "Segmentations")
+@@ -44,6 +45,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${qSlicerSegmentationsEditorEffects_INCLUDE_DIRS}
+   ${qSlicerSegmentationsSubjectHierarchyPlugins_INCLUDE_DIRS}
+   ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
++  ${PYTHONQT_INCLUDE_DIR}
+   )
+ 
+ set(MODULE_SRCS
+diff --git a/Modules/Loadable/Segmentations/EditorEffects/CMakeLists.txt b/Modules/Loadable/Segmentations/EditorEffects/CMakeLists.txt
+index 0ad731bef..699caed48 100644
+--- a/Modules/Loadable/Segmentations/EditorEffects/CMakeLists.txt
++++ b/Modules/Loadable/Segmentations/EditorEffects/CMakeLists.txt
+@@ -78,6 +78,7 @@ set(${KIT}_TARGET_LIBRARIES
+   MRMLLogic
+   MRMLCore
+   qSlicerBaseQTGUI # required for access to qSlicerApplication singletons
++  qSlicerBaseQTCore
+   ${CTK_LIBRARIES}
+   )
+ 
+-- 
+2.24.1
+
