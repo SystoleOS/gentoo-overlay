@@ -1,7 +1,7 @@
 From d7bb5b4b95450a06ca95ae0b892c6031d948cf70 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sun, 19 Jan 2020 13:13:55 +0100
-Subject: [PATCH] ENH: Make SceneViews a separate module
+Subject: [PATCH 1/2] ENH: Make SceneViews a separate module
 
 ---
  Modules/Loadable/SceneViews/CMakeLists.txt    | 26 ++++++++++++++++++-
