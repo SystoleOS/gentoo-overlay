@@ -1,0 +1,52 @@
+diff --git a/Modules/Scripted/DICOMLib/CMakeLists.txt b/Modules/Scripted/DICOMLib/CMakeLists.txt
+index 8a98ace95..984c05584 100644
+--- a/Modules/Scripted/DICOMLib/CMakeLists.txt
++++ b/Modules/Scripted/DICOMLib/CMakeLists.txt
+@@ -1,3 +1,22 @@
++cmake_minimum_required(VERSION 3.0)
++
++project(DICOMLib)
++
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
++find_package(CTK REQUIRED)
++include(${CTK_USE_FILE})
++
++find_package(VTK REQUIRED)
++include(${VTK_USE_FILE})
++
++find_package(ITK REQUIRED)
++include(${ITK_USE_FILE})
++
++find_package(CTK REQUIRED)
++include(${CTK_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME DICOMLib)
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+diff --git a/Modules/Scripted/DICOMLib/Logic/CMakeLists.txt b/Modules/Scripted/DICOMLib/Logic/CMakeLists.txt
+index 38b20ba49..1a4ac0def 100644
+--- a/Modules/Scripted/DICOMLib/Logic/CMakeLists.txt
++++ b/Modules/Scripted/DICOMLib/Logic/CMakeLists.txt
+@@ -16,6 +16,7 @@ set(${KIT}_SRCS
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   ${VTK_LIBRARIES}
++  MRMLCore
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Scripted/DICOMLib/Widgets/CMakeLists.txt b/Modules/Scripted/DICOMLib/Widgets/CMakeLists.txt
+index bf25739d7..e5b3354bf 100644
+--- a/Modules/Scripted/DICOMLib/Widgets/CMakeLists.txt
++++ b/Modules/Scripted/DICOMLib/Widgets/CMakeLists.txt
+@@ -7,6 +7,8 @@ set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_MODULE_${MODULE_NAME_UPPER}_WIDGETS_EXPORT
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
+   ${vtkSlicerDICOMLibModuleLogic_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSubjectHierarchyModuleLogic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets  
+   )
+ 
+ set(${KIT}_SRCS
