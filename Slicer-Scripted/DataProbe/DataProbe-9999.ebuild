@@ -69,8 +69,8 @@ pkg_postinst(){
 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
 	done
 
-	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Python*.so" ! -name "*${PN}*PythonD.so")
-	for i in ${python_libraries}
+	python_module_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Python*.so" ! -name "*${PN}*PythonD.so")
+	for i in ${python_module_libraries}
 	do
 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
 	done
@@ -81,13 +81,7 @@ pkg_postinst(){
 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
 	done
 
-	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*.py")
-	for i in ${python_libraries}
-	do
-		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
-	done
-
-	python_libraries=$(find /usr/lib64/Slicer-4.11 -type d -name "*${PN}")
+	python_libraries=$(find /usr/lib64/Slicer-4.11 -type d -name "*${PN}*")
 	for i in ${python_libraries}
 	do
 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
