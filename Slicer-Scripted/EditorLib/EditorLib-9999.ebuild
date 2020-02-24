@@ -33,6 +33,10 @@ PATCHES=(
 	${FILESDIR}/0003-COMP-Fix-python-wrapping-error.patch
 )
 
+
+EGIT_CHECKOUT_DIR=${WORKDIR}/${PN}
+S=${WORKDIR}/${PN}
+
 src_prepare() {
 
 	cmake-utils_src_prepare
@@ -42,7 +46,6 @@ src_prepare() {
 	rm -rf ${to_delete}
 	mv ${PN}/* .
 	rm ${PN}
-
 }
 
 src_configure(){
