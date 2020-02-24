@@ -1,0 +1,24 @@
+From 26e5b144278a5bda195c5f98571683bed5f121c0 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 6 Feb 2020 14:45:03 +0100
+Subject: [PATCH 3/3] ENH: Add ITKThickness3D as local module
+
+---
+ Modules/Remote/Thickness3D.remote.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Modules/Remote/Thickness3D.remote.cmake b/Modules/Remote/Thickness3D.remote.cmake
+index a75f007bad..7256abdee6 100644
+--- a/Modules/Remote/Thickness3D.remote.cmake
++++ b/Modules/Remote/Thickness3D.remote.cmake
+@@ -1,6 +1,6 @@
+ # Contact: Thomas Janvier <thomas.p.janvier@gmail.com>
+ itk_fetch_module(Thickness3D
+   "Tools for 3D thickness measurement"
+-  GIT_REPOSITORY ${git_protocol}://github.com/InsightSoftwareConsortium/ITKThickness3D.git
++  GIT_REPOSITORY ${WORKDIR}/ITKThickness3D
+   GIT_TAG bdcc26d2782d558b43210fcb97fb2d6076a848d1
+ )
+-- 
+2.24.1
+
