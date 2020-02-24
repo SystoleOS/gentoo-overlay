@@ -22,7 +22,7 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND=""
+DEPEND="sci-libs/ITK"
 
 RDEPEND="${DEPEND}"
 
