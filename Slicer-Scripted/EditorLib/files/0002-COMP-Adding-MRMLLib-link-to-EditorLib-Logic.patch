@@ -1,4 +1,4 @@
-From 5fddc8f4d09f3a4038feafb3c5043cfab88e26a1 Mon Sep 17 00:00:00 2001
+From 921d745d071d589d7cd900dcc6051f7b4993a9ef Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 21 Feb 2020 13:56:01 +0100
 Subject: [PATCH 2/3] COMP: Adding MRMLLib link to EditorLib/Logic

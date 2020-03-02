@@ -1,4 +1,4 @@
-From fc227f2c1887f10d012f662fca07ebfb5f0c2008 Mon Sep 17 00:00:00 2001
+From 79ef8b086254bbe4e134c3f1d060784ae515ae74 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 21 Feb 2020 13:56:25 +0100
 Subject: [PATCH 3/3] COMP: Fix python wrapping error
