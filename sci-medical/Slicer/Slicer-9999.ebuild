@@ -74,6 +74,7 @@ PATCHES=(
 	${FILESDIR}/0023-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
 	${FILESDIR}/0024-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
 	${FILESDIR}/0025-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
+	${FILESDIR}/0026-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
 )
 
 src_prepare() {
@@ -141,4 +142,9 @@ pkg_postinst(){
 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
 	done
 
+	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*.so" ! -name "*Python.so" ! -name "*PythonD.so")
+	for i in ${pythond_libraries}
+	do
+		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
 }

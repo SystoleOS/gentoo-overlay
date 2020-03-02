@@ -1,0 +1,80 @@
+From 88014a8792fcbc9c0a99363efec7b9236715849b Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 2 Mar 2020 13:25:45 +0100
+Subject: [PATCH] ENH: Enable installation of hierarchy files (.txt) for python
+ wrap
+
+---
+ CMake/SlicerGenerateSlicerConfig.cmake | 14 ++++++++++++++
+ CMake/SlicerInstallConfig.cmake.in     |  3 +++
+ CMake/vtkMacroKitPythonWrap.cmake      |  8 ++++++++
+ 3 files changed, 25 insertions(+)
+
+diff --git a/CMake/SlicerGenerateSlicerConfig.cmake b/CMake/SlicerGenerateSlicerConfig.cmake
+index 3d1f31030..36c6a71f2 100644
+--- a/CMake/SlicerGenerateSlicerConfig.cmake
++++ b/CMake/SlicerGenerateSlicerConfig.cmake
+@@ -95,6 +95,7 @@ set(${target}_INCLUDE_DIRS
+   endforeach()
+ endif()
+ 
++# For build tree
+ get_property(_wrap_hierarchy_targets GLOBAL PROPERTY SLICER_WRAP_HIERARCHY_TARGETS)
+ if(_wrap_hierarchy_targets)
+   foreach(target ${_wrap_hierarchy_targets})
+@@ -106,6 +107,19 @@ set(${target}_WRAP_HIERARCHY_FILE
+   endforeach()
+ endif()
+ 
++# For install tree
++get_property(_wrap_hierarchy_targets GLOBAL PROPERTY SLICER_WRAP_HIERARCHY_TARGETS)
++if(_wrap_hierarchy_targets)
++  foreach(target ${_wrap_hierarchy_targets})
++    set(Slicer_WRAP_HIERARCHY_FILES_INSTALL_CONFIG
++"${Slicer_WRAP_HIERARCHY_FILES_INSTALL_CONFIG}
++set(${target}_WRAP_HIERARCHY_FILE
++  \"${${target}_WRAP_HIERARCHY_INSTALL_FILE}\")"
++)
++  endforeach()
++endif()
++
++
+ set(Slicer_Libs_INCLUDE_DIRS_CONFIG ${Slicer_Libs_INCLUDE_DIRS})
+ set(Slicer_Base_INCLUDE_DIRS_CONFIG ${Slicer_Base_INCLUDE_DIRS})
+ 
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
+index 5c5fd00a2..1f69327d8 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/CMake/SlicerInstallConfig.cmake.in
+@@ -9,6 +9,9 @@
+ 
+ # Slicer Libs VTK wrapped libraries
+ set(Slicer_Libs_VTK_WRAPPED_LIBRARIES "@Slicer_Libs_VTK_WRAPPED_LIBRARIES@")
++
++@Slicer_WRAP_HIERARCHY_FILES_INSTALL_CONFIG@
++
+ set(PYTHON_INCLUDE_DIRS "@PYTHON_INCLUDE_DIRS@")
+ 
+ # The C and C++ flags added by Slicer to the cmake-configured flags.
+diff --git a/CMake/vtkMacroKitPythonWrap.cmake b/CMake/vtkMacroKitPythonWrap.cmake
+index 5b4ba0667..e87549d88 100644
+--- a/CMake/vtkMacroKitPythonWrap.cmake
++++ b/CMake/vtkMacroKitPythonWrap.cmake
+@@ -287,6 +287,14 @@ macro(vtkMacroKitPythonWrap)
+       LIBRARY DESTINATION ${MY_KIT_MODULE_INSTALL_LIB_DIR} COMPONENT ${Slicer_VTK_WRAP_MODULE_INSTALL_COMPONENT_IDENTIFIER}
+       ARCHIVE DESTINATION ${MY_KIT_MODULE_INSTALL_LIB_DIR} COMPONENT Development
+       )
++
++    install(
++      FILES "${Slicer_VTK_WRAP_HIERARCHY_DIR}/${MY_KIT_NAME}Hierarchy.txt"
++      DESTINATION "${Slicer_INSTALL_LIB_DIR}" COMPONENT Development
++      )
++
++    set(${MY_KIT_NAME}_WRAP_HIERARCHY_INSTALL_FILE "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_LIB_DIR}/${MY_KIT_NAME}Hierarchy.txt" CACHE INTERNAL "${MY_KIT_NAME} wrap hierarchy install file" FORCE)
++    
+   endif()
+ 
+ endmacro()
+-- 
+2.24.1
+
