@@ -22,7 +22,8 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	sci-medical/Slicer
+	sci-medical/Slicer[python]
+	Slicer-Loadable/Segmentations
 "
 
 RDEPEND="${DEPEND}"
