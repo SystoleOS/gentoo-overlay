@@ -75,6 +75,7 @@ PATCHES=(
 	${FILESDIR}/0024-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
 	${FILESDIR}/0025-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
 	${FILESDIR}/0026-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
+	${FILESDIR}/0027-ENH-Change-SlicerApp-real-Slicer.patch
 )
 
 src_prepare() {
