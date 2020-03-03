@@ -76,6 +76,7 @@ PATCHES=(
 	${FILESDIR}/0025-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
 	${FILESDIR}/0026-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
 	${FILESDIR}/0027-ENH-Change-SlicerApp-real-Slicer.patch
+	${FILESDIR}/0028-ENH-Enable-utilities-for-creating-new-modules-extens.patch
 )
 
 src_prepare() {
@@ -117,6 +118,7 @@ src_configure(){
 			-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
 			-DSlicer_VTK_WRAP_HIERARCHY_DIR=${BUILD_DIR}
 			-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
+			-DSlicer_INSTALL_LIBEXEC_DIR=lib64/Slicer-4.11/libexec
 		)
 
 		if use python; then

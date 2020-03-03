@@ -1,0 +1,96 @@
+From 0388d05b379c48c6e9415226ee560d1ed92d853c Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Tue, 3 Mar 2020 12:45:33 +0100
+Subject: [PATCH] ENH: Enable utilities for creating new modules/extensions
+
+---
+ CMakeLists.txt                                    | 6 ++----
+ Utilities/Scripts/CMakeLists.txt                  | 3 ++-
+ Utilities/Scripts/SlicerWizard/CMakeLists.txt     | 8 ++++++--
+ Utilities/Scripts/SlicerWizard/ExtensionWizard.py | 2 +-
+ Utilities/Templates/CMakeLists.txt                | 7 ++++++-
+ 5 files changed, 17 insertions(+), 9 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 74090a8b9..7b79bd2cc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -922,10 +922,8 @@ add_subdirectory(Libs)
+ add_subdirectory(Base)
+ add_subdirectory(Resources)
+ add_subdirectory(Utilities/Scripts)
+-if(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT)
+-  add_subdirectory(Utilities/Scripts/SlicerWizard)
+-  add_subdirectory(Utilities/Templates)
+-endif()
++add_subdirectory(Utilities/Scripts/SlicerWizard)
++add_subdirectory(Utilities/Templates)
+ 
+ #-----------------------------------------------------------------------------
+ # Macro useful to build ModuleLogic, ModuleMRML and ModuleWidgets libraries
+diff --git a/Utilities/Scripts/CMakeLists.txt b/Utilities/Scripts/CMakeLists.txt
+index de127e954..519586584 100644
+--- a/Utilities/Scripts/CMakeLists.txt
++++ b/Utilities/Scripts/CMakeLists.txt
+@@ -1,4 +1,5 @@
+-if(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT AND Slicer_USE_PYTHONQT)
++if(Slicer_USE_PYTHONQT)
++
+   # Determine name of Python interpreter
+   #
+   # NOTE: Do NOT use ${PYTHON_EXECUTABLE}; when using our own Python, it is set
+diff --git a/Utilities/Scripts/SlicerWizard/CMakeLists.txt b/Utilities/Scripts/SlicerWizard/CMakeLists.txt
+index c99477bf6..65bdce99b 100644
+--- a/Utilities/Scripts/SlicerWizard/CMakeLists.txt
++++ b/Utilities/Scripts/SlicerWizard/CMakeLists.txt
+@@ -29,11 +29,15 @@ set(SlicerWizard_PYTHON_SCRIPTS
+   WizardHelpFormatter.py
+   )
+ 
+-if(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT AND Slicer_USE_PYTHONQT)
++if(NOT DEFINED PYTHON_SITE_DIR)
++  set(PYTHON_SITE_DIR ${Slicer_INSTALL_BIN_DIR}/Python)
++endif()
++
++if(Slicer_USE_PYTHONQT)
+   ctkMacroCompilePythonScript(
+     TARGET_NAME SlicerWizard
+     SCRIPTS "${SlicerWizard_PYTHON_SCRIPTS}"
+     DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python/SlicerWizard
+-    INSTALL_DIR ${Slicer_INSTALL_BIN_DIR}/Python
++    INSTALL_DIR ${PYTHON_SITE_DIR}
+     )
+ endif()
+diff --git a/Utilities/Scripts/SlicerWizard/ExtensionWizard.py b/Utilities/Scripts/SlicerWizard/ExtensionWizard.py
+index 2585425d7..2a0cc7916 100644
+--- a/Utilities/Scripts/SlicerWizard/ExtensionWizard.py
++++ b/Utilities/Scripts/SlicerWizard/ExtensionWizard.py
+@@ -648,7 +648,7 @@ class ExtensionWizard(object):
+ 
+     candidateBuiltInTemplatePaths = [
+         os.path.join(scriptPath, "..", "..", "..", "Utilities", "Templates"), # Run from source directory
+-        os.path.join(scriptPath, "..", "..", "..", "share", # Run from install
++        os.path.join(scriptPath, "..", "..", "..", "..", "share", # Run from install
+                      "Slicer-%s.%s" % tuple(__version_info__[:2]),
+                      "Wizard", "Templates")
+         ]
+diff --git a/Utilities/Templates/CMakeLists.txt b/Utilities/Templates/CMakeLists.txt
+index 3938d41ac..50ecf8035 100644
+--- a/Utilities/Templates/CMakeLists.txt
++++ b/Utilities/Templates/CMakeLists.txt
+@@ -8,6 +8,11 @@ configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/Extensions/extension_description.s4ext.in
+  ${Slicer_BINARY_DIR}/Utilities/Templates/Extensions/extension_description.s4ext.in
+  COPYONLY
+-)
++ )
++
++install(
++  FILES ${Slicer_BINARY_DIR}/Utilities/Templates/Extensions/extension_description.s4ext.in
++  DESTINATION ${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_SHARE_DIR}/Wizard/Templates
++  )
+ 
+ include(SlicerExtensionTemplatesGenerator)
+-- 
+2.24.1
+
