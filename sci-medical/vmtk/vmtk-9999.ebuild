@@ -24,6 +24,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
+	dev-lang/python[tk]
 	>=sci-libs/ITK-5.0
 	>=sci-libs/VTK-8.2
 "
@@ -33,6 +34,7 @@ RDEPEND="${DEPEND}"
 PATCHES=(
 	${FILESDIR}/0001-COMP-Adapt-vmtk-to-ITK-5.1.patch
 	${FILESDIR}/0002-COMP-Remove-install-sentence-for-VMTK-Targets.patch
+	${FILESDIR}/0003-ENH-Change-variables-definition-check.patch
 )
 
 src_prepare() {
@@ -49,11 +51,15 @@ src_configure(){
 		-DCMAKE_INSTALL_PREFIX=/usr
 		-DVMTK_USE_SUPERBUILD=OFF
 		-DVMTK_BUILD_TESTING=OFF
+		-DVMTK_INSTALL_LIB_DIR=lib64
 		-DVTK_VMTK_INSTALL_LIB_DIR=lib64
-		-DVTK_VMTK_WRAP_PYTHON=OFF
+		-DVMTK_SCRIPTS_INSTALL_LIB_DIR=lib64/python3.6/site-packages/vmtk
+		-DVMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR=lib64/python3.6/site-packages/vmtk
+		-DPYPES_MODULE_INSTALL_LIB_DIR=lib64/python3.6/site-packages/vmtk
 		-DVMTK_SCRIPTS_ENABLED=ON
 		-DVMTK_MINIMAL_INSTALL=ON
 		-DVTK_VMTK_WRAP_PYTHON=ON
+		-DVMTK_WRAP_PYTHON=ON
 		-DVTK_VMTK_CONTRIB=ON
 	)
 
@@ -66,10 +72,10 @@ pkg_postinst() {
 
 	pushd /usr/bin
 
-	for i in "${vmtk_python_files}"
+	for i in ${vmtk_python_files}
 	do
 		chmod +x ${i}
-		ln -sf ${i} /usr/bin/$(basename ${i}) || die
+		ln -sf ${i} /usr/bin/$(basename ${i} .py) || die
 	done
 
 	popd

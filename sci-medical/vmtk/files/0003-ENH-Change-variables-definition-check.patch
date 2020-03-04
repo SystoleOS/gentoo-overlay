@@ -1,0 +1,145 @@
+From 2691b512825e5bee0cd16bd32dd250dce6ff226a Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Wed, 4 Mar 2020 21:30:59 +0100
+Subject: [PATCH 3/3] ENH: Change variables definition check
+
+---
+ CMakeLists.txt                     | 12 ++++++------
+ PypeS/CMakeLists.txt               |  8 ++++----
+ vmtkScripts/CMakeLists.txt         |  8 ++++----
+ vmtkScripts/contrib/CMakeLists.txt |  8 ++++----
+ vtkVmtk/CMakeLists.txt             | 18 +++++++++---------
+ 5 files changed, 27 insertions(+), 27 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 649c71f..6896352 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -223,17 +223,17 @@ set(VMTK_MODULE_SRCS
+    __init__.py.in
+    )
+ 
+-if(NOT VMTK_INSTALL_BIN_DIR)
++if(NOT DEFINED VMTK_INSTALL_BIN_DIR)
+   set(VMTK_INSTALL_BIN_DIR bin)
+-endif(NOT VMTK_INSTALL_BIN_DIR)
++endif(NOT DEFINED VMTK_INSTALL_BIN_DIR)
+ 
+-if(NOT VMTK_INSTALL_LIB_DIR)
++if(NOT DEFINED VMTK_INSTALL_LIB_DIR)
+   set(VMTK_INSTALL_LIB_DIR lib)
+-endif(NOT VMTK_INSTALL_LIB_DIR)
++endif(NOT DEFINED VMTK_INSTALL_LIB_DIR)
+ 
+-if(NOT VMTK_MODULE_INSTALL_LIB_DIR)
++if(NOT DEFINED VMTK_MODULE_INSTALL_LIB_DIR)
+   set(VMTK_MODULE_INSTALL_LIB_DIR ${VMTK_INSTALL_LIB_DIR}/${VMTK_PYTHON_VERSION}/site-packages/vmtk)
+-endif(NOT VMTK_MODULE_INSTALL_LIB_DIR)
++endif(NOT DEFINED VMTK_MODULE_INSTALL_LIB_DIR)
+ 
+ if(VMTK_SCRIPTS_ENABLED)
+ 
+diff --git a/PypeS/CMakeLists.txt b/PypeS/CMakeLists.txt
+index d62ae99..d6144ed 100644
+--- a/PypeS/CMakeLists.txt
++++ b/PypeS/CMakeLists.txt
+@@ -20,13 +20,13 @@ foreach (SCRIPT_FILE ${PYPES_BASE_SRCS})
+   configure_file(${PYPES_SOURCE_DIR}/${SCRIPT_FILE} ${PYPES_BINARY_DIR}/${SCRIPT_FILE} COPYONLY)
+ endforeach (SCRIPT_FILE)
+ 
+-if(NOT PYPES_INSTALL_BIN_DIR)
++if(NOT DEFINED PYPES_INSTALL_BIN_DIR)
+   set(PYPES_INSTALL_BIN_DIR bin)
+-endif(NOT PYPES_INSTALL_BIN_DIR)
++endif(NOT DEFINED PYPES_INSTALL_BIN_DIR)
+ 
+-if(NOT PYPES_MODULE_INSTALL_LIB_DIR)
++if(NOT DEFINED PYPES_MODULE_INSTALL_LIB_DIR)
+   set(PYPES_MODULE_INSTALL_LIB_DIR lib/${VMTK_PYTHON_VERSION}/site-packages/vmtk)
+-endif(NOT PYPES_MODULE_INSTALL_LIB_DIR)
++endif(NOT DEFINED PYPES_MODULE_INSTALL_LIB_DIR)
+ 
+ foreach(SCRIPT_FILE ${PYPES_SRCS})
+   configure_file(${PYPES_SOURCE_DIR}/${SCRIPT_FILE} ${PYPES_BINARY_DIR}/${SCRIPT_FILE} COPYONLY)
+diff --git a/vmtkScripts/CMakeLists.txt b/vmtkScripts/CMakeLists.txt
+index bea4bbe..696c064 100644
+--- a/vmtkScripts/CMakeLists.txt
++++ b/vmtkScripts/CMakeLists.txt
+@@ -159,13 +159,13 @@ if (VMTK_CONTRIB_SCRIPTS)
+   add_subdirectory(contrib)
+ endif (VMTK_CONTRIB_SCRIPTS)
+ 
+-if(NOT VMTK_SCRIPTS_INSTALL_BIN_DIR)
++if(NOT DEFINED VMTK_SCRIPTS_INSTALL_BIN_DIR)
+   set(VMTK_SCRIPTS_INSTALL_BIN_DIR bin)
+-endif(NOT VMTK_SCRIPTS_INSTALL_BIN_DIR)
++endif(NOT DEFINED VMTK_SCRIPTS_INSTALL_BIN_DIR)
+ 
+-if(NOT VMTK_SCRIPTS_INSTALL_LIB_DIR)
++if(NOT DEFINED VMTK_SCRIPTS_INSTALL_LIB_DIR)
+   set(VMTK_SCRIPTS_INSTALL_LIB_DIR lib/${VMTK_PYTHON_VERSION}/site-packages/vmtk)
+-endif(NOT VMTK_SCRIPTS_INSTALL_LIB_DIR)
++endif(NOT DEFINED VMTK_SCRIPTS_INSTALL_LIB_DIR)
+ 
+ add_subdirectory(resources)
+ 
+diff --git a/vmtkScripts/contrib/CMakeLists.txt b/vmtkScripts/contrib/CMakeLists.txt
+index 30faa16..7c93e85 100644
+--- a/vmtkScripts/contrib/CMakeLists.txt
++++ b/vmtkScripts/contrib/CMakeLists.txt
+@@ -33,13 +33,13 @@ set(CONTRIB_MODULE_SRCS
+   vmtkcontribscripts.py
+   )
+ 
+-if(NOT VMTK_CONTRIB_SCRIPTS_INSTALL_BIN_DIR)
++if(NOT DEFINED VMTK_CONTRIB_SCRIPTS_INSTALL_BIN_DIR)
+   set(VMTK_CONTRIB_SCRIPTS_INSTALL_BIN_DIR bin)
+-endif(NOT VMTK_CONTRIB_SCRIPTS_INSTALL_BIN_DIR)
++endif(NOT DEFINED VMTK_CONTRIB_SCRIPTS_INSTALL_BIN_DIR)
+ 
+-if(NOT VMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR)
++if(NOT DEFINED VMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR)
+   set(VMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR lib/${VMTK_PYTHON_VERSION}/site-packages/vmtk)
+-endif(NOT VMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR)
++endif(NOT DEFINED VMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR)
+ 
+ foreach (SCRIPT_FILE  ${CONTRIB_SCRIPTS_SRCS})
+   configure_file(${VMTK_CONTRIB_SCRIPTS_SOURCE_DIR}/${SCRIPT_FILE} ${VMTK_CONTRIB_SCRIPTS_BINARY_DIR}/${SCRIPT_FILE} COPYONLY)
+diff --git a/vtkVmtk/CMakeLists.txt b/vtkVmtk/CMakeLists.txt
+index 578b6be..b2bafdb 100644
+--- a/vtkVmtk/CMakeLists.txt
++++ b/vtkVmtk/CMakeLists.txt
+@@ -42,21 +42,21 @@ if (VTK_USE_COCOA)
+   option(VTK_VMTK_USE_COCOA "Build the Cocoa vmtk classes." ON)
+ endif (VTK_USE_COCOA)
+ 
+-if(NOT VTK_VMTK_INSTALL_BIN_DIR)
++if(NOT DEFINED VTK_VMTK_INSTALL_BIN_DIR)
+   set(VTK_VMTK_INSTALL_BIN_DIR bin)
+-endif(NOT VTK_VMTK_INSTALL_BIN_DIR)
++endif(NOT DEFINED VTK_VMTK_INSTALL_BIN_DIR)
+ 
+-if(NOT VTK_VMTK_INSTALL_INCLUDE_DIR)
++if(NOT DEFINED VTK_VMTK_INSTALL_INCLUDE_DIR)
+   set(VTK_VMTK_INSTALL_INCLUDE_DIR include/vmtk)
+-endif(NOT VTK_VMTK_INSTALL_INCLUDE_DIR)
++endif(NOT DEFINED VTK_VMTK_INSTALL_INCLUDE_DIR)
+ 
+-if(NOT VTK_VMTK_INSTALL_LIB_DIR)
++if(NOT DEFINED VTK_VMTK_INSTALL_LIB_DIR)
+   set(VTK_VMTK_INSTALL_LIB_DIR lib)
+-endif(NOT VTK_VMTK_INSTALL_LIB_DIR)
++endif(NOT DEFINED VTK_VMTK_INSTALL_LIB_DIR)
+ 
+-if(NOT VTK_VMTK_MODULE_INSTALL_LIB_DIR)
+-  set(VTK_VMTK_MODULE_INSTALL_LIB_DIR lib/${VMTK_PYTHON_VERSION}/site-packages/vmtk)
+-endif(NOT VTK_VMTK_MODULE_INSTALL_LIB_DIR)
++if(NOT DEFINED VTK_VMTK_MODULE_INSTALL_LIB_DIR)
++  set(VTK_VMTK_MODULE_INSTALL_LIB_DIR ${VTK_VMTK_INSTALL_LIB_DIR}/${VMTK_PYTHON_VERSION}/site-packages/vmtk)
++endif(NOT DEFINED VTK_VMTK_MODULE_INSTALL_LIB_DIR)
+ 
+ include_directories (${VTK_VMTK_SOURCE_DIR})
+ include_directories (${VTK_VMTK_SOURCE_DIR}/Common)
+-- 
+2.24.1
+

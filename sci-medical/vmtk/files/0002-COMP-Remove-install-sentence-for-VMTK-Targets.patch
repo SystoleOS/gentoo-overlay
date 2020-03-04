@@ -1,7 +1,7 @@
 From f4af368471060baf9f3b42eda8b6922bc2e76762 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 5 Feb 2020 15:59:39 +0100
-Subject: [PATCH 2/2] COMP: Remove install sentence for VMTK-Targets
+Subject: [PATCH 2/3] COMP: Remove install sentence for VMTK-Targets
 
 ---
  CMakeLists.txt | 2 +-
