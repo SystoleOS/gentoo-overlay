@@ -1,0 +1,75 @@
+From b2331f5b0da82a1800f0e7851ee70e6f31faa2aa Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Wed, 4 Mar 2020 07:17:55 +0100
+Subject: [PATCH] ENH: Make the ExtractSkeleton CLI module a separate module
+
+---
+ Modules/CLI/ExtractSkeleton/CMakeLists.txt | 34 +++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 4 deletions(-)
+
+diff --git a/Modules/CLI/ExtractSkeleton/CMakeLists.txt b/Modules/CLI/ExtractSkeleton/CMakeLists.txt
+index 8aaaff62e..38aa6195c 100755
+--- a/Modules/CLI/ExtractSkeleton/CMakeLists.txt
++++ b/Modules/CLI/ExtractSkeleton/CMakeLists.txt
+@@ -1,15 +1,32 @@
++cmake_minimum_required(VERSION 3.0)
++
++project(ExtractSkeleton)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME ExtractSkeleton)
+ 
+ #-----------------------------------------------------------------------------
+ 
++#
++# Slicer
++#
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
++
+ #
+ # SlicerExecutionModel
+ #
+ find_package(SlicerExecutionModel REQUIRED)
+ include(${SlicerExecutionModel_USE_FILE})
+ 
++#
++# VTK
++#
++find_package(VTK REQUIRED)
++include(${VTK_USE_FILE})
++
++
+ #
+ # ITK
+ #
+@@ -38,12 +55,21 @@ SEMMacroBuildCLI(
+     coordTypes.h
+     misc.h
+     misc.cxx
+-  TARGET_LIBRARIES ${ITK_LIBRARIES}
++    
++    TARGET_LIBRARIES
++    ${VTK_LIBRARIES}
++    ${ITK_LIBRARIES}
+     MRMLCore
+     vtkSlicerMarkupsModuleMRML
+-  INCLUDE_DIRECTORIES
+-    ${MRMLCore_INCLUDE_DIRS}
+-    ${vtkSlicerMarkupsModuleMRML_INCLUDE_DIRS}
++    ITKFactoryRegistration
++    
++    INCLUDE_DIRECTORIES
++    ${Slicer_Libs_INCLUDE_DIRS}
++    ${Slicer_HOME}/${Slicer_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
++
++    INSTALL_RUNTIME_DESTINATION ${Slicer_INSTALL_CLIMODULES_BIN_DIR}
++    INSTALL_LIBRARY_DESTINATION ${Slicer_INSTALL_CLIMODULES_LIB_DIR}
++    INSTALL_ARCHIVE_DESTINATION ${Slicer_INSTALL_CLIMODULES_SHARE_DIR}
+   )
+ 
+ #-----------------------------------------------------------------------------
+-- 
+2.24.1
+
