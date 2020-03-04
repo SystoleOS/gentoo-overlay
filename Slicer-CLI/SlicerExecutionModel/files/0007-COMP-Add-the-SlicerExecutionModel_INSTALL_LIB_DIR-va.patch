@@ -1,7 +1,7 @@
-From 72a71db0c767a49e02f77c7bd2cf01865f6b10e0 Mon Sep 17 00:00:00 2001
+From 06b26e062521b416032bbe8d110ae9c92598ff9e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 16 Dec 2019 06:06:42 +0100
-Subject: [PATCH 07/17] COMP: Add the SlicerExecutionModel_INSTALL_LIB_DIR
+Subject: [PATCH 07/15] COMP: Add the SlicerExecutionModel_INSTALL_LIB_DIR
  variable
 
 ---

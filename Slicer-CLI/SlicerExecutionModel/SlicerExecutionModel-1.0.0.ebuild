@@ -10,7 +10,7 @@ DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/ITK/"
 
-COMMIT="c4011006034be69a732fd519fe42e5966c52dedf"
+COMMIT="1788b378ed2e4928cded2bc9ecdc2b37c7f2af5f"
 
 SRC_URI="https://github.com/Slicer/SlicerExecutionModel/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -77,4 +77,14 @@ src_configure(){
 	)
 
 	cmake-utils_src_configure
+}
+
+pkg_postinst(){
+
+	libraries=$(find /usr/lib64/${P} -name "*.so")
+	for i in ${libraries}
+	do
+		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+	done
+
 }

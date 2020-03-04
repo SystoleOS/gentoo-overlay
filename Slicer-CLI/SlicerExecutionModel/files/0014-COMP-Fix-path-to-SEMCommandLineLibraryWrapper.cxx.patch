@@ -1,0 +1,25 @@
+From 859df05ab953f55f421f1e9e41e0c0c42b4f7d1e Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Wed, 15 Jan 2020 07:26:37 +0100
+Subject: [PATCH 14/15] COMP: Fix path to SEMCommandLineLibraryWrapper.cxx
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index a946863..18efae0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -153,7 +153,7 @@ endif()
+ #-----------------------------------------------------------------------------
+ if(NOT DEFINED SlicerExecutionModel_DEFAULT_CLI_LIBRARY_WRAPPER_CXX)
+   set(SlicerExecutionModel_DEFAULT_CLI_LIBRARY_WRAPPER_CXX
+-    ${CMAKE_CURRENT_SOURCE_DIR}/CMake/SEMCommandLineLibraryWrapper.cxx)
++    ${SlicerExecutionModel_INSTALL_LIB_DIR}/CMake/SEMCommandLineLibraryWrapper.cxx)
+ endif()
+ 
+ #-----------------------------------------------------------------------------
+-- 
+2.24.1
+

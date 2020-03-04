@@ -1,7 +1,7 @@
-From 897397ee2f524e03f99f86aa757333e60e2a0a1e Mon Sep 17 00:00:00 2001
+From 550e75d4eb4d84ea73bee56035702223a05ea34f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 17 Dec 2019 06:39:12 +0100
-Subject: [PATCH 10/17] COMP: Install GenerateInstallCLPConfig.cmake (install
+Subject: [PATCH 10/15] COMP: Install GenerateInstallCLPConfig.cmake (install
  tree)
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 10/17] COMP: Install GenerateInstallCLPConfig.cmake (install
  1 file changed, 11 insertions(+), 19 deletions(-)
 
 diff --git a/GenerateCLP/CMakeLists.txt b/GenerateCLP/CMakeLists.txt
-index 60473c2..1cccaf6 100644
+index 29f7032..5700d11 100644
 --- a/GenerateCLP/CMakeLists.txt
 +++ b/GenerateCLP/CMakeLists.txt
-@@ -135,22 +135,6 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+@@ -133,22 +133,6 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
      )
  endif()
  
@@ -35,7 +35,7 @@ index 60473c2..1cccaf6 100644
  # --------------------------------------------------------------------------
  # Launcher
  # --------------------------------------------------------------------------
-@@ -239,9 +223,17 @@ include(GenerateGenerateCLPConfig.cmake)
+@@ -256,9 +240,17 @@ include(GenerateGenerateCLPConfig.cmake)
  # Install support files
  # --------------------------------------------------------------------------
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)

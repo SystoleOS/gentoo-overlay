@@ -1,17 +1,17 @@
-From 742d85ac359abe0555c3a87ec0da3e737a39a182 Mon Sep 17 00:00:00 2001
+From e10afd6a98b30f353da0e9dd57fe36fe1f1f599e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 16 Dec 2019 05:40:22 +0100
-Subject: [PATCH 06/17] COMP: Fix path to GenerateCLPConfig for install tree
+Subject: [PATCH 06/15] COMP: Fix path to GenerateCLPConfig for install tree
 
 ---
  GenerateCLP/CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/GenerateCLP/CMakeLists.txt b/GenerateCLP/CMakeLists.txt
-index 4bf8e94..60473c2 100644
+index 1b1ac44..29f7032 100644
 --- a/GenerateCLP/CMakeLists.txt
 +++ b/GenerateCLP/CMakeLists.txt
-@@ -240,7 +240,7 @@ include(GenerateGenerateCLPConfig.cmake)
+@@ -257,7 +257,7 @@ include(GenerateGenerateCLPConfig.cmake)
  # --------------------------------------------------------------------------
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    install(FILES

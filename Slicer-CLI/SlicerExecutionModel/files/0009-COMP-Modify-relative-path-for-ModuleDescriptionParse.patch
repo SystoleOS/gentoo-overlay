@@ -1,7 +1,7 @@
-From 6f14af80dbcf74a59248b5c1257f50019b2554c0 Mon Sep 17 00:00:00 2001
+From 9e9fe141bf4b7798337c3a85ea2e71106e84a49b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 16 Dec 2019 20:12:42 +0100
-Subject: [PATCH 09/17] COMP: Modify relative path for ModuleDescriptionParser
+Subject: [PATCH 09/15] COMP: Modify relative path for ModuleDescriptionParser
 
 ---
  .../ModuleDescriptionParserInstallConfig.cmake.in             | 4 ++--

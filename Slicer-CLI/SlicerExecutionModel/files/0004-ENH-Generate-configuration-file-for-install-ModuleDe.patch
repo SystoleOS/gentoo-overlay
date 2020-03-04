@@ -1,7 +1,7 @@
-From 7fbdee7546cbeafaba4ff3e6d5f60f269ef34a54 Mon Sep 17 00:00:00 2001
+From 37bf8e0d67379373f875f3708995487fa50476d7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 21:50:53 +0200
-Subject: [PATCH 04/17] ENH: Generate configuration file for install
+Subject: [PATCH 04/15] ENH: Generate configuration file for install
  ModuleDescriptionParser
 
 ---
@@ -10,10 +10,10 @@ Subject: [PATCH 04/17] ENH: Generate configuration file for install
  2 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/ModuleDescriptionParser/CMakeLists.txt b/ModuleDescriptionParser/CMakeLists.txt
-index 903fca7..d5ced3e 100644
+index 6a2769a..6f0ba25 100644
 --- a/ModuleDescriptionParser/CMakeLists.txt
 +++ b/ModuleDescriptionParser/CMakeLists.txt
-@@ -235,7 +235,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+@@ -239,7 +239,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    install(FILES
      ${CMAKE_CURRENT_BINARY_DIR}/UseModuleDescriptionParser.cmake
      ${CMAKE_CURRENT_BINARY_DIR}/install/ModuleDescriptionParserConfig.cmake

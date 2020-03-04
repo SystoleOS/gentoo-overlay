@@ -1,41 +1,39 @@
-From baf00a06499653a090f3b9611b40a6c308b82817 Mon Sep 17 00:00:00 2001
+From f6b06c00dfdaa382f55ec8e306bf3342dc348334 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 17 Dec 2019 08:05:25 +0100
-Subject: [PATCH 13/17] COMP: Fix path to GenerateCLP executable
+Subject: [PATCH 13/15] COMP: Fix path to GenerateCLP executable
 
 ---
- GenerateCLP/CMakeLists.txt                    | 8 +++++---
+ GenerateCLP/CMakeLists.txt                    | 9 ++++-----
  GenerateCLP/GenerateCLPInstallConfig.cmake.in | 2 +-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/GenerateCLP/CMakeLists.txt b/GenerateCLP/CMakeLists.txt
-index 46cc526..5167101 100644
+index bd51085..f34ec27 100644
 --- a/GenerateCLP/CMakeLists.txt
 +++ b/GenerateCLP/CMakeLists.txt
-@@ -159,14 +159,15 @@ set(GenerateCLP_FORWARD_PATH_BUILD " \\
-    ${json_forward_path_build} \\
-    \"${ModuleDescriptionParser_DIR}/bin\" CONFIG_DIR_POST \\
- ")
-+#ITK path here is a workaround!!!
+@@ -177,12 +177,11 @@ set(GenerateCLP_FORWARD_PATH_BUILD " \\
  set(GenerateCLP_FORWARD_PATH_INSTALL " \\
     \".\", \\
--   \"${ITK_DIR}/bin\", \\
-+   \"${ITK_INSTALL_PREFIX}/lib64/ITK-${ITK_VERSION_MAJOR}.${ITK_VERSION_MINOR}.${ITK_VERSION_PATCH}\", \\
-    ${json_forward_path_install} \\
+    \"${ITK_DIR}/bin\", \\
+-   ${json_forward_path_install} \\
+-   ${additional_forward_paths_install} \\
 -   \"${ModuleDescriptionParser_DIR}/bin\" \\
-+   \"${SlicerExecutionModel_INSTALL_LIB_DIR}\" \\
++   \"${json_forward_path_install}\", \\
++   \"${SlicerExecutionModel_CONFIG_DIR}\" \\
  ")
  set(GenerateCLP_FORWARD_EXE GenerateCLP)
 -set(GenerateCLP_FORWARD_DIR_INSTALL "..")
-+set(GenerateCLP_FORWARD_DIR_INSTALL ".")
++set(GenerateCLP_FORWARD_DIR_INSTALL "./")
+ 
  
  # --------------------------------------------------------------------------
- # Build launcher
-@@ -243,6 +244,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+@@ -259,7 +258,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   install(FILES
      ${GenerateCLP_BINARY_DIR}/bin/GenerateCLP
      ${GenerateCLP_BINARY_DIR}/bin/GenerateCLPLauncher
-     DESTINATION bin
-+    PERMISSIONS OWNER_WRITE WORLD_READ WORLD_EXECUTE
+-    DESTINATION bin
++    DESTINATION ${SlicerExecutionModel_INSTALL_LIB_DIR}/${PROJECT_NAME}/bin
      COMPONENT Runtime
      )
  

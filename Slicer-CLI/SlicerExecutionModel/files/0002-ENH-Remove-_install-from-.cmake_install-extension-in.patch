@@ -1,7 +1,7 @@
-From 94f5a251fb389bc3f9c3cd7f2fc24beca5fe9396 Mon Sep 17 00:00:00 2001
+From b1044da034ad9aa70b92a38189d528aea4bd924f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 21:02:38 +0200
-Subject: [PATCH 02/17] ENH: Remove _install from .cmake_install extension in
+Subject: [PATCH 02/15] ENH: Remove _install from .cmake_install extension in
  some files
 
 ---
@@ -10,10 +10,10 @@ Subject: [PATCH 02/17] ENH: Remove _install from .cmake_install extension in
  2 files changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/GenerateCLP/CMakeLists.txt b/GenerateCLP/CMakeLists.txt
-index e6a70da..4bf8e94 100644
+index 3ae60ba..1b1ac44 100644
 --- a/GenerateCLP/CMakeLists.txt
 +++ b/GenerateCLP/CMakeLists.txt
-@@ -139,13 +139,13 @@ endif()
+@@ -137,13 +137,13 @@ endif()
  # Install support files
  # --------------------------------------------------------------------------
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
@@ -31,7 +31,7 @@ index e6a70da..4bf8e94 100644
      COMPONENT Development
      RENAME UseGenerateCLP.cmake
      )
-@@ -235,6 +235,15 @@ configure_file(
+@@ -252,6 +252,15 @@ configure_file(
    )
  include(GenerateGenerateCLPConfig.cmake)
  

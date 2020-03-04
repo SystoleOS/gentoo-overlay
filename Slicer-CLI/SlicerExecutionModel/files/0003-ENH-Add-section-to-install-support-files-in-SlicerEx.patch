@@ -1,7 +1,7 @@
-From a587b1fda0bc1556c7f61f38f96549cf1b7eaf5d Mon Sep 17 00:00:00 2001
+From 1dde975008d44560acd37ee3f8eac80a72122443 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 21:12:05 +0200
-Subject: [PATCH 03/17] ENH: Add section to install support files in
+Subject: [PATCH 03/15] ENH: Add section to install support files in
  SlicerExecutionModel
 
 ---
@@ -12,10 +12,10 @@ Subject: [PATCH 03/17] ENH: Add section to install support files in
  create mode 100644 SlicerExecutionModelInstallConfig.cmake.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index ccdc767..ecb4a32 100644
+index 917e3f7..a946863 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -15,6 +15,8 @@ project(SlicerExecutionModel CXX)
+@@ -29,6 +29,8 @@ project(SlicerExecutionModel
  
  #-----------------------------------------------------------------------------
  
@@ -24,7 +24,7 @@ index ccdc767..ecb4a32 100644
  include(CMakeDependentOption)
  
  set(CMAKE_MODULE_PATH ${SlicerExecutionModel_SOURCE_DIR}/CMake ${CMAKE_MODULE_PATH})
-@@ -215,3 +217,29 @@ foreach(SCRIPT ${allscripts})
+@@ -247,3 +249,29 @@ foreach(SCRIPT ${allscripts})
    configure_file(${SCRIPT}
      ${CMAKE_CURRENT_BINARY_DIR}/CMake/${_fileName} COPYONLY IMMEDIATE)
  endforeach()

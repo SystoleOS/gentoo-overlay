@@ -1,7 +1,7 @@
-From 39844d61cee17bf7ce5130cfdb2386f63c6a3260 Mon Sep 17 00:00:00 2001
+From 97cb9428fc99b97dcb5d0430ba31141bbdb91b11 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sat, 28 Sep 2019 22:29:13 +0200
-Subject: [PATCH 05/17] ENH: Generate TCLAP install configuration files
+Subject: [PATCH 05/15] ENH: Generate TCLAP install configuration files
 
 ---
  tclap/GenerateTCLAPConfig.cmake | 6 +++---
