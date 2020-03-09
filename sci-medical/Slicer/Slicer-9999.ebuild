@@ -77,6 +77,8 @@ PATCHES=(
 	${FILESDIR}/0026-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
 	${FILESDIR}/0027-ENH-Change-SlicerApp-real-Slicer.patch
 	${FILESDIR}/0028-ENH-Enable-utilities-for-creating-new-modules-extens.patch
+	${FILESDIR}/0029-ENH-Enable-search-of-settings-in-etc-Slicer-for-ints.patch
+	${FILESDIR}/0030-ENH-Improve-directories-configuration.patch
 )
 
 src_prepare() {
@@ -117,7 +119,10 @@ src_configure(){
 			-DjqPlot_DIR=/usr/share/jqPlot
 			-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
 			-DSlicer_VTK_WRAP_HIERARCHY_DIR=${BUILD_DIR}
-			-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
+			-DSlicer_INSTALL_QTLOADABLEMODULES_BIN_DIR=lib64/Slicer-4.11/qt-loadable-modules
+			-DSlicer_INSTALL_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
+			-DSlicer_INSTALL_CLIMODULES_BIN_DIR=lib64/Slicer-4.11/cli-modules
+			-DSlicer_INSTALL_CLIMODULES_LIB_DIR=lib64/Slicer-4.11/cli-modules
 			-DSlicer_INSTALL_LIBEXEC_DIR=lib64/Slicer-4.11/libexec
 		)
 
