@@ -61,6 +61,7 @@ src_configure(){
 		-DVTK_VMTK_WRAP_PYTHON=ON
 		-DVMTK_WRAP_PYTHON=ON
 		-DVTK_VMTK_CONTRIB=ON
+		-DVMTK_USE_RENDERING=ON
 	)
 
 	cmake-utils_src_configure
