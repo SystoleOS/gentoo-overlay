@@ -31,6 +31,7 @@ RDEPEND="
 	dev-qt/qtwebengine[widgets]
 	dev-qt/qtsql
 	dev-qt/designer[webkit]
+	x11-libs/libXt
 "
 
 DEPEND="${RDEPEND}"
