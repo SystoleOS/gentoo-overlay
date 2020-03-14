@@ -22,7 +22,8 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND=""
+DEPEND="dev-qt/qtcore
+		dev-qt/qtwidgets"
 RDEPEND="${DEPEND}"
 
 PATCHES=()
