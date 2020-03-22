@@ -1,0 +1,71 @@
+diff --git a/cpp-client/CMakeLists.txt b/cpp-client/CMakeLists.txt
+index ed5d78d..a53936c 100644
+--- a/cpp-client/CMakeLists.txt
++++ b/cpp-client/CMakeLists.txt
+@@ -71,10 +71,30 @@ target_link_libraries(NvidiaAIAAClient ${ITK_LIBRARIES})
+ 
+ include(CMakePackageConfigHelpers)
+ 
++if (NOT DEFINED NvidiaAIAAClient_LIBRARIES_DIR)
++  set(NvidiaAIAAClient_LIBRARIES_DIR "lib")
++endif()
++
++if (NOT DEFINED NvidiaAIAAClient_ARCHIVE_DIR)
++  set(NvidiaAIAAClient_ARCHIVE_DIR "lib")
++endif()
++
++if (NOT DEFINED NvidiaAIAAClient_BINARIES_DIR)
++  set(NvidiaAIAAClient_BINARIES_DIR "bin")
++endif()
++
++if (NOT DEFINED NvidiaAIAAClient_INCLUDE_DIR)
++  set(NvidiaAIAAClient_INCLUDE_DIR "include/nvidia/aiaa")
++endif()
++
++if (NOT DEFINED NvidiaAIAAClient_CMAKE_DIR)
++  set(NvidiaAIAAClient_CMAKE_DIR "lib/cmake")
++endif()
++
+ install(TARGETS NvidiaAIAAClient EXPORT NvidiaAIAAClientTargets
+-    ARCHIVE  DESTINATION lib
+-    LIBRARY  DESTINATION lib
+-    RUNTIME  DESTINATION bin)
++    ARCHIVE  DESTINATION ${NvidiaAIAAClient_ARCHIVE_DIR}
++    LIBRARY  DESTINATION ${NvidiaAIAAClient_LIBRARIES_DIR}
++    RUNTIME  DESTINATION ${NvidiaAIAAClient_BINARIES_DIR})
+ 
+ install(FILES 
+          include/nvidia/aiaa/client.h
+@@ -88,7 +108,7 @@ install(FILES
+          include/nvidia/aiaa/exception.h
+        DESTINATION include/nvidia/aiaa)
+ 
+-install(EXPORT NvidiaAIAAClientTargets DESTINATION lib/cmake/NvidiaAIAAClient)
++install(EXPORT NvidiaAIAAClientTargets DESTINATION "${NvidiaAIAAClient_CMAKE_DIR}/NvidiaAIAAClient")
+ 
+ #export(TARGETS NvidiaAIAAClient FILE NvidiaAIAAClientConfig.cmake)
+ 
+diff --git a/slicer-plugin/CMakeLists.txt b/slicer-plugin/CMakeLists.txt
+index c9e63c8..60e4328 100644
+--- a/slicer-plugin/CMakeLists.txt
++++ b/slicer-plugin/CMakeLists.txt
+@@ -21,5 +21,5 @@ add_subdirectory(NvidiaAIAA)
+ ## NEXT_MODULE
+ 
+ #-----------------------------------------------------------------------------
+-include(${Slicer_EXTENSION_GENERATE_CONFIG})
+-include(${Slicer_EXTENSION_CPACK})
++#include(${Slicer_EXTENSION_GENERATE_CONFIG})
++#include(${Slicer_EXTENSION_CPACK})
+diff --git a/slicer-plugin/NvidiaAIAA/CMakeLists.txt b/slicer-plugin/NvidiaAIAA/CMakeLists.txt
+index f442f4f..9c059ee 100644
+--- a/slicer-plugin/NvidiaAIAA/CMakeLists.txt
++++ b/slicer-plugin/NvidiaAIAA/CMakeLists.txt
+@@ -31,7 +31,6 @@ slicerMacroBuildScriptedModule(
+   NAME ${MODULE_NAME}
+   SCRIPTS ${MODULE_PYTHON_SCRIPTS}
+   RESOURCES ${MODULE_PYTHON_RESOURCES}
+-  WITH_GENERIC_TESTS
+   )
+ 
+ #-----------------------------------------------------------------------------
