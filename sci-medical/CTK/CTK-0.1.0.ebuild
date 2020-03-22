@@ -49,6 +49,7 @@ PATCHES=(
 	${FILESDIR}/0001-COMP-Fix-Unknown-CMake-command-ctk_add_executable_ut.patch
 	${FILESDIR}/0002-ENH-Include-missing-files.patch
 	${FILESDIR}/0003-ENH-Change-installation-path-for-python-wrapped-file.patch
+	${FILESDIR}/0004-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
 )
 
 src_unpack() {
