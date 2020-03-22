@@ -23,7 +23,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="sci-medical/GDCM
-		sci-libs/hdf5
+		sci-libs/hdf5[cxx]
 		sci-libs/VTK
 		dev-cpp/eigen"
 
@@ -85,7 +85,6 @@ src_configure(){
 		-DITK_USE_CONCEPT_CHECKING=OFF
 		-DVNL_CONFIG_LEGACY_METHODS=ON
 		-DITK_INSTALL_LIBRARY_DIR=/usr/lib64
-		-DITKGDCM_INSTALL_LIB_DIR=/usr/lib64
 		-DWORKDIR=${WORKDIR}
 	)
 
