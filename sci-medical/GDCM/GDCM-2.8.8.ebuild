@@ -58,7 +58,7 @@ src_configure(){
 		-DGDCM_BUILD_TESTING=0FF
 		-DGDCM_USE_VTK=OFF
 		-DGDCM_USE_SYSTEM_OPENJPEG=ON
-		-DGDCM_INSTALL_LIB_DIR=/usr/lib64
+		-DGDCM_INSTALL_LIB_DIR=lib64
 	)
 
 	cmake-utils_src_configure
