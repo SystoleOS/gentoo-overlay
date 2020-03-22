@@ -23,6 +23,8 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
+IUSE="python cli sitk"
+
 RDEPEND="
 	python? ( ${PYTHON_DEPS}
 			  sci-medical/CTK[python] )
@@ -42,11 +44,10 @@ RDEPEND="
 	dev-python/PythonQt_CTK
 	sci-libs/jqPlot
 	cli? ( Slicer-CLI/SlicerExecutionModel )
+	sitk? ( sci-libs/SimpleITK )
 "
 
 DEPEND="${RDEPEND}"
-
-IUSE="python cli"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
@@ -128,6 +129,10 @@ src_configure(){
 
 		if use python; then
 			mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
+		fi
+
+		if use sitk; then
+			mycmakeargs+=(-DSlicer_USE_SimpleITK=ON)
 		fi
 
 		cmake-utils_src_configure
