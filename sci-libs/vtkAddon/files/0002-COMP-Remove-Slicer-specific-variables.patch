@@ -1,0 +1,26 @@
+From a75a6ced90fcf6f8669ee7068fbb846e1aa7ade4 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Wed, 25 Mar 2020 12:27:22 +0100
+Subject: [PATCH 2/4] COMP: Remove Slicer-specific variables
+
+---
+ CMake/vtkMacroKitPythonWrap.cmake | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/CMake/vtkMacroKitPythonWrap.cmake b/CMake/vtkMacroKitPythonWrap.cmake
+index 71e03ae..6e2fbf8 100644
+--- a/CMake/vtkMacroKitPythonWrap.cmake
++++ b/CMake/vtkMacroKitPythonWrap.cmake
+@@ -118,7 +118,8 @@ macro(vtkMacroKitPythonWrap)
+   endif()
+   # Default global variables
+   if(NOT DEFINED Slicer_VTK_WRAP_HIERARCHY_DIR)
+-    set(Slicer_VTK_WRAP_HIERARCHY_DIR ${Slicer_BINARY_DIR})
++#    set(Slicer_VTK_WRAP_HIERARCHY_DIR ${Slicer_BINARY_DIR})
++    set(Slicer_VTK_WRAP_HIERARCHY_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+   endif()
+   if(NOT DEFINED Slicer_VTK_WRAP_MODULE_INSTALL_COMPONENT_IDENTIFIER)
+     set(Slicer_VTK_WRAP_MODULE_INSTALL_COMPONENT_IDENTIFIER "RuntimeLibraries")
+-- 
+2.24.1
+
