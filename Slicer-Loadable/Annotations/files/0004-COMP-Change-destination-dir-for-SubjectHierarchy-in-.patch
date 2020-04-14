@@ -1,7 +1,7 @@
-From 94aeb871188a1977be2c883fdf9af2ad9d88aab6 Mon Sep 17 00:00:00 2001
+From 0c18b95c30a9d9c24a489d7e6f9f98afda610744 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 20 Feb 2020 20:07:16 +0100
-Subject: [PATCH 4/4] COMP: Change destination dir for SubjectHierarchy in
+Subject: [PATCH 4/5] COMP: Change destination dir for SubjectHierarchy in
  Annotations
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 4/4] COMP: Change destination dir for SubjectHierarchy in
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Modules/Loadable/Annotations/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Loadable/Annotations/SubjectHierarchyPlugins/CMakeLists.txt
-index 195efe5ec..063dfb8b0 100644
+index 195efe5ecd..063dfb8b01 100644
 --- a/Modules/Loadable/Annotations/SubjectHierarchyPlugins/CMakeLists.txt
 +++ b/Modules/Loadable/Annotations/SubjectHierarchyPlugins/CMakeLists.txt
 @@ -11,7 +11,7 @@ ctkMacroCompilePythonScript(

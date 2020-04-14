@@ -1,7 +1,7 @@
-From d02c4e6027f3298165822c42e92a2dfa28f103a3 Mon Sep 17 00:00:00 2001
+From 61dffea3ce9e53c1f2df0adf444294bc30a0622f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 20 Feb 2020 14:27:10 +0100
-Subject: [PATCH 3/4] COMP: Fix compilation error on wrapping
+Subject: [PATCH 3/5] COMP: Fix compilation error on wrapping
 
 see
 https://www.slicer.org/wiki/Documentation/Nightly/Developers/Tutorials/MigrationGuide/VTK7-Qt4-to-VTK8-Qt5
@@ -12,10 +12,10 @@ section VTK8: Copy constructor and equal operator should be disabled
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/Modules/Loadable/Annotations/Logic/vtkSlicerAnnotationModuleLogic.h b/Modules/Loadable/Annotations/Logic/vtkSlicerAnnotationModuleLogic.h
-index a4abe3d7d..c6595057e 100644
+index 1dd6a8ed32..b5c7b3f11c 100644
 --- a/Modules/Loadable/Annotations/Logic/vtkSlicerAnnotationModuleLogic.h
 +++ b/Modules/Loadable/Annotations/Logic/vtkSlicerAnnotationModuleLogic.h
-@@ -273,8 +273,9 @@ public:
+@@ -276,8 +276,9 @@ public:
  protected:
  
    vtkSlicerAnnotationModuleLogic();

@@ -1,14 +1,14 @@
-From 9db432bf0b816e670026b7c1d2692ab159fb132b Mon Sep 17 00:00:00 2001
+From 4882e6eb4dde084c08c70b8f2d17aa1ff633355f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 20 Feb 2020 14:26:51 +0100
-Subject: [PATCH 2/4] COMP: Add PythonQt include directory
+Subject: [PATCH 2/5] COMP: Add PythonQt include directory
 
 ---
  Modules/Loadable/Annotations/CMakeLists.txt | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/Modules/Loadable/Annotations/CMakeLists.txt b/Modules/Loadable/Annotations/CMakeLists.txt
-index e550d44ef..a25d5da8d 100644
+index e550d44ef4..a25d5da8d3 100644
 --- a/Modules/Loadable/Annotations/CMakeLists.txt
 +++ b/Modules/Loadable/Annotations/CMakeLists.txt
 @@ -46,6 +46,7 @@ set(MODULE_INCLUDE_DIRECTORIES

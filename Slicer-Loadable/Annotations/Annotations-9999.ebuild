@@ -33,6 +33,7 @@ PATCHES=(
 	${FILESDIR}/0002-COMP-Add-PythonQt-include-directory.patch
 	${FILESDIR}/0003-COMP-Fix-compilation-error-on-wrapping.patch
 	${FILESDIR}/0004-COMP-Change-destination-dir-for-SubjectHierarchy-in-.patch
+	${FILESDIR}/0005-COMP-Remove-redundant-special-functions-declarations.patch
 )
 
 src_prepare() {
