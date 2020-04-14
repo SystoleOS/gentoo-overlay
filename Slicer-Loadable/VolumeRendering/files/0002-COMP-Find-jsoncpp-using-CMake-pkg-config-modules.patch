@@ -1,0 +1,45 @@
+From b37050986a1c52bc5fb865bf10b51e8a5b2dc782 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Tue, 14 Apr 2020 16:24:25 +0200
+Subject: [PATCH 2/2] COMP: Find jsoncpp using CMake pkg-config modules
+
+---
+ Modules/Loadable/VolumeRendering/CMakeLists.txt      | 3 +++
+ Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt | 6 +-----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/Modules/Loadable/VolumeRendering/CMakeLists.txt b/Modules/Loadable/VolumeRendering/CMakeLists.txt
+index 997d108924..03aa25a226 100644
+--- a/Modules/Loadable/VolumeRendering/CMakeLists.txt
++++ b/Modules/Loadable/VolumeRendering/CMakeLists.txt
+@@ -15,6 +15,9 @@ include(${CTK_USE_FILE})
+ find_package(ITK REQUIRED)
+ include(${ITK_USE_FILE})
+ 
++include(FindPkgConfig)
++pkg_check_modules (jsoncpp REQUIRED jsoncpp)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME VolumeRendering)
+ set(MODULE_TITLE "Volume Rendering")
+diff --git a/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt b/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
+index d9eae4395d..37b02e0e5e 100644
+--- a/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
++++ b/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
+@@ -4,12 +4,8 @@ set(KIT ${PROJECT_NAME})
+ 
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT")
+ 
+-find_package(jsoncpp REQUIRED)
+-
+-get_target_property(jsoncpp_INCLUDE_DIR jsoncpp_lib INTERFACE_INCLUDE_DIRECTORIES)
+-
+ set(${KIT}_INCLUDE_DIRECTORIES
+-  ${jsoncpp_INCLUDE_DIR}
++  ${jsoncpp_INCLUDE_DIRS}
+   ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerAnnotationsModuleMRML
+   )
+ 
+-- 
+2.24.1
+
