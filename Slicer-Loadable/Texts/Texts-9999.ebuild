@@ -55,6 +55,7 @@ src_configure(){
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
 		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
