@@ -25,12 +25,7 @@ DEPEND="${PYTHON_DEPS}"
 
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	${FILESDIR}/0001-COMP-Adding-necessary-dependency-file-form-Slicer.patch
-	${FILESDIR}/0002-COMP-Remove-Slicer-specific-variables.patch
-	${FILESDIR}/0003-ENH-Adding-install-directories.patch
-	${FILESDIR}/0004-ENH-Adding-installation-of-configuration-files.patch
-)
+PATCHES=()
 
 src_configure(){
 
