@@ -31,6 +31,7 @@ RDEPEND="${DEPEND}"
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-SceneViews-a-separate-module.patch
 	${FILESDIR}/0002-COMP-Fix-compilation-error-on-python-wrapping.patch
+	${FILESDIR}/0003-COMP-Remove-redundant-declaration-of-special-functio.patch
 )
 
 src_prepare() {
