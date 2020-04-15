@@ -1,7 +1,7 @@
-From 178995485e9223df49df51b825299bc985bc9101 Mon Sep 17 00:00:00 2001
+From 36d31a79684ad298a3c47f85ca86766e48487a90 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 18 Dec 2019 07:46:25 +0100
-Subject: [PATCH 13/25] COMP: Change JsonCpp by jsoncpp
+Subject: [PATCH 13/29] COMP: Change JsonCpp by jsoncpp
 
 This makes it work with own external packages
 ---
@@ -16,7 +16,7 @@ This makes it work with own external packages
  8 files changed, 25 insertions(+), 24 deletions(-)
 
 diff --git a/CMake/CTestCustom.cmake.in b/CMake/CTestCustom.cmake.in
-index 0435b5cd9..8da90413b 100644
+index 0435b5cd9a..8da90413bd 100644
 --- a/CMake/CTestCustom.cmake.in
 +++ b/CMake/CTestCustom.cmake.in
 @@ -146,7 +146,7 @@ set(CTEST_CUSTOM_WARNING_EXCEPTION
@@ -29,7 +29,7 @@ index 0435b5cd9..8da90413b 100644
  
    # Libs/tclap
 diff --git a/CMake/SlicerBlockInstallCMakeProjects.cmake b/CMake/SlicerBlockInstallCMakeProjects.cmake
-index e9f7aded3..54f152e61 100644
+index e9f7aded34..54f152e612 100644
 --- a/CMake/SlicerBlockInstallCMakeProjects.cmake
 +++ b/CMake/SlicerBlockInstallCMakeProjects.cmake
 @@ -42,15 +42,15 @@ if(NOT "${SimpleITK_DIR}" STREQUAL "" AND EXISTS "${SimpleITK_DIR}/CMakeCache.tx
@@ -53,7 +53,7 @@ index e9f7aded3..54f152e61 100644
  
  # -------------------------------------------------------------------------
 diff --git a/CMake/SlicerCPackBundleFixup.cmake.in b/CMake/SlicerCPackBundleFixup.cmake.in
-index 2fffb5f0a..7bc8599c7 100644
+index 2fffb5f0a6..7bc8599c7e 100644
 --- a/CMake/SlicerCPackBundleFixup.cmake.in
 +++ b/CMake/SlicerCPackBundleFixup.cmake.in
 @@ -225,7 +225,7 @@ function(fixup_bundle_with_plugins app)
@@ -66,7 +66,7 @@ index 2fffb5f0a..7bc8599c7 100644
      endforeach()
    endif()
 diff --git a/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt b/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
-index a6490a24e..cefec7715 100644
+index a6490a24ea..cefec77159 100644
 --- a/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
 +++ b/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
 @@ -4,10 +4,11 @@ set(KIT ${PROJECT_NAME})
@@ -93,10 +93,10 @@ index a6490a24e..cefec7715 100644
    vtkSlicerAnnotationsModuleMRML
    )
 diff --git a/SuperBuild.cmake b/SuperBuild.cmake
-index 3e8c4ea48..3a4bd16c4 100644
+index 6af3b47131..2f8c90b5e8 100644
 --- a/SuperBuild.cmake
 +++ b/SuperBuild.cmake
-@@ -161,10 +161,10 @@ endif()
+@@ -164,10 +164,10 @@ endif()
  
  include(SlicerCheckModuleEnabled)
  
@@ -110,7 +110,7 @@ index 3e8c4ea48..3a4bd16c4 100644
  
  #------------------------------------------------------------------------------
 diff --git a/SuperBuild/External_JsonCpp.cmake b/SuperBuild/External_JsonCpp.cmake
-index 40f7f8624..995232ffa 100644
+index 40f7f86247..995232ffa4 100644
 --- a/SuperBuild/External_JsonCpp.cmake
 +++ b/SuperBuild/External_JsonCpp.cmake
 @@ -1,5 +1,5 @@
@@ -148,7 +148,7 @@ index 40f7f8624..995232ffa 100644
    VARS ${proj}_DIR:PATH
    )
 diff --git a/SuperBuild/External_ParameterSerializer.cmake b/SuperBuild/External_ParameterSerializer.cmake
-index 8a13f14c3..35804f53b 100644
+index 8a13f14c35..35804f53b9 100644
 --- a/SuperBuild/External_ParameterSerializer.cmake
 +++ b/SuperBuild/External_ParameterSerializer.cmake
 @@ -2,7 +2,7 @@
@@ -172,7 +172,7 @@ index 8a13f14c3..35804f53b 100644
      INSTALL_COMMAND ""
      DEPENDS
 diff --git a/SuperBuild/External_SlicerExecutionModel.cmake b/SuperBuild/External_SlicerExecutionModel.cmake
-index d1859f743..11f4b6c4d 100644
+index d1859f7432..11f4b6c4d7 100644
 --- a/SuperBuild/External_SlicerExecutionModel.cmake
 +++ b/SuperBuild/External_SlicerExecutionModel.cmake
 @@ -9,7 +9,7 @@ if(Slicer_USE_TBB)

@@ -1,7 +1,7 @@
-From 37a051c712c4a5f19b8df57a470a7aebd95bf9c3 Mon Sep 17 00:00:00 2001
+From 2bbb357b7a04ad76de3714ca56bc6abe89e749fe Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 16:44:15 +0100
-Subject: [PATCH 18/25] COMP: Adding MRMLCLI include directories to
+Subject: [PATCH 18/29] COMP: Adding MRMLCLI include directories to
  Slicer_Base_INCLUDE_DIRS
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 18/25] COMP: Adding MRMLCLI include directories to
  1 file changed, 1 insertion(+)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index a70f750ab..2e62fb68f 100644
+index 394cb2cb35..c5a1093ef3 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -92,6 +92,7 @@ set(Slicer_Base_LIBRARY_DIRS
+@@ -93,6 +93,7 @@ set(Slicer_Base_LIBRARY_DIRS
  # Slicer Base include file directories.
  set(Slicer_Base_INCLUDE_DIRS
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@"

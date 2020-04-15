@@ -1,7 +1,7 @@
-From b2d1f60fca3500d1b291b8f38bc5cf7525ec8c7f Mon Sep 17 00:00:00 2001
+From 88313b471b04aaf4fdf623b953488dc9666fcef3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 19 Feb 2020 09:39:24 +0100
-Subject: [PATCH 23/25] COMP: Set missing variables in SlicerConfig (install
+Subject: [PATCH 22/29] COMP: Set missing variables in SlicerConfig (install
  configuration)
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 23/25] COMP: Set missing variables in SlicerConfig (install
  1 file changed, 4 insertions(+)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index e8f603047..eb3a8608a 100644
+index 7d9ab626c5..ddf965b38a 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
 @@ -7,6 +7,10 @@

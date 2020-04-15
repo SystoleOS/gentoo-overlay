@@ -1,7 +1,7 @@
-From deb80103bb4187699349c252dfeed2bd10b30321 Mon Sep 17 00:00:00 2001
+From 3eb9671ab1db96068497fd0584953f82d8e3a33a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 4 Oct 2019 13:31:59 +0200
-Subject: [PATCH 09/25] COMP: Add QTLOADABLEMODULES dirs in intall tree
+Subject: [PATCH 09/29] COMP: Add QTLOADABLEMODULES dirs in intall tree
  configuration
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 09/25] COMP: Add QTLOADABLEMODULES dirs in intall tree
  1 file changed, 13 insertions(+), 6 deletions(-)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 2be8cee6f..f5c89ec03 100644
+index dcdf4d3a47..bc0f19a308 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -116,12 +116,19 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
+@@ -117,12 +117,19 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "@Slicer_INSTALL_CLIMODULES_SHARE_DIR@")
  

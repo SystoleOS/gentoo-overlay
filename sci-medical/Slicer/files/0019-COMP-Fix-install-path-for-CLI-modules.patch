@@ -1,7 +1,7 @@
-From cc05431819e255c7ef13866857fe0e3552e992da Mon Sep 17 00:00:00 2001
+From 7182af198b77174b3cae5e5d4550405d25da3127 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 16 Jan 2020 12:43:27 +0100
-Subject: [PATCH 19/25] COMP: Fix install path for CLI modules
+Subject: [PATCH 19/29] COMP: Fix install path for CLI modules
 
 ---
  CMake/SlicerInstallConfig.cmake.in | 5 +++++
@@ -9,10 +9,10 @@ Subject: [PATCH 19/25] COMP: Fix install path for CLI modules
  2 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 2e62fb68f..fe3f5d407 100644
+index c5a1093ef3..51f657b26a 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -114,6 +114,11 @@ set(Slicer_INSTALL_INCLUDE_DIR "@Slicer_INSTALL_INCLUDE_DIR@")
+@@ -115,6 +115,11 @@ set(Slicer_INSTALL_INCLUDE_DIR "@Slicer_INSTALL_INCLUDE_DIR@")
  set(Slicer_INSTALL_SHARE_DIR "@Slicer_INSTALL_SHARE_DIR@")
  set(Slicer_INSTALL_ITKFACTORIES_DIR "@Slicer_INSTALL_ITKFACTORIES_DIR@")
  
@@ -25,7 +25,7 @@ index 2e62fb68f..fe3f5d407 100644
  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "@Slicer_INSTALL_CLIMODULES_SHARE_DIR@")
 diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
-index 52b89c175..241c2d39f 100644
+index 52b89c175a..241c2d39fc 100644
 --- a/CMake/UseSlicer.cmake.in
 +++ b/CMake/UseSlicer.cmake.in
 @@ -317,9 +317,9 @@ endif()

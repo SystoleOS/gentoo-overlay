@@ -71,15 +71,14 @@ PATCHES=(
 	${FILESDIR}/0019-COMP-Fix-install-path-for-CLI-modules.patch
 	${FILESDIR}/0020-COMP-Fix-ITKFactoryRegistration-issues-on-install-tr.patch
 	${FILESDIR}/0021-ENH-Enable-Python.patch
-	${FILESDIR}/0022-ENH-Enable-external-definition-of-directories.patch
-	${FILESDIR}/0023-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
-	${FILESDIR}/0024-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
-	${FILESDIR}/0025-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
-	${FILESDIR}/0026-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
-	${FILESDIR}/0027-ENH-Change-SlicerApp-real-Slicer.patch
-	${FILESDIR}/0028-ENH-Enable-utilities-for-creating-new-modules-extens.patch
-	${FILESDIR}/0029-ENH-Enable-search-of-settings-in-etc-Slicer-for-ints.patch
-	${FILESDIR}/0030-ENH-Improve-directories-configuration.patch
+	${FILESDIR}/0022-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
+	${FILESDIR}/0023-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
+	${FILESDIR}/0024-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
+	${FILESDIR}/0025-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
+	${FILESDIR}/0026-ENH-Change-SlicerApp-real-Slicer.patch
+	${FILESDIR}/0027-ENH-Enable-search-of-settings-in-etc-Slicer-for-ints.patch
+	${FILESDIR}/0028-ENH-Improve-directories-configuration.patch
+	${FILESDIR}/0029-COMP-Add-finding-of-vtkAddon-and-mod-on-Slicer_Libs_.patch
 )
 
 src_prepare() {
@@ -94,70 +93,56 @@ src_configure(){
 		local mycmakeargs=()
 
 		mycmakeargs+=(
-			-DSlicer_SUPERBUILD=OFF
-			-DBUILD_TESTING=OFF
-			-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT=OFF
-			-DSlicer_BUILD_CLI_SUPPORT="$(usex cli)"
-			-DSlicer_BUILD_CLI=OFF
-			-DCMAKE_CXX_STANDARD=11
-			-DSlicer_REQUIRED_QT_VERSION=5
-			-DSlicer_BUILD_DICOM_SUPPORT=OFF
-			-DSlicer_BUILD_ITKPython=OFF
-			-DSlicer_BUILD_QTLOADABLEMODULES=OFF
-			-DSlicer_BUILD_QTSCRIPTEDMODULES=OFF
-			-DSlicer_BUILD_QT_DESIGNER_PLUGINS=ON
-			-DSlicer_USE_CTKAPPLAUNCHER=OFF
-			-DSlicer_USE_PYTHONQT="$(usex python)"
-			-DSlicer_USE_QtTesting=OFF
-			-DSlicer_USE_SimpleITK=OFF
-			-DSlicer_VTK_RENDERING_BACKEND=OpenGL2
-			-DSlicer_VTK_VERSION_MAJOR=8
-			-DSlicer_INSTALL_DEVELOPMENT=ON
-			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
-			-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-			-DTeem_DIR="/usr/lib64"
-			-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
-			-DjqPlot_DIR=/usr/share/jqPlot
-			-DCTKAppLauncherLib_DIR=/usr/lib64/CTKAppLauncher-1.0.0
-			-DSlicer_VTK_WRAP_HIERARCHY_DIR=${BUILD_DIR}
-			-DSlicer_INSTALL_QTLOADABLEMODULES_BIN_DIR=lib64/Slicer-4.11/qt-loadable-modules
-			-DSlicer_INSTALL_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
-			-DSlicer_INSTALL_CLIMODULES_BIN_DIR=lib64/Slicer-4.11/cli-modules
-			-DSlicer_INSTALL_CLIMODULES_LIB_DIR=lib64/Slicer-4.11/cli-modules
-			-DSlicer_INSTALL_LIBEXEC_DIR=lib64/Slicer-4.11/libexec
+			-DSlicer_SUPERBUILD:BOOL=OFF
+			-DBUILD_TESTING:BOOL=OFF
+			-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
+			-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli)"
+			-DSlicer_BUILD_CLI:BOOL=OFF
+			-DCMAKE_CXX_STANDARD:STRING="11"
+			-DSlicer_REQUIRED_QT_VERSION:STRING="5"
+			-DSlicer_BUILD_DICOM_SUPPORT:BOOL=OFF
+			-DSlicer_BUILD_ITKPython:BOOL=OFF
+			-DSlicer_BUILD_QTLOADABLEMODULES:BOOL=OFF
+			-DSlicer_BUILD_QTSCRIPTEDMODULES:BOOL=OFF
+			-DSlicer_BUILD_QT_DESIGNER_PLUGINS:BOOL=ON
+			-DSlicer_USE_CTKAPPLAUNCHER:BOOL=OFF
+			-DSlicer_USE_PYTHONQT:BOOL="$(usex python)"
+			-DSlicer_USE_QtTesting:BOOL=OFF
+			-DSlicer_USE_SimpleITK:BOOL=OFF
+			-DSlicer_VTK_RENDERING_BACKEND:STRING="OpenGL2"
+			-DSlicer_VTK_VERSION_MAJOR:STRING="8"
+			-DSlicer_INSTALL_DEVELOPMENT:BOOL=ON
+			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
+			-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
+			-DTeem_DIR:STRING="/usr/lib64"
+			-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)"
+			-DSlicer_INSTALL_PYTHOND_LIB_DIR:STRING="$(get_libdir)"
+			-DSlicer_INSTALL_PYTHON_LIB_DIR:STRING="$(python_get_sitedir)"
+			-DSlicer_INSTALL_PYTHON_BIN_DIR:STRING="$(python_get_sitedir)"
+			-DSlicer_INSTALL_BIN_DIR:STRING="bin"
+			-DjqPlot_DIR:STRING="/usr/share/jqPlot"
+			-DCTKAppLauncherLib_DIR:STRING="/usr/lib64/CTKAppLauncher-1.0.0"
+			-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${BUILD_DIR}"
+			-DSlicer_INSTALL_QTLOADABLEMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
+			-DSlicer_INSTALL_QTLOADABLEMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
+			-DSlicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
+			-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
+			-DSlicer_INSTALL_CLIMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/cli-modules"
+			-DSlicer_INSTALL_CLIMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/cli-modules"
+			-DSlicer_INSTALL_LIBEXEC_DIR:STRING="lib64/Slicer-4.11/libexec"
+			-DSlicer_INSTALL_CMAKE_CONFIG_DIR:STRING="lib64/cmake/Slicer"
+			-DSlicer_INSTALL_CMAKE_DIR:STRING="lib64/Slicer-4.11/CMake"
+			-DSlicer_INSTALL_SHARE_DIR:STRING="share/Slicer-4.11"
+			-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
+			-DSlicer_BUILD_vtkAddon:BOOL=OFF
 		)
 
-		if use python; then
-			mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
-		fi
-
 		if use sitk; then
-			mycmakeargs+=(-DSlicer_USE_SimpleITK=ON)
+			mycmakeargs+=(-DSlicer_USE_SimpleITK:BOOL=ON)
 		fi
 
 		cmake-utils_src_configure
 	}
 
 	python_foreach_impl run_in_build_dir configure
-}
-
-pkg_postinst(){
-
-	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*PythonD.so")
-	for i in ${pythond_libraries}
-	do
-		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
-	done
-
-	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*Python.so")
-	for i in ${python_libraries}
-	do
-		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
-	done
-
-	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*.so" ! -name "*Python.so" ! -name "*PythonD.so")
-	for i in ${pythond_libraries}
-	do
-		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
-	done
 }

@@ -1,7 +1,7 @@
-From d8a5a613bbbb264093592f07c00188eb75371ab5 Mon Sep 17 00:00:00 2001
+From 6548965cc610d7bbd15815884b8abfc858279666 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:05:50 +0200
-Subject: [PATCH 05/25] COMP: Add installation of missing files
+Subject: [PATCH 05/29] COMP: Add installation of missing files
 
 ---
  CMake/SlicerInstallConfig.cmake.in | 14 +++++++++++---
@@ -10,10 +10,10 @@ Subject: [PATCH 05/25] COMP: Add installation of missing files
  3 files changed, 38 insertions(+), 11 deletions(-)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 1bac8abe2..b00440acb 100644
+index 0e9b1a4bd7..5cad3bc60b 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -69,7 +69,9 @@ set(Slicer_Libs_INCLUDE_DIRS
+@@ -70,7 +70,9 @@ set(Slicer_Libs_INCLUDE_DIRS
    "${Slicer_HOME}/include/ITKCommandIO"
    "${Slicer_HOME}/include/LoadableModule"
    "${Slicer_HOME}/include/MGHImageIO"
@@ -24,7 +24,7 @@ index 1bac8abe2..b00440acb 100644
    "${Slicer_HOME}/include/MRMLIDImageIO"
    "${Slicer_HOME}/include/ModuleDescriptionParser"
    "${Slicer_HOME}/include/Qdec"
-@@ -78,6 +80,8 @@ set(Slicer_Libs_INCLUDE_DIRS
+@@ -79,6 +81,8 @@ set(Slicer_Libs_INCLUDE_DIRS
    "${Slicer_HOME}/include/vtkITK"
    "${Slicer_HOME}/include/vtkSegmentationCore"
    "${Slicer_HOME}/include/vtkTeem"
@@ -33,7 +33,7 @@ index 1bac8abe2..b00440acb 100644
    )
  
  # Slicer Base library directories.
-@@ -89,8 +93,9 @@ set(Slicer_Base_LIBRARY_DIRS
+@@ -90,8 +94,9 @@ set(Slicer_Base_LIBRARY_DIRS
  set(Slicer_Base_INCLUDE_DIRS
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@"
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseCLI"
@@ -45,7 +45,7 @@ index 1bac8abe2..b00440acb 100644
    )
  
  # The location of the UseSlicer.cmake file.
-@@ -134,3 +139,6 @@ set(PYTHON_LIBRARIES "${Slicer_HOME}/lib/Python/lib/${PYTHON_LIB_FILE}")
+@@ -135,3 +140,6 @@ set(PYTHON_LIBRARIES "${Slicer_HOME}/lib/Python/lib/${PYTHON_LIB_FILE}")
  get_filename_component(PYTHON_INCLUDE_DIR "${PYTHON_INCLUDE_PATH}" NAME)
  set(PYTHON_INCLUDE_PATH "${Slicer_HOME}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
  set(CTK_CMAKE_DIR "@CTK_CMAKE_DIR@")
@@ -53,10 +53,10 @@ index 1bac8abe2..b00440acb 100644
 +set(Slicer_EXPORT_HEADER_TEMPLATE "${Slicer_CMAKE_DIR}/qSlicerExport.h.in")
 +set(Slicer_LOGOS_RESOURCE "${Slicer_HOME}/${Slicer_INSTALL_SHARE_DIR}/Resources/qSlicer.qrc")
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 66430cfb8..74090a8b9 100644
+index ea83168caf..afaedac8ff 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1141,6 +1141,20 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1161,6 +1161,20 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
      DESTINATION ${Slicer_INSTALL_LIB_DIR}
      COMPONENT Development
      )
@@ -78,7 +78,7 @@ index 66430cfb8..74090a8b9 100644
  
  #-----------------------------------------------------------------------------
 diff --git a/Resources/CMakeLists.txt b/Resources/CMakeLists.txt
-index 47bde29d3..55257b4e7 100644
+index 47bde29d39..55257b4e76 100644
 --- a/Resources/CMakeLists.txt
 +++ b/Resources/CMakeLists.txt
 @@ -14,19 +14,19 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)

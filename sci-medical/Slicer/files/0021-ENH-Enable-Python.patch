@@ -1,80 +1,77 @@
-From 34c53587b00ce88e28ef056f4bb5af9ec7fe5d6c Mon Sep 17 00:00:00 2001
+From 5894637fd29113523f25f39db3398d2567bdc8fe Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 28 Jan 2020 13:14:57 +0100
-Subject: [PATCH 21/25] ENH: Enable Python
+Subject: [PATCH 21/29] ENH: Enable Python
 
 ---
- Base/Logic/CMakeLists.txt                           | 4 ++++
- Base/Python/CMakeLists.txt                          | 7 ++++++-
- Base/QTCLI/CMakeLists.txt                           | 4 ++++
- Base/QTCore/CMakeLists.txt                          | 5 ++++-
- CMake/LastConfigureStep/CMakeLists.txt              | 4 +++-
- CMake/SlicerBlockInstallExternalPythonModules.cmake | 6 +++++-
- CMake/SlicerMacroBuildBaseQtLibrary.cmake           | 7 ++++++-
- CMake/SlicerMacroBuildScriptedModule.cmake          | 6 +++++-
- CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake   | 6 +++++-
- Libs/MRML/CLI/CMakeLists.txt                        | 4 ++++
- Libs/MRML/Core/CMakeLists.txt                       | 5 +++++
- Libs/MRML/Widgets/CMakeLists.txt                    | 8 +++++++-
- Libs/vtkSegmentationCore/CMakeLists.txt             | 4 ++++
- Libs/vtkTeem/CMakeLists.txt                         | 5 +++++
- 14 files changed, 67 insertions(+), 8 deletions(-)
+ Base/Logic/CMakeLists.txt                     |   5 +-
+ Base/Python/CMakeLists.txt                    |   3 +-
+ Base/QTCLI/CMakeLists.txt                     |   5 +-
+ Base/QTCore/CMakeLists.txt                    |   5 +-
+ CMake/LastConfigureStep/CMakeLists.txt        |   4 +-
+ ...cerBlockInstallExternalPythonModules.cmake |   2 +-
+ CMake/SlicerDirectories.cmake                 | 182 +++++++++++++-----
+ CMake/SlicerMacroBuildBaseQtLibrary.cmake     |   4 +-
+ Libs/CMakeLists.txt                           |   3 +
+ Libs/MRML/CLI/CMakeLists.txt                  |   5 +-
+ Libs/MRML/Core/CMakeLists.txt                 |   5 +-
+ Libs/MRML/DisplayableManager/CMakeLists.txt   |   5 +-
+ Libs/MRML/Logic/CMakeLists.txt                |   5 +-
+ Libs/MRML/Widgets/CMakeLists.txt              |   4 +-
+ Libs/vtkITK/CMakeLists.txt                    |   1 +
+ Libs/vtkSegmentationCore/CMakeLists.txt       |   5 +-
+ Libs/vtkTeem/CMakeLists.txt                   |   4 +-
+ Utilities/Scripts/SlicerWizard/CMakeLists.txt |   2 +-
+ 18 files changed, 181 insertions(+), 68 deletions(-)
 
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
-index 2a81b9a71..827dc93bf 100644
+index 2a81b9a71d..c50cc5eb64 100644
 --- a/Base/Logic/CMakeLists.txt
 +++ b/Base/Logic/CMakeLists.txt
-@@ -196,6 +196,10 @@ install(TARGETS ${lib_name}
- if(VTK_WRAP_PYTHON)
-   include(vtkMacroKitPythonWrap)
- 
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${Slicer_INSTALL_LIB_DIR}")
-+  endif()
-+
-   vtkMacroKitPythonWrap(
+@@ -200,8 +200,9 @@ if(VTK_WRAP_PYTHON)
      KIT_NAME ${lib_name}
      KIT_SRCS ${SlicerBaseLogic_SRCS}
+     KIT_PYTHON_LIBRARIES MRMLLogicPythonD
+-    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   set_property(GLOBAL APPEND PROPERTY Slicer_TARGETS ${lib_name}Python ${lib_name}PythonD)
 diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
-index 9331ad9c9..dc096066a 100644
+index 9331ad9c95..1b352d3cb7 100644
 --- a/Base/Python/CMakeLists.txt
 +++ b/Base/Python/CMakeLists.txt
-@@ -68,12 +68,17 @@ if(Slicer_USE_PYTHONQT_WITH_TCL)
-     )
- endif()
- 
-+if(NOT DEFINED PYTHON_SITE_DIR)
-+  set(PYTHON_SITE_DIR ${Slicer_INSTALL_BIN_DIR})
-+endif()
-+
- ctkMacroCompilePythonScript(
-   TARGET_NAME SlicerBase
+@@ -73,7 +73,8 @@ ctkMacroCompilePythonScript(
    SCRIPTS "${Slicer_PYTHON_SCRIPTS}"
    RESOURCES "${Slicer_PYTHON_RESOURCES}"
    DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python
 -  INSTALL_DIR ${Slicer_INSTALL_BIN_DIR}
-+  INSTALL_DIR ${PYTHON_SITE_DIR}
++  INSTALL_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
 +  NO_INSTALL_SUBDIR
    )
  
  #-----------------------------------------------------------------------------
 diff --git a/Base/QTCLI/CMakeLists.txt b/Base/QTCLI/CMakeLists.txt
-index ec60bb195..8fb538f4f 100644
+index ec60bb1956..56054b4d55 100644
 --- a/Base/QTCLI/CMakeLists.txt
 +++ b/Base/QTCLI/CMakeLists.txt
-@@ -127,6 +127,10 @@ endif()
- if(VTK_WRAP_PYTHON)
-   include(vtkMacroKitPythonWrap)
- 
-+    if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${Slicer_INSTALL_LIB_DIR}")
-+  endif()
-+
+@@ -130,8 +130,9 @@ if(VTK_WRAP_PYTHON)
    vtkMacroKitPythonWrap(
      KIT_NAME ${PROJECT_NAME}
      KIT_SRCS ${KIT_VTK_SRCS}
+-    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
+     KIT_PYTHON_LIBRARIES SlicerBaseLogicPythonD
+     )
+   set_property(GLOBAL APPEND PROPERTY Slicer_TARGETS ${PROJECT_NAME}Python ${PROJECT_NAME}PythonD)
 diff --git a/Base/QTCore/CMakeLists.txt b/Base/QTCore/CMakeLists.txt
-index 4930d9056..aaa0e3c1b 100644
+index 4930d90560..aaa0e3c1bb 100644
 --- a/Base/QTCore/CMakeLists.txt
 +++ b/Base/QTCore/CMakeLists.txt
 @@ -277,4 +277,7 @@ endif()
@@ -87,7 +84,7 @@ index 4930d9056..aaa0e3c1b 100644
 +  add_subdirectory(Testing)
 +endif()
 diff --git a/CMake/LastConfigureStep/CMakeLists.txt b/CMake/LastConfigureStep/CMakeLists.txt
-index 072b9fb24..2a434fdc4 100644
+index 072b9fb247..2a434fdc4d 100644
 --- a/CMake/LastConfigureStep/CMakeLists.txt
 +++ b/CMake/LastConfigureStep/CMakeLists.txt
 @@ -41,4 +41,6 @@ include(${Slicer_SOURCE_DIR}/CMake/SlicerGenerateSlicerConfig.cmake)
@@ -99,178 +96,421 @@ index 072b9fb24..2a434fdc4 100644
 +  include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
 +endif()
 diff --git a/CMake/SlicerBlockInstallExternalPythonModules.cmake b/CMake/SlicerBlockInstallExternalPythonModules.cmake
-index 653a554a3..6b8331bf9 100644
+index 653a554a36..70b2ecd011 100644
 --- a/CMake/SlicerBlockInstallExternalPythonModules.cmake
 +++ b/CMake/SlicerBlockInstallExternalPythonModules.cmake
-@@ -9,8 +9,12 @@ set(_vtk_package "vtk")
- if(EXISTS ${VTK_PYTHON_MODULE}/vtkmodules)
+@@ -10,7 +10,7 @@ if(EXISTS ${VTK_PYTHON_MODULE}/vtkmodules)
    set(_vtk_package "vtkmodules") # Introduced in VTK9 kitware/vtk@2404228 on 2017.12.15
  endif()
-+
-+if(NOT DEFINED PYTHON_SITE_DIR)
-+  set(PYTHON_SITE_DIR ${Slicer_INSTALL_BIN_DIR}/Python)
-+endif()
  install(DIRECTORY ${VTK_PYTHON_MODULE}/${_vtk_package}
 -  DESTINATION ${Slicer_INSTALL_BIN_DIR}/Python
-+  DESTINATION ${PYTHON_SITE_DIR}
++  DESTINATION ${Slicer_INSTALL_PYTHON_BIN_DIR}/Python
    USE_SOURCE_PERMISSIONS
    COMPONENT Runtime
    # VTK9: Add exclusions to avoid installing VTK's C++ Python modules
+diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
+index d835eab1e0..20e42d0fe6 100644
+--- a/CMake/SlicerDirectories.cmake
++++ b/CMake/SlicerDirectories.cmake
+@@ -64,19 +64,49 @@ set(Slicer_ITKFACTORIES_DIR "${Slicer_LIB_DIR}/ITKFactories")
+ set(Slicer_QM_DIR "${Slicer_BIN_DIR}/Translations")
+ 
+ # for install tree
+-set(Slicer_INSTALL_ROOT "./")
+-set(Slicer_BUNDLE_LOCATION "${Slicer_MAIN_PROJECT_APPLICATION_NAME}.app/Contents")
++if(NOT DEFINED Slicer_INSTALL_ROOT)
++  set(Slicer_INSTALL_ROOT "./")
++endif()
++
+ if(APPLE)
++  set(Slicer_BUNDLE_LOCATION "${Slicer_MAIN_PROJECT_APPLICATION_NAME}.app/Contents")
+   set(Slicer_INSTALL_ROOT "${Slicer_BUNDLE_LOCATION}/") # Set to create Bundle
+ endif()
+-set(Slicer_INSTALL_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_BIN_DIR}")
+-set(Slicer_INSTALL_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIB_DIR}")
+-set(Slicer_INSTALL_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_INCLUDE_DIR}")
+-set(Slicer_INSTALL_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_SHARE_DIR}")
+-set(Slicer_INSTALL_LIBEXEC_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
+-set(Slicer_INSTALL_ITKFACTORIES_DIR "${Slicer_INSTALL_LIB_DIR}/ITKFactories")
+-set(Slicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR "${Slicer_INSTALL_ROOT}/include/ITKFactoryRegistration")
+-set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
++
++if(NOT DEFINED Slicer_INSTALL_BIN_DIR)
++  set(Slicer_INSTALL_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_BIN_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_LIB_DIR)
++  set(Slicer_INSTALL_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIB_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_INCLUDE_DIR)
++  set(Slicer_INSTALL_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_INCLUDE_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_SHARE_DIR)
++  set(Slicer_INSTALL_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_SHARE_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_LIBEXEC_DIR)
++  set(Slicer_INSTALL_LIBEXEC_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_ITKFACTORIES_DIR)
++  set(Slicer_INSTALL_ITKFACTORIES_DIR "${Slicer_INSTALL_LIB_DIR}/ITKFactories")
++endif()
++if(NOT DEFINED Slicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR)
++  set(Slicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR "${Slicer_INSTALL_ROOT}/include/ITKFactoryRegistration")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QM_DIR)
++  set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
++endif()
++
++if(NOT DEFINED Slicer_INSTALL_PYTHOND_LIB_DIR)
++  set(Slicer_INSTALL_PYTHOND_LIB_DIR ${Slicer_INSTALL_LIB_DIR})
++endif()
++if(NOT DEFINED Slicer_INSTALL_PYTHON_LIB_DIR)
++  set(Slicer_INSTALL_PYTHON_LIB_DIR ${Slicer_INSTALL_LIB_DIR})
++endif()
++if(NOT DEFINED Slicer_INSTALL_PYTHON_BIN_DIR)
++  set(Slicer_INSTALL_PYTHON_BIN_DIR ${Slicer_INSTALL_BIN_DIR})
++endif()
+ 
+ 
+ #-----------------------------------------------------------------------------
+@@ -86,17 +116,31 @@ set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
+ # NOTE: Make sure to update vtkSlicerApplicationLogic::GetModuleShareDirectory()
+ #       if the following variables are changed.
+ 
+-set(Slicer_CLIMODULES_SUBDIR "cli-modules")
++if(NOT DEFINED Slicer_CLIMODULES_SUBDIR)
++  set(Slicer_CLIMODULES_SUBDIR "cli-modules")
++endif()
+ 
+ # for build tree
+-set(Slicer_CLIMODULES_BIN_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
+-set(Slicer_CLIMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
+-set(Slicer_CLIMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_CLIMODULES_SUBDIR}")
++if(NOT DEFINED Slicer_CLIMODULES_BIN_DIR)
++  set(Slicer_CLIMODULES_BIN_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_CLIMODULES_LIB_DIR)
++  set(Slicer_CLIMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_CLIMODULES_SHARE_DIR)
++  set(Slicer_CLIMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_CLIMODULES_SUBDIR}")
++endif()
+ 
+ # for install tree
+-set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_BIN_DIR}")
+-set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_LIB_DIR}")
+-set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_SHARE_DIR}")
++if(NOT DEFINED Slicer_INSTALL_CLIMODULES_BIN_DIR)
++  set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_BIN_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_CLIMODULES_LIB_DIR)
++  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_LIB_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_CLIMODULES_SHARE_DIR)
++  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_SHARE_DIR}")
++endif()
+ 
+ 
+ #-----------------------------------------------------------------------------
+@@ -106,21 +150,43 @@ set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODUL
+ # NOTE: Make sure to update vtkSlicerApplicationLogic::GetModuleShareDirectory()
+ #       if the following variables are changed.
+ 
+-set(Slicer_QTLOADABLEMODULES_SUBDIR "qt-loadable-modules")
++if(NOT DEFINED Slicer_QTLOADABLEMODULES_SUBDIR)
++  set(Slicer_QTLOADABLEMODULES_SUBDIR "qt-loadable-modules")
++endif()
+ 
+ # for build tree
+-set(Slicer_QTLOADABLEMODULES_BIN_DIR "${Slicer_LIB_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
+-set(Slicer_QTLOADABLEMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
+-set(Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}/Python")
+-set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
+-set(Slicer_QTLOADABLEMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
++if(NOT DEFINED Slicer_QTLOADABLEMODULES_BIN_DIR)
++  set(Slicer_QTLOADABLEMODULES_BIN_DIR "${Slicer_LIB_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_QTLOADABLEMODULES_LIB_DIR)
++  set(Slicer_QTLOADABLEMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR)
++  set(Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}/Python")
++endif()
++if(NOT DEFINED Slicer_QTLOADABLEMODULES_INCLUDE_DIR)
++  set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_QTLOADABLEMODULES_SHARE_DIR)
++  set(Slicer_QTLOADABLEMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
++endif()
+ 
+ # for install tree
+-set(Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_BIN_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_LIB_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_PYTHON_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_INCLUDE_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_SHARE_DIR}")
++if(NOT DEFINED Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR)
++  set(Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_BIN_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR)
++  set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_LIB_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTLOADABLEMODULES_PYTHON_LIB_DIR)
++  set(Slicer_INSTALL_QTLOADABLEMODULES_PYTHON_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR)
++  set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_INCLUDE_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR)
++  set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_SHARE_DIR}")
++endif()
+ 
+ 
+ #-----------------------------------------------------------------------------
+@@ -130,19 +196,37 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_Q
+ # NOTE: Make sure to update vtkSlicerApplicationLogic::GetModuleShareDirectory()
+ #       if the following variables are changed.
+ 
+-set(Slicer_QTSCRIPTEDMODULES_SUBDIR "qt-scripted-modules")
++if(NOT DEFINED Slicer_QTSCRIPTEDMODULES_SUBDIR)
++  set(Slicer_QTSCRIPTEDMODULES_SUBDIR "qt-scripted-modules")
++endif()
+ 
+ # for build tree
+-set(Slicer_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_LIB_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
+-set(Slicer_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
+-set(Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
+-set(Slicer_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++if(NOT DEFINED Slicer_QTSCRIPTEDMODULES_BIN_DIR)
++  set(Slicer_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_LIB_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_QTSCRIPTEDMODULES_LIB_DIR)
++  set(Slicer_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR)
++  set(Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++endif()
++if(NOT DEFINED Slicer_QTSCRIPTEDMODULES_SHARE_DIR)
++  set(Slicer_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++endif()
+ 
+ # for install tree
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_BIN_DIR}")
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_LIB_DIR}")
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR}")
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_SHARE_DIR}")
++if(NOT DEFINED Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR)
++  set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_BIN_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR)
++  set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_LIB_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR)
++  set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR)
++  set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_SHARE_DIR}")
++endif()
+ 
+ 
+ # --------------------------------------------------------------------------
+@@ -150,9 +234,15 @@ set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_Q
+ # --------------------------------------------------------------------------
+ 
+ # for build tree
+-set(Slicer_THIRDPARTY_BIN_DIR ${Slicer_BIN_DIR})
+-set(Slicer_THIRDPARTY_LIB_DIR ${Slicer_LIB_DIR})
+-set(Slicer_THIRDPARTY_SHARE_DIR ${Slicer_SHARE_DIR})
++if(NOT DEFINED Slicer_THIRDPARTY_BIN_DIR)
++  set(Slicer_THIRDPARTY_BIN_DIR ${Slicer_BIN_DIR})
++endif()
++if(NOT DEFINED Slicer_THIRDPARTY_LIB_DIR)
++  set(Slicer_THIRDPARTY_LIB_DIR ${Slicer_LIB_DIR})
++endif()
++if(NOT DEFINED Slicer_THIRDPARTY_SHARE_DIR)
++  set(Slicer_THIRDPARTY_SHARE_DIR ${Slicer_SHARE_DIR})
++endif()
+ 
+ # for install tree:
+ #
+@@ -161,6 +251,12 @@ set(Slicer_THIRDPARTY_SHARE_DIR ${Slicer_SHARE_DIR})
+ #
+ # The values set below corresponds to scenario (1). Value for scenario (2) are set
+ # in UseSlicer.cmake.
+-set(Slicer_INSTALL_THIRDPARTY_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_BIN_DIR}")
+-set(Slicer_INSTALL_THIRDPARTY_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_LIB_DIR}")
+-set(Slicer_INSTALL_THIRDPARTY_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_SHARE_DIR}")
++if(NOT DEFINED Slicer_INSTALL_THIRDPARTY_BIN_DIR)
++  set(Slicer_INSTALL_THIRDPARTY_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_BIN_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_THIRDPARTY_LIB_DIR)
++  set(Slicer_INSTALL_THIRDPARTY_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_LIB_DIR}")
++endif()
++if(NOT DEFINED Slicer_INSTALL_THIRDPARTY_SHARE_DIR)
++  set(Slicer_INSTALL_THIRDPARTY_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_SHARE_DIR}")
++endif()
 diff --git a/CMake/SlicerMacroBuildBaseQtLibrary.cmake b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
-index 41c65b2d0..50a1fcbe5 100644
+index 41c65b2d03..d735e69e2f 100644
 --- a/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 +++ b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
-@@ -251,12 +251,17 @@ macro(SlicerMacroBuildBaseQtLibrary)
-   # PythonQt wrapping
-   # --------------------------------------------------------------------------
-   if(Slicer_USE_PYTHONQT AND SLICERQTBASELIB_WRAP_PYTHONQT)
-+
-+    if(NOT DEFINED PYTHON_SITE_DIR)
-+      set(PYTHON_SITE_DIR "${Slicer_INSTALL_LIB_DIR}")
-+    endif()
-+
-     ctkMacroBuildLibWrapper(
+@@ -255,8 +255,8 @@ macro(SlicerMacroBuildBaseQtLibrary)
        NAMESPACE "osb" # Use "osb" instead of "org.slicer.base" to avoid build error on windows
        TARGET ${lib_name}
        SRCS "${SLICERQTBASELIB_SRCS}"
-       INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
+-      INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
 -      INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
-+      INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++      INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++      INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
        )
      set_target_properties(${lib_name}PythonQt PROPERTIES FOLDER "Core-Base")
    endif()
-diff --git a/CMake/SlicerMacroBuildScriptedModule.cmake b/CMake/SlicerMacroBuildScriptedModule.cmake
-index 3cf67d465..8938fd762 100644
---- a/CMake/SlicerMacroBuildScriptedModule.cmake
-+++ b/CMake/SlicerMacroBuildScriptedModule.cmake
-@@ -97,12 +97,16 @@ macro(slicerMacroBuildScriptedModule)
-     set(_no_install_subdir_option "")
+diff --git a/Libs/CMakeLists.txt b/Libs/CMakeLists.txt
+index 0b3ff1bc0d..99ebdf54fb 100644
+--- a/Libs/CMakeLists.txt
++++ b/Libs/CMakeLists.txt
+@@ -94,6 +94,9 @@ foreach(dir ${dirs})
    endif()
- 
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}")
-+  endif()
-+  
-   ctkMacroCompilePythonScript(
-     TARGET_NAME ${MY_SLICER_NAME}
-     SCRIPTS "${MY_SLICER_SCRIPTS}"
-     RESOURCES "${MY_SLICER_RESOURCES}"
-     DESTINATION_DIR ${CMAKE_BINARY_DIR}/${Slicer_QTSCRIPTEDMODULES_LIB_DIR}${_destination_subdir}
--    INSTALL_DIR ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}
-+    INSTALL_DIR ${PYTHON_SITE_DIR}
-     ${_no_install_subdir_option}
-     )
- 
-diff --git a/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake b/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
-index fdd967794..c1c6fa5e9 100644
---- a/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
-+++ b/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
-@@ -73,11 +73,15 @@ macro(SlicerMacroPythonWrapModuleVTKLibrary)
-     ${PYTHONWRAPMODULEVTKLIBRARY_WRAPPED_TARGET_LIBRARIES}
-     )
- 
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}")
-+  endif()
-+  
-   vtkMacroKitPythonWrap(
-     KIT_NAME ${PYTHONWRAPMODULEVTKLIBRARY_NAME}
-     KIT_SRCS ${PYTHONWRAPMODULEVTKLIBRARY_SRCS}
-     KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-+    KIT_INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
-     KIT_PYTHON_LIBRARIES ${PYTHONWRAPMODULEVTKLIBRARY_Wrapped_LIBRARIES}
-     )
- 
+   set(${dir_noslash}_INSTALL_BIN_DIR ${Slicer_INSTALL_LIB_DIR})
+   set(${dir_noslash}_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR})
++  set(${dir_noslash}_INSTALL_PYTHON_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR})
++  set(${dir_noslash}_INSTALL_PYTHON_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR})
++  set(${dir_noslash}_INSTALL_PYTHOND_LIB_DIR ${Slicer_INSTALL_PYTHOND_LIB_DIR})
+   set(${dir_noslash}_INSTALL_SHARE_DIR ${Slicer_INSTALL_ROOT}share/${dir_noslash})
+   set(${dir_noslash}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+   set(${dir_noslash}_EXPORT_FILE ${Slicer_BINARY_DIR}/SlicerTargets.cmake)
 diff --git a/Libs/MRML/CLI/CMakeLists.txt b/Libs/MRML/CLI/CMakeLists.txt
-index b9f641518..4be910f47 100644
+index b9f641518f..2086ffe69a 100644
 --- a/Libs/MRML/CLI/CMakeLists.txt
 +++ b/Libs/MRML/CLI/CMakeLists.txt
-@@ -135,6 +135,10 @@ install(TARGETS ${lib_name}
- if(VTK_WRAP_PYTHON)
-   include(vtkMacroKitPythonWrap)
- 
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${${PROJECT_NAME}_INSTALL_LIB_DIR}")
-+  endif()
-+  
-   vtkMacroKitPythonWrap(
+@@ -139,8 +139,9 @@ if(VTK_WRAP_PYTHON)
      KIT_NAME ${lib_name}
      KIT_SRCS ${MRMLCLI_SRCS}
+     KIT_PYTHON_LIBRARIES MRMLCorePythonD
+-    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
-index 7a3e6b301..d8cfb8dc9 100644
+index 7cb0b145ac..18106d54e4 100644
 --- a/Libs/MRML/Core/CMakeLists.txt
 +++ b/Libs/MRML/Core/CMakeLists.txt
-@@ -320,6 +320,11 @@ install(TARGETS ${lib_name}
- # Python Wrapping
- # --------------------------------------------------------------------------
- if(VTK_WRAP_PYTHON)
-+
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${${PROJECT_NAME}_INSTALL_LIB_DIR}")
-+  endif()
-+
+@@ -330,8 +330,9 @@ if(VTK_WRAP_PYTHON)
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${MRMLCore_SRCS}
+-    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
+diff --git a/Libs/MRML/DisplayableManager/CMakeLists.txt b/Libs/MRML/DisplayableManager/CMakeLists.txt
+index f81bdc7980..a1c3384b44 100644
+--- a/Libs/MRML/DisplayableManager/CMakeLists.txt
++++ b/Libs/MRML/DisplayableManager/CMakeLists.txt
+@@ -236,8 +236,9 @@ if(MRMLDisplayableManager_USE_PYTHON)
+     KIT_NAME ${lib_name}
+     KIT_SRCS ${KIT_SRCS}
+     KIT_PYTHON_LIBRARIES MRMLLogicPythonD
+-    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
+diff --git a/Libs/MRML/Logic/CMakeLists.txt b/Libs/MRML/Logic/CMakeLists.txt
+index 5d7aec2f6f..9e33bb649c 100644
+--- a/Libs/MRML/Logic/CMakeLists.txt
++++ b/Libs/MRML/Logic/CMakeLists.txt
+@@ -160,8 +160,9 @@ if(VTK_WRAP_PYTHON)
+     KIT_NAME ${lib_name}
+     KIT_SRCS ${MRMLLogic_SRCS}
+     KIT_PYTHON_LIBRARIES MRMLCorePythonD
+-    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
-index d27ffc497..6a4c2eaea 100644
+index d27ffc4978..f93b45275d 100644
 --- a/Libs/MRML/Widgets/CMakeLists.txt
 +++ b/Libs/MRML/Widgets/CMakeLists.txt
-@@ -530,13 +530,19 @@ endif()
- # PythonQt wrapping
- # --------------------------------------------------------------------------
- if(MRMLWidgets_WRAP_PYTHON)
-+
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${Slicer_INSTALL_LIB_DIR}")
-+  endif()
-+
-   ctkMacroBuildLibWrapper(
+@@ -534,8 +534,8 @@ if(MRMLWidgets_WRAP_PYTHON)
      NAMESPACE "org.slicer.libs"
      TARGET ${lib_name}
      SRCS "${MRMLWidgets_SRCS}"
-     INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
+-    INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
 -    INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
-+    INSTALL_LIB_DIR ${PYTHON_SITE_DIR}
++    INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++    INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
      )
-+  
    # Folder
    if(NOT "${${PROJECT_NAME}_FOLDER}" STREQUAL "")
-     set_target_properties(${lib_name}PythonQt PROPERTIES FOLDER ${${PROJECT_NAME}_FOLDER})
+diff --git a/Libs/vtkITK/CMakeLists.txt b/Libs/vtkITK/CMakeLists.txt
+index ca6042c61c..35fc988969 100644
+--- a/Libs/vtkITK/CMakeLists.txt
++++ b/Libs/vtkITK/CMakeLists.txt
+@@ -217,6 +217,7 @@ if(VTK_WRAP_PYTHON)
+     KIT_SRCS ${vtkITK_SRCS}
+     KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+     KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/vtkSegmentationCore/CMakeLists.txt b/Libs/vtkSegmentationCore/CMakeLists.txt
-index e6cb0439e..d3fc30b7d 100644
+index a45c412266..5be019698d 100644
 --- a/Libs/vtkSegmentationCore/CMakeLists.txt
 +++ b/Libs/vtkSegmentationCore/CMakeLists.txt
-@@ -155,6 +155,10 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
- 
-   include(vtkMacroKitPythonWrap)
- 
-+    if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${${PROJECT_NAME}_INSTALL_LIB_DIR}")
-+  endif()
-+  
+@@ -165,8 +165,9 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
    vtkMacroKitPythonWrap(
      KIT_NAME ${PROJECT_NAME}
      KIT_SRCS ${vtkSegmentationCore_SRCS}
+-    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
+     )
+ 
+   # Export target
 diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
-index 5106e7e4a..0ce0b9fea 100644
+index 5106e7e4aa..e67ad8a714 100644
 --- a/Libs/vtkTeem/CMakeLists.txt
 +++ b/Libs/vtkTeem/CMakeLists.txt
-@@ -146,8 +146,13 @@ install(TARGETS ${lib_name}
- # Python Wrapping
- # --------------------------------------------------------------------------
- if(VTK_WRAP_PYTHON)
-+
-   include(vtkMacroKitPythonWrap)
- 
-+  if(NOT DEFINED PYTHON_SITE_DIR)
-+    set(PYTHON_SITE_DIR "${${PROJECT_NAME}_INSTALL_LIB_DIR}")
-+  endif()
-+
+@@ -151,8 +151,8 @@ if(VTK_WRAP_PYTHON)
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${vtkTeem_SRCS}
+-    KIT_INSTALL_BIN_DIR ${${PROJECT_NAME}_INSTALL_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${${PROJECT_NAME}_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
+diff --git a/Utilities/Scripts/SlicerWizard/CMakeLists.txt b/Utilities/Scripts/SlicerWizard/CMakeLists.txt
+index c99477bf64..675a5ee232 100644
+--- a/Utilities/Scripts/SlicerWizard/CMakeLists.txt
++++ b/Utilities/Scripts/SlicerWizard/CMakeLists.txt
+@@ -34,6 +34,6 @@ if(Slicer_BUILD_EXTENSIONMANAGER_SUPPORT AND Slicer_USE_PYTHONQT)
+     TARGET_NAME SlicerWizard
+     SCRIPTS "${SlicerWizard_PYTHON_SCRIPTS}"
+     DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python/SlicerWizard
+-    INSTALL_DIR ${Slicer_INSTALL_BIN_DIR}/Python
++    INSTALL_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}/Python
+     )
+ endif()
 -- 
 2.24.1
 

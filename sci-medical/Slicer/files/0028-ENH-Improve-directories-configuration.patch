@@ -1,0 +1,509 @@
+From 09cb6e3d409e00fb7337c49321d2f9d8e11437d8 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 9 Mar 2020 09:24:23 +0100
+Subject: [PATCH 28/29] ENH: Improve directories configuration
+
+These improvements try to conciliate configurations between install and the built trees
+---
+ CMake/SlicerDirectories.cmake               |   9 +-
+ CMake/SlicerInstallConfig.cmake.in          | 166 ++++++++++----------
+ CMake/UseSlicer.cmake.in                    |  16 --
+ CMake/vtkSlicerConfigure.h.in               |  26 +--
+ CMakeLists.txt                              |  10 +-
+ Libs/MRML/Core/CMakeLists.txt               |   2 +-
+ Libs/MRML/DisplayableManager/CMakeLists.txt |   2 +-
+ Libs/MRML/IDImageIO/CMakeLists.txt          |   2 +-
+ Libs/MRML/Logic/CMakeLists.txt              |   2 +-
+ Libs/MRML/Widgets/CMakeLists.txt            |   4 +-
+ Libs/vtkSegmentationCore/CMakeLists.txt     |   4 +-
+ Libs/vtkTeem/CMakeLists.txt                 |   3 +-
+ 12 files changed, 117 insertions(+), 129 deletions(-)
+
+diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
+index 335b76bd91..5d3583c769 100644
+--- a/CMake/SlicerDirectories.cmake
++++ b/CMake/SlicerDirectories.cmake
+@@ -66,7 +66,7 @@ set(Slicer_QM_DIR "${Slicer_BIN_DIR}/Translations")
+ 
+ # for install tree
+ if(NOT DEFINED Slicer_INSTALL_ROOT)
+-  set(Slicer_INSTALL_ROOT "./")
++  set(Slicer_INSTALL_ROOT "")
+ endif()
+ 
+ if(APPLE)
+@@ -109,6 +109,12 @@ if(NOT DEFINED Slicer_INSTALL_PYTHON_BIN_DIR)
+   set(Slicer_INSTALL_PYTHON_BIN_DIR ${Slicer_INSTALL_BIN_DIR})
+ endif()
+ 
++if(NOT DEFINED Slicer_INSTALL_CMAKE_DIR)
++  set(Slicer_INSTALL_CMAKE_DIR ${Slicer_INSTALL_LIB_DIR}/CMake)
++endif()
++if(NOT DEFINED Slicer_INSTALL_CMAKE_CONFIG_DIR)
++  set(Slicer_INSTALL_CMAKE_CONFIG_DIR ${Slicer_INSTALL_LIB_DIR}/CMake)
++endif()
+ 
+ #-----------------------------------------------------------------------------
+ # Slicer CLI relative directories
+@@ -189,7 +195,6 @@ if(NOT DEFINED Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR)
+   set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTLOADABLEMODULES_SHARE_DIR}")
+ endif()
+ 
+-
+ #-----------------------------------------------------------------------------
+ # Scripted Modules relative directories
+ #-----------------------------------------------------------------------------
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
+index 422af06e8a..ed5645ff66 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/CMake/SlicerInstallConfig.cmake.in
+@@ -37,96 +37,82 @@ set(Slicer_USE_PYTHONQT "@Slicer_USE_PYTHONQT@")
+ set(Slicer_USE_PYTHONQT_WITH_TCL "@Slicer_USE_PYTHONQT_WITH_TCL@")
+ set(Slicer_USE_OPENTRACKER "@Slicer_USE_OPENTRACKER@")
+ 
+-# Slicer could be installed anywhere, so set all paths based on where
+-# this file was found (which should be the lib/Slicer3 directory of the
+-# installation)
+-get_filename_component(Slicer_CONFIG_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+-
+-# Slicer home (top of the tree)
+-set(Slicer_HOME "${Slicer_CONFIG_DIR}/../..")
+-get_filename_component(Slicer_HOME ${Slicer_HOME} ABSOLUTE)
+-
+ # The CMake macros dir.
+-set(Slicer_CMAKE_DIR "${Slicer_HOME}/@Slicer_INSTALL_LIB_DIR@/CMake")
++set(Slicer_CMAKE_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_CMAKE_DIR@")
+ 
+ # Slicer Libs library directories.
+ set(Slicer_Libs_LIBRARY_DIRS
+-  "${Slicer_HOME}/lib/FreeSurfer"
+-  "${Slicer_HOME}/lib/IGT"
+-  "${Slicer_HOME}/lib/ITKCommandIO"
+-  "${Slicer_HOME}/lib/LoadableModule"
+-  "${Slicer_HOME}/lib/MGHImageIO"
+-  "${Slicer_HOME}/lib/MRML"
+-  "${Slicer_HOME}/lib/MRMLIDImageIO"
+-  "${Slicer_HOME}/lib/ModuleDescriptionParser"
+-  "${Slicer_HOME}/lib/Qdec"
+-  "${Slicer_HOME}/lib/tclap"
+-  "${Slicer_HOME}/lib/vtkAddon"
+-  "${Slicer_HOME}/lib/vtkITK"
+-  "${Slicer_HOME}/lib/vtkSegmentationCore"
+-  "${Slicer_HOME}/lib/vtkTeem"
+-  "${Slicer_HOME}/lib/TclTk/lib"
+-  "${Slicer_HOME}/lib/TclTk/lib/itcl@INCR_TCL_VERSION_DOT@"
+-  "${Slicer_HOME}/lib/TclTk/lib/itk@INCR_TCL_VERSION_DOT@"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/FreeSurfer"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/IGT"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/ITKCommandIO"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/LoadableModule"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/MGHImageIO"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/MRML"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/MRMLIDImageIO"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/ModuleDescriptionParser"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/Qdec"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/tclap"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/vtkAddon"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/vtkITK"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/vtkSegmentationCore"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/vtkTeem"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/TclTk"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/TclTk/lib/itcl@INCR_TCL_VERSION_DOT@"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@/TclTk/lib/itk@INCR_TCL_VERSION_DOT@"
+   )
+ 
+ # Slicer Libs include file directories.
+ set(Slicer_Libs_INCLUDE_DIRS
+-  "${Slicer_HOME}/include/FreeSurfer"
+-  "${Slicer_HOME}/include/IGT"
+-  "${Slicer_HOME}/include/ITKCommandIO"
+-  "${Slicer_HOME}/include/LoadableModule"
+-  "${Slicer_HOME}/include/MGHImageIO"
+-  "${Slicer_HOME}/include/MRMLCore"
+-  "${Slicer_HOME}/include/MRMLDisplayableManager"
+-  "${Slicer_HOME}/include/MRMLLogic"
+-  "${Slicer_HOME}/include/MRMLIDImageIO"
+-  "${Slicer_HOME}/include/ModuleDescriptionParser"
+-  "${Slicer_HOME}/include/Qdec"
+-  "${Slicer_HOME}/include/tclap"
+-  "${Slicer_HOME}/include/vtkAddon"
+-  "${Slicer_HOME}/include/vtkITK"
+-  "${Slicer_HOME}/include/vtkSegmentationCore"
+-  "${Slicer_HOME}/include/vtkTeem"
+-  "${Slicer_HOME}/include/SlicerBaseLogic"
+-  "${Slicer_HOME}/include/qMRMLWidgets"
+-  "${Slicer_HOME}/include/ITKFactoryRegistration"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/FreeSurfer"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/IGT"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/ITKCommandIO"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/LoadableModule"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/MGHImageIO"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/MRMLCore"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/MRMLDisplayableManager"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/MRMLLogic"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/MRMLIDImageIO"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/ModuleDescriptionParser"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/Qdec"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/tclap"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/vtkITK"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/vtkSegmentationCore"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/vtkTeem"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseLogic"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/qMRMLWidgets"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/ITKFactoryRegistration"
+   )
+ 
+ # Slicer Base library directories.
+-set(Slicer_Base_LIBRARY_DIRS
+-  "${Slicer_HOME}/@Slicer_INSTALL_LIB_DIR@"
+-  )
++set(Slicer_Base_LIBRARY_DIRS "@Slicer_INSTALL_LIB_DIR@")
+ 
+ # Slicer Base include file directories.
+ set(Slicer_Base_INCLUDE_DIRS
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/MRMLCLI"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseCLI"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseLogic"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTApp"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTGUI"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTCore"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/MRMLCLI"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseCLI"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseLogic"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTApp"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTGUI"
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTCore"
+   )
+ 
+ # The location of the UseSlicer.cmake file.
+-set(Slicer_USE_FILE "${Slicer_CONFIG_DIR}/UseSlicer.cmake")
+-
+-# The build settings file.
+-set(Slicer_BUILD_SETTINGS_FILE
+-  "${Slicer_CONFIG_DIR}/SlicerBuildSettings.cmake")
++set(Slicer_USE_FILE
++  "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_CMAKE_CONFIG_DIR@/UseSlicer.cmake"
++  )
+ 
+ # The Slicer relative install directories.
+-set(Slicer_INSTALL_BIN_DIR "@Slicer_INSTALL_BIN_DIR@")
+-set(Slicer_INSTALL_LIB_DIR "@Slicer_INSTALL_LIB_DIR@")
+-set(Slicer_INSTALL_INCLUDE_DIR "@Slicer_INSTALL_INCLUDE_DIR@")
+-set(Slicer_INSTALL_SHARE_DIR "@Slicer_INSTALL_SHARE_DIR@")
+-set(Slicer_INSTALL_ITKFACTORIES_DIR "@Slicer_INSTALL_ITKFACTORIES_DIR@")
++set(Slicer_INSTALL_BIN_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_BIN_DIR@")
++set(Slicer_INSTALL_LIB_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_LIB_DIR@")
++set(Slicer_INSTALL_INCLUDE_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@")
++set(Slicer_INSTALL_SHARE_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_SHARE_DIR@")
++set(Slicer_INSTALL_ITKFACTORIES_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_ITKFACTORIES_DIR@")
+ 
+ set(Slicer_CLIMODULES_SUBDIR "@Slicer_CLIMODULES_SUBDIR@")
+-set(Slicer_CLIMODULES_BIN_DIR "@Slicer_CLIMODULES_BIN_DIR@")
+-set(Slicer_CLIMODULES_LIB_DIR "@Slicer_CLIMODULES_LIB_DIR@")
+-set(Slicer_CLIMODULES_SHARE_DIR "@Slicer_CLIMODULES_SHARE_DIR@")
++set(Slicer_CLIMODULES_BIN_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_CLIMODULES_BIN_DIR@")
++set(Slicer_CLIMODULES_LIB_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_CLIMODULES_LIB_DIR@")
++set(Slicer_CLIMODULES_SHARE_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_CLIMODULES_SHARE_DIR@")
+ 
+ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
+ set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
+@@ -139,33 +125,43 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_QTLOADABLEMODULES_INCLUDE_DIR@
+ set(Slicer_QTLOADABLEMODULES_SHARE_DIR "@Slicer_QTLOADABLEMODULES_SHARE_DIR@")
+ set(Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "@Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR@")
+ 
+-set(Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR "${Slicer_HOME}/@Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR@")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "${Slicer_HOME}/@Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR@")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_HOME}/@Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR@")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${Slicer_HOME}/@Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR@")
++set(Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR@")
++set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR@")
++set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR@")
++set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR@")
++
++set(Slicer_QTSCRIPTEDMODULES_SUBDIR "@Slicer_QTSCRIPTEDMODULES_SUBDIR@")
++set(Slicer_QTSCRIPTEDMODULES_BIN_DIR "@Slicer_QTSCRIPTEDMODULES_BIN_DIR@")
++set(Slicer_QTSCRIPTEDMODULES_LIB_DIR "@Slicer_QTSCRIPTEDMODULES_LIB_DIR@")
++set(Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "@Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR@")
++set(Slicer_QTSCRIPTEDMODULES_SHARE_DIR "@Slicer_QTSCRIPTEDMODULES_SHARE_DIR@")
+ 
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR@")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR@")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR@")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${CMAKE_INSTALL_PREFIX}/@Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR@")
+ 
+ # Components needed to build modules from outside a Slicer build tree or
+ # from outside a Slicer installation tree
+-set(TCLAP_DIR "${Slicer_HOME}/lib/tclap")
+-set(ModuleDescriptionParser_DIR "${Slicer_HOME}/lib/ModuleDescriptionParser")
+-set(GenerateCLP_DIR "${Slicer_HOME}/lib/GenerateCLP")
+-set(GenerateLM_DIR "${Slicer_HOME}/lib/GenerateLM")
+-set(ITK_DIR "${Slicer_HOME}/lib/${ITK_LIB_DIR}")
+-set(LoadableModule_DIR "${Slicer_HOME}/lib/LoadableModule")
+-set(Teem_DIR "${Slicer_HOME}/lib/Teem-@Teem_VERSION_MAJOR@.@Teem_VERSION_MINOR@.@Teem_VERSION_PATCH@")
+-set(VTK_DIR "${Slicer_HOME}/lib/vtk-@VTK_MAJOR_VERSION@.@VTK_MINOR_VERSION@")
++set(TCLAP_DIR "${CMAKE_INSTALL_PREFIX}/lib/tclap")
++set(ModuleDescriptionParser_DIR "${CMAKE_INSTALL_PREFIX}/lib/ModuleDescriptionParser")
++set(GenerateCLP_DIR "${CMAKE_INSTALL_PREFIX}/lib/GenerateCLP")
++set(GenerateLM_DIR "${CMAKE_INSTALL_PREFIX}/lib/GenerateLM")
++set(ITK_DIR "${CMAKE_INSTALL_PREFIX}/lib/${ITK_LIB_DIR}")
++set(LoadableModule_DIR "${CMAKE_INSTALL_PREFIX}/lib/LoadableModule")
++set(Teem_DIR "${CMAKE_INSTALL_PREFIX}/lib/Teem-@Teem_VERSION_MAJOR@.@Teem_VERSION_MINOR@.@Teem_VERSION_PATCH@")
++set(VTK_DIR "${CMAKE_INSTALL_PREFIX}/lib/vtk-@VTK_MAJOR_VERSION@.@VTK_MINOR_VERSION@")
+ set(PYTHON_INCLUDE_PATH "@PYTHON_INCLUDE_PATH@")
+ get_filename_component(PYTHON_LIB_FILE "${PYTHON_LIBRARY}" NAME)
+-set(PYTHON_LIBRARIES "${Slicer_HOME}/lib/Python/lib/${PYTHON_LIB_FILE}")
++set(PYTHON_LIBRARIES "${CMAKE_INSTALL_PREFIX}/lib/Python/lib/${PYTHON_LIB_FILE}")
+ get_filename_component(PYTHON_INCLUDE_DIR "${PYTHON_INCLUDE_PATH}" NAME)
+-set(PYTHON_INCLUDE_PATH "${Slicer_HOME}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
++set(PYTHON_INCLUDE_PATH "${CMAKE_INSTALL_PREFIX}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
+ set(CTK_CMAKE_DIR "@CTK_CMAKE_DIR@")
+ 
+ set(Slicer_EXPORT_HEADER_TEMPLATE "${Slicer_CMAKE_DIR}/qSlicerExport.h.in")
+-set(Slicer_LOGOS_RESOURCE "${Slicer_HOME}/${Slicer_INSTALL_SHARE_DIR}/Resources/qSlicer.qrc")
++set(Slicer_LOGOS_RESOURCE "${Slicer_INSTALL_SHARE_DIR}/Resources/qSlicer.qrc")
+ 
+ # MRML libraries - This variable regroup all related MRML libraries
+ set(MRML_LIBRARIES @MRML_LIBRARIES@)
+ 
+-set(SlicerExecutionModel_DEFAULT_CLI_LIBRARY_WRAPPER_CXX "${Slicer_HOME}/${Slicer_INSTALL_SHARE_DIR}/SEMCommandLineLibraryWrapper.cxx")
++set(SlicerExecutionModel_DEFAULT_CLI_LIBRARY_WRAPPER_CXX "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_SHARE_DIR}/SEMCommandLineLibraryWrapper.cxx")
+diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
+index 241c2d39fc..76d79f2ac3 100644
+--- a/CMake/UseSlicer.cmake.in
++++ b/CMake/UseSlicer.cmake.in
+@@ -317,9 +317,6 @@ endif()
+ # Set Slicer_INSTALL_*MODULE_*_DIR variables
+ #-----------------------------------------------------------------------------
+ if(Slicer_BUILD_CLI_SUPPORT)
+-  set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${Slicer_HOME}/${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_BIN_DIR}")
+-  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${Slicer_HOME}/${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_LIB_DIR}")
+-  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_HOME}/${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_CLIMODULES_SHARE_DIR}")
+   if(APPLE)
+     set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION "${Slicer_INSTALL_CLIMODULES_BIN_DIR}")
+     set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION "${Slicer_INSTALL_CLIMODULES_LIB_DIR}")
+@@ -331,19 +328,6 @@ if(Slicer_BUILD_CLI_SUPPORT)
+   endif()
+ endif()
+ 
+-set(Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}/${Slicer_QTLOADABLEMODULES_BIN_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}/${Slicer_QTLOADABLEMODULES_LIB_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_PYTHON_LIB_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}/${Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}/${Slicer_QTLOADABLEMODULES_INCLUDE_DIR}")
+-set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}/${Slicer_QTLOADABLEMODULES_SHARE_DIR}")
+-
+-if(Slicer_USE_PYTHONQT)
+-  set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_QTSCRIPTEDMODULES_BIN_DIR}")
+-  set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_QTSCRIPTEDMODULES_LIB_DIR}")
+-  set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR}")
+-  set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_HOME}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_QTSCRIPTEDMODULES_SHARE_DIR}")
+-endif()
+-
+ # These variables can be used when configuring extension external projects in
+ # two different scenarios: (1) bundled extensions and (2) regular extensions.
+ #
+diff --git a/CMake/vtkSlicerConfigure.h.in b/CMake/vtkSlicerConfigure.h.in
+index 52ce5f5b08..80b223191e 100644
+--- a/CMake/vtkSlicerConfigure.h.in
++++ b/CMake/vtkSlicerConfigure.h.in
+@@ -48,9 +48,9 @@
+ #cmakedefine Slicer_BUILD_WIN32_CONSOLE
+ 
+ #define Slicer_MAIN_PROJECT_APPLICATION_NAME "@Slicer_MAIN_PROJECT_APPLICATION_NAME@"
+-#define Slicer_BIN_DIR "@Slicer_BIN_DIR@"
++#define Slicer_BIN_DIR "@Slicer_INSTALL_BIN_DIR@"
+ #define Slicer_ETC_DIR "@Slicer_ETC_DIR@"
+-#define Slicer_LIB_DIR "@Slicer_LIB_DIR@"
++#define Slicer_LIB_DIR "@Slicer_INSTALL_LIB_DIR@"
+ #define Slicer_INCLUDE_DIR "@Slicer_INCLUDE_DIR@"
+ #define Slicer_SHARE_DIR "@Slicer_SHARE_DIR@"
+ #define Slicer_ITKFACTORIES_DIR "@Slicer_ITKFACTORIES_DIR@"
+@@ -74,8 +74,8 @@
+ #cmakedefine Slicer_BUILD_CLI_SUPPORT
+ #cmakedefine Slicer_BUILD_CLI
+ #define Slicer_CLIMODULES_SUBDIR "@Slicer_CLIMODULES_SUBDIR@"
+-#define Slicer_CLIMODULES_BIN_DIR "@Slicer_CLIMODULES_BIN_DIR@"
+-#define Slicer_CLIMODULES_LIB_DIR "@Slicer_CLIMODULES_LIB_DIR@"
++#define Slicer_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@"
++#define Slicer_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@"
+ #define Slicer_CLIMODULES_SHARE_DIR "@Slicer_CLIMODULES_SHARE_DIR@"
+ 
+ #define Slicer_CLI_PREFER_EXECUTABLE_DEFAULT true
+@@ -89,21 +89,21 @@
+ 
+ #cmakedefine Slicer_BUILD_QTLOADABLEMODULES
+ #define Slicer_QTLOADABLEMODULES_SUBDIR "@Slicer_QTLOADABLEMODULES_SUBDIR@"
+-#define Slicer_QTLOADABLEMODULES_BIN_DIR "@Slicer_QTLOADABLEMODULES_BIN_DIR@"
+-#define Slicer_QTLOADABLEMODULES_LIB_DIR "@Slicer_QTLOADABLEMODULES_LIB_DIR@"
+-#define Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_QTLOADABLEMODULES_INCLUDE_DIR@"
+-#define Slicer_QTLOADABLEMODULES_SHARE_DIR "@Slicer_QTLOADABLEMODULES_SHARE_DIR@"
++#define Slicer_QTLOADABLEMODULES_BIN_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR@"
++#define Slicer_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR@"
++#define Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR@"
++#define Slicer_QTLOADABLEMODULES_SHARE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR@"
+ #ifdef Slicer_USE_PYTHONQT
+-#  define Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "@Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR@"
++#  define Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_PYTHON_LIB_DIR@"
+ #endif
+ 
+ #cmakedefine Slicer_BUILD_QTSCRIPTEDMODULES
+ #ifdef Slicer_USE_PYTHONQT
+ #  define Slicer_QTSCRIPTEDMODULES_SUBDIR "@Slicer_QTSCRIPTEDMODULES_SUBDIR@"
+-#  define Slicer_QTSCRIPTEDMODULES_BIN_DIR "@Slicer_QTSCRIPTEDMODULES_BIN_DIR@"
+-#  define Slicer_QTSCRIPTEDMODULES_LIB_DIR "@Slicer_QTSCRIPTEDMODULES_LIB_DIR@"
+-#  define Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "@Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR@"
+-#  define Slicer_QTSCRIPTEDMODULES_SHARE_DIR "@Slicer_QTSCRIPTEDMODULES_SHARE_DIR@"
++#  define Slicer_QTSCRIPTEDMODULES_BIN_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR@"
++#  define Slicer_QTSCRIPTEDMODULES_LIB_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR@"
++#  define Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR@"
++#  define Slicer_QTSCRIPTEDMODULES_SHARE_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR@"
+ #endif //Slicer_USE_PYTHONQT
+ 
+ // ThirdParty: Corresponds to superbuild projects built
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c3b4596c1b..d442ed1985 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1149,14 +1149,14 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+   file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.cmake")
+   install(
+     FILES ${cmake_files}
+-    DESTINATION ${Slicer_INSTALL_LIB_DIR}/CMake COMPONENT Development
++    DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
+     )
+ 
+   install(FILES
+     ${Slicer_BINARY_DIR}/UseSlicer.cmake
+     ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake
+     ${Slicer_BINARY_DIR}/SlicerConfigVersion.cmake
+-    DESTINATION ${Slicer_INSTALL_LIB_DIR}
++    DESTINATION ${Slicer_INSTALL_CMAKE_CONFIG_DIR}
+     COMPONENT Development
+     )
+ 
+@@ -1164,14 +1164,16 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+   install(
+     FILES
+     ${cmake_files}
+-    DESTINATION ${Slicer_INSTALL_LIB_DIR}/CMake COMPONENT Development
++    DESTINATION ${Slicer_INSTALL_CMAKE_DIR}
++    COMPONENT Development
+     )
+ 
+   file(GLOB cmake_files "${Slicer_SOURCE_DIR}/CMake/*.in")
+   install(
+     FILES
+     ${cmake_files}
+-    DESTINATION ${Slicer_INSTALL_LIB_DIR}/CMake COMPONENT Development
++    DESTINATION ${Slicer_INSTALL_CMAKE_DIR}/ #TODO: this is a patch solution
++    COMPONENT Development
+     )  
+ endif()
+ 
+diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
+index 18106d54e4..582c734487 100644
+--- a/Libs/MRML/Core/CMakeLists.txt
++++ b/Libs/MRML/Core/CMakeLists.txt
+@@ -102,7 +102,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Libs/MRML/DisplayableManager/CMakeLists.txt b/Libs/MRML/DisplayableManager/CMakeLists.txt
+index a1c3384b44..233f634c15 100644
+--- a/Libs/MRML/DisplayableManager/CMakeLists.txt
++++ b/Libs/MRML/DisplayableManager/CMakeLists.txt
+@@ -63,7 +63,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Libs/MRML/IDImageIO/CMakeLists.txt b/Libs/MRML/IDImageIO/CMakeLists.txt
+index d09395c41c..35dfdc957a 100644
+--- a/Libs/MRML/IDImageIO/CMakeLists.txt
++++ b/Libs/MRML/IDImageIO/CMakeLists.txt
+@@ -64,7 +64,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Libs/MRML/Logic/CMakeLists.txt b/Libs/MRML/Logic/CMakeLists.txt
+index 9e33bb649c..f502ed11fb 100644
+--- a/Libs/MRML/Logic/CMakeLists.txt
++++ b/Libs/MRML/Logic/CMakeLists.txt
+@@ -60,7 +60,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
+index f93b45275d..5fabccf4ab 100644
+--- a/Libs/MRML/Widgets/CMakeLists.txt
++++ b/Libs/MRML/Widgets/CMakeLists.txt
+@@ -451,11 +451,11 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ 
+   install(FILES
+     ${MRMLWidgets_UI_CXX}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development
+     )
+ endif()
+ 
+diff --git a/Libs/vtkSegmentationCore/CMakeLists.txt b/Libs/vtkSegmentationCore/CMakeLists.txt
+index 5be019698d..712c9802b7 100644
+--- a/Libs/vtkSegmentationCore/CMakeLists.txt
++++ b/Libs/vtkSegmentationCore/CMakeLists.txt
+@@ -23,12 +23,12 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ 
+     file(GLOB templates "${CMAKE_CURRENT_SOURCE_DIR}/*.txx")
+   install(
+     FILES ${templates} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
+index e67ad8a714..132f975dd3 100644
+--- a/Libs/vtkTeem/CMakeLists.txt
++++ b/Libs/vtkTeem/CMakeLists.txt
+@@ -152,7 +152,8 @@ if(VTK_WRAP_PYTHON)
+     KIT_NAME ${lib_name}
+     KIT_SRCS ${vtkTeem_SRCS}
+     KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHOND_LIB_DIR}
++    KIT_MODULE_INSTALL_LIB_DIR ${Slicer_INSTALL_PYTHON_LIB_DIR}
+     )
+   # Export target
+   export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
+-- 
+2.24.1
+

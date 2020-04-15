@@ -1,8 +1,8 @@
-From 88014a8792fcbc9c0a99363efec7b9236715849b Mon Sep 17 00:00:00 2001
+From 2d29e5fa552817eef358ab205233ca720ce04fc7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 2 Mar 2020 13:25:45 +0100
-Subject: [PATCH] ENH: Enable installation of hierarchy files (.txt) for python
- wrap
+Subject: [PATCH 25/29] ENH: Enable installation of hierarchy files (.txt) for
+ python wrap
 
 ---
  CMake/SlicerGenerateSlicerConfig.cmake | 14 ++++++++++++++
@@ -11,7 +11,7 @@ Subject: [PATCH] ENH: Enable installation of hierarchy files (.txt) for python
  3 files changed, 25 insertions(+)
 
 diff --git a/CMake/SlicerGenerateSlicerConfig.cmake b/CMake/SlicerGenerateSlicerConfig.cmake
-index 3d1f31030..36c6a71f2 100644
+index 3d1f310301..36c6a71f21 100644
 --- a/CMake/SlicerGenerateSlicerConfig.cmake
 +++ b/CMake/SlicerGenerateSlicerConfig.cmake
 @@ -95,6 +95,7 @@ set(${target}_INCLUDE_DIRS
@@ -43,7 +43,7 @@ index 3d1f31030..36c6a71f2 100644
  set(Slicer_Base_INCLUDE_DIRS_CONFIG ${Slicer_Base_INCLUDE_DIRS})
  
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 5c5fd00a2..1f69327d8 100644
+index 247d0d6827..422af06e8a 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
 @@ -9,6 +9,9 @@
@@ -57,7 +57,7 @@ index 5c5fd00a2..1f69327d8 100644
  
  # The C and C++ flags added by Slicer to the cmake-configured flags.
 diff --git a/CMake/vtkMacroKitPythonWrap.cmake b/CMake/vtkMacroKitPythonWrap.cmake
-index 5b4ba0667..e87549d88 100644
+index 5b4ba06673..e87549d881 100644
 --- a/CMake/vtkMacroKitPythonWrap.cmake
 +++ b/CMake/vtkMacroKitPythonWrap.cmake
 @@ -287,6 +287,14 @@ macro(vtkMacroKitPythonWrap)

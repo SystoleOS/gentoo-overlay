@@ -1,7 +1,7 @@
-From b541352585d85f33d3f3a17ce5b3966d33666f2f Mon Sep 17 00:00:00 2001
+From 5be48494cd84fbfc1d6f72fd177f7e566de4a3ec Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 13 Jan 2020 16:46:08 +0100
-Subject: [PATCH 14/25] COMP: Adding link directories for ModuleParser
+Subject: [PATCH 14/29] COMP: Adding link directories for ModuleParser
 
 ---
  Applications/SlicerApp/CMakeLists.txt     | 2 ++
@@ -13,7 +13,7 @@ Subject: [PATCH 14/25] COMP: Adding link directories for ModuleParser
  6 files changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/Applications/SlicerApp/CMakeLists.txt b/Applications/SlicerApp/CMakeLists.txt
-index 1acd8ec56..abbd48b97 100755
+index 1acd8ec56b..abbd48b97d 100755
 --- a/Applications/SlicerApp/CMakeLists.txt
 +++ b/Applications/SlicerApp/CMakeLists.txt
 @@ -1,6 +1,8 @@
@@ -26,7 +26,7 @@ index 1acd8ec56..abbd48b97 100755
  
  # --------------------------------------------------------------------------
 diff --git a/Base/QTApp/CMakeLists.txt b/Base/QTApp/CMakeLists.txt
-index 2d16fc8be..513012df8 100644
+index 2d16fc8be1..513012df87 100644
 --- a/Base/QTApp/CMakeLists.txt
 +++ b/Base/QTApp/CMakeLists.txt
 @@ -4,6 +4,8 @@ project(qSlicerBaseQTApp)
@@ -39,7 +39,7 @@ index 2d16fc8be..513012df8 100644
  
  # Additional directories to include
 diff --git a/Base/QTGUI/CMakeLists.txt b/Base/QTGUI/CMakeLists.txt
-index f2133ac15..60b5cebe6 100644
+index f2133ac153..60b5cebe6a 100644
 --- a/Base/QTGUI/CMakeLists.txt
 +++ b/Base/QTGUI/CMakeLists.txt
 @@ -9,6 +9,8 @@ project(qSlicerBaseQTGUI)
@@ -52,7 +52,7 @@ index f2133ac15..60b5cebe6 100644
  
  # Additional directories to include
 diff --git a/CMake/SlicerMacroBuildBaseQtLibrary.cmake b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
-index 2a9df70d8..41c65b2d0 100644
+index 2a9df70d8f..41c65b2d03 100644
 --- a/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 +++ b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 @@ -142,8 +142,6 @@ macro(SlicerMacroBuildBaseQtLibrary)
@@ -65,7 +65,7 @@ index 2a9df70d8..41c65b2d0 100644
        QT5_ADD_RESOURCES(SLICERQTBASELIB_QRC_SRCS ${SLICERQTBASELIB_RESOURCES})
      endif()
 diff --git a/Modules/CMakeLists.txt b/Modules/CMakeLists.txt
-index 3f6fa9eab..38b5490a6 100644
+index 3f6fa9eab4..38b5490a62 100644
 --- a/Modules/CMakeLists.txt
 +++ b/Modules/CMakeLists.txt
 @@ -1,6 +1,8 @@
@@ -78,7 +78,7 @@ index 3f6fa9eab..38b5490a6 100644
    add_subdirectory(Loadable)
  endif()
 diff --git a/Modules/Core/CMakeLists.txt b/Modules/Core/CMakeLists.txt
-index 6f4a1e318..6b77e88ff 100644
+index 6f4a1e3186..6b77e88ff4 100644
 --- a/Modules/Core/CMakeLists.txt
 +++ b/Modules/Core/CMakeLists.txt
 @@ -5,6 +5,8 @@ project(qSlicerModulesCore)

@@ -1,7 +1,7 @@
-From b93e45b028839e324f3d0335afe2de161e1a8401 Mon Sep 17 00:00:00 2001
+From 217afd30b80731f633a36299eae6352caa60efa8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 09:25:22 +0100
-Subject: [PATCH 15/25] COMP: Change installation destination
+Subject: [PATCH 15/29] COMP: Change installation destination
 
 This affects to SlicerBaseCLI and SlicerBaseLogic development components
 ---
@@ -12,7 +12,7 @@ This affects to SlicerBaseCLI and SlicerBaseLogic development components
  4 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/Base/CLI/CMakeLists.txt b/Base/CLI/CMakeLists.txt
-index 74025e389..99474cf65 100644
+index 74025e3890..99474cf653 100644
 --- a/Base/CLI/CMakeLists.txt
 +++ b/Base/CLI/CMakeLists.txt
 @@ -74,7 +74,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
@@ -25,7 +25,7 @@ index 74025e389..99474cf65 100644
  
  # --------------------------------------------------------------------------
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
-index a31cfe73b..2a81b9a71 100644
+index a31cfe73b7..2a81b9a71d 100644
 --- a/Base/Logic/CMakeLists.txt
 +++ b/Base/Logic/CMakeLists.txt
 @@ -104,7 +104,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
@@ -38,10 +38,10 @@ index a31cfe73b..2a81b9a71 100644
  
  # --------------------------------------------------------------------------
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index f5c89ec03..a70f750ab 100644
+index bc0f19a308..394cb2cb35 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -93,6 +93,7 @@ set(Slicer_Base_LIBRARY_DIRS
+@@ -94,6 +94,7 @@ set(Slicer_Base_LIBRARY_DIRS
  set(Slicer_Base_INCLUDE_DIRS
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@"
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseCLI"
@@ -50,7 +50,7 @@ index f5c89ec03..a70f750ab 100644
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTGUI"
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/qSlicerBaseQTCore"
 diff --git a/Libs/MRML/CLI/CMakeLists.txt b/Libs/MRML/CLI/CMakeLists.txt
-index 195fb776c..b9f641518 100644
+index 195fb776c0..b9f641518f 100644
 --- a/Libs/MRML/CLI/CMakeLists.txt
 +++ b/Libs/MRML/CLI/CMakeLists.txt
 @@ -66,7 +66,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)

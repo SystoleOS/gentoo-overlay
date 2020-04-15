@@ -1,7 +1,7 @@
-From 3ca6b99be8faf5cc18b2d37fec58969f85d66119 Mon Sep 17 00:00:00 2001
+From 85779b300d6c3e18a6f6bc21f84a162d94d08f47 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 11:47:42 +0200
-Subject: [PATCH 10/25] COMP: Adding conditional for installation of QT
+Subject: [PATCH 10/29] COMP: Adding conditional for installation of QT
  designer launcher
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 10/25] COMP: Adding conditional for installation of QT
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMake/SlicerCPack.cmake b/CMake/SlicerCPack.cmake
-index ee2c2bb68..611252621 100644
+index 16f9133e78..df6e96d150 100644
 --- a/CMake/SlicerCPack.cmake
 +++ b/CMake/SlicerCPack.cmake
 @@ -64,7 +64,7 @@ if(Slicer_BUILD_DICOM_SUPPORT AND NOT Slicer_USE_SYSTEM_DCMTK)

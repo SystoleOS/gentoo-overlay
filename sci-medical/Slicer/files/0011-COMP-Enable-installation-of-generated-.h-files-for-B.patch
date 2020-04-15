@@ -1,7 +1,7 @@
-From d10c0d4be2214f70b7e56a1781cf46a589612c9d Mon Sep 17 00:00:00 2001
+From 8073077bf6c36515fad1ceaa807009e5d13be264 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 12:22:52 +0200
-Subject: [PATCH 11/25] COMP: Enable installation of generated .h files for
+Subject: [PATCH 11/29] COMP: Enable installation of generated .h files for
  BaseQTLibraries
 
 Some SlicerBaseQT libraries generate ui_*.h files. With this, these
@@ -11,7 +11,7 @@ files will be also installed with the rest of development files
  1 file changed, 8 insertions(+)
 
 diff --git a/CMake/SlicerMacroBuildBaseQtLibrary.cmake b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
-index e7ba64316..2a9df70d8 100644
+index e7ba64316d..2a9df70d8f 100644
 --- a/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 +++ b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 @@ -141,6 +141,9 @@ macro(SlicerMacroBuildBaseQtLibrary)
