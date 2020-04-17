@@ -34,13 +34,6 @@ PATCHES=(
 src_prepare() {
 
 	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/Scripted/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN}
-
 }
 
 src_configure(){
@@ -58,5 +51,7 @@ src_configure(){
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
+
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Scripted/${PN}"
 	cmake-utils_src_configure
 }
