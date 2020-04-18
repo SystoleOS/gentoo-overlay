@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils multilib git-r3
+inherit cmake git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -33,14 +33,7 @@ PATCHES=(
 
 src_prepare() {
 
-	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/Loadable/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN}
-
+	cmake_src_prepare
 }
 
 src_configure(){
@@ -53,7 +46,6 @@ src_configure(){
 		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-D${PN}_DEVELOPMENT_INSTALL=ON
-		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
@@ -61,32 +53,34 @@ src_configure(){
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
-	cmake-utils_src_configure
+
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
+	cmake_src_configure
 }
 
-pkg_postinst(){
+# pkg_postinst(){
 
-	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*PythonD.so")
-	for i in ${pythond_libraries}
-	do
-		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
-	done
+# 	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*PythonD.so")
+# 	for i in ${pythond_libraries}
+# 	do
+# 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+# 	done
 
-	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Python*.so" ! -name "*${PN}*PythonD.so")
-	for i in ${python_libraries}
-	do
-		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
-	done
+# 	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Python*.so" ! -name "*${PN}*PythonD.so")
+# 	for i in ${python_libraries}
+# 	do
+# 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
+# 	done
 
-	module_libraries=$(find /usr/lib64/Slicer-4.11/qt-loadable-modules -name "*${PN}*.so" ! -name "*${PN}*Python*")
-	for i in ${module_libraries}
-	do
-		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
-	done
+# 	module_libraries=$(find /usr/lib64/Slicer-4.11/qt-loadable-modules -name "*${PN}*.so" ! -name "*${PN}*Python*")
+# 	for i in ${module_libraries}
+# 	do
+# 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
+# 	done
 
-	plugin_python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Plugin.py")
-	for i in ${plugin_python_libraries}
-	do
-		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
-	done
-}
+# 	plugin_python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Plugin.py")
+# 	for i in ${plugin_python_libraries}
+# 	do
+# 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
+# 	done
+# }
