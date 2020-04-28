@@ -3,7 +3,7 @@
 EAPI=7
 PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils git-r3 python-single-r1
+inherit cmake git-r3 python-single-r1
 
 # Short one-line description of this package.
 DESCRIPTION="General-purpose features that may be integrated into VTK library in the future."
@@ -42,11 +42,11 @@ src_configure(){
 		-DvtkAddon_INSTALL_PYTHON_LIB_DIR:STRING="$(get_libdir)"
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install(){
 
-	cmake-utils_src_install
+	cmake_src_install
 	python_optimize
 }
