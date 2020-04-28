@@ -21,6 +21,7 @@ DEPEND="
 	dev-qt/qtcore:5
 	dev-qt/qtmultimedia
 	dev-qt/qtsvg
+	dev-qt/designer
 	!dev-python/PythonQt
 "
 RDEPEND="${DEPEND}"
