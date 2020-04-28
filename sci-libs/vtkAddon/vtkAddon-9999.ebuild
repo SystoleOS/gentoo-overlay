@@ -18,8 +18,14 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE=""
-REQURIED_USE="${PYTHON_REQUIRED_USE}"
+IUSE="python"
+
+REQURIED_USE="
+	${PYTHON_REQUIRED_USE}
+	python? ( ${PYTHON_DEPS}
+			  sci-libs/VTK[python] )
+	!python? ( sci-libs/CTK )
+"
 
 DEPEND="${PYTHON_DEPS}"
 
@@ -34,13 +40,18 @@ src_configure(){
 	mycmakeargs+=(
 		-DBUILD_SHARED_LIBS:BOOL=ON
 		-DBUILD_TESTING:BOOL=OFF
-		-DvtkAddon_WRAP_PYTHON:BOOL=ON
+		-DvtkAddon_WRAP_PYTHON:BOOL="$(usex python ON OFF)"
 		-DvtkAddon_INSTALL_NO_DEVELOPMENT:BOOL=OFF
 		-DvtkAddon_INSTALL_LIB_DIR:STRING="$(get_libdir)"
 		-DvtkAddon_INSTALL_CMAKE_DIR:STRING="$(get_libdir)/cmake/${PN}"
-		-DvtkAddon_INSTALL_PYTHON_MODULE_LIB_DIR:STRING="$(python_get_sitedir)"
-		-DvtkAddon_INSTALL_PYTHON_LIB_DIR:STRING="$(get_libdir)"
 	)
+
+	if use python; then
+		mycmakeargs+=(
+			-DvtkAddon_INSTALL_PYTHON_MODULE_LIB_DIR:STRING="$(python_get_sitedir)"
+			-DvtkAddon_INSTALL_PYTHON_LIB_DIR:STRING="$(get_libdir)"
+		)
+	fi
 
 	cmake_src_configure
 }
