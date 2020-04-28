@@ -75,7 +75,7 @@ src_configure(){
 			-DVTK_LEGACY_REMOVE=OFF
 			-DVTK_QT_VERSION=5
 			-DVTK_RENDERING_BACKEND=OpenGL2
-			-DVTK_WRAP_PYTHON="$(usex python)"
+			-DVTK_WRAP_PYTHON:BOOL="$(usex python ON OFF)"
 			-DModule_vtkGUISupportQt=ON
 			-DModule_vtkGUISupportQtOpenGL=ON
 			-DModule_vtkGUISupportQtSQL=ON
