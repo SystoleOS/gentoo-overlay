@@ -27,8 +27,11 @@ IUSE="python cli sitk"
 
 RDEPEND="
 	python? ( ${PYTHON_DEPS}
-			  sci-medical/CTK[python] )
-	!python? ( sci-medical/CTK )
+			  sci-medical/CTK[python]
+			  sci-libs/vtkAddon[python]
+			   )
+	!python? ( sci-medical/CTK
+			   sci-libs/vtkAddon )
 	dev-qt/qtcore
 	dev-qt/qtmultimedia
 	dev-qt/qtopengl
