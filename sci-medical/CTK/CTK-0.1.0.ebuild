@@ -86,6 +86,7 @@ src_configure(){
 			-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
 			-DCTK_SUPERBUILD=OFF
 			-DCTK_INSTALL_LIB_DIR=/usr/lib64
+			-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
 			# PythonQt wrapping
 			-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python)"
 			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python)"
