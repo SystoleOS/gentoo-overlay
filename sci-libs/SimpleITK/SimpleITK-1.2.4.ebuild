@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils
+inherit cmake python-single-r1
 
 DESCRIPTION="A layer built on top of the Insight Toolkit (ITK), intended to simplify and facilitate ITK's use in rapid prototyping, education and interpreted languages."
 
@@ -23,7 +23,9 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
-PATCHES=(${FILESDIR}/test.patch)
+PATCHES=(
+	${FILESDIR}/0001-ENH-Adding-installation-directory-for-python-module.patch
+)
 
 src_unpack() {
 
@@ -40,20 +42,15 @@ src_configure() {
 
 	# General building options
 	mycmakeargs+=(
-		-DBUILD_TESTING=OFF
-		-DWRAP_LUA=OFF
-		-DWRAP_JAVA=OFF
-		-DWRAP_PYTHON=ON
-		-DSKBUILD=ON
-		-DSimpleITK_INSTALL_LIBRARY_DIR=lib64
-		-DSimpleITK_INSTALL_ARCHIVE_DIR=lib64
-		-DSimpleITK_INSTALL_PREFIX=/usr
+		-DBUILD_TESTING:BOOL=OFF
+		-DWRAP_LUA:BOOL=OFF
+		-DWRAP_JAVA:BOOL=OFF
+		-DWRAP_PYTHON:BOOL=ON
+		-DSKBUILD:BOOL=ON
+		-DSimpleITK_INSTALL_LIBRARY_DIR:STRING="$(get_libdir)"
+		-DSimpleITK_INSTALL_ARCHIVE_DIR:STRING="$(get_libdir)"
+		-DSimpleITK_INSTALL_PYTHON_LIBRARY_DIR:STRING="$(python_get_sitedir)"
 	)
 
-	cmake-utils_src_configure
-}
-
-pkg_postinst(){
-
-	ln -sf /usr/lib64/SimpleITK/ /usr/lib64/python3.6/site-packages/SimpleITK || die
+	cmake_src_configure
 }
