@@ -115,6 +115,9 @@ src_configure(){
 			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
 			-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
 			-DTeem_DIR:STRING="/usr/lib64"
+			-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
+			-DQT_PLUGINS_DIR:STRING="/usr/lib64/designer"
+			-DSlicer_QtPlugins_DIR:STRING="/usr/lib64/designer"
 			-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)"
 			-DSlicer_INSTALL_PYTHOND_LIB_DIR:STRING="$(get_libdir)"
 			-DSlicer_INSTALL_PYTHON_LIB_DIR:STRING="$(python_get_sitedir)"
