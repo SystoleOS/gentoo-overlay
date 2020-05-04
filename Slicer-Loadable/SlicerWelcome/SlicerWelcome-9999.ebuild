@@ -31,18 +31,6 @@ PATCHES=(
 	${FILESDIR}/0001-Make-SlicerWelcome-a-separate-module.patch
 )
 
-src_prepare() {
-
-	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/Loadable/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN}
-
-}
-
 src_configure(){
 
 	local mycmakeargs=()
@@ -59,7 +47,8 @@ src_configure(){
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
-	cmake-utils_src_configure
+
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
 	cmake_src_configure
 }
 
