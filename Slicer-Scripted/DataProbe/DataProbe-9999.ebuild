@@ -2,7 +2,7 @@
 
 EAPI=7
 
-inherit cmake multilib git-r3
+inherit cmake git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
