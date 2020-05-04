@@ -2,7 +2,9 @@
 
 EAPI=7
 
-inherit cmake-utils multilib git-r3
+PYTHON_COMPAT=( python3_6 )
+
+inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -45,11 +47,11 @@ src_configure(){
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
-				-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
 		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
-		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
+		-DPYTHON_INCLUDE_DIR="$(python_get_sitedir)"
 	)
 
 	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
