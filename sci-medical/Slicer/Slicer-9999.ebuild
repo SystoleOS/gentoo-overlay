@@ -1,10 +1,10 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils python-r1 git-r3
+inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -86,69 +86,66 @@ PATCHES=(
 
 src_prepare() {
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 	cp ${FILESDIR}/FindPythonQt.cmake ${S}/CMake
 }
 
 src_configure(){
 
-	configure() {
-		local mycmakeargs=()
+	local mycmakeargs=()
 
-		mycmakeargs+=(
-			-DSlicer_SUPERBUILD:BOOL=OFF
-			-DBUILD_TESTING:BOOL=OFF
-			-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
-			-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli)"
-			-DSlicer_BUILD_CLI:BOOL=OFF
-			-DCMAKE_CXX_STANDARD:STRING="11"
-			-DSlicer_REQUIRED_QT_VERSION:STRING="5"
-			-DSlicer_BUILD_DICOM_SUPPORT:BOOL=OFF
-			-DSlicer_BUILD_ITKPython:BOOL=OFF
-			-DSlicer_BUILD_QTLOADABLEMODULES:BOOL=OFF
-			-DSlicer_BUILD_QTSCRIPTEDMODULES:BOOL=OFF
-			-DSlicer_BUILD_QT_DESIGNER_PLUGINS:BOOL=ON
-			-DSlicer_USE_CTKAPPLAUNCHER:BOOL=OFF
-			-DSlicer_USE_PYTHONQT:BOOL="$(usex python)"
-			-DSlicer_USE_QtTesting:BOOL=OFF
-			-DSlicer_USE_SimpleITK:BOOL=OFF
-			-DSlicer_VTK_RENDERING_BACKEND:STRING="OpenGL2"
-			-DSlicer_VTK_VERSION_MAJOR:STRING="8"
-			-DSlicer_INSTALL_DEVELOPMENT:BOOL=ON
-			-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0:/usr/lib64/SlicerExecutionModel-1.0.0
-			-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
-			-DTeem_DIR:STRING="/usr/lib64"
-			-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
-			-DQT_PLUGINS_DIR:STRING="/usr/lib64/designer"
-			-DSlicer_QtPlugins_DIR:STRING="/usr/lib64/designer"
-			-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)"
-			-DSlicer_INSTALL_PYTHOND_LIB_DIR:STRING="$(get_libdir)"
-			-DSlicer_INSTALL_PYTHON_LIB_DIR:STRING="$(python_get_sitedir)"
-			-DSlicer_INSTALL_PYTHON_BIN_DIR:STRING="$(python_get_sitedir)"
-			-DSlicer_INSTALL_BIN_DIR:STRING="bin"
-			-DjqPlot_DIR:STRING="/usr/share/jqPlot"
-			-DCTKAppLauncherLib_DIR:STRING="/usr/lib64/CTKAppLauncher-1.0.0"
-			-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${BUILD_DIR}"
-			-DSlicer_INSTALL_QTLOADABLEMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
-			-DSlicer_INSTALL_QTLOADABLEMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
-			-DSlicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
-			-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
-			-DSlicer_INSTALL_CLIMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/cli-modules"
-			-DSlicer_INSTALL_CLIMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/cli-modules"
-			-DSlicer_INSTALL_LIBEXEC_DIR:STRING="lib64/Slicer-4.11/libexec"
-			-DSlicer_INSTALL_CMAKE_CONFIG_DIR:STRING="lib64/cmake/Slicer"
-			-DSlicer_INSTALL_CMAKE_DIR:STRING="lib64/Slicer-4.11/CMake"
-			-DSlicer_INSTALL_SHARE_DIR:STRING="share/Slicer-4.11"
-			-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
-			-DSlicer_BUILD_vtkAddon:BOOL=OFF
-		)
+	mycmakeargs+=(
+		-DSlicer_SUPERBUILD:BOOL=OFF
+		-DBUILD_TESTING:BOOL=OFF
+		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
+		-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli)"
+		-DSlicer_BUILD_CLI:BOOL=OFF
+		-DCMAKE_CXX_STANDARD:STRING="11"
+		-DSlicer_REQUIRED_QT_VERSION:STRING="5"
+		-DSlicer_BUILD_DICOM_SUPPORT:BOOL=OFF
+		-DSlicer_BUILD_ITKPython:BOOL=OFF
+		-DSlicer_BUILD_QTLOADABLEMODULES:BOOL=OFF
+		-DSlicer_BUILD_QTSCRIPTEDMODULES:BOOL=OFF
+		-DSlicer_BUILD_QT_DESIGNER_PLUGINS:BOOL=ON
+		-DSlicer_USE_CTKAPPLAUNCHER:BOOL=OFF
+		-DSlicer_USE_PYTHONQT:BOOL="$(usex python)"
+		-DSlicer_USE_QtTesting:BOOL=OFF
+		-DSlicer_USE_SimpleITK:BOOL=OFF
+		-DSlicer_VTK_RENDERING_BACKEND:STRING="OpenGL2"
+		-DSlicer_VTK_VERSION_MAJOR:STRING="8"
+		-DSlicer_INSTALL_DEVELOPMENT:BOOL=ON
+		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
+		-DTeem_DIR:STRING="/usr/lib64"
+		-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
+		-DQT_PLUGINS_DIR:STRING="/usr/lib64/designer"
+		-DSlicer_QtPlugins_DIR:STRING="/usr/lib64/designer"
+		-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)"
+		-DSlicer_INSTALL_PYTHOND_LIB_DIR:STRING="$(get_libdir)"
+		-DSlicer_INSTALL_PYTHON_LIB_DIR:STRING="$(python_get_sitedir)"
+		-DSlicer_INSTALL_PYTHON_BIN_DIR:STRING="$(python_get_sitedir)"
+		-DSlicer_INSTALL_BIN_DIR:STRING="bin"
+		-DjqPlot_DIR:STRING="/usr/share/jqPlot"
+		-DCTKAppLauncherLib_DIR:STRING="/usr/lib64/CTKAppLauncher-1.0.0"
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${BUILD_DIR}"
+		-DSlicer_INSTALL_QTLOADABLEMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
+		-DSlicer_INSTALL_QTLOADABLEMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
+		-DSlicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
+		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
+		-DSlicer_INSTALL_CLIMODULES_BIN_DIR:STRING="lib64/Slicer-4.11/cli-modules"
+		-DSlicer_INSTALL_CLIMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/cli-modules"
+		-DSlicer_INSTALL_LIBEXEC_DIR:STRING="lib64/Slicer-4.11/libexec"
+		-DSlicer_INSTALL_CMAKE_CONFIG_DIR:STRING="lib64/cmake/Slicer"
+		-DSlicer_INSTALL_CMAKE_DIR:STRING="lib64/Slicer-4.11/CMake"
+		-DSlicer_INSTALL_SHARE_DIR:STRING="share/Slicer-4.11"
+		-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
+		-DSlicer_BUILD_vtkAddon:BOOL=OFF
+	)
 
-		if use sitk; then
-			mycmakeargs+=(-DSlicer_USE_SimpleITK:BOOL=ON)
-		fi
+	if use sitk; then
+		mycmakeargs+=(-DSlicer_USE_SimpleITK:BOOL=ON)
+	fi
 
-		cmake-utils_src_configure
-	}
+	cmake_src_configure
+}
 
-	python_foreach_impl run_in_build_dir configure
 }
