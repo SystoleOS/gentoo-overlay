@@ -31,18 +31,6 @@ PATCHES=(
 	${FILESDIR}/0001-ENH-Make-the-SampleData-scripted-module-a-separate-m.patch
 )
 
-src_prepare() {
-
-	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/Scripted/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN}
-
-}
-
 src_configure(){
 
 	local mycmakeargs=()
@@ -58,5 +46,6 @@ src_configure(){
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
 
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Scripted/${PN}"
 	cmake_src_configure
 }
