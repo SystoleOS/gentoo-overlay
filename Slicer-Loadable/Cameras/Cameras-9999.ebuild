@@ -57,30 +57,3 @@ src_configure(){
 	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
 	cmake_src_configure
 }
-
-# pkg_postinst(){
-
-# 	pythond_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*PythonD.so")
-# 	for i in ${pythond_libraries}
-# 	do
-# 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
-# 	done
-
-# 	python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Python*.so" ! -name "*${PN}*PythonD.so")
-# 	for i in ${python_libraries}
-# 	do
-# 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
-# 	done
-
-# 	module_libraries=$(find /usr/lib64/Slicer-4.11/qt-loadable-modules -name "*${PN}*.so" ! -name "*${PN}*Python*")
-# 	for i in ${module_libraries}
-# 	do
-# 		ln -sf ${i} /usr/lib64/$(basename ${i}) || die
-# 	done
-
-# 	plugin_python_libraries=$(find /usr/lib64/Slicer-4.11 -name "*${PN}*Plugin.py")
-# 	for i in ${plugin_python_libraries}
-# 	do
-# 		ln -sf ${i} /usr/lib64/python3.6/site-packages/$(basename ${i}) || die
-# 	done
-# }
