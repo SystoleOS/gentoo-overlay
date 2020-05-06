@@ -43,19 +43,19 @@ src_configure(){
 	local mycmakeargs=()
 
 	mycmakeargs+=(
-		-DBUILD_TESTING=OFF
-		-DCMAKE_CXX_STANDARD=11
-		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
-		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
-		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL=ON
-		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL=ON
-		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
-		-DSlicer_INSTALL_LIB_DIR="$(get_libdir)/Slicer-4.11"
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-loadable-modules"
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
-		-DPYTHON_INCLUDE_DIR="$(python_get_sitedir)"
+		-DBUILD_TESTING:BOOL=OFF
+		-DCMAKE_CXX_STANDARD:STRING="11"
+		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
+		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL:BOOL=ON
+		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL:BOOL=ON
+		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL:BOOL=ON
+		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL:BOOL=ON
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${WORKDIR}"
+		-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11"
+		-DSlicer_QTLOADABLEMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-loadable-modules"
+		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
+		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
+		-DPYTHON_INCLUDE_DIR:STRING="$(python_get_sitedir)"
 	)
 
 	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
