@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils multilib git-r3
+inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -31,18 +31,6 @@ PATCHES=(
 	${FILESDIR}/0001-Separate-Colors-in-a-different-module.patch
 )
 
-src_prepare() {
-
-	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/Loadable/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN} -rf
-
-}
-
 src_configure(){
 
 	local mycmakeargs=()
@@ -61,8 +49,7 @@ src_configure(){
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
-	cmake-utils_src_configure
-}
 
-
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
+	cmake_src_configure
 }
