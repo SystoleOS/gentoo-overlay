@@ -51,10 +51,10 @@ src_configure(){
 		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
-		-DSlicer_INSTALL_LIB_DIR="lib64/Slicer-4.11"
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
+		-DSlicer_INSTALL_LIB_DIR="$(get_libdir)/Slicer-4.11"
+		-DSlicer_QTLOADABLEMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-loadable-modules"
+		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
+		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
 		-DPYTHON_INCLUDE_DIR="$(python_get_sitedir)"
 	)
 
