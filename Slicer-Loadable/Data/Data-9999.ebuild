@@ -41,7 +41,7 @@ src_configure(){
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
 		-DCMAKE_CXX_STANDARD:STRING="11"
-		-DCMAKE_INSTALL_RPATH:STRING="/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0"
+		-DCMAKE_INSTALL_RPATH:STRING="/usr/lib64/Slicer-4.11/qt-loadable-modules"
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
 		-D${PN}_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL:BOOL=ON
