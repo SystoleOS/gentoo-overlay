@@ -31,11 +31,6 @@ PATCHES=(
 	${FILESDIR}/0001-Make-Cameras-module-a-separate-package.patch
 )
 
-src_prepare() {
-
-	cmake_src_prepare
-}
-
 src_configure(){
 
 	local mycmakeargs=()
