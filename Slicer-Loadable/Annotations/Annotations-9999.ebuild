@@ -36,18 +36,6 @@ PATCHES=(
 	${FILESDIR}/0005-COMP-Remove-redundant-special-functions-declarations.patch
 )
 
-src_prepare() {
-
-	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/Loadable/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN}
-
-}
-
 src_configure(){
 
 	local mycmakeargs=()
@@ -69,5 +57,6 @@ src_configure(){
 		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
 	)
 
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Loadable/${PN}"
 	cmake_src_configure
 }
