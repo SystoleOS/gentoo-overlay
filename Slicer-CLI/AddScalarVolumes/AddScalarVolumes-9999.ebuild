@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils multilib git-r3
+inherit cmake git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -31,30 +31,15 @@ PATCHES=(
 	${FILESDIR}/0001-ENH-Make-AddScalarVolumes-a-separate-module.patch
 )
 
-src_prepare() {
-
-	cmake-utils_src_prepare
-
-	to_delete=$(ls)
-	mv Modules/CLI/${PN} .
-	rm -rf ${to_delete}
-	mv ${PN}/* .
-	rm ${PN} -rf
-
-}
-
 src_configure(){
 
 	local mycmakeargs=()
 
 	mycmakeargs+=(
-		-DBUILD_TESTING=OFF
-		-DCMAKE_CXX_STANDARD=11
-		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0
-		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
-		-D${PN}_DEVELOPMENT_INSTALL=ON
-		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
-		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
+		-DBUILD_TESTING:BOOL=OFF
+		-DCMAKE_CXX_STANDARD:STRING="11"
 	)
-	cmake-utils_src_configure
+
+	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/CLI/${PN}"
+	cmake_src_configure
 }
