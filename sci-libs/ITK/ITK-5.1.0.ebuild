@@ -10,7 +10,7 @@ DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/ITK/"
 
-COMMIT="d2e511437d3d9480ae1ab7ea8beb210696b6ceee"
+COMMIT="35704a458d1ad9a4a2f2634d38032216ab280823"
 
 SRC_URI="https://github.com/InsightSoftwareConsortium/ITK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
