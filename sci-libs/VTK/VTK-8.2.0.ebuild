@@ -12,7 +12,7 @@ DESCRIPTION="The Visualization Toolkit"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/VTK/"
 
-COMMIT="73e89e85c49c0802a77b208e8a973e566bc8b6f4"
+COMMIT="dd7e051af68cfbf3675e411494af7169fc7d5618"
 
 SRC_URI="https://github.com/Slicer/VTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
