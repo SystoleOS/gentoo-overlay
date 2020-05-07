@@ -1,14 +1,14 @@
-From b2331f5b0da82a1800f0e7851ee70e6f31faa2aa Mon Sep 17 00:00:00 2001
+From 431168aed6a12978b21db3c442669e3ccc9ea8b3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 4 Mar 2020 07:17:55 +0100
 Subject: [PATCH] ENH: Make the ExtractSkeleton CLI module a separate module
 
 ---
- Modules/CLI/ExtractSkeleton/CMakeLists.txt | 34 +++++++++++++++++++---
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ Modules/CLI/ExtractSkeleton/CMakeLists.txt | 36 +++++++++++++++++++---
+ 1 file changed, 32 insertions(+), 4 deletions(-)
 
 diff --git a/Modules/CLI/ExtractSkeleton/CMakeLists.txt b/Modules/CLI/ExtractSkeleton/CMakeLists.txt
-index 8aaaff62e..38aa6195c 100755
+index 8aaaff62e7..d0d82f8f38 100755
 --- a/Modules/CLI/ExtractSkeleton/CMakeLists.txt
 +++ b/Modules/CLI/ExtractSkeleton/CMakeLists.txt
 @@ -1,15 +1,32 @@
@@ -44,7 +44,16 @@ index 8aaaff62e..38aa6195c 100755
  #
  # ITK
  #
-@@ -38,12 +55,21 @@ SEMMacroBuildCLI(
+@@ -26,6 +43,8 @@ if(WIN32)
+   add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+ endif()
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SEMMacroBuildCLI(
+   NAME ${MODULE_NAME}
+@@ -38,12 +57,21 @@ SEMMacroBuildCLI(
      coordTypes.h
      misc.h
      misc.cxx
@@ -62,7 +71,7 @@ index 8aaaff62e..38aa6195c 100755
 +    
 +    INCLUDE_DIRECTORIES
 +    ${Slicer_Libs_INCLUDE_DIRS}
-+    ${Slicer_HOME}/${Slicer_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
++    ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
 +
 +    INSTALL_RUNTIME_DESTINATION ${Slicer_INSTALL_CLIMODULES_BIN_DIR}
 +    INSTALL_LIBRARY_DESTINATION ${Slicer_INSTALL_CLIMODULES_LIB_DIR}
@@ -71,5 +80,5 @@ index 8aaaff62e..38aa6195c 100755
  
  #-----------------------------------------------------------------------------
 -- 
-2.24.1
+2.26.2
 
