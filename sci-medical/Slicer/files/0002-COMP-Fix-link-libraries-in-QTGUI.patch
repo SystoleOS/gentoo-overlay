@@ -1,7 +1,7 @@
-From f83105d62059120a277edfc803462296ba67fdf7 Mon Sep 17 00:00:00 2001
+From 9a1048c89a1f3e04c3a13c21da3d323ae1ea0277 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 14:56:16 +0200
-Subject: [PATCH 02/29] COMP: Fix link libraries in QTGUI
+Subject: [PATCH 02/30] COMP: Fix link libraries in QTGUI
 
 ---
  Base/QTGUI/CMakeLists.txt | 6 ++++++
@@ -32,5 +32,5 @@ index e7752a745e..f2133ac153 100644
  
  # Python wrap
 -- 
-2.24.1
+2.26.2
 

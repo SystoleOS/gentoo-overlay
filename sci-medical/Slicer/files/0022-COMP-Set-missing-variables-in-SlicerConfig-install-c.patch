@@ -1,7 +1,7 @@
-From 88313b471b04aaf4fdf623b953488dc9666fcef3 Mon Sep 17 00:00:00 2001
+From 643ae735a87a4e09c1f4693b8d23e84b1a31c6ce Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 19 Feb 2020 09:39:24 +0100
-Subject: [PATCH 22/29] COMP: Set missing variables in SlicerConfig (install
+Subject: [PATCH 22/30] COMP: Set missing variables in SlicerConfig (install
  configuration)
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 22/29] COMP: Set missing variables in SlicerConfig (install
  1 file changed, 4 insertions(+)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 7d9ab626c5..ddf965b38a 100644
+index aa4cf5b0e2..f5388088d4 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
 @@ -7,6 +7,10 @@
@@ -24,5 +24,5 @@ index 7d9ab626c5..ddf965b38a 100644
  set(Slicer_REQUIRED_C_FLAGS "@Slicer_REQUIRED_C_FLAGS@")
  set(Slicer_REQUIRED_CXX_FLAGS "@Slicer_REQUIRED_CXX_FLAGS@")
 -- 
-2.24.1
+2.26.2
 

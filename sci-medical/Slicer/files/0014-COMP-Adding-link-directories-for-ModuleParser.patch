@@ -1,7 +1,7 @@
-From 5be48494cd84fbfc1d6f72fd177f7e566de4a3ec Mon Sep 17 00:00:00 2001
+From 8e52fd50a8c79df0ccd8f201f2c991df50cb32f9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 13 Jan 2020 16:46:08 +0100
-Subject: [PATCH 14/29] COMP: Adding link directories for ModuleParser
+Subject: [PATCH 14/30] COMP: Adding link directories for ModuleParser
 
 ---
  Applications/SlicerApp/CMakeLists.txt     | 2 ++
@@ -91,5 +91,5 @@ index 6f4a1e3186..6b77e88ff4 100644
  set(KIT_include_directories
    ${qSlicerBaseQTGUI_SOURCE_DIR}
 -- 
-2.24.1
+2.26.2
 

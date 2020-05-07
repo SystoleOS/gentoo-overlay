@@ -1,7 +1,7 @@
-From 77e7b9479cf39ca304f23b1a0c6b905498076585 Mon Sep 17 00:00:00 2001
+From 67d5d330f0cc63894bb6a22d86c89918a3491ca8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 3 Mar 2020 07:02:53 +0100
-Subject: [PATCH 26/29] ENH: Change SlicerApp-real -> Slicer
+Subject: [PATCH 26/30] ENH: Change SlicerApp-real -> Slicer
 
 ---
  CMake/SlicerMacroBuildApplication.cmake           | 2 +-
@@ -26,10 +26,10 @@ index 03f2a67aea..0b6df73497 100644
    message(STATUS "Setting ${SLICERAPP_APPLICATION_NAME} executable name to '${executable_name}${CMAKE_EXECUTABLE_SUFFIX}'")
  
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index afaedac8ff..c3b4596c1b 100644
+index 7823f069f8..0f7b5314e1 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -942,10 +942,8 @@ add_subdirectory(Libs)
+@@ -937,10 +937,8 @@ add_subdirectory(Libs)
  add_subdirectory(Base)
  add_subdirectory(Resources)
  add_subdirectory(Utilities/Scripts)
@@ -101,5 +101,5 @@ index 3938d41acd..50ecf8035e 100644
  
  include(SlicerExtensionTemplatesGenerator)
 -- 
-2.24.1
+2.26.2
 

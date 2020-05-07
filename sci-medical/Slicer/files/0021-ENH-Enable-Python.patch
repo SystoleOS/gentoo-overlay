@@ -1,7 +1,7 @@
-From 5894637fd29113523f25f39db3398d2567bdc8fe Mon Sep 17 00:00:00 2001
+From c1f86299dd92c8cae18c10ca9b4582cf16f8e050 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 28 Jan 2020 13:14:57 +0100
-Subject: [PATCH 21/29] ENH: Enable Python
+Subject: [PATCH 21/30] ENH: Enable Python
 
 ---
  Base/Logic/CMakeLists.txt                     |   5 +-
@@ -41,10 +41,10 @@ index 2a81b9a71d..c50cc5eb64 100644
    # Export target
    set_property(GLOBAL APPEND PROPERTY Slicer_TARGETS ${lib_name}Python ${lib_name}PythonD)
 diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
-index 9331ad9c95..1b352d3cb7 100644
+index 9a58187e25..b5639d9cb5 100644
 --- a/Base/Python/CMakeLists.txt
 +++ b/Base/Python/CMakeLists.txt
-@@ -73,7 +73,8 @@ ctkMacroCompilePythonScript(
+@@ -61,5 +61,6 @@ ctkMacroCompilePythonScript(
    SCRIPTS "${Slicer_PYTHON_SCRIPTS}"
    RESOURCES "${Slicer_PYTHON_RESOURCES}"
    DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python
@@ -52,8 +52,6 @@ index 9331ad9c95..1b352d3cb7 100644
 +  INSTALL_DIR ${Slicer_INSTALL_PYTHON_BIN_DIR}
 +  NO_INSTALL_SUBDIR
    )
- 
- #-----------------------------------------------------------------------------
 diff --git a/Base/QTCLI/CMakeLists.txt b/Base/QTCLI/CMakeLists.txt
 index ec60bb1956..56054b4d55 100644
 --- a/Base/QTCLI/CMakeLists.txt
@@ -394,10 +392,10 @@ index b9f641518f..2086ffe69a 100644
    # Export target
    export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
-index 7cb0b145ac..18106d54e4 100644
+index 8646349367..dcda020bf0 100644
 --- a/Libs/MRML/Core/CMakeLists.txt
 +++ b/Libs/MRML/Core/CMakeLists.txt
-@@ -330,8 +330,9 @@ if(VTK_WRAP_PYTHON)
+@@ -347,8 +347,9 @@ if(VTK_WRAP_PYTHON)
    vtkMacroKitPythonWrap(
      KIT_NAME ${lib_name}
      KIT_SRCS ${MRMLCore_SRCS}
@@ -426,10 +424,10 @@ index f81bdc7980..a1c3384b44 100644
    # Export target
    export(TARGETS ${lib_name}Python ${lib_name}PythonD APPEND FILE ${${PROJECT_NAME}_EXPORT_FILE})
 diff --git a/Libs/MRML/Logic/CMakeLists.txt b/Libs/MRML/Logic/CMakeLists.txt
-index 5d7aec2f6f..9e33bb649c 100644
+index 7202751e21..48dcea277e 100644
 --- a/Libs/MRML/Logic/CMakeLists.txt
 +++ b/Libs/MRML/Logic/CMakeLists.txt
-@@ -160,8 +160,9 @@ if(VTK_WRAP_PYTHON)
+@@ -148,8 +148,9 @@ if(VTK_WRAP_PYTHON)
      KIT_NAME ${lib_name}
      KIT_SRCS ${MRMLLogic_SRCS}
      KIT_PYTHON_LIBRARIES MRMLCorePythonD
@@ -512,5 +510,5 @@ index c99477bf64..675a5ee232 100644
      )
  endif()
 -- 
-2.24.1
+2.26.2
 

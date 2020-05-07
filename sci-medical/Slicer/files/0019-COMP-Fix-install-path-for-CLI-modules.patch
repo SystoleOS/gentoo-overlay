@@ -1,7 +1,7 @@
-From 7182af198b77174b3cae5e5d4550405d25da3127 Mon Sep 17 00:00:00 2001
+From 86590d26fbabd8aa393b8163f49d3722cbb05fc0 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 16 Jan 2020 12:43:27 +0100
-Subject: [PATCH 19/29] COMP: Fix install path for CLI modules
+Subject: [PATCH 19/30] COMP: Fix install path for CLI modules
 
 ---
  CMake/SlicerInstallConfig.cmake.in | 5 +++++
@@ -9,10 +9,10 @@ Subject: [PATCH 19/29] COMP: Fix install path for CLI modules
  2 files changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index c5a1093ef3..51f657b26a 100644
+index 5e9ddc9865..7c8be7076c 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -115,6 +115,11 @@ set(Slicer_INSTALL_INCLUDE_DIR "@Slicer_INSTALL_INCLUDE_DIR@")
+@@ -114,6 +114,11 @@ set(Slicer_INSTALL_INCLUDE_DIR "@Slicer_INSTALL_INCLUDE_DIR@")
  set(Slicer_INSTALL_SHARE_DIR "@Slicer_INSTALL_SHARE_DIR@")
  set(Slicer_INSTALL_ITKFACTORIES_DIR "@Slicer_INSTALL_ITKFACTORIES_DIR@")
  
@@ -42,5 +42,5 @@ index 52b89c175a..241c2d39fc 100644
      set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_RUNTIME_DESTINATION "${Slicer_INSTALL_CLIMODULES_BIN_DIR}")
      set(SlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION "${Slicer_INSTALL_CLIMODULES_LIB_DIR}")
 -- 
-2.24.1
+2.26.2
 

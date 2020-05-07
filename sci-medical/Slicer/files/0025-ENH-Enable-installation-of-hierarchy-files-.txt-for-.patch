@@ -1,7 +1,7 @@
-From 2d29e5fa552817eef358ab205233ca720ce04fc7 Mon Sep 17 00:00:00 2001
+From 3616c60086fc530f35a55dbe65155cba14cf8638 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 2 Mar 2020 13:25:45 +0100
-Subject: [PATCH 25/29] ENH: Enable installation of hierarchy files (.txt) for
+Subject: [PATCH 25/30] ENH: Enable installation of hierarchy files (.txt) for
  python wrap
 
 ---
@@ -11,10 +11,10 @@ Subject: [PATCH 25/29] ENH: Enable installation of hierarchy files (.txt) for
  3 files changed, 25 insertions(+)
 
 diff --git a/CMake/SlicerGenerateSlicerConfig.cmake b/CMake/SlicerGenerateSlicerConfig.cmake
-index 3d1f310301..36c6a71f21 100644
+index 1a0b967413..c51a36d2be 100644
 --- a/CMake/SlicerGenerateSlicerConfig.cmake
 +++ b/CMake/SlicerGenerateSlicerConfig.cmake
-@@ -95,6 +95,7 @@ set(${target}_INCLUDE_DIRS
+@@ -93,6 +93,7 @@ set(${target}_INCLUDE_DIRS
    endforeach()
  endif()
  
@@ -22,7 +22,7 @@ index 3d1f310301..36c6a71f21 100644
  get_property(_wrap_hierarchy_targets GLOBAL PROPERTY SLICER_WRAP_HIERARCHY_TARGETS)
  if(_wrap_hierarchy_targets)
    foreach(target ${_wrap_hierarchy_targets})
-@@ -106,6 +107,19 @@ set(${target}_WRAP_HIERARCHY_FILE
+@@ -104,6 +105,19 @@ set(${target}_WRAP_HIERARCHY_FILE
    endforeach()
  endif()
  
@@ -43,7 +43,7 @@ index 3d1f310301..36c6a71f21 100644
  set(Slicer_Base_INCLUDE_DIRS_CONFIG ${Slicer_Base_INCLUDE_DIRS})
  
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 247d0d6827..422af06e8a 100644
+index c7535b7007..a1cd22095f 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
 @@ -9,6 +9,9 @@
@@ -76,5 +76,5 @@ index 5b4ba06673..e87549d881 100644
  
  endmacro()
 -- 
-2.24.1
+2.26.2
 

@@ -1,7 +1,7 @@
-From 2eedd5497f0f434e341c9cfe65744e02fc7a20d9 Mon Sep 17 00:00:00 2001
+From 0362f8ec945f486fec72863b82cd821c78f2d838 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 7 May 2020 18:55:12 +0200
-Subject: [PATCH] ENH: Remove specification of Wrapper_CXX file
+Subject: [PATCH 30/30] ENH: Remove specification of Wrapper_CXX file
 
 If left unset, the SlicerExecutionModel configuration will pick up the
 right one

@@ -1,7 +1,7 @@
-From e0a4dab8a893030cdd3593553436248847a497c0 Mon Sep 17 00:00:00 2001
+From 10fcc8fab01e78bc6f2ab225ec5ca5c8a29122f8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 14:40:08 +0200
-Subject: [PATCH 12/29] COMP: Enable installation of header files for
+Subject: [PATCH 12/30] COMP: Enable installation of header files for
  qMRMLWidgets
 
 ---
@@ -25,5 +25,5 @@ index 881127654b..d27ffc4978 100644
  
    # --------------------------------------------------------------------------
 -- 
-2.24.1
+2.26.2
 

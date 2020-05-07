@@ -1,7 +1,7 @@
-From b045ba84067b886d1a817d05376f5e2b0aecea54 Mon Sep 17 00:00:00 2001
+From e715700ff8df045ac6aa7883b17fba02ec1e0e6a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 12:41:56 +0200
-Subject: [PATCH 06/29] COMP: Enable install of development files in Slicer
+Subject: [PATCH 06/30] COMP: Enable install of development files in Slicer
  libraries
 
 ---
@@ -96,10 +96,10 @@ index 24661d0942..195fb776c0 100644
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
-index d431ba3dec..7cb0b145ac 100644
+index 093b9aafc0..8646349367 100644
 --- a/Libs/MRML/Core/CMakeLists.txt
 +++ b/Libs/MRML/Core/CMakeLists.txt
-@@ -96,7 +96,7 @@ configure_file(
+@@ -102,7 +102,7 @@ configure_file(
  # Install headers
  # --------------------------------------------------------------------------
  if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
@@ -108,7 +108,7 @@ index d431ba3dec..7cb0b145ac 100644
  endif()
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
-@@ -356,7 +356,7 @@ endif()
+@@ -373,7 +373,7 @@ endif()
  # Install Test Data
  # --------------------------------------------------------------------------
  if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
@@ -144,10 +144,10 @@ index bb323c0577..d09395c41c 100644
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
 diff --git a/Libs/MRML/Logic/CMakeLists.txt b/Libs/MRML/Logic/CMakeLists.txt
-index 737b3e2603..5d7aec2f6f 100644
+index a7f688656b..7202751e21 100644
 --- a/Libs/MRML/Logic/CMakeLists.txt
 +++ b/Libs/MRML/Logic/CMakeLists.txt
-@@ -54,7 +54,7 @@ configure_file(
+@@ -49,7 +49,7 @@ configure_file(
  # Install headers
  # --------------------------------------------------------------------------
  if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
@@ -234,5 +234,5 @@ index f1eb4791b6..5106e7e4aa 100644
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
 -- 
-2.24.1
+2.26.2
 

@@ -1,7 +1,7 @@
-From f5a6159c7d45803b9a7e756bb082d3357ce5e377 Mon Sep 17 00:00:00 2001
+From 3eb8a7aa109a65476dfd20a03d678e4f49ab1d0f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 21 Feb 2020 14:46:20 +0100
-Subject: [PATCH 24/29] ENH: Make available paths to installed qt loadable
+Subject: [PATCH 24/30] ENH: Make available paths to installed qt loadable
  modules files
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 24/29] ENH: Make available paths to installed qt loadable
  1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index ddf965b38a..247d0d6827 100644
+index f5388088d4..c7535b7007 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -136,12 +136,11 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_QTLOADABLEMODULES_INCLUDE_DIR@
+@@ -135,12 +135,11 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_QTLOADABLEMODULES_INCLUDE_DIR@
  set(Slicer_QTLOADABLEMODULES_SHARE_DIR "@Slicer_QTLOADABLEMODULES_SHARE_DIR@")
  set(Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "@Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR@")
  
@@ -31,5 +31,5 @@ index ddf965b38a..247d0d6827 100644
  # Components needed to build modules from outside a Slicer build tree or
  # from outside a Slicer installation tree
 -- 
-2.24.1
+2.26.2
 
