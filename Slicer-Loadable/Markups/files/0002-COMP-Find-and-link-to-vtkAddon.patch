@@ -1,0 +1,38 @@
+From cecf35ebc5c6c6c1e95a57e30b1d41082da49e8a Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 7 May 2020 13:12:52 +0200
+Subject: [PATCH] COMP: Find and link to vtkAddon
+
+---
+ Modules/Loadable/Markups/CMakeLists.txt      | 2 ++
+ Modules/Loadable/Markups/MRML/CMakeLists.txt | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/Modules/Loadable/Markups/CMakeLists.txt b/Modules/Loadable/Markups/CMakeLists.txt
+index b349fe665a..6c0b85db13 100644
+--- a/Modules/Loadable/Markups/CMakeLists.txt
++++ b/Modules/Loadable/Markups/CMakeLists.txt
+@@ -9,6 +9,8 @@ find_package(Qt5 COMPONENTS Core Widgets Network Xml PrintSupport REQUIRED)
+ find_package(VTK REQUIRED)
+ include(${VTK_USE_FILE})
+ 
++find_package(vtkAddon REQUIRED)
++
+ find_package(CTK REQUIRED)
+ include(${CTK_USE_FILE})
+ 
+diff --git a/Modules/Loadable/Markups/MRML/CMakeLists.txt b/Modules/Loadable/Markups/MRML/CMakeLists.txt
+index f09bc3b5e4..b4907a4cf6 100644
+--- a/Modules/Loadable/Markups/MRML/CMakeLists.txt
++++ b/Modules/Loadable/Markups/MRML/CMakeLists.txt
+@@ -30,6 +30,7 @@ set(${KIT}_TARGET_LIBRARIES
+   ${MRML_LIBRARIES}
+   ${VTK_LIBRARIES}
+   ${ITK_LIBRARIES}
++  vtkAddon
+   )
+ 
+ link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
+-- 
+2.26.2
+
