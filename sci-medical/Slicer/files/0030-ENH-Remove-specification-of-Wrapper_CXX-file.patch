@@ -1,0 +1,24 @@
+From 2eedd5497f0f434e341c9cfe65744e02fc7a20d9 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 7 May 2020 18:55:12 +0200
+Subject: [PATCH] ENH: Remove specification of Wrapper_CXX file
+
+If left unset, the SlicerExecutionModel configuration will pick up the
+right one
+---
+ CMake/SlicerInstallConfig.cmake.in | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
+index 86d74bb320..95336be748 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/CMake/SlicerInstallConfig.cmake.in
+@@ -162,5 +162,3 @@ set(Slicer_LOGOS_RESOURCE "${Slicer_INSTALL_SHARE_DIR}/Resources/qSlicer.qrc")
+ 
+ # MRML libraries - This variable regroup all related MRML libraries
+ set(MRML_LIBRARIES @MRML_LIBRARIES@)
+-
+-set(SlicerExecutionModel_DEFAULT_CLI_LIBRARY_WRAPPER_CXX "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_SHARE_DIR}/SEMCommandLineLibraryWrapper.cxx")
+-- 
+2.26.2
+
