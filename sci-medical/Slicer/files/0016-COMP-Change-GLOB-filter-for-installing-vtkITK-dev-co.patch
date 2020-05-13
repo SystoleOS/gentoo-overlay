@@ -1,7 +1,7 @@
-From c411569e449ac4cbf833474d0b41ac82b03bb16f Mon Sep 17 00:00:00 2001
+From 8e57df0de4632f926f69435c77dee33814099f11 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 10:50:12 +0100
-Subject: [PATCH 16/30] COMP: Change GLOB filter for installing vtkITK dev
+Subject: [PATCH 16/29] COMP: Change GLOB filter for installing vtkITK dev
  components
 
 ---

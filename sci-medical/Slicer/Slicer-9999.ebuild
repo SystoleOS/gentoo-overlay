@@ -82,7 +82,6 @@ PATCHES=(
 	${FILESDIR}/0027-ENH-Enable-search-of-settings-in-etc-Slicer-for-ints.patch
 	${FILESDIR}/0028-ENH-Improve-directories-configuration.patch
 	${FILESDIR}/0029-COMP-Add-finding-of-vtkAddon-and-mod-on-Slicer_Libs_.patch
-	${FILESDIR}/0030-ENH-Remove-specification-of-Wrapper_CXX-file.patch
 )
 
 src_prepare() {

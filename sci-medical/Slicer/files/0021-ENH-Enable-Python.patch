@@ -1,7 +1,7 @@
-From c1f86299dd92c8cae18c10ca9b4582cf16f8e050 Mon Sep 17 00:00:00 2001
+From 303993a21da15083b334b2f4b49f66468210e7a7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 28 Jan 2020 13:14:57 +0100
-Subject: [PATCH 21/30] ENH: Enable Python
+Subject: [PATCH 21/29] ENH: Enable Python
 
 ---
  Base/Logic/CMakeLists.txt                     |   5 +-

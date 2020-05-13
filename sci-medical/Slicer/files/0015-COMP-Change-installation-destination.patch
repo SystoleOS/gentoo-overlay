@@ -1,7 +1,7 @@
-From 47471bbd4ec3a3ee8f9350b11a73bc78df2998a1 Mon Sep 17 00:00:00 2001
+From 307f6e692d2ef7012925d94946678080e59edd8e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 09:25:22 +0100
-Subject: [PATCH 15/30] COMP: Change installation destination
+Subject: [PATCH 15/29] COMP: Change installation destination
 
 This affects to SlicerBaseCLI and SlicerBaseLogic development components
 ---

@@ -1,7 +1,7 @@
-From 652aeeecb489c4247abe404dd80f81fa61b90877 Mon Sep 17 00:00:00 2001
+From 592c8fef4a146b60db9e730fc24c10a93ada363a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 14:45:07 +0200
-Subject: [PATCH 01/30] COMP: Remove uneccessary link libraries for QTCore
+Subject: [PATCH 01/29] COMP: Remove uneccessary link libraries for QTCore
 
 ---
  Base/QTCore/CMakeLists.txt | 2 --

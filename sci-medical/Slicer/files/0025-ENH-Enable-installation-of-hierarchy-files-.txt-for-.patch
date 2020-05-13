@@ -1,7 +1,7 @@
-From 3616c60086fc530f35a55dbe65155cba14cf8638 Mon Sep 17 00:00:00 2001
+From 9b3db43ea06cfe79c973f1e7ea6b2e3b034605e7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 2 Mar 2020 13:25:45 +0100
-Subject: [PATCH 25/30] ENH: Enable installation of hierarchy files (.txt) for
+Subject: [PATCH 25/29] ENH: Enable installation of hierarchy files (.txt) for
  python wrap
 
 ---

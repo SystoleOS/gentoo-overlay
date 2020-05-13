@@ -1,7 +1,7 @@
-From 4ffee177fd0c6b748f4405810026c07064d4bee3 Mon Sep 17 00:00:00 2001
+From ed0f93d2ce7a84236984ae97c3e1f7d7bf539391 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 14 Apr 2020 13:29:48 +0200
-Subject: [PATCH 29/30] COMP: Add finding of vtkAddon and mod on
+Subject: [PATCH 29/29] COMP: Add finding of vtkAddon and mod on
  Slicer_Libs_INLCUDE_DIRS
 
 ---

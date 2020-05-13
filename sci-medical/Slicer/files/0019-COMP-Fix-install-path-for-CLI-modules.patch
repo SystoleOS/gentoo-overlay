@@ -1,7 +1,7 @@
-From 86590d26fbabd8aa393b8163f49d3722cbb05fc0 Mon Sep 17 00:00:00 2001
+From 9cb5097e2edfcdbd4ea84a5f02c632c52e81e5f5 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 16 Jan 2020 12:43:27 +0100
-Subject: [PATCH 19/30] COMP: Fix install path for CLI modules
+Subject: [PATCH 19/29] COMP: Fix install path for CLI modules
 
 ---
  CMake/SlicerInstallConfig.cmake.in | 5 +++++
