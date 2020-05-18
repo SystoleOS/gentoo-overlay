@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils multilib git-r3
+inherit cmake git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -28,12 +28,12 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-Adding-CMAKE_INSTALL_RPATH-to-rpath-properties-of-ex.patch
+	${FILESDIR}/0001-ENH-Removing-limitation-for-only-STATIC-libraries.patch
 )
 
 src_prepare() {
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure(){
@@ -41,17 +41,16 @@ src_configure(){
 	local mycmakeargs=()
 
 	mycmakeargs+=(
-		-DBUILD_TESTING=OFF
-		-DCMAKE_CXX_STANDARD=11
-		-DELASTIX_USE_OPENCL=ON
-		-DELASTIX_USE_OPENMP=ON
-		-DCMAKE_INSTALL_PREFIX=/usr
-		-DELASTIX_RUNTIME_DIR=bin
-		-DELASTIX_ARCHIVE_DIR=lib64/elastix-4.9.0
-		-DELASTIX_LIBRARY_DIR=lib64/elastix-4.9.0
-		-DELASTIX_LIBRARY_DIR=lib64/elastix-4.9.0
-		-DCMAKE_INSTALL_RPATH=/usr/lib64/elastix-4.9.0:/usr/lib64/ITK-5.1.0
+		-DBUILD_TESTING:BOOL=OFF
+		-DCMAKE_CXX_STANDARD:STRING="11"
+		-DELASTIX_USE_OPENCL:BOOL=OFF
+		-DELASTIX_USE_OPENMP:BOOL=ON
+		-DCMAKE_INSTALL_PREFIX:STRING="/usr"
+		-DELASTIX_RUNTIME_DIR:STRING="bin"
+		-DELASTIX_ARCHIVE_DIR:STRING="$(get_libdir)"
+		-DELASTIX_LIBRARY_DIR:STRING="$(get_libdir)"
+		-DELASTIX_INCLUDE_DIR:STRING="include/${PN}"
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
