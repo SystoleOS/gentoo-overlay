@@ -2,6 +2,8 @@
 
 EAPI=6
 
+PYTHON_COMPAT=( python3_6 )
+
 inherit cmake-utils multilib git-r3
 
 # Short one-line description of this package.
@@ -56,7 +58,7 @@ src_configure(){
 		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
 		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
 		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
-		-DPYTHON_INCLUDE_DIR="/usr/include/python3.6m"
+		-DPYTHON_INCLUDE_DIR="$(python_get_include_dir)"
 	)
 	cmake-utils_src_configure
 }
