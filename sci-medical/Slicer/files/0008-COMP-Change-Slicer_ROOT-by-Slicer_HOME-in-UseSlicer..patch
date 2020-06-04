@@ -1,7 +1,7 @@
 From 77cdaf12a4d7936466f4d5d5ca8786d70e72983b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 4 Oct 2019 13:30:26 +0200
-Subject: [PATCH 08/29] COMP: Change Slicer_ROOT by Slicer_HOME in
+Subject: [PATCH 08/30] COMP: Change Slicer_ROOT by Slicer_HOME in
  UseSlicer.cmak.in
 
 ---

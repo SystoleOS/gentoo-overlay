@@ -82,6 +82,7 @@ PATCHES=(
 	${FILESDIR}/0027-ENH-Enable-search-of-settings-in-etc-Slicer-for-ints.patch
 	${FILESDIR}/0028-ENH-Improve-directories-configuration.patch
 	${FILESDIR}/0029-COMP-Add-finding-of-vtkAddon-and-mod-on-Slicer_Libs_.patch
+	${FILESDIR}/0030-ENH-Adding-ModuleWizard.py-to-the-list-of-scripts-co.patch
 )
 
 src_prepare() {
@@ -137,6 +138,7 @@ src_configure(){
 		-DSlicer_INSTALL_CMAKE_CONFIG_DIR:STRING="lib64/cmake/Slicer"
 		-DSlicer_INSTALL_CMAKE_DIR:STRING="lib64/Slicer-4.11/CMake"
 		-DSlicer_INSTALL_SHARE_DIR:STRING="share/Slicer-4.11"
+		-DSlicer_INSTALL_LIBEXEC_DIR:STRING="/usr/bin"
 		-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
 		-DSlicer_BUILD_vtkAddon:BOOL=OFF
 	)

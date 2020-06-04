@@ -1,7 +1,7 @@
 From b8a3d86f5fb2cd1ab6e47e9f1ca118204e8f0999 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 20 Feb 2020 15:07:42 +0100
-Subject: [PATCH 23/29] COMP: Add needed include dirs for python wrapping of
+Subject: [PATCH 23/30] COMP: Add needed include dirs for python wrapping of
  modules
 
 ---

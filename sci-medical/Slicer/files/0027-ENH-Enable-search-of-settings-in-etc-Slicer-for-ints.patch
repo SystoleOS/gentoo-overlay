@@ -1,7 +1,7 @@
 From 901a9f140261827f975b996d30ae50de74756c93 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 6 Mar 2020 20:43:28 +0100
-Subject: [PATCH 27/29] ENH: Enable search of settings in /etc/Slicer/ for
+Subject: [PATCH 27/30] ENH: Enable search of settings in /etc/Slicer/ for
  intstall tree
 
 ---

@@ -1,7 +1,7 @@
 From 9fdbdbc0eb5de43cb336f46e5fd41016ecc5ae10 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 3 Mar 2020 07:02:53 +0100
-Subject: [PATCH 26/29] ENH: Change SlicerApp-real -> Slicer
+Subject: [PATCH 26/30] ENH: Change SlicerApp-real -> Slicer
 
 ---
  CMake/SlicerMacroBuildApplication.cmake           | 2 +-

@@ -1,7 +1,7 @@
 From 415e1efc00b16a95ab48bbc76089e22b3455171f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 16:44:15 +0100
-Subject: [PATCH 18/29] COMP: Adding MRMLCLI include directories to
+Subject: [PATCH 18/30] COMP: Adding MRMLCLI include directories to
  Slicer_Base_INCLUDE_DIRS
 
 ---

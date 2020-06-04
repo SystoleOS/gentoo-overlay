@@ -1,7 +1,7 @@
 From 1bced77c1b4d1ab6798f4a06fcf6cb070188e76d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 12:53:21 +0100
-Subject: [PATCH 17/29] COMP: Add Slicer_USE_PYTHONQT as condition for
+Subject: [PATCH 17/30] COMP: Add Slicer_USE_PYTHONQT as condition for
  ModuleLogic build macro
 
 ---
