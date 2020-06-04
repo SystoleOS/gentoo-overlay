@@ -2,7 +2,9 @@
 
 EAPI=7
 
-inherit cmake git-r3
+PYTHON_COMPAT=( python3_6 )
+
+inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
