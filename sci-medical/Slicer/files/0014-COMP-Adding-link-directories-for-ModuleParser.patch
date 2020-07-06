@@ -1,4 +1,4 @@
-From c37fc13820d9e45361b9897887bd5606a1ac8e61 Mon Sep 17 00:00:00 2001
+From c48e7a7d2da6f89d92c6b0840b2dc6ac298979b3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 13 Jan 2020 16:46:08 +0100
 Subject: [PATCH 14/30] COMP: Adding link directories for ModuleParser
@@ -26,7 +26,7 @@ index 1acd8ec56b..abbd48b97d 100755
  
  # --------------------------------------------------------------------------
 diff --git a/Base/QTApp/CMakeLists.txt b/Base/QTApp/CMakeLists.txt
-index 2d16fc8be1..513012df87 100644
+index 450d848b58..4a840aa0bf 100644
 --- a/Base/QTApp/CMakeLists.txt
 +++ b/Base/QTApp/CMakeLists.txt
 @@ -4,6 +4,8 @@ project(qSlicerBaseQTApp)
@@ -39,7 +39,7 @@ index 2d16fc8be1..513012df87 100644
  
  # Additional directories to include
 diff --git a/Base/QTGUI/CMakeLists.txt b/Base/QTGUI/CMakeLists.txt
-index f2133ac153..60b5cebe6a 100644
+index f4f5516209..6918b64db5 100644
 --- a/Base/QTGUI/CMakeLists.txt
 +++ b/Base/QTGUI/CMakeLists.txt
 @@ -9,6 +9,8 @@ project(qSlicerBaseQTGUI)
@@ -52,7 +52,7 @@ index f2133ac153..60b5cebe6a 100644
  
  # Additional directories to include
 diff --git a/CMake/SlicerMacroBuildBaseQtLibrary.cmake b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
-index 2a9df70d8f..41c65b2d03 100644
+index 262756bb2f..1ef4b3af95 100644
 --- a/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 +++ b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 @@ -142,8 +142,6 @@ macro(SlicerMacroBuildBaseQtLibrary)
@@ -78,7 +78,7 @@ index 3f6fa9eab4..38b5490a62 100644
    add_subdirectory(Loadable)
  endif()
 diff --git a/Modules/Core/CMakeLists.txt b/Modules/Core/CMakeLists.txt
-index 6f4a1e3186..6b77e88ff4 100644
+index abdba1a55c..784d63656a 100644
 --- a/Modules/Core/CMakeLists.txt
 +++ b/Modules/Core/CMakeLists.txt
 @@ -5,6 +5,8 @@ project(qSlicerModulesCore)

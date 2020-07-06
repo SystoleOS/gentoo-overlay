@@ -1,4 +1,4 @@
-From 8d63cbadee8081919817a1b47bdb0423fbf8e235 Mon Sep 17 00:00:00 2001
+From 8aecfee083810044bfc912b7ef06ad554a61a137 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 23 Jan 2020 15:46:09 +0100
 Subject: [PATCH 20/30] COMP: Fix ITKFactoryRegistration issues on install tree
@@ -38,10 +38,10 @@ index 17a8e5461b..d835eab1e0 100644
  
  
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 7c8be7076c..aa4cf5b0e2 100644
+index b8055a5407..7bb572354d 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -82,6 +82,7 @@ set(Slicer_Libs_INCLUDE_DIRS
+@@ -80,6 +80,7 @@ set(Slicer_Libs_INCLUDE_DIRS
    "${Slicer_HOME}/include/vtkTeem"
    "${Slicer_HOME}/include/SlicerBaseLogic"
    "${Slicer_HOME}/include/qMRMLWidgets"
@@ -49,7 +49,7 @@ index 7c8be7076c..aa4cf5b0e2 100644
    )
  
  # Slicer Base library directories.
-@@ -159,3 +160,5 @@ set(Slicer_LOGOS_RESOURCE "${Slicer_HOME}/${Slicer_INSTALL_SHARE_DIR}/Resources/
+@@ -157,3 +158,5 @@ set(Slicer_LOGOS_RESOURCE "${Slicer_HOME}/${Slicer_INSTALL_SHARE_DIR}/Resources/
  
  # MRML libraries - This variable regroup all related MRML libraries
  set(MRML_LIBRARIES @MRML_LIBRARIES@)

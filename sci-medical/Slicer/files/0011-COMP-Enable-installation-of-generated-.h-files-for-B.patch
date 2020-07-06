@@ -1,4 +1,4 @@
-From 8740a2fc962d0f6eedda05d8b695e2f1821d5d08 Mon Sep 17 00:00:00 2001
+From 2528693978ac5a240e1aae0a126607d80fbf114b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 12:22:52 +0200
 Subject: [PATCH 11/30] COMP: Enable installation of generated .h files for
@@ -11,7 +11,7 @@ files will be also installed with the rest of development files
  1 file changed, 8 insertions(+)
 
 diff --git a/CMake/SlicerMacroBuildBaseQtLibrary.cmake b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
-index e7ba64316d..2a9df70d8f 100644
+index 66cfc933cf..262756bb2f 100644
 --- a/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 +++ b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
 @@ -141,6 +141,9 @@ macro(SlicerMacroBuildBaseQtLibrary)

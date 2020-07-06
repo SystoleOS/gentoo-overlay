@@ -1,4 +1,4 @@
-From c9f1bd108fec91e5f0866cce2e242c6054d82d16 Mon Sep 17 00:00:00 2001
+From 70ab42542d0712803eba4b32eacdb4f4d5b87e01 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 18 Dec 2019 07:46:25 +0100
 Subject: [PATCH 13/30] COMP: Change JsonCpp by jsoncpp
@@ -16,7 +16,7 @@ This makes it work with own external packages
  8 files changed, 28 insertions(+), 24 deletions(-)
 
 diff --git a/CMake/CTestCustom.cmake.in b/CMake/CTestCustom.cmake.in
-index 38f9117a5d..8f69699490 100644
+index 15e11dda80..2a1ac398b2 100644
 --- a/CMake/CTestCustom.cmake.in
 +++ b/CMake/CTestCustom.cmake.in
 @@ -128,7 +128,10 @@ set(CTEST_CUSTOM_WARNING_EXCEPTION
@@ -96,7 +96,7 @@ index a6490a24ea..cefec77159 100644
    vtkSlicerAnnotationsModuleMRML
    )
 diff --git a/SuperBuild.cmake b/SuperBuild.cmake
-index d4311a1b8a..acb3058a31 100644
+index 6b01e5b2f7..946ec8cb19 100644
 --- a/SuperBuild.cmake
 +++ b/SuperBuild.cmake
 @@ -161,10 +161,10 @@ endif()

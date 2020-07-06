@@ -1,4 +1,4 @@
-From e3e81dfc6f9beb799130de488ba42219cb253718 Mon Sep 17 00:00:00 2001
+From 2637b76c5f45d36b0c72e77ad119a2131af89725 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 1 Oct 2019 14:56:16 +0200
 Subject: [PATCH 02/30] COMP: Fix link libraries in QTGUI
@@ -8,7 +8,7 @@ Subject: [PATCH 02/30] COMP: Fix link libraries in QTGUI
  1 file changed, 6 insertions(+)
 
 diff --git a/Base/QTGUI/CMakeLists.txt b/Base/QTGUI/CMakeLists.txt
-index e7752a745e..f2133ac153 100644
+index ac29bff3fd..f4f5516209 100644
 --- a/Base/QTGUI/CMakeLists.txt
 +++ b/Base/QTGUI/CMakeLists.txt
 @@ -4,6 +4,11 @@ project(qSlicerBaseQTGUI)

@@ -1,4 +1,4 @@
-From 0ff9a3537103561c4645dd7d1bb60fd698626fbe Mon Sep 17 00:00:00 2001
+From 8f7be31d5446a13eded87e3dbdf5b7494501cf82 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 14 Apr 2020 13:29:48 +0200
 Subject: [PATCH 29/30] COMP: Add finding of vtkAddon and mod on

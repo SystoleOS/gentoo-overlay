@@ -1,4 +1,4 @@
-From 87f8efbb1d9fc648b7ea22b4aba3f604c359c061 Mon Sep 17 00:00:00 2001
+From d849ffc1253ee20c250f625b2399672bd598bdb3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 20 May 2020 16:22:24 +0200
 Subject: [PATCH 30/30] ENH: Adding ModuleWizard.py to the list of scripts

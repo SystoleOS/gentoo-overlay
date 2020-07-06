@@ -1,4 +1,4 @@
-From 307f6e692d2ef7012925d94946678080e59edd8e Mon Sep 17 00:00:00 2001
+From c3332a728d5875340d9912ed4b3d6d6629adef21 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Wed, 15 Jan 2020 09:25:22 +0100
 Subject: [PATCH 15/30] COMP: Change installation destination
@@ -25,10 +25,10 @@ index 74025e3890..99474cf653 100644
  
  # --------------------------------------------------------------------------
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
-index a31cfe73b7..2a81b9a71d 100644
+index 577c820f49..38ee4c0825 100644
 --- a/Base/Logic/CMakeLists.txt
 +++ b/Base/Logic/CMakeLists.txt
-@@ -104,7 +104,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+@@ -103,7 +103,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
    install(
      FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
@@ -38,10 +38,10 @@ index a31cfe73b7..2a81b9a71d 100644
  
  # --------------------------------------------------------------------------
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index 37a8cb390e..8d009efa82 100644
+index 274731d11a..a731265516 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -93,6 +93,7 @@ set(Slicer_Base_LIBRARY_DIRS
+@@ -91,6 +91,7 @@ set(Slicer_Base_LIBRARY_DIRS
  set(Slicer_Base_INCLUDE_DIRS
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@"
    "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseCLI"

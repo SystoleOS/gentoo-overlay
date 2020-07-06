@@ -1,4 +1,4 @@
-From cd91d61ef160bc7a44dfba8ab0d5d7599213bfbb Mon Sep 17 00:00:00 2001
+From 6dbd4ed177c31d6dde903989bafc0a9ed73a82e9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Fri, 21 Feb 2020 14:46:20 +0100
 Subject: [PATCH 24/30] ENH: Make available paths to installed qt loadable
@@ -9,10 +9,10 @@ Subject: [PATCH 24/30] ENH: Make available paths to installed qt loadable
  1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
-index f5388088d4..c7535b7007 100644
+index 4fc3152bc0..fc6b5b25c2 100644
 --- a/CMake/SlicerInstallConfig.cmake.in
 +++ b/CMake/SlicerInstallConfig.cmake.in
-@@ -135,12 +135,11 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_QTLOADABLEMODULES_INCLUDE_DIR@
+@@ -133,12 +133,11 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_QTLOADABLEMODULES_INCLUDE_DIR@
  set(Slicer_QTLOADABLEMODULES_SHARE_DIR "@Slicer_QTLOADABLEMODULES_SHARE_DIR@")
  set(Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR "@Slicer_QTLOADABLEMODULES_PYTHON_LIB_DIR@")
  
