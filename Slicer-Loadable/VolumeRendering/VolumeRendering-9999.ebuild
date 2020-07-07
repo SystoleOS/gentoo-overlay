@@ -33,7 +33,7 @@ RDEPEND="${DEPEND}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-VolumeRendering-a-separate-module.patch
-	${FILESDIR}/0002-COMP-Find-jsoncpp-ussing-CMake-pkg-config-modules.patch
+	${FILESDIR}/0002-COMP-Find-jsoncpp-using-CMake-pkg-config-modules.patch
 )
 
 src_configure(){

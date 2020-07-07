@@ -1,4 +1,4 @@
-From cd774a96f4d778ca19c5f2599b5c843faafcf31d Mon Sep 17 00:00:00 2001
+From 89649b8b07adf97eab9e8a7a39d4ca4bcb786b89 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 8 Oct 2019 13:20:01 +0200
 Subject: [PATCH 1/2] ENH: Make VolumeRendering a separate module
@@ -223,5 +223,5 @@ index 175a3ae65c..5b68ccf41d 100644
  SlicerMacroBuildModuleWidgets(
    NAME ${KIT}
 -- 
-2.24.1
+2.26.2
 

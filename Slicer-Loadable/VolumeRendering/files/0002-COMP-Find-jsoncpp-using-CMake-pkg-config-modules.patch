@@ -1,4 +1,4 @@
-From b37050986a1c52bc5fb865bf10b51e8a5b2dc782 Mon Sep 17 00:00:00 2001
+From b16b7a94af148f9611326197fa7f429a47243243 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 14 Apr 2020 16:24:25 +0200
 Subject: [PATCH 2/2] COMP: Find jsoncpp using CMake pkg-config modules
@@ -41,5 +41,5 @@ index d9eae4395d..37b02e0e5e 100644
    )
  
 -- 
-2.24.1
+2.26.2
 
