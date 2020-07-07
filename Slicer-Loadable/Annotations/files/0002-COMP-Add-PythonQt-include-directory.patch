@@ -1,4 +1,4 @@
-From 4882e6eb4dde084c08c70b8f2d17aa1ff633355f Mon Sep 17 00:00:00 2001
+From 5404594c70eb43bbbbaf7f4ae09fd7e8eaacadaf Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 20 Feb 2020 14:26:51 +0100
 Subject: [PATCH 2/5] COMP: Add PythonQt include directory
@@ -20,5 +20,5 @@ index e550d44ef4..a25d5da8d3 100644
  
  set(GUI_SRCS
 -- 
-2.24.1
+2.26.2
 

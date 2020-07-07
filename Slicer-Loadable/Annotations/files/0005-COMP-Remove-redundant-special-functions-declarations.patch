@@ -1,4 +1,4 @@
-From 6e0e893750e142371a6e04c1f7d96ebe35b7de9b Mon Sep 17 00:00:00 2001
+From 6f6f06af05a13fe64543953e21567578aa31fc3a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 14 Apr 2020 14:17:22 +0200
 Subject: [PATCH 5/5] COMP: Remove redundant special-functions declarations
@@ -21,5 +21,5 @@ index b5c7b3f11c..af1772a3c9 100644
    // Initialize listening to MRML events
    void SetMRMLSceneInternal(vtkMRMLScene * newScene) override;
 -- 
-2.24.1
+2.26.2
 

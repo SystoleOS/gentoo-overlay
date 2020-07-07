@@ -1,4 +1,4 @@
-From 52779a2ba801344f2676da853ac0a5be8c115b02 Mon Sep 17 00:00:00 2001
+From f571aa9f519462cfdaf98ecafed88fc5bb1446c4 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:07:31 +0200
 Subject: [PATCH 1/5] COMP: Make the module a separate project
@@ -8,11 +8,10 @@ Subject: [PATCH 1/5] COMP: Make the module a separate project
  .../Loadable/Annotations/Logic/CMakeLists.txt |  1 +
  .../Loadable/Annotations/MRML/CMakeLists.txt  |  8 +++++++
  .../Annotations/Widgets/CMakeLists.txt        |  2 ++
- .../Annotations/qSlicerAnnotationsModule.h    |  2 ++
  Modules/Loadable/Terminologies/CMakeLists.txt | 19 ++++++++++++++++
  .../Terminologies/Logic/CMakeLists.txt        |  4 ++++
  .../Terminologies/Widgets/CMakeLists.txt      |  3 +++
- 8 files changed, 60 insertions(+), 1 deletion(-)
+ 7 files changed, 58 insertions(+), 1 deletion(-)
 
 diff --git a/Modules/Loadable/Annotations/CMakeLists.txt b/Modules/Loadable/Annotations/CMakeLists.txt
 index 57125cac24..e550d44ef4 100644
@@ -120,19 +119,6 @@ index a456d0d741..50a84a3ab3 100644
    )
  
  #-----------------------------------------------------------------------------
-diff --git a/Modules/Loadable/Annotations/qSlicerAnnotationsModule.h b/Modules/Loadable/Annotations/qSlicerAnnotationsModule.h
-index a504e7a03c..cb503f20fe 100644
---- a/Modules/Loadable/Annotations/qSlicerAnnotationsModule.h
-+++ b/Modules/Loadable/Annotations/qSlicerAnnotationsModule.h
-@@ -2,6 +2,8 @@
- #define __qSlicerAnnotationsModule_h
- 
- // SlicerQT includes
-+//#include "qSlicerLoadableModule.h"
-+
- #include "qSlicerLoadableModule.h"
- 
- // CTK includes
 diff --git a/Modules/Loadable/Terminologies/CMakeLists.txt b/Modules/Loadable/Terminologies/CMakeLists.txt
 index 50e4ca5536..25ba774b6f 100644
 --- a/Modules/Loadable/Terminologies/CMakeLists.txt
@@ -190,5 +176,5 @@ index 0e2909a2b1..3655f0f56c 100644
  
  #-----------------------------------------------------------------------------
 -- 
-2.24.1
+2.26.2
 

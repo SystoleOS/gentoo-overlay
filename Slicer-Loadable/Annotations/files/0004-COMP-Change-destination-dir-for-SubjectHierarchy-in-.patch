@@ -1,4 +1,4 @@
-From 0c18b95c30a9d9c24a489d7e6f9f98afda610744 Mon Sep 17 00:00:00 2001
+From a0e878811078983e51e7363d00df4500d457f5f9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 20 Feb 2020 20:07:16 +0100
 Subject: [PATCH 4/5] COMP: Change destination dir for SubjectHierarchy in
@@ -22,5 +22,5 @@ index 195efe5ecd..063dfb8b01 100644
    NO_INSTALL_SUBDIR
    )
 -- 
-2.24.1
+2.26.2
 
