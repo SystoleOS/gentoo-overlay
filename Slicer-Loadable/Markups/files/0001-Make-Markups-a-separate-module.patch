@@ -1,7 +1,7 @@
-From 7f79974eded9ee527f31b0982eb8c6f9e134b1e5 Mon Sep 17 00:00:00 2001
+From f8304cd106a4a8b00a5df98da211c2adf7d385ef Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Mon, 7 Oct 2019 06:15:28 +0200
-Subject: [PATCH] Make Markups a separate module
+Subject: [PATCH 1/2] Make Markups a separate module
 
 ---
  Modules/Loadable/Markups/CMakeLists.txt       | 22 ++++++++++++++-
@@ -14,7 +14,7 @@ Subject: [PATCH] Make Markups a separate module
  7 files changed, 73 insertions(+), 10 deletions(-)
 
 diff --git a/Modules/Loadable/Markups/CMakeLists.txt b/Modules/Loadable/Markups/CMakeLists.txt
-index 555501122..b349fe665 100644
+index 5555011226..b349fe665a 100644
 --- a/Modules/Loadable/Markups/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/CMakeLists.txt
 @@ -1,4 +1,19 @@
@@ -59,7 +59,7 @@ index 555501122..b349fe665 100644
  slicerMacroBuildLoadableModule(
    NAME ${MODULE_NAME}
 diff --git a/Modules/Loadable/Markups/Logic/CMakeLists.txt b/Modules/Loadable/Markups/Logic/CMakeLists.txt
-index 13e813978..f2bb4535b 100644
+index 13e8139786..f2bb4535b6 100644
 --- a/Modules/Loadable/Markups/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/Logic/CMakeLists.txt
 @@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
@@ -85,18 +85,18 @@ index 13e813978..f2bb4535b 100644
  SlicerMacroBuildModuleLogic(
    NAME ${KIT}
 diff --git a/Modules/Loadable/Markups/MRML/CMakeLists.txt b/Modules/Loadable/Markups/MRML/CMakeLists.txt
-index b615265cf..f09bc3b5e 100644
+index 1be0ccf71d..a492bd46d3 100644
 --- a/Modules/Loadable/Markups/MRML/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/MRML/CMakeLists.txt
-@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
- set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT")
+@@ -8,6 +8,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT"
  
  set(${KIT}_INCLUDE_DIRECTORIES
+   ${RapidJSON_INCLUDE_DIR}
 +  ${Slicer_Base_INCLUDE_DIRS}
    )
  
  set(${KIT}_SRCS
-@@ -27,10 +28,20 @@ set(${KIT}_SRCS
+@@ -34,10 +35,20 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${MRML_LIBRARIES}
@@ -118,7 +118,7 @@ index b615265cf..f09bc3b5e 100644
    EXPORT_DIRECTIVE ${${KIT}_EXPORT_DIRECTIVE}
    INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
 diff --git a/Modules/Loadable/Markups/MRMLDM/CMakeLists.txt b/Modules/Loadable/Markups/MRMLDM/CMakeLists.txt
-index e2dcfcc1b..40a5214ae 100644
+index e2dcfcc1bc..40a5214ae9 100644
 --- a/Modules/Loadable/Markups/MRMLDM/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/MRMLDM/CMakeLists.txt
 @@ -38,6 +38,11 @@ set(${KIT}_TARGET_LIBRARIES
@@ -134,7 +134,7 @@ index e2dcfcc1b..40a5214ae 100644
  SlicerMacroBuildModuleLogic(
    NAME ${KIT}
 diff --git a/Modules/Loadable/Markups/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Loadable/Markups/SubjectHierarchyPlugins/CMakeLists.txt
-index 1ff594a72..c80c6c9e7 100644
+index 1ff594a724..c80c6c9e7c 100644
 --- a/Modules/Loadable/Markups/SubjectHierarchyPlugins/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/SubjectHierarchyPlugins/CMakeLists.txt
 @@ -5,15 +5,16 @@ set(KIT ${PROJECT_NAME})
@@ -180,10 +180,10 @@ index 1ff594a72..c80c6c9e7 100644
  
  #-----------------------------------------------------------------------------
 diff --git a/Modules/Loadable/Markups/VTKWidgets/CMakeLists.txt b/Modules/Loadable/Markups/VTKWidgets/CMakeLists.txt
-index cb509e012..edff528da 100644
+index 2eb8d037a8..938dd70233 100644
 --- a/Modules/Loadable/Markups/VTKWidgets/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/VTKWidgets/CMakeLists.txt
-@@ -52,6 +52,8 @@ set(${KIT}_TARGET_LIBRARIES
+@@ -58,6 +58,8 @@ set(${KIT}_TARGET_LIBRARIES
    vtkSlicer${MODULE_NAME}ModuleMRML
    )
  
@@ -193,7 +193,7 @@ index cb509e012..edff528da 100644
  SlicerMacroBuildModuleLogic(
    NAME ${KIT}
 diff --git a/Modules/Loadable/Markups/Widgets/CMakeLists.txt b/Modules/Loadable/Markups/Widgets/CMakeLists.txt
-index 312fd6804..09e2cb9fc 100644
+index 312fd6804b..09e2cb9fc7 100644
 --- a/Modules/Loadable/Markups/Widgets/CMakeLists.txt
 +++ b/Modules/Loadable/Markups/Widgets/CMakeLists.txt
 @@ -40,6 +40,15 @@ set(${KIT}_RESOURCES
@@ -213,5 +213,5 @@ index 312fd6804..09e2cb9fc 100644
  
  #-----------------------------------------------------------------------------
 -- 
-2.24.1
+2.26.2
 
