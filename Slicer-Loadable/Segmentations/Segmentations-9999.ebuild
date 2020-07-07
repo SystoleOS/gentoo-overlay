@@ -27,7 +27,6 @@ DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
 	Slicer-Loadable/Annotations
-	Slicer-Scripted/SegmentEditor
 "
 
 RDEPEND="${DEPEND}"
