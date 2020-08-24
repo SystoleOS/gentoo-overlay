@@ -1,0 +1,26 @@
+From 55f768a67d35d1bf3132bdb77ad02fa24546e187 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 24 Aug 2020 20:09:34 +0200
+Subject: [PATCH] COMP: Remove delete copy constructor
+
+---
+ Modules/Scripted/EditorLib/Logic/vtkImageErode.h | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/Modules/Scripted/EditorLib/Logic/vtkImageErode.h b/Modules/Scripted/EditorLib/Logic/vtkImageErode.h
+index 3cb8d85c52..4f2df60be6 100644
+--- a/Modules/Scripted/EditorLib/Logic/vtkImageErode.h
++++ b/Modules/Scripted/EditorLib/Logic/vtkImageErode.h
+@@ -44,9 +44,6 @@ protected:
+   void ThreadedExecute(vtkImageData *inData, vtkImageData *outData,
+     int extent[6], int id) override;
+ 
+-private:
+-  vtkImageErode(const vtkImageErode&) = delete;
+-  void operator=(const vtkImageErode&) = delete;
+ };
+ 
+ #endif
+-- 
+2.26.2
+
