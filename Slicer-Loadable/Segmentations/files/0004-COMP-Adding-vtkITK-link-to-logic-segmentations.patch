@@ -1,0 +1,24 @@
+From 1aeb94f649d0b9dbd312505acf9c2c6dc46ac244 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Mon, 24 Aug 2020 13:50:12 +0200
+Subject: [PATCH] COMP: Adding vtkITK link to logic segmentations
+
+---
+ Modules/Loadable/Segmentations/Logic/CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Modules/Loadable/Segmentations/Logic/CMakeLists.txt b/Modules/Loadable/Segmentations/Logic/CMakeLists.txt
+index 065c36ff17..9352fe7208 100644
+--- a/Modules/Loadable/Segmentations/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Segmentations/Logic/CMakeLists.txt
+@@ -28,6 +28,7 @@ set(${KIT}_TARGET_LIBRARIES
+   MRMLLogic
+   ${VTK_LIBRARIES}
+   vtkAddon
++  vtkITK
+   )
+ 
+ link_directories(
+-- 
+2.26.2
+
