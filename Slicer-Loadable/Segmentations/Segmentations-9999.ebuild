@@ -35,6 +35,7 @@ PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Segmentations-a-separate-module.patch
 	${FILESDIR}/0002-COMP-Change-destination-dir-for-python-files.patch
 	${FILESDIR}/0003-COMP-Add-missing-include-dirs-and-libraries.patch
+	${FILESDIR}/0004-COMP-Adding-vtkITK-link-to-logic-segmentations.patch
 )
 
 src_configure(){
