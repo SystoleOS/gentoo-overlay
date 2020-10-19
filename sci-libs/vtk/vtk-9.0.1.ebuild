@@ -9,7 +9,7 @@ WEBAPP_MANUAL_SLOT=yes
 
 # Short package version
 SPV="$(ver_cut 1-2)"
-inherit python-r1 cmake
+inherit python-r1 cmake java-pkg-opt-2
 
 DESCRIPTION="The Visualization Toolkit"
 HOMEPAGE="https://www.vtk.org/"
@@ -221,8 +221,8 @@ src_configure() {
 		)
 
 		vtk_enable_external mpi mpi mpi4py
-		vtk_enable_externali theora theora ogg
-		vtk_enable_externali gl2ps gl2ps
+		vtk_enable_external theora theora ogg
+		vtk_enable_external gl2ps gl2ps
 
 		if use java; then
 			local javacargs=$(java-pkg_javac-args)
