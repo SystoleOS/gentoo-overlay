@@ -9,22 +9,35 @@ WEBAPP_MANUAL_SLOT=yes
 
 # Short package version
 SPV="$(ver_cut 1-2)"
-inherit python-r1 cmake java-pkg-opt-2
+inherit python-r1 cmake java-pkg-opt-2 virtualx
+
+declare -a ADITIONAL_TEST_FILES=(
+		https://vtk.org/files/ExternalData/MD5/eaab2cdba68e8630f9a1f8a8e81cb097
+		https://vtk.org/files/ExternalData/MD5/8e09d028a9fd114b4ceb8f924d8b466c
+		https://vtk.org/files/ExternalData/MD5/325acbb1a74ae27148d76399c2e7c7c5
+		https://vtk.org/files/ExternalData/MD5/7e7e6c5e28fa93b16fe0414881bdbbcd
+)
+
+ADITIONAL_TEST_FILES_SRC=""
+for i in "${ADITIONAL_TEST_FILES[@]}"; do
+	ADITIONAL_TEST_FILES_SRC+="${i} "
+done
 
 DESCRIPTION="The Visualization Toolkit"
 HOMEPAGE="https://www.vtk.org/"
 SRC_URI="
-	https://www.vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz
+	https://www.vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz -> ${PN}-${PV}.tar.gz
 	doc? ( https://www.vtk.org/files/release/${SPV}/vtkDocHtml-${PV}.tar.gz )
-	examples? (
-		https://www.vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz
-		https://www.vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz
+	test? (
+		https://www.vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz -> ${PN}Data-${PV}.tar.gz
+		https://www.vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz -> ${PN}LargeData-${PV}.tar.gz
+		${ADITIONAL_TEST_FILES_SRC}
 	)"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
-IUSE="all_modules aqua boost doc examples ffmpeg gdal -gl2ps imaging java json mpi odbc offscreen postgres python qt5 R rendering tbb tcl theora video_cards_nvidia views web +X xdmf2"
+IUSE="all_modules aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json loguru mpi odbc offscreen postgres python qt5 R rendering tbb test tcl theora video_cards_nvidia views web +X xdmf2"
 
 REQUIRED_USE="
 	all_modules? ( python xdmf2 boost )
@@ -32,12 +45,14 @@ REQUIRED_USE="
 	python? ( ${PYTHON_REQUIRED_USE} )
 	tcl? ( rendering )
 	examples? ( python )
+	loguru? ( python )
 	web? ( python )
 	^^ ( X aqua offscreen )
 "
 
 RDEPEND="
 	app-arch/lz4
+	app-arch/lzma
 	dev-cpp/eigen
 	dev-db/sqlite
 	dev-libs/double-conversion:0=
@@ -52,7 +67,6 @@ RDEPEND="
 	media-libs/libtheora
 	media-libs/mesa
 	media-libs/tiff:0
-	sci-libs/exodusii
 	sci-libs/hdf5:=
 	sci-libs/netcdf:0=
 	sci-libs/netcdf-cxx:3
@@ -68,9 +82,11 @@ RDEPEND="
 		dev-qt/qtcore:5
 		dev-qt/qtgui:5
 	)
+	exodus? ( sci-libs/exodusii )
 	ffmpeg? ( media-video/ffmpeg )
 	gdal? ( sci-libs/gdal )
 	java? ( >=virtual/jdk-1.7:* )
+	loguru? ( dev-python/loguru )
 	mpi? (
 		app-admin/chrpath
 		virtual/mpi[cxx,romio]
@@ -121,19 +137,30 @@ BDEPEND="doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}"/VTK-${PV}
 
-PATCHES=(
-)
-
-RESTRICT="test"
-
 pkg_setup() {
 	use java && java-pkg-opt-2_pkg_setup
 	use python && python_setup
 	use web && webapp_pkg_setup
 }
 
+src_unpack(){
+
+	unpack ${PN}-${PV}.tar.gz
+	use test && unpack ${PN}Data-${PV}.tar.gz
+	use test && unpack ${PN}LargeData-${PV}.tar.gz
+}
+
 src_prepare() {
+
 	cmake_src_prepare
+
+	if use test; then
+		mkdir -p ${S}/.ExternalData/MD5/
+		for i in ${ADITIONAL_TEST_FILES[@]}; do
+			einfo "cp ${i##*/} ${S}/.ExternalData/MD5/${i##*/}"
+			cp ${DISTDIR}/${i##*/} ${S}/.ExternalData/MD5/${i##*/}
+		done
+	fi
 
 	if use doc; then
 		einfo "Removing .md5 files from documents."
@@ -148,9 +175,19 @@ src_configure() {
 	# Utility function to enable external modules (args 2..n) based on
 	# the activation of an use flag (arg 1)
 	vtk_enable_external(){
-		for ((i=0; i<${2:-0}; i++)); do
-			use ${1} && echo -DVTK_MODULE_USE_EXTERNAL_VTK_${i}=ON
-		done
+
+		# If only one argument is provided. Then the argument is the module
+		# to use externally
+		if [ $# -eq 1 ]; then
+			echo -DVTK_MODULE_USE_EXTERNAL_VTK_${1}=ON
+
+		# If there are more than one argument. Then, the first argument is the module
+		# use flag to check and from the second argument, the modules enabled externally
+		elif [ $# -gt 1 ]; then
+			for ((i=2; i<=$#; i++)); do
+				use ${1} && echo -DVTK_MODULE_USE_EXTERNAL_VTK_${!i}=ON
+			done
+		fi
 	}
 
 	vtk_configure() {
@@ -161,16 +198,6 @@ src_configure() {
 			-DVTK_INSTALL_DOC_DIR="${EPREFIX}/usr/share/doc/${PF}"
 			-DVTK_CUSTOM_LIBRARY_SUFFIX=""
 			-DBUILD_SHARED_LIBS=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_expat=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_freetype=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_hdf5=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_jpeg=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_libproj=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_libxml2=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_netcdf=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_png=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_tiff=ON
-			-DVTK_MODULE_USE_EXTERNAL_VTK_zlib=ON
 			-DVTK_USE_LARGE_DATA=ON
 			-DVTK_EXTRA_COMPILER_WARNINGS=ON
 			-DVTK_GROUP_ENABLE_StandAlone=YES
@@ -191,19 +218,19 @@ src_configure() {
 			-DVTK_OPENGL_HAS_OSMESA=$(usex offscreen)
 			-DVTK_USE_NVCONTROL=$(usex video_cards_nvidia)
 			-DVTK_USE_X=$(usex X)
-			-DVTK_MODULE_USE_EXTERNAL_VTK_eigen=ON
 			# IO
 			-DVTK_USE_FFMPEG_ENCODER=$(usex ffmpeg)
 			-DVTK_MODULE_ENABLE_VTK_IOGDAL=$(usex gdal YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOGeoJSON=$(usex json YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOXdmf2=$(usex xdmf2 YES NO)
-			-DBUILD_TESTING=$(usex examples)
+			-DVTK_BUILD_TESTING=$(usex test ON OFF)
 			# Apple stuff, does it really work?
 			-DVTK_USE_COCOA=$(usex aqua)
 			-DVTK_GROUP_ENABLE_Qt=YES
 			# Qt5
 			-DVTK_MODULE_ENABLE_VTK_ViewsCore=$(usex qt5 YES NO)
 			-DVTK_MODULE_ENABLE_VTK_ViewsInfovis=$(usex qt5 YES NO)
+			-DVTK_MODULE_ENABLE_VTK_ViewsContext2D=$(usex qt5 YES NO)
 			-DVTK_MODULE_ENABLE_VTK_InfovisCore=$(usex qt5 YES NO)
 			-DVTK_MODULE_ENABLE_VTK_InteractionStyle=$(usex qt5 YES NO)
 			-DVTK_MODULE_ENABLE_VTK_ChartsCore=$(usex qt5 YES NO)
@@ -218,11 +245,25 @@ src_configure() {
 			# MPI support
 			-DVTK_GROUP_ENABLE_MPI=$(usex mpi YES NO)
 			-DVTK_USE_MPI=$(usex mpi ON OFF)
+			-DVTK_MODULE_ENABLE_VTK_mpi=$(usex mpi YES NO)
+			# Enable the use of external libraries (if proceeds)
+			$(vtk_enable_external doubleconversion)
+			$(vtk_enable_external eigen)
+			$(vtk_enable_external expat)
+			$(vtk_enable_external freetype)
+			$(vtk_enable_external gl2ps gl2ps)
+			$(vtk_enable_external hdf5)
+			$(vtk_enable_external jpeg)
+			$(vtk_enable_external libproj)
+			$(vtk_enable_external libxml2)
+			$(vtk_enable_external lzma)
+			$(vtk_enable_external netcdf)
+			$(vtk_enable_external png)
+			$(vtk_enable_external theora theora ogg)
+			$(vtk_enable_external tiff)
+			$(vtk_enable_external zlib)
 		)
 
-		vtk_enable_external mpi mpi mpi4py
-		vtk_enable_external theora theora ogg
-		vtk_enable_external gl2ps gl2ps
 
 		if use java; then
 			local javacargs=$(java-pkg_javac-args)
@@ -234,6 +275,10 @@ src_configure() {
 			mycmakeargs+=(
 				-DVTK_PYTHON_VERSION="3"
 				-DPython3_EXECUTABLE="${PYTHON}"
+				-DVTK_MODULE_ENABLE_VTK_mpi4py=$(usex mpi YES NO)
+				-DVTK_MODULE_ENABLE_VTK_loguru=$(usex loguru YES NO)
+				$(vtk_enable_external mpi mpi4py)
+				$(vtk_enable_external loguru loguru)
 			)
 
 			case "${EPYTHON}" in
@@ -281,7 +326,7 @@ src_configure() {
 
 src_compile()
 {
-	python_foreach_impl run_in_build_dir default
+	python_foreach_impl run_in_build_dir cmake_src_compile
 }
 
 vtk_install()
@@ -290,6 +335,7 @@ vtk_install()
 	use web && webapp_src_preinst
 
 	debug-print-function ${FUNCNAME} "$@"
+
 	cmake_src_install
 
 	#TODO enabling MPI sets rpath to /usr/lib64; that creates QA warnings. The
@@ -297,7 +343,7 @@ vtk_install()
 	#fix.
 	use mpi && find "${D}" -name "*lib*.so*" -exec chrpath -d {} \;
 
-	use java && java-pkg_regjar "${ED}"/usr/$(get_libdir)/${PN}.jar
+	use java && java-pkg_regjar "${ED}"/usr/$(get_libdir)/java/${PN}.jar
 
 	# Stop web page images from being compressed
 	use doc && docompress -x /usr/share/doc/${PF}/doxygen
@@ -335,4 +381,17 @@ pkg_postinst() {
 
 pkg_prerm() {
 	use web && webapp_pkg_prerm
+}
+
+src_test() {
+	vtk_test(){
+		if use test; then
+			einfo "Running VTK Unit Tests ..."
+			pushd "${BUILD_DIR}" > /dev/null || die
+			virtx ctest -j 1 -VV
+			popd > /dev/null || die
+		fi
+	}
+
+	python_foreach_impl vtk_test
 }
