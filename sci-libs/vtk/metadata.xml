@@ -6,7 +6,6 @@
     <name>Rafael Palomar (The Intervention Centre)</name>
   </maintainer>
   <use>
-    <flag name="all_modules">Build all VTK modules.</flag>
     <flag name="aqua">Enable vtk COCOA</flag>
     <flag name="boost">Use the Boost library.</flag>
     <flag name="doc">Install doxygen html documentation.</flag>

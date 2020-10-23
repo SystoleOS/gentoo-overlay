@@ -37,10 +37,9 @@ SRC_URI="
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
-IUSE="all_modules aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python qt5 R rendering tbb test tcl theora video_cards_nvidia views web +X xdmf2"
+IUSE="aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python qt5 R rendering tbb test tcl theora video_cards_nvidia views web +X xdmf2"
 
 REQUIRED_USE="
-	all_modules? ( python xdmf2 boost )
 	java? ( qt5 )
 	python? ( ${PYTHON_REQUIRED_USE} )
 	tcl? ( rendering )
@@ -203,7 +202,6 @@ src_configure() {
 			-DVTK_GROUP_ENABLE_StandAlone=YES
 			-DVTK_BUILD_DOCUMENTATION=$(usex doc)
 			-DVTK_BUILD_EXAMPLES=$(usex examples)
-			-DVTK_BUILD_ALL_MODULES=$(usex all_modules ON OFF)
 			-DVTK_GROUP_ENABLE_Imaging=$(usex imaging YES NO)
 			-DVTK_GROUP_ENABLE_Rendering=$(usex rendering YES NO)
 			-DVTK_GROUP_ENABLE_Views=$(usex views YES NO)
