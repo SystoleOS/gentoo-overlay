@@ -234,7 +234,8 @@ src_configure() {
 			-DVTK_MODULE_ENABLE_VTK_InteractionStyle=$(usex qt5 YES NO)
 			-DVTK_MODULE_ENABLE_VTK_ChartsCore=$(usex qt5 YES NO)
 			-DVTK_MODULE_ENABLE_VTK_InteractionWidgets=$(usex qt5 YES NO)
-			-DVTK_GROUP_ENABLE_Rendering=$(usex qt5 YES NO)
+			-DVTK_GROUP_ENABLE_Rendering=$(usex rendering YES NO)
+			-DVTK_GROUP_ENABLE_RenderingContext2D=$(usex rendering YES NO)
 			# Theora/Ogg support
 			-DVTK_MODULE_ENABLE_VTK_ogg=$(usex theora YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOOggTheora=$(usex theora YES NO)
