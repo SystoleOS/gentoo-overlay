@@ -1,10 +1,10 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7} )
 
-inherit multibuild python-r1 qmake-utils cmake-utils
+inherit multibuild python-r1 cmake
 
 # Short one-line description of this package.
 DESCRIPTION="A set of common support code for medical imaging, surgical navigation, and related purposes"
@@ -12,7 +12,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="0e3f5d0139dd505e616397e97096a783690f9868"
+COMMIT="03bf84789d8c1f5ba7aeb8f6139d07e12ab94fd1"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -28,8 +28,8 @@ IUSE="python"
 RDEPEND="
 	python? ( ${PYTHON_DEPS}
 			  dev-python/PythonQt_CTK
-			  sci-libs/VTK[python] )
-	!python? ( sci-libs/VTK )
+			  sci-libs/vtk[python] )
+	!python? ( sci-libs/vtk )
 	dev-qt/qtconcurrent
 	dev-qt/qtcore
 	dev-qt/designer
@@ -41,7 +41,7 @@ RDEPEND="
 	dev-qt/qtwidgets
 	dev-qt/qtxmlpatterns
 	dev-qt/qtxml
-	sci-libs/ITK
+	sci-libs/itk
 "
 DEPEND="${RDEPEND}"
 
@@ -62,7 +62,7 @@ src_unpack() {
 
 src_prepare() {
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure(){
@@ -103,8 +103,18 @@ src_configure(){
 			mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
 		fi
 
-		cmake-utils_src_configure
+		cmake_src_configure
 	}
 
 	python_foreach_impl run_in_build_dir configure
+}
+
+src_compile()
+{
+	python_foreach_impl run_in_build_dir cmake_src_compile
+}
+
+src_install()
+{
+	python_foreach_impl run_in_build_dir cmake_src_install
 }
