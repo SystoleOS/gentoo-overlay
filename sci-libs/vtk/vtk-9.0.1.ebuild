@@ -37,7 +37,7 @@ SRC_URI="
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
-IUSE="all_modules aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json loguru mpi odbc offscreen postgres python qt5 R rendering tbb test tcl theora video_cards_nvidia views web +X xdmf2"
+IUSE="all_modules aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python qt5 R rendering tbb test tcl theora video_cards_nvidia views web +X xdmf2"
 
 REQUIRED_USE="
 	all_modules? ( python xdmf2 boost )
@@ -45,7 +45,7 @@ REQUIRED_USE="
 	python? ( ${PYTHON_REQUIRED_USE} )
 	tcl? ( rendering )
 	examples? ( python )
-	loguru? ( python )
+	logging? ( python )
 	web? ( python )
 	^^ ( X aqua offscreen )
 "
@@ -86,7 +86,7 @@ RDEPEND="
 	ffmpeg? ( media-video/ffmpeg )
 	gdal? ( sci-libs/gdal )
 	java? ( >=virtual/jdk-1.7:* )
-	loguru? ( dev-python/loguru )
+	logging? ( dev-python/loguru )
 	mpi? (
 		app-admin/chrpath
 		virtual/mpi[cxx,romio]
@@ -218,6 +218,7 @@ src_configure() {
 			-DVTK_OPENGL_HAS_OSMESA=$(usex offscreen)
 			-DVTK_USE_NVCONTROL=$(usex video_cards_nvidia)
 			-DVTK_USE_X=$(usex X)
+			-DVTK_ENABLE_LOGGING=$(usex logging)
 			# IO
 			-DVTK_USE_FFMPEG_ENCODER=$(usex ffmpeg)
 			-DVTK_MODULE_ENABLE_VTK_IOGDAL=$(usex gdal YES NO)
@@ -276,9 +277,9 @@ src_configure() {
 				-DVTK_PYTHON_VERSION="3"
 				-DPython3_EXECUTABLE="${PYTHON}"
 				-DVTK_MODULE_ENABLE_VTK_mpi4py=$(usex mpi YES NO)
-				-DVTK_MODULE_ENABLE_VTK_loguru=$(usex loguru YES NO)
+				-DVTK_MODULE_ENABLE_VTK_loguru=$(usex logging YES NO)
 				$(vtk_enable_external mpi mpi4py)
-				$(vtk_enable_external loguru loguru)
+				$(vtk_enable_external logging loguru)
 			)
 
 			case "${EPYTHON}" in

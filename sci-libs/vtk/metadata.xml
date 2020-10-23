@@ -15,6 +15,7 @@
     <flag name="gdal">Use gdal library (geospatial vector formats).</flag>
     <flag name="gl2ps">Enable support for the OpenGL-to-Postscript printing library.</flag>
     <flag name="imaging">Enable Imaging modules.</flag>
+    <flag name="logging">Enable logging.</flag>
     <flag name="java">Add support for Java.</flag>
     <flag name="json">Enable JSON support for the modules that support it.</flag>
     <flag name="mpi">Add MPI (Message Passing Interface) layer to the modules that support it.</flag>
