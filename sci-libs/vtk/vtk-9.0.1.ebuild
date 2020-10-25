@@ -136,6 +136,10 @@ BDEPEND="doc? ( app-doc/doxygen )"
 
 S="${WORKDIR}"/VTK-${PV}
 
+PATCHES=(
+	${FILESDIR}/0001-Removing-FT_CALLBACK_DEF.patch
+)
+
 pkg_setup() {
 	use java && java-pkg-opt-2_pkg_setup
 	use python && python_setup
