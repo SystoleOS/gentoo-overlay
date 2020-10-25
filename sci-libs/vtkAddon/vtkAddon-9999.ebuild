@@ -1,9 +1,9 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
 EAPI=7
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_{6,7,8} )
 
-inherit cmake git-r3 python-single-r1
+inherit cmake git-r3 python-r1
 
 # Short one-line description of this package.
 DESCRIPTION="General-purpose features that may be integrated into VTK library in the future."
@@ -31,33 +31,51 @@ DEPEND="${PYTHON_DEPS}"
 
 RDEPEND="${DEPEND}"
 
-PATCHES=()
+PATCHES=(
+	${FILESDIR}/0001-Assing-C-as-language-of-the-project.patch
+)
 
 src_configure(){
 
-	local mycmakeargs=()
+	vtkAddon_configure(){
 
-	mycmakeargs+=(
-		-DBUILD_SHARED_LIBS:BOOL=ON
-		-DBUILD_TESTING:BOOL=OFF
-		-DvtkAddon_WRAP_PYTHON:BOOL="$(usex python ON OFF)"
-		-DvtkAddon_INSTALL_NO_DEVELOPMENT:BOOL=OFF
-		-DvtkAddon_INSTALL_LIB_DIR:STRING="$(get_libdir)"
-		-DvtkAddon_INSTALL_CMAKE_DIR:STRING="$(get_libdir)/cmake/${PN}"
-	)
+		local mycmakeargs=()
 
-	if use python; then
 		mycmakeargs+=(
-			-DvtkAddon_INSTALL_PYTHON_MODULE_LIB_DIR:STRING="$(python_get_sitedir)"
-			-DvtkAddon_INSTALL_PYTHON_LIB_DIR:STRING="$(get_libdir)"
+			-DBUILD_SHARED_LIBS:BOOL=ON
+			-DBUILD_TESTING:BOOL=OFF
+			-DvtkAddon_WRAP_PYTHON:BOOL="$(usex python ON OFF)"
+			-DvtkAddon_INSTALL_NO_DEVELOPMENT:BOOL=OFF
+			-DvtkAddon_INSTALL_LIB_DIR:STRING="$(get_libdir)"
+			-DvtkAddon_INSTALL_CMAKE_DIR:STRING="$(get_libdir)/cmake/${PN}"
 		)
-	fi
 
-	cmake_src_configure
+		if use python; then
+			mycmakeargs+=(
+				-DvtkAddon_INSTALL_PYTHON_MODULE_LIB_DIR:STRING="$(python_get_sitedir)"
+				-DvtkAddon_INSTALL_PYTHON_LIB_DIR:STRING="$(get_libdir)"
+			)
+		fi
+
+		cmake_src_configure
+	}
+
+	python_foreach_impl vtkAddon_configure
+}
+
+src_compile()
+{
+	python_foreach_impl run_in_build_dir cmake_src_compile
 }
 
 src_install(){
 
-	cmake_src_install
-	python_optimize
+	vtkAddon_install(){
+
+		cmake_src_install
+
+		use python && python_optimize "${D}"$(python_get_sitedir)
+	}
+
+	python_foreach_impl vtkAddon_install
 }
