@@ -220,7 +220,7 @@ src_configure() {
 			-DVTK_OPENGL_HAS_OSMESA=$(usex offscreen)
 			-DVTK_USE_NVCONTROL=$(usex video_cards_nvidia)
 			-DVTK_USE_X=$(usex X)
-			-DVTK_ENABLE_LOGGING=$(usex logging)
+			-DVTK_ENABLE_LOGGING=$(usex logging ON OFF)
 			# IO
 			-DVTK_USE_FFMPEG_ENCODER=$(usex ffmpeg)
 			-DVTK_MODULE_ENABLE_VTK_IOGDAL=$(usex gdal YES NO)
@@ -274,15 +274,18 @@ src_configure() {
 			mycmakeargs+=( -DJAVAC_OPTIONS=${javacargs// /;} )
 		fi
 
+		if use python && use logging; then
+			-DVTK_MODULE_ENABLE_VTK_loguru=$(usex logging YES NO)
+			$(vtk_enable_external logging loguru)
+		fi
+
 		if use python && python_is_python3; then
 
 			mycmakeargs+=(
 				-DVTK_PYTHON_VERSION="3"
 				-DPython3_EXECUTABLE="${PYTHON}"
 				-DVTK_MODULE_ENABLE_VTK_mpi4py=$(usex mpi YES NO)
-				-DVTK_MODULE_ENABLE_VTK_loguru=$(usex logging YES NO)
 				$(vtk_enable_external mpi mpi4py)
-				$(vtk_enable_external logging loguru)
 			)
 
 			case "${EPYTHON}" in
