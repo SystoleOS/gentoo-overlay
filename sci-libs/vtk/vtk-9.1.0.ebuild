@@ -3,36 +3,19 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{8,9} )
 WEBAPP_OPTIONAL=yes
 WEBAPP_MANUAL_SLOT=yes
 
 # Short package version
 SPV="$(ver_cut 1-2)"
-inherit python-r1 cmake java-pkg-opt-2 virtualx
+inherit python-single-r1 cmake java-pkg-opt-2 git-r3
 
-declare -a ADITIONAL_TEST_FILES=(
-		https://vtk.org/files/ExternalData/MD5/eaab2cdba68e8630f9a1f8a8e81cb097
-		https://vtk.org/files/ExternalData/MD5/8e09d028a9fd114b4ceb8f924d8b466c
-		https://vtk.org/files/ExternalData/MD5/325acbb1a74ae27148d76399c2e7c7c5
-		https://vtk.org/files/ExternalData/MD5/7e7e6c5e28fa93b16fe0414881bdbbcd
-)
+DESCRIPTION="This is the 3D Slicer Visualization Toolkit"
+HOMEPAGE="https://github.com/slicer/vtk"
 
-ADITIONAL_TEST_FILES_SRC=""
-for i in "${ADITIONAL_TEST_FILES[@]}"; do
-	ADITIONAL_TEST_FILES_SRC+="${i} "
-done
-
-DESCRIPTION="The Visualization Toolkit"
-HOMEPAGE="https://www.vtk.org/"
-SRC_URI="
-	https://www.vtk.org/files/release/${SPV}/VTK-${PV}.tar.gz -> ${PN}-${PV}.tar.gz
-	doc? ( https://www.vtk.org/files/release/${SPV}/vtkDocHtml-${PV}.tar.gz )
-	test? (
-		https://www.vtk.org/files/release/${SPV}/VTKData-${PV}.tar.gz -> ${PN}Data-${PV}.tar.gz
-		https://www.vtk.org/files/release/${SPV}/VTKLargeData-${PV}.tar.gz -> ${PN}LargeData-${PV}.tar.gz
-		${ADITIONAL_TEST_FILES_SRC}
-	)"
+EGIT_REPO_URI="https://github.com/Slicer/VTK"
+EGIT_BRANCH="slicer-v9.1.20220125-efbe2afc2"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
@@ -66,7 +49,7 @@ RDEPEND="
 	media-libs/libtheora
 	media-libs/mesa
 	media-libs/tiff:0
-	sci-libs/hdf5:=
+	sci-libs/hdf5:0=
 	sci-libs/netcdf:0=
 	sci-libs/netcdf-cxx:3
 	sci-libs/proj
@@ -109,6 +92,7 @@ RDEPEND="
 		dev-qt/qtopengl:5
 		dev-qt/qtsql:5
 		dev-qt/qtx11extras:5
+		dev-qt/qtquickcontrols:5
 		$(python_gen_cond_dep '
 			python? ( dev-python/PyQt5[${PYTHON_USEDEP}] )
 		')
@@ -134,23 +118,18 @@ RDEPEND="
 DEPEND="${RDEPEND}"
 BDEPEND="doc? ( app-doc/doxygen )"
 
-S="${WORKDIR}"/VTK-${PV}
+S="${WORKDIR}"/vtk-${PV}
 
 PATCHES=(
-	${FILESDIR}/0001-Removing-FT_CALLBACK_DEF.patch
-)
+
+	"${FILESDIR}"/${P}-adjust-to-find-binaries.patch
+ )
+
 
 pkg_setup() {
 	use java && java-pkg-opt-2_pkg_setup
 	use python && python_setup
 	use web && webapp_pkg_setup
-}
-
-src_unpack(){
-
-	unpack ${PN}-${PV}.tar.gz
-	use test && unpack ${PN}Data-${PV}.tar.gz
-	use test && unpack ${PN}LargeData-${PV}.tar.gz
 }
 
 src_prepare() {
@@ -226,7 +205,7 @@ src_configure() {
 			-DVTK_MODULE_ENABLE_VTK_IOGDAL=$(usex gdal YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOGeoJSON=$(usex json YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOXdmf2=$(usex xdmf2 YES NO)
-			-DVTK_BUILD_TESTING=$(usex test ON OFF)
+			-DVTK_BUILD_TESTING=OFF
 			# Apple stuff, does it really work?
 			-DVTK_USE_COCOA=$(usex aqua)
 			-DVTK_GROUP_ENABLE_Qt=YES
@@ -329,7 +308,7 @@ src_configure() {
 		cmake_src_configure
 	}
 
-	python_foreach_impl vtk_configure
+	vtk_configure
 }
 
 src_compile()
@@ -378,8 +357,7 @@ vtk_install()
 }
 
 src_install() {
-
-	python_foreach_impl vtk_install
+	vtk_install
 }
 
 # webapp.eclass exports these but we want it optional #534036
@@ -401,5 +379,5 @@ src_test() {
 		fi
 	}
 
-	python_foreach_impl vtk_test
+	vtk_test
 }
