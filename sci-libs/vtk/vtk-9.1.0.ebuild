@@ -49,7 +49,7 @@ RDEPEND="
 	media-libs/libtheora
 	media-libs/mesa
 	media-libs/tiff:0
-	sci-libs/hdf5:0=
+	sci-libs/hdf5:0=[cxx]
 	sci-libs/netcdf:0=
 	sci-libs/netcdf-cxx:3
 	sci-libs/proj
