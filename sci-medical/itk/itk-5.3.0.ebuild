@@ -29,7 +29,7 @@ EGIT_BRANCH="slicer-v5.3rc03-2022-02-10-be81e62"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug doc examples fftw python review test +vtkglue"
+IUSE="debug doc examples fftw python review -test +vtkglue"
 
 RESTRICT="!test? ( test )"
 
@@ -43,7 +43,7 @@ RDEPEND="
 	sys-libs/zlib:0=
 	media-libs/libjpeg-turbo:0=
 	fftw? ( sci-libs/fftw:3.0= )
-	vtkglue? ( sci-libs/vtk:0=[rendering,python?] )
+	vtkglue? ( >=sci-libs/vtk-9.1.0[rendering,python?] )
 	python? ( ${PYTHON_DEPS} )
 	sci-medical/gdcm
 "
