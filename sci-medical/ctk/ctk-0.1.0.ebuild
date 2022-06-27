@@ -2,7 +2,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{6,7} )
+PYTHON_COMPAT=( python3_{8,9} )
 
 inherit multibuild python-r1 cmake
 
@@ -12,7 +12,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="03bf84789d8c1f5ba7aeb8f6139d07e12ab94fd1"
+COMMIT="ec816cbb77986f6ee28c41a495e82238dee0e2d3"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -30,10 +30,11 @@ RDEPEND="
 			  dev-python/PythonQt_CTK
 			  sci-libs/vtk[python] )
 	!python? ( sci-libs/vtk )
+	dev-qt/designer
 	dev-qt/qtconcurrent
 	dev-qt/qtcore
-	dev-qt/designer
 	dev-qt/qtgui
+    dev-qt/qtmultimedia
 	dev-qt/qtnetwork
 	dev-qt/qtopengl
 	dev-qt/qtsql
@@ -57,7 +58,7 @@ src_unpack() {
 		unpack ${A}
 	fi
 
-	mv ${WORKDIR}/${PN}-${COMMIT} ${WORKDIR}/${PN}-${PV}
+	mv ${WORKDIR}/CTK-${COMMIT} ${WORKDIR}/${PN}-${PV} || die
 }
 
 src_prepare() {
