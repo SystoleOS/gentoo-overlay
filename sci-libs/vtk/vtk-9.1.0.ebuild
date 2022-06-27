@@ -20,7 +20,7 @@ EGIT_BRANCH="slicer-v9.1.20220125-efbe2afc2"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
-IUSE="aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python qt5 R rendering tbb test tcl theora video_cards_nvidia views web +X xdmf2"
+IUSE="aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora video_cards_nvidia +views web +X xdmf2"
 
 REQUIRED_USE="
 	java? ( qt5 )
