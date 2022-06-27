@@ -1,7 +1,7 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
 EAPI=7
-PYTHON_COMPAT=( python3_{6,7,8} )
+PYTHON_COMPAT=( python3_{8,9} )
 
 inherit cmake git-r3 python-r1
 
@@ -31,9 +31,7 @@ DEPEND="${PYTHON_DEPS}"
 
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	${FILESDIR}/0001-Assing-C-as-language-of-the-project.patch
-)
+PATCHES=()
 
 src_configure(){
 
