@@ -2,7 +2,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_9 )
 
 inherit cmake python-single-r1 git-r3
 
@@ -12,7 +12,7 @@ image processing, and three-dimensional visualization. This package is a
 live-build which will pull the master branch of the official 3D Slicer repository."
 
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
-EGIT_BRANCH="master"
+EGIT_BRANCH="main"
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.slicer.org/"
@@ -30,7 +30,7 @@ RDEPEND="
 			  sci-medical/CTK[python]
 			  sci-libs/vtkAddon[python]
 			   )
-	!python? ( sci-medical/CTK
+	!python? ( sci-medical/ctk
 			   sci-libs/vtkAddon )
 	dev-qt/qtcore
 	dev-qt/qtmultimedia
@@ -45,7 +45,6 @@ RDEPEND="
 	sci-medical/CTKAppLauncherLib
 	sci-medical/teem
 	dev-python/PythonQt_CTK
-	sci-libs/jqPlot
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 	sitk? ( sci-libs/SimpleITK )
 "
