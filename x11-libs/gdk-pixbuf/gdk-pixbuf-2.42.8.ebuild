@@ -64,7 +64,15 @@ multilib_src_configure() {
 		-Dpng=enabled
 		$(meson_feature tiff)
 		$(meson_feature jpeg)
-		-Dbuiltin_loade
+		-Dbuiltin_loaders=png,jpeg
+		-Drelocatable=false
+		#native_windows_loaders
+		-Dinstalled_tests=false
+		-Dgio_sniffing=true
+		$(meson_native_use_bool gtk-doc gtk_doc)
+		$(meson_native_use_feature introspection)
+		$(meson_native_true man)
+	)
 
 	meson_src_configure
 }
