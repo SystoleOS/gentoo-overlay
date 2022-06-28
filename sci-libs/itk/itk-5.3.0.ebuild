@@ -14,12 +14,14 @@ MY_P="${MY_PN}-${PV}"
 # ITK Remotes
 ITKAdaptiveDenoising_HASH="674218fae611184d4168bd0c7b027f1a0d1a8a18"
 ITKMGHImageIO_HASH="74379a6350f8017be2b4481c807726d56fec14bb"
+ITKIOScanco_HASH="348ca2eb519cf11c976884fb792ec1b0a08a277a"
 
 
 # Source code URIs
 SRC_URI="
 	https://github.com/ntustison/ITKAdaptiveDenoising/archive/${ITKAdaptiveDenoising_HASH}.zip
   https://github.com/InsightSoftwareConsortium/itkMGHImageIO/archive/${ITKMGHImageIO_HASH}.zip
+  https://github.com/KitwareMedical/ITKIOScanco/archive/${ITKIOScanco_HASH}.zip
 "
 
 
@@ -71,6 +73,7 @@ src_unpack() {
 	#Unpack ITKAdaptiveDenoising
 	unzip ${DISTDIR}/${ITKAdaptiveDenoising_HASH}.zip || die
 	unzip ${DISTDIR}/${ITKMGHImageIO_HASH}.zip || die
+	unzip ${DISTDIR}/${ITKIOScanco_HASH}.zip || die
 
 	#NOTE: This ebuild has the particularity that it uses both git and source
 	#files. Therefore we need to call the src_unpack function from the git module
@@ -82,8 +85,9 @@ src_prepare() {
 		Modules/ThirdParty/GDCM/src/gdcm/CMakeLists.txt
 
 	# Symlinking external ITKAdaptiveDenoising
-	ln -sr ../ITKAdaptiveDenoising-* Modules/Remote/ITKAdaptiveDenoising|| die
-	ln -sr ../ITKMGHImageIO-* Modules/Remote/ITKMGHImageIO|| die
+	ln -sr ../ITKAdaptiveDenoising-* Modules/Remote/ITKAdaptiveDenoising || die
+	ln -sr ../ITKMGHImageIO-* Modules/Remote/ITKMGHImageIO || die
+	ln -sr ../ITKIOScanco-* Modules/Remote/ITKIOScanco || die
 
 	cmake_src_prepare
 }
