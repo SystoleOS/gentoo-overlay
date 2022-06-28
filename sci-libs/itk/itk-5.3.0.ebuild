@@ -34,7 +34,7 @@ EGIT_BRANCH="slicer-v5.3rc03-2022-02-10-be81e62"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug doc examples fftw python review -test +vtkglue"
+IUSE="debug deprecated doc examples fftw python review -test +vtkglue"
 
 RESTRICT="!test? ( test )"
 
@@ -110,6 +110,8 @@ src_configure() {
       -DModule_SimpleITKFilters:BOOL=${Slicer_USE_SimpleITK}
       -DModule_GenericLabelInterpolator:BOOL=ON
       -DModule_AdaptiveDenoising:BOOL=ON
+      -DModule_ITKVtkGlue:BOOL=$(usex vtkglue ON OFF)
+      -DModule_ITKDeprecated:BOOL=$(usex deprecated ON OFF)
       -DITK_INSTALL_NO_DEVELOPMENT:BOOL=ON
       -DKWSYS_USE_MD5:BOOL=ON # Required by SlicerExecutionModel
       -DITK_WRAPPING:BOOL=OFF #${BUILD_SHARED_LIBS} ## HACK:  QUICK CHANGE
@@ -145,6 +147,7 @@ src_configure() {
 	  -DWRAP_ITK_TCL=OFF
 	  -Ddouble-conversion_INCLUDE_DIRS="${EPREFIX}/usr/include/double-conversion"
 	)
+  k
 	if use fftw; then
 		mycmakeargs+=(
 			-DUSE_FFTWD=ON
@@ -156,11 +159,7 @@ src_configure() {
 			-DITK_WRAP_complex_double=ON
 		)
 	fi
-	if use vtkglue; then
-		mycmakeargs+=(
-			-DModule_ITKVtkGlue=ON
-		)
-	fi
+
 	if use python; then
 		mycmakeargs+=(
 			-DITK_WRAP_PYTHON=ON
