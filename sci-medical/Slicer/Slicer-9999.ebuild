@@ -33,7 +33,8 @@ RDEPEND="
 	!python? ( sci-medical/ctk
 			   sci-libs/vtkAddon )
 	dev-qt/qtcore
-	dev-qt/qtmultimedia
+	dev-qt/linguist-tools
+	dev-qt/qtmultimedia[widgets]
 	dev-qt/qtopengl
 	dev-qt/qtsql
 	dev-qt/qtxmlpatterns
