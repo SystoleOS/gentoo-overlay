@@ -204,3 +204,14 @@ src_install() {
     dodoc -r *
   fi
 }
+
+pkg_postinst(){
+
+	libraries=$(find /usr/lib64 -name "libitk*.so")
+	for i in ${libraries}
+	do
+        b=$(basename $i)
+		ln -sf $i /usr/lib64/${b%-*}.so || die
+	done
+
+}
