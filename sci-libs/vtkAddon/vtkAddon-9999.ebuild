@@ -27,7 +27,10 @@ REQURIED_USE="
 	!python? ( sci-libs/CTK )
 "
 
-DEPEND="${PYTHON_DEPS}"
+DEPEND="
+    sci-libs/vtk
+    ${PYTHON_DEPS}
+    "
 
 RDEPEND="${DEPEND}"
 
