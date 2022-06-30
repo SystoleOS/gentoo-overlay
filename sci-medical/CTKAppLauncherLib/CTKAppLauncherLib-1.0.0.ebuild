@@ -1,6 +1,6 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
 inherit cmake-utils
 
@@ -10,7 +10,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="ec98a50327644f6607b1a21bf016eba1027134d5"
+COMMIT="8759e03985738b8a8f3eb74ab516ba4e8ef29988"
 
 SRC_URI="https://github.com/commontk/AppLauncher/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -52,9 +52,9 @@ src_configure(){
 		-DBUILD_TESTING=OFF
 		-DCTKAppLauncher_QT_VERSION=5
 		-DCTKAppLauncher_INSTALL_LauncherLibrary=ON
-		-DCTK_INSTALL_LIB_DIR=lib64/CTKAppLauncher-1.0.0
-		-DCTK_INSTALL_CMAKE_DIR=lib64/CTKAppLauncher-1.0.0/CMake
-		-DCTK_INSTALL_CONFIG_DIR=lib64/CTKAppLauncher-1.0.0
+		-DCTK_INSTALL_LIB_DIR=lib64
+		-DCTK_INSTALL_CMAKE_DIR=lib64/cmake
+		# -DCTK_INSTALL_CONFIG_DIR=lib64/CTKAppLauncher-1.0.0
 	)
 
 	cmake-utils_src_configure
