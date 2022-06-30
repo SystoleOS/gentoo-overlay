@@ -51,6 +51,7 @@ RDEPEND="
 	vtkglue? ( >=sci-libs/vtk-9.1.0[rendering,python?] )
 	python? ( ${PYTHON_DEPS} )
 	sci-medical/gdcm
+	dev-cpp/eigen
 "
 DEPEND="${RDEPEND}
 	sys-apps/coreutils
@@ -117,6 +118,7 @@ src_configure() {
       -DITK_WRAPPING:BOOL=OFF #${BUILD_SHARED_LIBS} ## HACK:  QUICK CHANGE
       -DITK_WRAP_PYTHON:BOOL=${Slicer_BUILD_ITKPython}
       -DExternalData_OBJECT_STORES:PATH=${ExternalData_OBJECT_STORES}
+	  -DITK_USE_SYSTEM_EIGEN:BOOL=ON
 
       # VTK
       -DModule_ITKVtkGlue:BOOL=ON
@@ -147,7 +149,7 @@ src_configure() {
 	  -DWRAP_ITK_TCL=OFF
 	  -Ddouble-conversion_INCLUDE_DIRS="${EPREFIX}/usr/include/double-conversion"
 	)
-  k
+
 	if use fftw; then
 		mycmakeargs+=(
 			-DUSE_FFTWD=ON
