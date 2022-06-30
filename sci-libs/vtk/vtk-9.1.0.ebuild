@@ -114,6 +114,7 @@ RDEPEND="
 	)
 	xdmf2? ( sci-libs/xdmf2 )
 	gl2ps? ( x11-libs/gl2ps )
+	dev-cpp/eigen
 "
 DEPEND="${RDEPEND}"
 BDEPEND="doc? ( app-doc/doxygen )"
@@ -220,6 +221,7 @@ src_configure() {
 			-DVTK_GROUP_ENABLE_Rendering=$(usex rendering YES NO)
 			-DVTK_MODULE_ENABLE_VTK_RenderingContext2D=$(usex rendering YES NO)
 			-DVTK_MODULE_ENABLE_VTK_GUISupportQt=$(usex rendering YES NO)
+			-DVTK_MODULE_USE_EXTERNAL_VTK_eigen:BOOL=ON
 			# Theora/Ogg support
 			-DVTK_MODULE_ENABLE_VTK_ogg=$(usex theora YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOOggTheora=$(usex theora YES NO)
