@@ -1,0 +1,31 @@
+From cc53cf2c2359cc44f318d75f7daf57deed521bb5 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 30 Jun 2022 07:53:08 +0200
+Subject: [PATCH] COMP: Add the VTK CommonSystem component
+
+CommonSystem is a VTK component used in
+`vtkSegmentationCore` (`vtkTimerLog` in
+`vtkCalculateOversamplingFactor.cxx`). Not having the component will
+produce a link error when `-DSlicer_SUPERBUILD=OFF` (see
+SystoleOS/gentoo-overlay#22).
+
+This commit adds `CommonSystem` as a component to be found along `VTK`.
+---
+ CMakeLists.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5158d8759..52000c637 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -553,6 +553,7 @@ message(STATUS "  Slicer_VTK_VERSION_MAJOR is ${Slicer_VTK_VERSION_MAJOR}")
+ # Slicer_VTK_COMPONENTS
+ #-----------------------------------------------------------------------------
+ set(Slicer_VTK_COMPONENTS
++  CommonSystem
+   FiltersExtraction
+   FiltersFlowPaths
+   FiltersGeometry
+-- 
+2.34.1
+

@@ -1,0 +1,16 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5158d8759..98b1978e8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -849,6 +849,11 @@ if(NOT TARGET ${VTK_GUI_SUPPORT_QT_TARGET_NAME})
+ endif()
+ set(VTK_RENDERING_BACKEND "${Slicer_VTK_RENDERING_BACKEND}")
+ 
++#-----------------------------------------------------------------------------
++# Eigen
++#-----------------------------------------------------------------------------
++find_package(Eigen3 3.3 REQUIRED CONFIG)
++
+ #-----------------------------------------------------------------------------
+ # CTK
+ #-----------------------------------------------------------------------------
