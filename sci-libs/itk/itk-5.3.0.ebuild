@@ -35,7 +35,7 @@ EGIT_BRANCH="slicer-v5.3rc03-2022-02-10-be81e62"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="debug deprecated doc examples fftw python review -test +vtkglue"
+IUSE="debug deprecated doc examples fftw python review -test vtkglue dicom"
 
 RESTRICT="!test? ( test )"
 
@@ -111,24 +111,19 @@ src_configure() {
     -DModule_ITKIOMINC:BOOL=ON
     -DModule_IOScanco:BOOL=ON
     -DModule_MorphologicalContourInterpolation:BOOL=ON
-    -DModule_SimpleITKFilters:BOOL=${Slicer_USE_SimpleITK}
+    -DModule_SimpleITKFilters:BOOL=
     -DModule_GenericLabelInterpolator:BOOL=ON
     -DModule_AdaptiveDenoising:BOOL=ON
     -DModule_ITKVtkGlue:BOOL=$(usex vtkglue ON OFF)
     -DModule_ITKDeprecated:BOOL=$(usex deprecated ON OFF)
-    -DITK_INSTALL_NO_DEVELOPMENT:BOOL=ON
     -DKWSYS_USE_MD5:BOOL=ON # Required by SlicerExecutionModel
     -DITK_WRAPPING:BOOL=OFF #${BUILD_SHARED_LIBS} ## HACK:  QUICK CHANGE
     -DITK_WRAP_PYTHON:BOOL=${Slicer_BUILD_ITKPython}
     -DExternalData_OBJECT_STORES:PATH=${ExternalData_OBJECT_STORES}
     -DITK_USE_SYSTEM_EIGEN:BOOL=ON
 
-    # VTK
-    -DModule_ITKVtkGlue:BOOL=ON
-
     # DCMTK
     -DITK_USE_SYSTEM_DCMTK:BOOL=ON
-    -DDCMTK_DIR:PATH=${DCMTK_DIR}
     -DModule_ITKIODCMTK:BOOL=${Slicer_BUILD_DICOM_SUPPORT}
 
     # ZLIB
@@ -138,18 +133,14 @@ src_configure() {
     -DITK_FORBID_DOWNLOADS:BOOL=ON
     -DITK_USE_SYSTEM_DCMTK=ON
     -DITK_USE_SYSTEM_DOUBLECONVERSION=ON
-    -DITK_USE_SYSTEM_CASTXML=ON
     -DITK_USE_SYSTEM_HDF5=ON
     -DITK_USE_SYSTEM_JPEG=ON
     -DITK_USE_SYSTEM_PNG=ON
-    -DITK_USE_SYSTEM_SWIG=ON
     -DITK_USE_SYSTEM_TIFF=ON
     -DITK_USE_SYSTEM_ZLIB=ON
     -DITK_USE_KWSTYLE=OFF
     -DITK_BUILD_DEFAULT_MODULES=ON
     -DITK_COMPUTER_MEMORY_SIZE="${ITK_COMPUTER_MEMORY_SIZE:-1}"
-    -DWRAP_ITK_JAVA=OFF
-    -DWRAP_ITK_TCL=OFF
     -Ddouble-conversion_INCLUDE_DIRS="${EPREFIX}/usr/include/double-conversion"
   )
 
