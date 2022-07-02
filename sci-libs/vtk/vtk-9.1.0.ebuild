@@ -20,7 +20,7 @@ EGIT_BRANCH="slicer-v9.1.20220125-efbe2afc2"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
-IUSE="aqua boost doc examples -exodus ffmpeg gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora video_cards_nvidia +views web +X xdmf2"
+IUSE="aqua boost doc examples -exodus gdal -gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora video_cards_nvidia +views web +X xdmf2"
 
 REQUIRED_USE="
 	java? ( qt5 )
@@ -65,7 +65,6 @@ RDEPEND="
 		dev-qt/qtgui:5
 	)
 	exodus? ( sci-libs/exodusii )
-	ffmpeg? ( media-video/ffmpeg )
 	gdal? ( sci-libs/gdal )
 	java? ( >=virtual/jdk-1.7:* )
 	logging? ( dev-python/loguru )
@@ -176,9 +175,6 @@ src_configure() {
 	vtk_configure() {
 		local mycmakeargs=(
 			-Wno-dev
-			-DVTK_INSTALL_LIBRARY_DIR=$(get_libdir)
-			-DVTK_INSTALL_PACKAGE_DIR="$(get_libdir)/cmake/${PN}-${SPV}"
-			-DVTK_INSTALL_DOC_DIR="${EPREFIX}/usr/share/doc/${PF}"
 			-DVTK_CUSTOM_LIBRARY_SUFFIX=""
 			-DBUILD_SHARED_LIBS=ON
 			-DVTK_USE_LARGE_DATA=ON
@@ -202,7 +198,6 @@ src_configure() {
 			-DVTK_USE_X=$(usex X)
 			-DVTK_ENABLE_LOGGING=$(usex logging ON OFF)
 			# IO
-			-DVTK_USE_FFMPEG_ENCODER=$(usex ffmpeg)
 			-DVTK_MODULE_ENABLE_VTK_IOGDAL=$(usex gdal YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOGeoJSON=$(usex json YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOXdmf2=$(usex xdmf2 YES NO)
@@ -313,14 +308,9 @@ src_configure() {
 	vtk_configure
 }
 
-src_compile()
-{
-	python_foreach_impl run_in_build_dir cmake_src_compile
-}
 
 vtk_install()
 {
-
 	use web && webapp_src_preinst
 
 	debug-print-function ${FUNCNAME} "$@"
