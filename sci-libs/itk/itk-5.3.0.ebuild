@@ -29,8 +29,8 @@ SRC_URI="
 DESCRIPTION="NLM Insight Segmentation and Registration Toolkit"
 HOMEPAGE="http://www.itk.org"
 
-EGIT_REPO_URI="https://github.com/Slicer/ITK"
-EGIT_BRANCH="slicer-v5.3rc03-2022-02-10-be81e62"
+EGIT_REPO_URI="https://github.com/InsightSoftwareConsortium/ITK.git"
+EGIT_TAG="v5.3rc03"
 
 LICENSE="Apache-2.0"
 SLOT="0"
