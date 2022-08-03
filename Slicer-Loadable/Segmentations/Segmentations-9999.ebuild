@@ -27,6 +27,8 @@ DEPEND="
 
 RDEPEND="${DEPEND}"
 
+REQUIRED_USE="{PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Segmentations-a-separate-module.patch
 	${FILESDIR}/0002-COMP-Change-destination-dir-for-python-files.patch
