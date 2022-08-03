@@ -28,7 +28,7 @@ DEPEND="
 RDEPEND="
     ${PYTHON_DEPS}
     ${DEPEND}
-    "
+"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
