@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 # Short one-line description of this package.
 DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
@@ -14,7 +14,7 @@ COMMIT="1788b378ed2e4928cded2bc9ecdc2b37c7f2af5f"
 
 SRC_URI="https://github.com/Slicer/SlicerExecutionModel/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
-LICENSE="3D-Slicer"
+LICENSE="BSD"
 
 SLOT="0"
 
@@ -22,8 +22,7 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-DEPEND="sci-libs/itk"
-
+DEPEND="sci-libs/itk app-arch/unzip"
 RDEPEND="${DEPEND}"
 
 PATCHES=(
@@ -58,7 +57,7 @@ src_unpack() {
 
 src_prepare() {
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure(){
@@ -76,7 +75,7 @@ src_configure(){
 		-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_ARCHIVE_DESTINATION=lib64
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 pkg_postinst(){
