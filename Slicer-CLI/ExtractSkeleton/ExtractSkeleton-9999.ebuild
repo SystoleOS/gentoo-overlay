@@ -18,7 +18,7 @@ LICENSE="BSD"
 SLOT="0"
 
 DEPEND="
-	sci-medical/slicer
+	sci-medical/Slicer
 	Slicer-Loadable/Markups
 "
 
