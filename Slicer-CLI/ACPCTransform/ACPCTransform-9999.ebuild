@@ -5,9 +5,7 @@ EAPI=7
 inherit cmake git-r3
 
 # Short one-line description of this package.
-DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
-image processing, and three-dimensional visualization. This package is a
-live-build which will pull the master branch of the official 3D Slicer repository."
+DESCRIPTION="ACPCTransorm module for 3D Slicer"
 
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
 EGIT_BRANCH="master"
@@ -18,8 +16,6 @@ HOMEPAGE="https://www.slicer.org/"
 LICENSE="BSD"
 
 SLOT="0"
-
-KEYWORDS="~amd64"
 
 DEPEND="
 	sci-medical/Slicer
