@@ -29,6 +29,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-the-SampleData-scripted-module-a-separate-m.patch
 )
