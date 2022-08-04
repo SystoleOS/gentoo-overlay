@@ -13,7 +13,7 @@ HOMEPAGE="https://github.com/SimpleITK/SimpleITK"
 
 SRC_URI="https://github.com/SimpleITK/SimpleITK/archive/v1.2.4.zip -> ${PN}-${PV}.zip"
 
-LICENSE="Apache 2.0"
+LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
 SLOT="0"
 
