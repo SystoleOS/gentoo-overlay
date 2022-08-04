@@ -27,7 +27,10 @@ DEPEND="
 	sci-medical/Slicer
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-DoubleArrays-a-separate-module.patch
