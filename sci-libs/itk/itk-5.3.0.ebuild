@@ -19,10 +19,10 @@ ITKMorphologicalContourInterpolator_HASH="44854a462309ca902d2d21a18dca50f777b9f6
 
 # source code URIs
 SRC_URI="
-	https://github.com/ntustison/ITKAdaptiveDenoising/archive/${ITKAdaptiveDenoising_HASH}.zip
-	https://github.com/InsightSoftwareConsortium/itkMGHImageIO/archive/${ITKMGHImageIO_HASH}.zip
-	https://github.com/KitwareMedical/ITKIOScanco/archive/${ITKIOScanco_HASH}.zip
-	https://github.com/KitwareMedical/ITKMorphologicalContourInterpolation/archive/${ITKMorphologicalContourInterpolator_HASH}.zip
+	https://github.com/ntustison/ITKAdaptiveDenoising/archive/${ITKAdaptiveDenoising_HASH}.zip -> ITKAdaptiveDenoising.zip
+	https://github.com/InsightSoftwareConsortium/itkMGHImageIO/archive/${ITKMGHImageIO_HASH}.zip -> ITKMGHImageIO.zip
+	https://github.com/KitwareMedical/ITKIOScanco/archive/${ITKIOScanco_HASH}.zip -> ITKIOScanco.zip
+	https://github.com/KitwareMedical/ITKMorphologicalContourInterpolation/archive/${ITKMorphologicalContourInterpolator_HASH}.zip -> ITKMorphologicalContourInterpolator.zip
 "
 
 DESCRIPTION="NLM Insight Segmentation and Registration Toolkit"
@@ -53,7 +53,7 @@ DEPEND="
 	sci-medical/gdcm
 	dev-cpp/eigen
 "
-REPEND="${DEPEND}
+RDEPEND="${DEPEND}
 	sys-apps/coreutils
 	python? (
 		>=dev-lang/swig-2.0:0
@@ -72,10 +72,10 @@ PATCHES=()
 
 src_unpack() {
 	#Unpack ITKAdaptiveDenoising
-	 unzip ${DISTDIR}/${ITKAdaptiveDenoising_HASH}.zip || die
-	 unzip ${DISTDIR}/${ITKMGHImageIO_HASH}.zip || die
-	 unzip ${DISTDIR}/${ITKIOScanco_HASH}.zip || die
-	 unzip ${DISTDIR}/${ITKMorphologicalContourInterpolator_HASH}.zip || die
+	 unzip ${DISTDIR}/ITKAdaptiveDenoising.zip || die
+	 unzip ${DISTDIR}/ITKMGHImageIO.zip || die
+	 unzip ${DISTDIR}/ITKIOScanco.zip || die
+	 unzip ${DISTDIR}/ITKMorphologicalContourInterpolator.zip || die
 
 	#NOTE: This ebuild has the particularity that it uses both git and source
 	#files. Therefore we need to call the src_unpack function from the git module
