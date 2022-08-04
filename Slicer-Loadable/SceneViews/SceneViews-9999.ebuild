@@ -19,8 +19,6 @@ LICENSE="BSD"
 
 SLOT="0"
 
-KEYWORDS="~amd64"
-
 DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
