@@ -29,6 +29,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-the-Editor-scripted-modue-a-separate-modul.patch
 )
