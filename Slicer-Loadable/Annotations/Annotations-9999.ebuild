@@ -29,7 +29,7 @@ RDEPEND="
 	${PYTHON_DEPS}
  "
 
-REQUIRED_USE="${PYTHON_REQUIRED_USE}
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-the-module-a-separate-project.patch
