@@ -29,6 +29,7 @@ RDEPEND="
 	${DEPEND}
 	${PYTHON_DEPS}
 "
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-Make-Cameras-module-a-separate-package.patch
