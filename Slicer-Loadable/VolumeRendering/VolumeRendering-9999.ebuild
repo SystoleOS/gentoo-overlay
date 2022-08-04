@@ -25,7 +25,10 @@ DEPEND="
 	Slicer-Loadable/Annotations
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-VolumeRendering-a-separate-module.patch
