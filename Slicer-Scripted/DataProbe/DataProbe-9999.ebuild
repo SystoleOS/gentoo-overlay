@@ -23,7 +23,10 @@ DEPEND="
 	sci-medical/Slicer[python]
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-DataProbe-a-separate-module.patch
