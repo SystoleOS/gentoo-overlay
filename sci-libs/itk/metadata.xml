@@ -15,7 +15,9 @@
 	</longdescription>
 		<use>
 		<flag name="review">Enable compilation of methods under review</flag>
-		<flag name="vtkglue">PLEASE FIX MY DESCRIPTION</flag>
+		<flag name="vtkglue">Build vtkGlue support</flag>
+		<flag name="deprecated">Build deprecated modules</flag>
+		<flag name="dicom">Build dicom support</flag>
 	</use>
 	<upstream>
 		<remote-id type="sourceforge">itk</remote-id>

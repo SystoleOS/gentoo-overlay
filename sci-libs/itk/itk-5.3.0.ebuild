@@ -25,7 +25,6 @@ SRC_URI="
   https://github.com/KitwareMedical/ITKMorphologicalContourInterpolation/archive/${ITKMorphologicalContourInterpolator_HASH}.zip
 "
 
-
 DESCRIPTION="NLM Insight Segmentation and Registration Toolkit"
 HOMEPAGE="http://www.itk.org"
 
@@ -39,7 +38,7 @@ IUSE="debug deprecated doc examples fftw python review test vtkglue dicom"
 
 RESTRICT="!test? ( test )"
 
-RDEPEND="
+DEPEND="
   dev-libs/double-conversion:0=
   media-libs/openjpeg:2
   media-libs/libpng:0=
@@ -54,7 +53,7 @@ RDEPEND="
   sci-medical/gdcm
   dev-cpp/eigen
 "
-DEPEND="${RDEPEND}
+REPEND="${DEPEND}
   sys-apps/coreutils
   python? (
 	>=dev-lang/swig-2.0:0
@@ -124,7 +123,7 @@ src_configure() {
 
 	# DCMTK
 	-DITK_USE_SYSTEM_DCMTK:BOOL=ON
-	-DModule_ITKIODCMTK:BOOL=${Slicer_BUILD_DICOM_SUPPORT}
+	-DModule_ITKIODCMTK:BOOL=$(usex dicom ON OFF)
 
 	# ZLIB
 	-DITK_USE_SYSTEM_ZLIB:BOOL=ON
