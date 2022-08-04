@@ -1,4 +1,4 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -11,7 +11,7 @@ DESCRIPTION="A layer built on top of the Insight Toolkit (ITK), intended to simp
 
 HOMEPAGE="https://github.com/SimpleITK/SimpleITK"
 
-SRC_URI="https://github.com/SimpleITK/SimpleITK/archive/v1.2.4.zip -> ${PN}-${PV}.zip"
+SRC_URI="https://github.com/SimpleITK/SimpleITK/archive/v1.2.4.tar.gz -> ${PN}-${PV}.tar.gz"
 
 LICENSE="Apache-2.0"
 KEYWORDS="~amd64"
