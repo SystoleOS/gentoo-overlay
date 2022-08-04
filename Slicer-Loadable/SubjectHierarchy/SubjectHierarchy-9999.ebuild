@@ -28,7 +28,10 @@ DEPEND="
 	Slicer-Loadable/Terminologies
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Making-the-module-a-separate-project.patch
