@@ -25,7 +25,10 @@ DEPEND="
 	sci-medical/Slicer
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-Make-Cameras-module-a-separate-package.patch
