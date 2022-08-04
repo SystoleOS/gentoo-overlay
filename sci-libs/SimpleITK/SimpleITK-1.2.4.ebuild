@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_9 )
 
 inherit cmake python-single-r1
 
-DESCRIPTION="A layer built on top of the Insight Toolkit (ITK), intended to simplify and facilitate ITK's use in rapid prototyping, education and interpreted languages."
+DESCRIPTION="A layer built on top of the Insight Toolkit (ITK), intended to simplify and facilitate ITK's use in rapid prototyping."
 
 HOMEPAGE="https://github.com/SimpleITK/SimpleITK"
 
