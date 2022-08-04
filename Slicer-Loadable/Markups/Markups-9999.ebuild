@@ -26,7 +26,10 @@ DEPEND="
 	Slicer-Loadable/SubjectHierarchy
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-Make-Markups-a-separate-module.patch
