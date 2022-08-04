@@ -32,6 +32,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-DoubleArrays-a-separate-module.patch
 )
