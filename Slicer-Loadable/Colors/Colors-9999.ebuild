@@ -7,9 +7,7 @@ PYTHON_COMPAT=( python3_9 )
 inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
-DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
-image processing, and three-dimensional visualization. This package is a
-live-build which will pull the master branch of the official 3D Slicer repository."
+DESCRIPTION="Colors module for 3D-Slicer"
 
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
 EGIT_BRANCH="master"
@@ -27,7 +25,10 @@ DEPEND="
 	sci-medical/Slicer
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-Separate-Colors-in-a-different-module.patch
