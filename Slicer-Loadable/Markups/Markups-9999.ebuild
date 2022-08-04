@@ -31,6 +31,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-Make-Markups-a-separate-module.patch
 	${FILESDIR}/0002-COMP-Find-and-link-to-vtkAddon.patch
