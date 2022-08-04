@@ -9,7 +9,8 @@ WEBAPP_MANUAL_SLOT=yes
 
 # Short package version
 SPV="$(ver_cut 1-2)"
-inherit python-single-r1 cmake java-pkg-opt-2 git-r3
+
+inherit python-single-r1 cmake java-pkg-opt-2 git-r3 virtualx webapp
 
 DESCRIPTION="This is the 3D Slicer Visualization Toolkit"
 HOMEPAGE="https://github.com/slicer/vtk"
@@ -20,7 +21,7 @@ EGIT_BRANCH="slicer-v9.1.20220125-efbe2afc2"
 LICENSE="BSD LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
-IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora video_cards_nvidia +views web +X xdmf2"
+IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora nvidia +views web +X xdmf2"
 
 REQUIRED_USE="
 	java? ( qt5 )
@@ -99,7 +100,7 @@ RDEPEND="
 	R? ( dev-lang/R )
 	tbb? ( dev-cpp/tbb )
 	tcl? ( dev-lang/tcl:0= )
-	video_cards_nvidia? ( x11-drivers/nvidia-drivers[tools,static-libs] )
+	nvidia? ( x11-drivers/nvidia-drivers[tools,static-libs] )
 	web? (
 		${WEBAPP_DEPEND}
 		$(python_gen_cond_dep '
@@ -121,9 +122,8 @@ BDEPEND="doc? ( app-doc/doxygen )"
 S="${WORKDIR}"/vtk-${PV}
 
 PATCHES=(
-
 	"${FILESDIR}"/${P}-adjust-to-find-binaries.patch
- )
+)
 
 
 pkg_setup() {
@@ -194,7 +194,7 @@ src_configure() {
 			-DVTK_MODULE_ENABLE_VTK_IOODBC=$(usex odbc YES NO)
 			-DVTK_DEFAULT_RENDER_WINDOW_OFFSCREEN=$(usex offscreen)
 			-DVTK_OPENGL_HAS_OSMESA=$(usex offscreen)
-			-DVTK_USE_NVCONTROL=$(usex video_cards_nvidia)
+			-DVTK_USE_NVCONTROL=$(usex nvidia)
 			-DVTK_USE_X=$(usex X)
 			-DVTK_ENABLE_LOGGING=$(usex logging ON OFF)
 			# IO
@@ -290,7 +290,7 @@ src_configure() {
 			)
 		fi
 
-		append-cppflags -D__STDC_CONSTANT_MACROS -D_UNICODE
+		#append-cppflags -D__STDC_CONSTANT_MACROS -D_UNICODE
 
 		use java && export JAVA_HOME="${EPREFIX}/etc/java-config-2/current-system-vm"
 

@@ -10,6 +10,7 @@
     <flag name="boost">Use the Boost library.</flag>
     <flag name="doc">Install doxygen html documentation.</flag>
     <flag name="examples">Install vtk examples' code.</flag>
+    <flag name="exodus">Build exodus support.</flag>
     <flag name="ffmpeg">Enable ffmpeg/libav-based audio/video codec support.</flag>
     <flag name="gdal">Use gdal library (geospatial vector formats).</flag>
     <flag name="gl2ps">Enable support for the OpenGL-to-Postscript printing library.</flag>
@@ -18,6 +19,7 @@
     <flag name="java">Add support for Java.</flag>
     <flag name="json">Enable JSON support for the modules that support it.</flag>
     <flag name="mpi">Add MPI (Message Passing Interface) layer to the modules that support it.</flag>
+    <flag name="nvidia">Build nvidia specific settings.</flag>
     <flag name="odbc">Add ODBC Support (Open DataBase Connectivity) for the modules that support it.</flag>
     <flag name="offscreen">Use an offscreen renderer by default.</flag>
     <flag name="postgres">Add support for the postgresql database for the modules that use it.</flag>
@@ -28,7 +30,6 @@
     <flag name="tbb">Add TBB support (Thread Building Blocks).</flag>
     <flag name="tcl">Add support for the TCL dynamic language.</flag>
     <flag name="theora">Add Theora Video Compression Codec support for the modules that use it.</flag>
-    <flag name="video_cards_nvidia">Build Nvidia specific settings.</flag>
     <flag name="views">Enable Views modules.</flag>
     <flag name="web">Enable Web modules.</flag>
     <flag name="X">Use XOrg for render windows.</flag>
