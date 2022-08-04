@@ -28,6 +28,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-the-Endoscopy-scripted-module-a-separate-mo.patch
 )
