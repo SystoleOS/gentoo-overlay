@@ -24,7 +24,10 @@ DEPEND="
 	Slicer-Loadable/Volumes
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-the-SampleData-scripted-module-a-separate-m.patch
