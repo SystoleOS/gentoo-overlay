@@ -25,7 +25,10 @@ DEPEND="
 	Slicer-Loadable/Colors
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Models-a-separate-module.patch
