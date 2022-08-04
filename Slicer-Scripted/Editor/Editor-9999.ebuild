@@ -24,7 +24,10 @@ DEPEND="
 	Slicer-Scripted/EditorLib
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-the-Editor-scripted-modue-a-separate-modul.patch
