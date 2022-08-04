@@ -30,6 +30,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Models-a-separate-module.patch
 )
