@@ -30,6 +30,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-VolumeRendering-a-separate-module.patch
 	${FILESDIR}/0002-COMP-Find-jsoncpp-using-CMake-pkg-config-modules.patch
