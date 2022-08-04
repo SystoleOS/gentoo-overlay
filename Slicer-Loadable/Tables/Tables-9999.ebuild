@@ -24,7 +24,10 @@ DEPEND="
 	Slicer-Loadable/SubjectHierarchy
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Tables-a-separate-module.patch
