@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8,9} )
+PYTHON_COMPAT=( python3_9 )
 
 inherit cmake python-single-r1 git-r3
 
@@ -50,7 +50,6 @@ DEPEND="
 	media-libs/libjpeg-turbo:0=
 	fftw? ( sci-libs/fftw:3.0= )
 	vtkglue? ( >=sci-libs/vtk-9.1.0[rendering,python?] )
-	python? ( ${PYTHON_DEPS} )
 	sci-medical/gdcm
 	dev-cpp/eigen
 "
@@ -59,6 +58,7 @@ REPEND="${DEPEND}
 	python? (
 		>=dev-lang/swig-2.0:0
 		dev-cpp/castxml
+		${PYTHON_DEPS}
 		)
 	doc? ( app-doc/doxygen )
 "
