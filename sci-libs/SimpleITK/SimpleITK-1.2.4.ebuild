@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8,9} )
+PYTHON_COMPAT=( python3_9 )
 
 inherit cmake python-single-r1
 
@@ -25,6 +25,8 @@ RDEPEND="
 	${DEPEND}
 	${PYTHON_DEPS}
 "
+
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Adding-installation-directory-for-python-module.patch
