@@ -1,7 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
 EAPI=7
-PYTHON_COMPAT=( python3_{8,9} )
+
+PYTHON_COMPAT=( python3_9 )
 
 inherit cmake git-r3 python-r1
 
@@ -28,11 +29,13 @@ REQURIED_USE="
 "
 
 DEPEND="
-    sci-libs/vtk
-    ${PYTHON_DEPS}
-    "
+	sci-libs/vtk
+"
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=()
 
