@@ -4,7 +4,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_6 )
 
-inherit cmake-utils python-single-r1 git-r3
+inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
@@ -35,7 +35,7 @@ PATCHES=(
 
 src_prepare() {
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure(){
@@ -53,5 +53,5 @@ src_configure(){
 	)
 
 	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Scripted/${PN}"
-	cmake-utils_src_configure
+	cmake_src_configure
 }
