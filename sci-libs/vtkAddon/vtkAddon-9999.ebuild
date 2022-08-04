@@ -24,8 +24,8 @@ IUSE="python"
 DEPEND="
 	sci-libs/vtk
 	python? ( ${PYTHON_DEPS}
-			  sci-libs/VTK[python] )
-	!python? ( sci-libs/VTK )
+			  sci-libs/vtk[python] )
+	!python? ( sci-libs/vtk )
 "
 
 RDEPEND="
