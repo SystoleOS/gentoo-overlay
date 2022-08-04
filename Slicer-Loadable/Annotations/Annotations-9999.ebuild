@@ -22,6 +22,7 @@ SLOT="0"
 DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
+    ${PYTHON_DEPS}
 "
 
 RDEPEND="${DEPEND}"
