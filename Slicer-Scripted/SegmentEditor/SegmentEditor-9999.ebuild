@@ -24,7 +24,10 @@ DEPEND="
 	Slicer-Loadable/Segmentations
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/test.patch
