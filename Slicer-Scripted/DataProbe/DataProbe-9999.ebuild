@@ -32,6 +32,8 @@ PATCHES=(
 	${FILESDIR}/0001-COMP-Make-DataProbe-a-separate-module.patch
 )
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 src_prepare() {
 
 	cmake_src_prepare
