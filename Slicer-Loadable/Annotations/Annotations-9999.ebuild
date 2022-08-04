@@ -22,10 +22,11 @@ SLOT="0"
 DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
-    ${PYTHON_DEPS}
 "
 
 RDEPEND="${DEPEND}"
+
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-the-module-a-separate-project.patch
