@@ -11,7 +11,6 @@
     <flag name="doc">Install doxygen html documentation.</flag>
     <flag name="examples">Install vtk examples' code.</flag>
     <flag name="exodus">Build exodus support.</flag>
-    <flag name="ffmpeg">Enable ffmpeg/libav-based audio/video codec support.</flag>
     <flag name="gdal">Use gdal library (geospatial vector formats).</flag>
     <flag name="gl2ps">Enable support for the OpenGL-to-Postscript printing library.</flag>
     <flag name="imaging">Enable Imaging modules.</flag>

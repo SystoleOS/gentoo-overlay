@@ -20,7 +20,7 @@ EGIT_BRANCH="slicer-v9.1.20220125-efbe2afc2"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~x86 ~amd64-linux ~x86-linux"
+
 IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora nvidia +views web +X xdmf2"
 
 REQUIRED_USE="
@@ -124,7 +124,6 @@ S="${WORKDIR}"/vtk-${PV}
 PATCHES=(
 	"${FILESDIR}"/${P}-adjust-to-find-binaries.patch
 )
-
 
 pkg_setup() {
 	use java && java-pkg-opt-2_pkg_setup
@@ -245,7 +244,6 @@ src_configure() {
 			$(vtk_enable_external zlib)
 		)
 
-
 		if use java; then
 			local javacargs=$(java-pkg_javac-args)
 			mycmakeargs+=( -DJAVAC_OPTIONS=${javacargs// /;} )
@@ -307,7 +305,6 @@ src_configure() {
 
 	vtk_configure
 }
-
 
 vtk_install()
 {
