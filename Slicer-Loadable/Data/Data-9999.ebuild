@@ -26,7 +26,10 @@ DEPEND="
 	Slicer-Loadable/Colors
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-Make-Data-a-separate-module.patch
