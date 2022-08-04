@@ -16,8 +16,8 @@ EGIT_REPO_URI="https://github.com/Slicer/vtkAddon"
 EGIT_BRANCH="master"
 
 LICENSE="BSD"
+
 SLOT="0"
-KEYWORDS="~amd64"
 
 IUSE="python"
 
@@ -33,7 +33,7 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
-REQUIRIED_USE="${PYTHON_REQUIRED_USE}"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=()
 
