@@ -23,7 +23,10 @@ DEPEND="
 	sci-medical/Slicer
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-the-ScreenCapture-module-a-separate-module.patch
