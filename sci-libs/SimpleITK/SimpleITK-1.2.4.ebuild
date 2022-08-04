@@ -21,7 +21,10 @@ DEPEND="
 	dev-lang/python
 	>=dev-lang/lua-5.1
 "
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Adding-installation-directory-for-python-module.patch
