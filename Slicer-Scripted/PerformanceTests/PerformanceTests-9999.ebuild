@@ -25,7 +25,10 @@ DEPEND="
 	sci-medical/Slicer[python]
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-PerformanceTests-scriptable-module-a-separa.patch
