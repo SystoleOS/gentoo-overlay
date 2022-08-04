@@ -28,6 +28,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-COMP-Make-EditorLib-a-separate-module.patch
 	${FILESDIR}/0002-COMP-Adding-MRMLLib-link-to-EditorLib-Logic.patch
