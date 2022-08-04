@@ -21,21 +21,19 @@ KEYWORDS="~amd64"
 
 IUSE="python"
 
-REQURIED_USE="
-	${PYTHON_REQUIRED_USE}
-	python? ( ${PYTHON_DEPS}
-			  sci-libs/VTK[python] )
-	!python? ( sci-libs/CTK )
-"
-
 DEPEND="
 	sci-libs/vtk
+	python? ( ${PYTHON_DEPS}
+			  sci-libs/VTK[python] )
+	!python? ( sci-libs/VTK )
 "
 
 RDEPEND="
 	${DEPEND}
 	${PYTHON_DEPS}
 "
+
+REQUIRIED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=()
 
