@@ -4,7 +4,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python3_9 )
 
-inherit cmake multilib python-r1 qmake-utils git-r3
+inherit cmake python-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="The Vascular Modeling Toolkit"
