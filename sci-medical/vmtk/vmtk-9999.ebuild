@@ -15,7 +15,7 @@ EGIT_BRANCH="master"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="http://vmtk.org/"
 
-LICENSE="VTK"
+LICENSE="BSD"
 
 SLOT="0"
 
