@@ -20,11 +20,10 @@ SLOT="0"
 
 KEYWORDS="~amd64"
 
-IUSE=""
-
 DEPEND="dev-qt/qtcore
 		dev-qt/qtwidgets"
 RDEPEND="${DEPEND}"
+BDEPEND="app-arch/unzip"
 
 PATCHES=()
 
