@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=6
+EAPI=7
 
-inherit cmake-utils
+inherit cmake
 
 # Short one-line description of this package.
 DESCRIPTION="Implementation of the DICOM standard"
@@ -42,7 +42,7 @@ src_unpack() {
 
 src_prepare() {
 
-	cmake-utils_src_prepare
+	cmake_src_prepare
 }
 
 src_configure(){
@@ -61,5 +61,5 @@ src_configure(){
 		-DGDCM_INSTALL_LIB_DIR=lib64
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
