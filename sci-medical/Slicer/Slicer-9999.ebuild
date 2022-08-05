@@ -7,9 +7,7 @@ PYTHON_COMPAT=( python3_9 )
 inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
-DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
-image processing, and three-dimensional visualization. This package is a
-live-build which will pull the master branch of the official 3D Slicer repository."
+DESCRIPTION="3D Slicer is an open source software for medical image processing and visualization"
 
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
 EGIT_BRANCH="main"
@@ -47,7 +45,7 @@ RDEPEND="
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 	sci-libs/itk[vtkglue,deprecated]
 	sitk? ( sci-libs/SimpleITK )
-	>=sci-libs/vtk-9.1.0[gl2ps]
+	>=sci-libs/vtk-9.1.0
 "
 
 DEPEND="${RDEPEND}"
