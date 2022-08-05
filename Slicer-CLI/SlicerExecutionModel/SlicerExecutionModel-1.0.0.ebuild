@@ -18,8 +18,6 @@ LICENSE="BSD"
 
 SLOT="0"
 
-KEYWORDS="~amd64"
-
 IUSE=""
 
 DEPEND="sci-libs/itk app-arch/unzip"
