@@ -20,10 +20,7 @@ LICENSE="Apache-2.0"
 
 SLOT="0"
 
-KEYWORDS="~amd64"
-
 IUSE="python"
-
 
 RDEPEND="
 	python? ( ${PYTHON_DEPS}
@@ -34,7 +31,7 @@ RDEPEND="
 	dev-qt/qtconcurrent
 	dev-qt/qtcore
 	dev-qt/qtgui
-    dev-qt/qtmultimedia
+	dev-qt/qtmultimedia
 	dev-qt/qtnetwork
 	dev-qt/qtopengl
 	dev-qt/qtsql
