@@ -22,10 +22,10 @@ SLOT="0"
 
 IUSE="python"
 
-RDEPEND="
-	python? ( ${PYTHON_DEPS}
-			  dev-python/PythonQt_CTK
-			  sci-libs/vtk[python] )
+DEPEND="
+	python? (
+		dev-python/PythonQt_CTK
+		sci-libs/vtk[python] )
 	!python? ( sci-libs/vtk )
 	dev-qt/designer
 	dev-qt/qtconcurrent
@@ -41,7 +41,12 @@ RDEPEND="
 	dev-qt/qtxml
 	sci-libs/itk
 "
-DEPEND="${RDEPEND}"
+RDEPEND="
+	${DEPEND}
+	python? ( ${PYTHON_DEPS} )
+"
+
+BDEPEND="app-arch/unzip"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Fix-Unknown-CMake-command-ctk_add_executable_ut.patch
