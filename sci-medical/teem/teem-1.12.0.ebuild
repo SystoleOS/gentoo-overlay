@@ -5,7 +5,7 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="Set of libraries for representing, processing and visualizing scientific raster data. This is the version maintained by and for the 3D Slicer project (https://github.com/Slicer/teem)"
+DESCRIPTION="Set of libraries for representing, processing and visualizing scientific raster data (3D Slicer maintained)"
 
 HOMEPAGE="https://teem.sourceforge.net"
 
