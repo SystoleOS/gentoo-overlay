@@ -20,7 +20,7 @@ LICENSE="Apache-2.0"
 SLOT="0"
 
 DEPEND="
-	>=sci-libs/ITK-5.0
+	>=sci-libs/itk-5.0
 "
 
 RDEPEND="${DEPEND}"
