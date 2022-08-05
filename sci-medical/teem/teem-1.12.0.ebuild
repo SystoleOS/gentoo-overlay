@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake-utils multilib
+inherit cmake
 
 DESCRIPTION="Set of libraries for representing, processing and visualizing scientific raster data. This is the version maintained by and for the 3D Slicer project (https://github.com/Slicer/teem)"
 
@@ -19,6 +19,7 @@ SLOT="0"
 
 DEPEND="sys-libs/zlib"
 RDEPEND="${DEPEND}"
+BDEPEND="app-arch/unzip"
 
 PATCHES=(
 
@@ -45,5 +46,5 @@ src_configure() {
 		-DTeem_LIB_INSTALL_DIR=$(get_libdir)
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
