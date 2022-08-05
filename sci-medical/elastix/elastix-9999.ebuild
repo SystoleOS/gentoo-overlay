@@ -5,9 +5,7 @@ EAPI=7
 inherit cmake git-r3
 
 # Short one-line description of this package.
-DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
-image processing, and three-dimensional visualization. This package is a
-live-build which will pull the master branch of the official 3D Slicer repository."
+DESCRIPTION="A toolbox for rigid and nonrigid registration of images"
 
 EGIT_REPO_URI="https://github.com/SuperElastix/elastix"
 EGIT_BRANCH="develop"
