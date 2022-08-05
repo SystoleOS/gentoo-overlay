@@ -2,7 +2,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_6 )
+PYTHON_COMPAT=( python3_9 )
 
 inherit cmake multilib python-r1 qmake-utils git-r3
 
