@@ -5,7 +5,7 @@ EAPI=7
 PYTHON_COMPAT=( python3_9 )
 
 inherit cmake python-single-r1 git-r3
- 
+
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
 image processing, and three-dimensional visualization. This package is a
@@ -20,8 +20,6 @@ HOMEPAGE="https://www.slicer.org/"
 LICENSE="BSD"
 
 SLOT="0"
-
-KEYWORDS="~amd64"
 
 IUSE="python cli sitk"
 
@@ -47,9 +45,9 @@ RDEPEND="
 	sci-medical/teem
 	dev-python/PythonQt_CTK
 	cli? ( Slicer-CLI/SlicerExecutionModel )
-    sci-libs/itk[vtkglue,deprecated]
+	sci-libs/itk[vtkglue,deprecated]
 	sitk? ( sci-libs/SimpleITK )
-    >=sci-libs/vtk-9.1.0[gl2ps]
+	>=sci-libs/vtk-9.1.0[gl2ps]
 "
 
 DEPEND="${RDEPEND}"
@@ -57,8 +55,8 @@ DEPEND="${RDEPEND}"
 BDEPEND=">=dev-util/cmake-3.23.1"
 
 PATCHES=(
-    ${FILESDIR}/0001-COMP-Add-the-VTK-CommonSystem-component.patch
-    ${FILESDIR}/0002-Find-Eigen.patch
+	${FILESDIR}/0001-COMP-Add-the-VTK-CommonSystem-component.patch
+	${FILESDIR}/0002-Find-Eigen.patch
 	# ${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	# ${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
 	# ${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
