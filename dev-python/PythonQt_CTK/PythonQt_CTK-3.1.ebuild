@@ -5,7 +5,7 @@ EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
 
-inherit cmake-utils
+inherit cmake
 
 DESCRIPTION="PyhtonQt for CTK"
 
@@ -50,5 +50,5 @@ src_configure() {
 		-DPythonQt_Wrap_QtAll=ON
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
