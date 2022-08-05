@@ -25,8 +25,8 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	dev-lang/python[tk]
-	>=sci-libs/ITK-5.0
-	>=sci-libs/VTK-8.2
+	>=sci-libs/itk-5.0
+	>=sci-libs/vtk-9.1
 "
 
 RDEPEND="${DEPEND}"
