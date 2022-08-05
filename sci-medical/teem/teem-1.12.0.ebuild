@@ -28,7 +28,6 @@ PATCHES=(
 	${FILESDIR}/test.patch
 )
 
-
 src_unpack(){
 
 	default
