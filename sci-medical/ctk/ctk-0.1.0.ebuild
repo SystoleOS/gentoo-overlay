@@ -2,7 +2,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{8,9} )
+PYTHON_COMPAT=( python3_9 )
 
 inherit python-r1 cmake
 
