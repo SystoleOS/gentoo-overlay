@@ -25,7 +25,10 @@ DEPEND="
 	>=sci-libs/vtk-9.1
 "
 
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Adapt-vmtk-to-ITK-5.1.patch
