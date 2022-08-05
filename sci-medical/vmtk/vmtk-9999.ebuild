@@ -30,6 +30,8 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
 PATCHES=(
 	${FILESDIR}/0001-COMP-Adapt-vmtk-to-ITK-5.1.patch
 	${FILESDIR}/0002-COMP-Remove-install-sentence-for-VMTK-Targets.patch
