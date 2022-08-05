@@ -7,9 +7,7 @@ PYTHON_COMPAT=( python3_9 )
 inherit cmake multilib python-r1 qmake-utils git-r3
 
 # Short one-line description of this package.
-DESCRIPTION="3D Slicer is an open source software platform for medical image informatics,
-image processing, and three-dimensional visualization. This package is a
-live-build which will pull the master branch of the official 3D Slicer repository."
+DESCRIPTION="The Vascular Modeling Toolkit"
 
 EGIT_REPO_URI="https://github.com/vmtk/vmtk"
 EGIT_BRANCH="master"
@@ -20,8 +18,6 @@ HOMEPAGE="http://vmtk.org/"
 LICENSE="VTK"
 
 SLOT="0"
-
-KEYWORDS="~amd64"
 
 DEPEND="
 	dev-lang/python[tk]
