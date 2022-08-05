@@ -25,6 +25,7 @@ DEPEND="
 	!dev-python/PythonQt
 "
 RDEPEND="${DEPEND}"
+BDEPEND="app-arch/unzip"
 
 src_unpack(){
 
