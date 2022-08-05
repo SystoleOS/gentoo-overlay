@@ -48,6 +48,8 @@ RDEPEND="
 
 BDEPEND="app-arch/unzip"
 
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+
 PATCHES=(
 	${FILESDIR}/0001-COMP-Fix-Unknown-CMake-command-ctk_add_executable_ut.patch
 	${FILESDIR}/0002-ENH-Include-missing-files.patch
