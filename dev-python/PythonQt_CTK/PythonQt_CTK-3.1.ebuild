@@ -14,7 +14,7 @@ HOMEPAGE="https://github.com/commontk/PythonQt"
 SRC_URI="https://github.com/commontk/PythonQt/archive/dafdb7255b82163329672edebba4f267958c7376.zip -> ${P}.zip"
 
 LICENSE="BSD LGPL-2"
-KEYWORDS="~amd64 ~arm x86 ~amd64-linux ~x86-linux"
+KEYWORDS="~amd64"
 SLOT="0"
 
 DEPEND="
