@@ -21,11 +21,11 @@ SLOT="0"
 
 IUSE="python cli sitk"
 
-RDEPEND="
-	python? ( ${PYTHON_DEPS}
-			  sci-medical/CTK[python]
-			  sci-libs/vtkAddon[python]
-			   )
+REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+
+DEPEND="
+	python? ( sci-medical/CTK[python]
+				sci-libs/vtkAddon[python] )
 	!python? ( sci-medical/ctk
 			   sci-libs/vtkAddon )
 	dev-qt/qtcore
@@ -48,7 +48,10 @@ RDEPEND="
 	>=sci-libs/vtk-9.1.0
 "
 
-DEPEND="${RDEPEND}"
+RDEPEND="
+	${DEPEND}
+	python? ( ${PYTHON_DEPS} )
+"
 
 BDEPEND=">=dev-util/cmake-3.23.1"
 
