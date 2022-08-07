@@ -25,8 +25,8 @@ IUSE="python"
 DEPEND="
 	python? (
 		dev-python/PythonQt_CTK
-		sci-libs/vtk[python] )
-	!python? ( sci-libs/vtk )
+		>=sci-libs/vtk-9.1[python,qt5,rendering] )
+	!python? ( >=sci-libs/vtk-9.1[qt5,rendering] )
 	dev-qt/designer
 	dev-qt/qtconcurrent
 	dev-qt/qtcore
