@@ -41,7 +41,6 @@ DEPEND="
 	dev-libs/jsoncpp
 	sci-medical/CTKAppLauncherLib
 	sci-medical/teem
-	dev-python/PythonQt_CTK
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 	sci-libs/itk[vtkglue,deprecated]
 	sitk? ( sci-libs/SimpleITK )
