@@ -24,7 +24,7 @@ IUSE="python cli sitk"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 DEPEND="
-	python? ( sci-medical/CTK[python]
+	python? ( sci-medical/ctk[python]
 				sci-libs/vtkAddon[python] )
 	!python? ( sci-medical/ctk
 			   sci-libs/vtkAddon )
@@ -34,6 +34,8 @@ DEPEND="
 	dev-qt/qtopengl
 	dev-qt/qtsql
 	dev-qt/qtxmlpatterns
+    dev-qt/qtx11extras
+    dev-qt/qtsvg
 	dev-qt/qtwebengine
 	dev-qt/qtwebchannel
 	dev-qt/designer
