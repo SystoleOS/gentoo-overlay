@@ -81,6 +81,7 @@ src_unpack() {
 	#files. Therefore we need to call the src_unpack function from the git module
 	git-r3_src_unpack
 }
+
 src_prepare() {
 
 	  sed -i -e "s/find_package(OpenJPEG 2.0.0/find_package(OpenJPEG/g"\
@@ -94,6 +95,7 @@ src_prepare() {
 
 	cmake_src_prepare
 }
+
 src_configure() {
 	local mycmakeargs=(
 		-DBUILD_SHARED_LIBS:BOOL=ON
@@ -198,7 +200,7 @@ src_install() {
 }
 
 pkg_postinst(){
-	libraries=$(find /usr/lib64 -name "libitk*.so")
+	libraries=$(find /usr/lib64 -name "libitk*.so" -or -name "libITK*.so")
 
 	for i in ${libraries}
 	do
