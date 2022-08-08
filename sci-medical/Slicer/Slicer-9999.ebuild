@@ -27,15 +27,15 @@ DEPEND="
 	python? ( sci-medical/ctk[python]
 				sci-libs/vtkAddon[python] )
 	!python? ( sci-medical/ctk
-			   sci-libs/vtkAddon )
+				sci-libs/vtkAddon )
 	dev-qt/qtcore
 	dev-qt/linguist-tools
 	dev-qt/qtmultimedia[widgets]
 	dev-qt/qtopengl
 	dev-qt/qtsql
 	dev-qt/qtxmlpatterns
-    dev-qt/qtx11extras
-    dev-qt/qtsvg
+	dev-qt/qtx11extras
+	dev-qt/qtsvg
 	dev-qt/qtwebengine
 	dev-qt/qtwebchannel
 	dev-qt/designer
@@ -46,7 +46,7 @@ DEPEND="
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 	sci-libs/itk[vtkglue,deprecated]
 	sitk? ( sci-libs/SimpleITK )
-	>=sci-libs/vtk-9.1.0
+	>=sci-libs/vtk-9.1.0[qt5,rendering,gl2ps]
 "
 
 RDEPEND="
