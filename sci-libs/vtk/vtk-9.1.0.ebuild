@@ -16,7 +16,7 @@ DESCRIPTION="This is the 3D Slicer Visualization Toolkit"
 HOMEPAGE="https://github.com/slicer/vtk"
 
 EGIT_REPO_URI="https://github.com/Slicer/VTK"
-EGIT_BRANCH="slicer-v9.1.20220125-efbe2afc2"
+EGIT_COMMIT="97a187572d4000cd820f9fc887f21eaf0bde857c"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
