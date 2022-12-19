@@ -2,9 +2,9 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9,10,11} )
 
-inherit cmake git-r3 python-r1
+inherit cmake python-r1
 
 # Short one-line description of this package.
 DESCRIPTION="General-purpose features that may be integrated into VTK library in the future."
@@ -12,8 +12,7 @@ DESCRIPTION="General-purpose features that may be integrated into VTK library in
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/vtkAddon"
 
-EGIT_REPO_URI="https://github.com/Slicer/vtkAddon"
-EGIT_BRANCH="master"
+SRC_URI="https://github.com/Slicer/vtkAddon/archive/fb7edc86fc16ace43398f6743eff5a47f8ca0328.tar.gz -> vtkAddon.tar.gz"
 
 LICENSE="BSD"
 
@@ -36,6 +35,11 @@ RDEPEND="
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 PATCHES=()
+
+src_unpack(){
+	default
+	mv ${WORKDIR}/* ${WORKDIR}/${P}
+}
 
 src_configure(){
 
