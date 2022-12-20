@@ -2,9 +2,9 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9..11} )
 
-inherit cmake python-single-r1 git-r3
+inherit cmake python-any-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software for medical image processing and visualization"
@@ -21,7 +21,7 @@ SLOT="0"
 
 IUSE="python cli sitk"
 
-REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+#REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 DEPEND="
 	python? ( sci-medical/ctk[python]
