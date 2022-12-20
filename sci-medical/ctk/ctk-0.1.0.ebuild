@@ -1,8 +1,8 @@
 # Copyright @ 2019 Oslo University Hospital. All rights reserved.
 
-EAPI=7
+EAPI=8
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9,10,11})
 
 inherit python-r1 cmake
 
@@ -12,7 +12,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="ec816cbb77986f6ee28c41a495e82238dee0e2d3"
+COMMIT="2c89539632e503e7cf9b7c53adccd8f1f71b2ead"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
