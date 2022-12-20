@@ -21,8 +21,6 @@ SLOT="0"
 
 IUSE="python cli sitk"
 
-#REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
-
 DEPEND="
 	python? ( sci-medical/ctk[python]
 				sci-libs/vtkAddon[python] )
@@ -38,6 +36,7 @@ DEPEND="
 	dev-qt/qtsvg
 	dev-qt/qtwebengine
 	dev-qt/qtwebchannel
+    dev-qt/qtscript
 	dev-qt/designer
 	dev-libs/rapidjson
 	dev-libs/jsoncpp
