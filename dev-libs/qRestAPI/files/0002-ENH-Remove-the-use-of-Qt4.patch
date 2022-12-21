@@ -1,0 +1,97 @@
+From 905fd3ff0e795865f77efca76fb8e810ace99393 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 21 Dec 2022 11:29:18 +0100
+Subject: [PATCH 2/3] ENH: Remove the use of Qt4
+
+---
+ CMakeLists.txt         | 35 ++++++-----------------------------
+ Testing/CMakeLists.txt | 11 ++---------
+ 2 files changed, 8 insertions(+), 38 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index bb05d12..713c6fc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -9,26 +9,11 @@ set(CMAKE_POSITION_INDEPENDENT_CODE 1)
+ option(BUILD_SHARED_LIBS "Build shared library" ON)
+ option(BUILD_TESTING "Test the project" ON)
+ 
+-set(qRestAPI_QT_VERSION "4" CACHE STRING "Expected Qt version")
+-mark_as_advanced(qRestAPI_QT_VERSION)
+-set_property(CACHE qRestAPI_QT_VERSION PROPERTY STRINGS 4 5)
+-if(NOT (qRestAPI_QT_VERSION VERSION_EQUAL "4" OR qRestAPI_QT_VERSION VERSION_EQUAL "5"))
+-  message(FATAL_ERROR "Expected value for qRestAPI_QT_VERSION is either '4' or '5'")
+-endif()
+-
+-if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+-  set(QT5_INSTALL_PREFIX "" CACHE PATH "The install location of Qt5")
+-  set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT5_INSTALL_PREFIX})
+-endif()
++set(QT5_INSTALL_PREFIX "" CACHE PATH "The install location of Qt5")
++set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT5_INSTALL_PREFIX})
+ 
+-if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+-  set(qRestAPI_QT5_COMPONENTS Core Gui Network Script Test)
+-  find_package(Qt5 COMPONENTS ${qRestAPI_QT5_COMPONENTS} REQUIRED)
+-else()
+-  # HACK: QtXml is required because of "http://www.richelbilderbeek.nl/CppLinkErrorUndefinedReferenceToQListData.htm"
+-  find_package(Qt4 4.6.2 COMPONENTS QtCore QtGui QtNetwork QtScript QtXml QtTest REQUIRED)
+-  include(${QT_USE_FILE})
+-endif()
++set(qRestAPI_QT5_COMPONENTS Core Gui Network Script Test)
++find_package(Qt5 COMPONENTS ${qRestAPI_QT5_COMPONENTS} REQUIRED)
+ 
+ if(BUILD_SHARED_LIBS)
+   set(qRestAPI_STATIC OFF)
+@@ -61,18 +46,10 @@ set(KIT_MOC_SRCS
+   qRestResult.h
+   )
+ 
+-if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+-  qt5_wrap_cpp(KIT_MOC_OUTPUT ${KIT_MOC_SRCS})
+-else()
+-  QT4_WRAP_CPP(KIT_MOC_OUTPUT ${KIT_MOC_SRCS})
+-endif()
++qt5_wrap_cpp(KIT_MOC_OUTPUT ${KIT_MOC_SRCS})
+ 
+ add_library(${PROJECT_NAME} ${KIT_SRCS} ${KIT_MOC_OUTPUT})
+-if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+-  target_link_libraries(${PROJECT_NAME} Qt5::Gui Qt5::Network Qt5::Script)
+-else()
+-  target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
+-endif()
++target_link_libraries(${PROJECT_NAME} Qt5::Gui Qt5::Network Qt5::Script)
+ 
+ include(CTest)
+ if(BUILD_TESTING)
+diff --git a/Testing/CMakeLists.txt b/Testing/CMakeLists.txt
+index 7bd3213..30f0f81 100644
+--- a/Testing/CMakeLists.txt
++++ b/Testing/CMakeLists.txt
+@@ -16,21 +16,14 @@ foreach(file IN LISTS KIT_TEST_GENERATE_MOC_SRCS)
+   get_filename_component(abs_file ${file} ABSOLUTE)
+   get_filename_component(source_name ${file} NAME_WE)
+   set(moc_file ${CMAKE_CURRENT_BINARY_DIR}/moc_${source_name}.cpp)
+-  if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+-    QT5_GENERATE_MOC(${abs_file} ${moc_file})
+-  else()
+-    QT4_GENERATE_MOC(${abs_file} ${moc_file})
+-  endif()
++  QT5_GENERATE_MOC(${abs_file} ${moc_file})
+   macro_add_file_dependencies(${abs_file} ${moc_file})
+ endforeach()
+ 
+ add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+ 
+ add_executable(qRestAPITests ${KIT_TESTDRIVER_SRCS})
+-target_link_libraries(qRestAPITests qRestAPI)
+-if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+-  target_link_libraries(qRestAPITests Qt5::Test)
+-endif()
++target_link_libraries(qRestAPITests qRestAPI Qt5::Test)
+ 
+ macro(SIMPLE_TEST TESTNAME)
+   add_test(NAME ${TESTNAME} COMMAND qRestAPITests ${TESTNAME})
+-- 
+2.34.1
+
