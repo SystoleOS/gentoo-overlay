@@ -1,0 +1,24 @@
+diff --git a/Libs/ITKFactoryRegistration/itkFactoryRegistration.h b/Libs/ITKFactoryRegistration/itkFactoryRegistration.h
+index 974a3d426..c3fdec6a7 100644
+--- a/Libs/ITKFactoryRegistration/itkFactoryRegistration.h
++++ b/Libs/ITKFactoryRegistration/itkFactoryRegistration.h
+@@ -4,7 +4,6 @@
+ #define itkFactoryRegistration_h
+ 
+ #include "itkFactoryRegistrationConfigure.h"
+-#include "itkNamespace.h"
+ 
+ namespace itk {
+ 
+diff --git a/Libs/vtkITK/vtkITK.h b/Libs/vtkITK/vtkITK.h
+index 785472ee3..f417a0fce 100644
+--- a/Libs/vtkITK/vtkITK.h
++++ b/Libs/vtkITK/vtkITK.h
+@@ -15,7 +15,6 @@
+ #ifndef __vtkITK_h
+ #define __vtkITK_h
+ 
+-#include "itkNamespace.h"
+ #include "vtkITKExport.h"
+ #include "vtkITKNumericTraits.h"
+ 
