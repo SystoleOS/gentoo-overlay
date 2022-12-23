@@ -55,12 +55,13 @@ RDEPEND="
 
 BDEPEND=">=dev-util/cmake-3.23.1"
 
+
 PATCHES=(
 	${FILESDIR}/0001-COMP-Add-the-VTK-CommonSystem-component.patch
 	${FILESDIR}/0002-Find-Eigen.patch
     ${FILESDIR}/0003-COMP-Remove-use-UseqRestAPI.patch
     ${FILESDIR}/0004-COMP-Remove-itkNamespace_h.patch
-    #${FILESDIR}/0005-COMP-qSlicerCoreApplication-wrong-variable.patch
+    ${FILESDIR}/0005-Add-qRestAPI-include-dir.patch
 	# ${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	# ${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
 	# ${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
