@@ -1,0 +1,22 @@
+diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
+index 10785b6fd..a453aa2c6 100644
+--- a/CMake/SlicerDirectories.cmake
++++ b/CMake/SlicerDirectories.cmake
+@@ -54,9 +54,16 @@ endif()
+ #-----------------------------------------------------------------------------
+ # Slicer relative directories
+ #-----------------------------------------------------------------------------
++
++# This leaves the user the possibility to define alternative lib directories
++# (e,g., lib64/ comonly used in contemporary GNU/Linux sytems).
++if(NOT DEFINED Slicer_LIB_PREFIX)
++  set(Slicer_LIB_PREFIX "lib")
++endif()
++
+ # for build tree
+ set(Slicer_BIN_DIR "bin")
+-set(Slicer_LIB_DIR "lib/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
++set(Slicer_LIB_DIR "${Slicer_LIB_PREFIX}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_INCLUDE_DIR "include/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_SHARE_DIR "share/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_LIBEXEC_DIR "libexec/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")

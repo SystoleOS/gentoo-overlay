@@ -62,6 +62,7 @@ PATCHES=(
     ${FILESDIR}/0003-COMP-Remove-use-UseqRestAPI.patch
     ${FILESDIR}/0004-COMP-Remove-itkNamespace_h.patch
     ${FILESDIR}/0005-Add-qRestAPI-include-dir.patch
+    ${FILESDIR}/0006-ENH-Enable-alternative-install-lib-directory.patch
 	# ${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	# ${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
 	# ${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
@@ -129,7 +130,7 @@ src_configure(){
 		-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
 		-DQT_PLUGINS_DIR:STRING="/usr/lib64/designer"
 		-DSlicer_QtPlugins_DIR:STRING="/usr/lib64/designer"
-		-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)"
+		-DSlicer_LIB_PREFIX:STRING="lib64"
 		-DSlicer_INSTALL_PYTHOND_LIB_DIR:STRING="$(get_libdir)"
 		-DSlicer_INSTALL_PYTHON_LIB_DIR:STRING="$(python_get_sitedir)"
 		-DSlicer_INSTALL_PYTHON_BIN_DIR:STRING="$(python_get_sitedir)"
