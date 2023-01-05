@@ -1,0 +1,72 @@
+diff --git a/Libs/MRML/Core/vtkArchive.cxx b/Libs/MRML/Core/vtkArchive.cxx
+index 2ad8ba333c..a9513f77a1 100644
+--- a/Libs/MRML/Core/vtkArchive.cxx
++++ b/Libs/MRML/Core/vtkArchive.cxx
+@@ -549,11 +549,7 @@ bool vtkArchive::UnZip(const char* zipFileName, const char* destinationDirectory
+ 
+   std::string cwd = vtksys::SystemTools::GetCurrentWorkingDirectory();
+ 
+-#if (VTK_MAJOR_VERSION >= 9 && VTK_MINOR_VERSION >= 0 && VTK_BUILD_VERSION >= 20210806)
+   if ( !vtksys::SystemTools::ChangeDirectory(destinationDirectory) )
+-#else
+-  if ( vtksys::SystemTools::ChangeDirectory(destinationDirectory) )
+-#endif
+     {
+     vtkArchiveTools::Error("Unzip:", "could not change to destination directory");
+     return false;
+@@ -662,11 +658,7 @@ bool vtkArchive::UnZip(const char* zipFileName, const char* destinationDirectory
+     return false;
+     }
+ 
+-#if (VTK_MAJOR_VERSION >= 9 && VTK_MINOR_VERSION >= 0 && VTK_BUILD_VERSION >= 20210806)
+   if ( !vtksys::SystemTools::ChangeDirectory(cwd.c_str()) )
+-#else
+-  if ( vtksys::SystemTools::ChangeDirectory(cwd.c_str()) )
+-#endif
+     {
+     vtkArchiveTools::Error("Unzip:", "could not change back to working directory");
+     return false;
+diff --git a/Libs/MRML/Core/vtkCacheManager.cxx b/Libs/MRML/Core/vtkCacheManager.cxx
+index 02a42a5aa6..546fb9bc7f 100644
+--- a/Libs/MRML/Core/vtkCacheManager.cxx
++++ b/Libs/MRML/Core/vtkCacheManager.cxx
+@@ -643,11 +643,7 @@ int vtkCacheManager::ClearCache()
+     this->MarkNodesBeforeDeletingDataFromCache ( this->RemoteCacheDirectory.c_str() );
+     vtksys::SystemTools::RemoveADirectory ( this->RemoteCacheDirectory.c_str() );
+     }
+-#if (VTK_MAJOR_VERSION >= 9 && VTK_MINOR_VERSION >= 0 && VTK_BUILD_VERSION >= 20210806)
+   if ( !vtksys::SystemTools::MakeDirectory ( this->RemoteCacheDirectory.c_str() ) )
+-#else
+-  if ( vtksys::SystemTools::MakeDirectory ( this->RemoteCacheDirectory.c_str() ) == false )
+-#endif
+     {
+     vtkWarningMacro ( "Cache cleared: Error: unable to recreate cache directory after deleting its contents." );
+     return 0;
+diff --git a/Libs/MRML/Core/vtkMRMLVolumeArchetypeStorageNode.cxx b/Libs/MRML/Core/vtkMRMLVolumeArchetypeStorageNode.cxx
+index 0740b3dd23..c9baa6ca6a 100644
+--- a/Libs/MRML/Core/vtkMRMLVolumeArchetypeStorageNode.cxx
++++ b/Libs/MRML/Core/vtkMRMLVolumeArchetypeStorageNode.cxx
+@@ -634,11 +634,7 @@ int vtkMRMLVolumeArchetypeStorageNode::WriteDataInternal(vtkMRMLNode *refNode)
+         }
+       }
+     // delete the temporary dir and all remaining contents
+-#if (VTK_MAJOR_VERSION >= 9 && VTK_MINOR_VERSION >= 0 && VTK_BUILD_VERSION >= 20210806)
+     bool dirRemoved = vtksys::SystemTools::RemoveADirectory(moveFromDir.c_str()).IsSuccess();
+-#else
+-    bool dirRemoved = vtksys::SystemTools::RemoveADirectory(moveFromDir.c_str());
+-#endif
+     if (!dirRemoved)
+       {
+       vtkWarningMacro("Failed to remove temporary write directory " << moveFromDir);
+@@ -884,11 +880,7 @@ std::string vtkMRMLVolumeArchetypeStorageNode::UpdateFileList(vtkMRMLNode *refNo
+ 
+   // look through the new dir and populate the file list
+   vtksys::Directory dir;
+-#if (VTK_MAJOR_VERSION >= 9 && VTK_MINOR_VERSION >= 0 && VTK_BUILD_VERSION >= 20210806)
+   success = dir.Load(tempDir.c_str()).IsSuccess();
+-#else
+-  success = dir.Load(tempDir.c_str());
+-#endif
+   vtkDebugMacro("UpdateFileList: tempdir " << tempDir.c_str() << " has " << dir.GetNumberOfFiles() << " in it");
+   if (!success)
+     {
