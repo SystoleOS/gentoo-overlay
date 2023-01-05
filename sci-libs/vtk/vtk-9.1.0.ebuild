@@ -178,6 +178,7 @@ src_configure() {
 	vtk_configure() {
 		local mycmakeargs=(
 			-Wno-dev
+            -DVTK_VERSION_FULL:STRING="9.1.0.20220125"
 			-DVTK_CUSTOM_LIBRARY_SUFFIX=""
 			-DBUILD_SHARED_LIBS=ON
 			-DVTK_USE_LARGE_DATA=ON
