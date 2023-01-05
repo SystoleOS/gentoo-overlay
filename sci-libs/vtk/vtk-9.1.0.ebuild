@@ -10,13 +10,12 @@ WEBAPP_MANUAL_SLOT=yes
 # Short package version
 SPV="$(ver_cut 1-2)"
 
-inherit python-single-r1 cmake java-pkg-opt-2 git-r3 virtualx webapp
+inherit python-single-r1 cmake java-pkg-opt-2 virtualx webapp
 
 DESCRIPTION="This is the 3D Slicer Visualization Toolkit"
 HOMEPAGE="https://github.com/slicer/vtk"
 
-EGIT_REPO_URI="https://github.com/Slicer/VTK"
-EGIT_COMMIT="97a187572d4000cd820f9fc887f21eaf0bde857c"
+SRC_URI="https://github.com/Slicer/VTK/archive/97a187572d4000cd820f9fc887f21eaf0bde857c.tar.gz -> vtk-9.1.0.tar.gz"
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
@@ -131,6 +130,11 @@ pkg_setup() {
 	use web && webapp_pkg_setup
 }
 
+src_unpack() {
+    default
+
+    mv ${WORKDIR}/VTK* ${S}
+}
 src_prepare() {
 
 	cmake_src_prepare
@@ -266,7 +270,7 @@ src_configure() {
 			case "${EPYTHON}" in
 
 				# Python >=3.7 installs in /usr/lib
-				python3.[789])
+				python3.[7,8,9,10])
 					mycmakeargs+=(
 						-DVTK_PYTHON_SITE_PACKAGES_SUFFIX=lib/${EPYTHON}/site-packages
 					)
