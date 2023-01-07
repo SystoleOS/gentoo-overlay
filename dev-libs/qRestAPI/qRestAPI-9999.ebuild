@@ -12,6 +12,17 @@ KEYWORDS="~amd64"
 EGIT_REPO_URI="https://github.com/commontk/qRestAPI.git"
 EGIT_BRANCH="master"
 
+DEPEND="
+	dev-qt/qtcore
+    dev-qt/qtgui
+    dev-qt/qtnetwork
+    dev-qt/qtscript
+    dev-qt/qttest
+"
+RDEPEND="
+	${DEPEND}
+"
+
 PATCHES=(
     ${FILESDIR}/0001-ENH-Update-cmake-requirements.patch
     ${FILESDIR}/0002-ENH-Remove-the-use-of-Qt4.patch
