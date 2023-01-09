@@ -20,7 +20,7 @@ SRC_URI="https://github.com/Slicer/VTK/archive/97a187572d4000cd820f9fc887f21eaf0
 LICENSE="BSD LGPL-2"
 SLOT="0"
 
-IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R rendering tbb test tcl theora nvidia +views web +X xdmf2"
+IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R +rendering tbb test tcl theora nvidia +views web +X xdmf2"
 
 REQUIRED_USE="
 	java? ( qt5 )
