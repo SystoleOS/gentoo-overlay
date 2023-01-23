@@ -65,6 +65,7 @@ PATCHES=(
     ${FILESDIR}/0005-Add-qRestAPI-include-dir.patch
     ${FILESDIR}/0006-ENH-Enable-alternative-install-lib-directory.patch
     ${FILESDIR}/0007-COMP-Remove-conditional-code-for-old-vtk.patch
+    ${FILESDIR}/0008-BUG-Limit-CPack-on-non-Superbuild.patch
 
 	# ${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	# ${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
