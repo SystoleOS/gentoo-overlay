@@ -56,7 +56,6 @@ RDEPEND="
 
 BDEPEND=">=dev-util/cmake-3.23.1"
 
-
 PATCHES=(
 	${FILESDIR}/0001-COMP-Add-the-VTK-CommonSystem-component.patch
 	${FILESDIR}/0002-Find-Eigen.patch
@@ -66,13 +65,14 @@ PATCHES=(
     ${FILESDIR}/0006-ENH-Enable-alternative-install-lib-directory.patch
     ${FILESDIR}/0007-COMP-Remove-conditional-code-for-old-vtk.patch
     ${FILESDIR}/0008-BUG-Limit-CPack-on-non-Superbuild.patch
+    ${FILESDIR}/0009-ENH-Install-testing-data-only-with-testing-support.patch
 
 	# ${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
 	# ${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
 	# ${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
 	# ${FILESDIR}/0004-COMP-Setting-CMAKE_MODULE_PATH-to-account-for-CTK-an.patch
 	# ${FILESDIR}/0005-COMP-Add-installation-of-missing-files.patch
-	# ${FILESDIR}/0006-COMP-Enable-install-of-development-files-in-Slicer-l.patch
+    # ${FILESDIR}/0006-COMP-Enable-install-of-development-files-in-Slicer-l.patch
 	# ${FILESDIR}/0007-COMP-Adding-MRML_LIBRARIES-variable-to-install-confi.patch
 	# ${FILESDIR}/0008-COMP-Change-Slicer_ROOT-by-Slicer_HOME-in-UseSlicer..patch
 	# ${FILESDIR}/0009-COMP-Add-QTLOADABLEMODULES-dirs-in-intall-tree-confi.patch

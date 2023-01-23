@@ -1,0 +1,126 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 09650e64b8..707d2d0cdf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1180,17 +1180,18 @@ endif()
+ #-----------------------------------------------------------------------------
+ if(BUILD_TESTING)
+   add_subdirectory(Testing)
+-endif()
+ 
+-# Install testing data
+-if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+-  install(DIRECTORY
+-    Testing
+-    DESTINATION ${Slicer_INSTALL_SHARE_DIR} COMPONENT Development
+-    PATTERN "CMakeLists.txt" EXCLUDE
++  # Install testing data
++  if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
++    install(DIRECTORY
++      Testing
++      DESTINATION ${Slicer_INSTALL_SHARE_DIR} COMPONENT Development
++      PATTERN "CMakeLists.txt" EXCLUDE
+     )
++  endif()
+ endif()
+ 
++
+ #-----------------------------------------------------------------------------
+ # Dynamic analysis
+ #-----------------------------------------------------------------------------
+diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
+index 540721fe4f..45b69783e4 100644
+--- a/Libs/MRML/Core/CMakeLists.txt
++++ b/Libs/MRML/Core/CMakeLists.txt
+@@ -376,50 +376,51 @@ endif()
+ # --------------------------------------------------------------------------
+ if(BUILD_TESTING)
+   add_subdirectory(Testing)
+-endif()
+ 
+-# --------------------------------------------------------------------------
+-# Install Test Data
+-# --------------------------------------------------------------------------
+-if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
+-endif()
+-if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  #file(GLOB_RECURSE MRMLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.mrml")
+-  #file(GLOB_RECURSE TCLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.tcl")
+-  #file(GLOB_RECURSE XMLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.xml")
+-  #file(GLOB_RECURSE GZFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.gz")
+-  #file(GLOB_RECURSE NHDRFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.nhdr")
+-  #file(GLOB_RECURSE NRRDFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.nrrd")
+-  #file(GLOB_RECURSE VTKFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.vtk")
+-
+-  #foreach(file
+-  #    ${MRMLFILES}
+-  #    ${TCLFILES}
+-  #    ${XMLFILES}
+-  #    ${GZFILES}
+-  #    ${NHDRFILES}
+-  #    ${NRRDFILES}
+-  #    ${VTKFILES}
+-  #    )
+-  #  message(file:${file})
+-  #  configure_file(
+-  #    ${CMAKE_CURRENT_SOURCE_DIR}/${file}
+-  #    ${CMAKE_BINARY_DIR}/share/${PROJECT_NAME}/${file}
+-  #    COPYONLY
+-  #    )
+-  #endforeach()
+-
+-  install(DIRECTORY
+-    Testing
+-    DESTINATION share/${PROJECT_NAME} COMPONENT Development
+-    PATTERN "*.cxx" EXCLUDE
+-    PATTERN ".svn" EXCLUDE
+-    PATTERN "*.tcl" EXCLUDE
+-    PATTERN "CMakeLists.txt" EXCLUDE
++  # --------------------------------------------------------------------------
++  # Install Test Data
++  # --------------------------------------------------------------------------
++  if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
++    set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
++  endif()
++  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
++    #file(GLOB_RECURSE MRMLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.mrml")
++    #file(GLOB_RECURSE TCLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.tcl")
++    #file(GLOB_RECURSE XMLFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.xml")
++    #file(GLOB_RECURSE GZFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.gz")
++    #file(GLOB_RECURSE NHDRFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.nhdr")
++    #file(GLOB_RECURSE NRRDFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.nrrd")
++    #file(GLOB_RECURSE VTKFILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "Testing/*.vtk")
++
++    #foreach(file
++    #    ${MRMLFILES}
++    #    ${TCLFILES}
++    #    ${XMLFILES}
++    #    ${GZFILES}
++    #    ${NHDRFILES}
++    #    ${NRRDFILES}
++    #    ${VTKFILES}
++    #    )
++    #  message(file:${file})
++    #  configure_file(
++    #    ${CMAKE_CURRENT_SOURCE_DIR}/${file}
++    #    ${CMAKE_BINARY_DIR}/share/${PROJECT_NAME}/${file}
++    #    COPYONLY
++    #    )
++    #endforeach()
++
++    install(DIRECTORY
++      Testing
++      DESTINATION share/${PROJECT_NAME} COMPONENT Development
++      PATTERN "*.cxx" EXCLUDE
++      PATTERN ".svn" EXCLUDE
++      PATTERN "*.tcl" EXCLUDE
++      PATTERN "CMakeLists.txt" EXCLUDE
+     )
++  endif()
+ endif()
+ 
++
+ # --------------------------------------------------------------------------
+ # Set INCLUDE_DIRS variable
+ # --------------------------------------------------------------------------
