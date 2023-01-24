@@ -1,0 +1,42 @@
+From 420cbce312e656bca8f6866caa5beb2494d148b5 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 25 Jan 2023 09:20:18 +0100
+Subject: [PATCH 09/11] ENH: Use slicer installation dirs for base dev
+ components
+
+This makes installation of development components in `Base/CLI` and
+`Base/Logic` use the slicer installation directories.
+---
+ Base/CLI/CMakeLists.txt   | 2 +-
+ Base/Logic/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Base/CLI/CMakeLists.txt b/Base/CLI/CMakeLists.txt
+index d619baf68f..471c88cb5c 100644
+--- a/Base/CLI/CMakeLists.txt
++++ b/Base/CLI/CMakeLists.txt
+@@ -74,7 +74,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
+index 70841b9838..3d5d78c469 100644
+--- a/Base/Logic/CMakeLists.txt
++++ b/Base/Logic/CMakeLists.txt
+@@ -109,7 +109,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+   install(
+     FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+-    DESTINATION include/${PROJECT_NAME} COMPONENT Development)
++    DESTINATION ${Slicer_INSTALL_INCLUDE_DIR}/${PROJECT_NAME} COMPONENT Development)
+ endif()
+ 
+ # --------------------------------------------------------------------------
+-- 
+2.34.1
+

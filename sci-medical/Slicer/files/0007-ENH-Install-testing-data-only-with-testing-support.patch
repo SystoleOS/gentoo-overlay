@@ -1,8 +1,20 @@
+From feb34841e84e735c6be188b3d49e0239a6013b45 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 24 Jan 2023 12:41:00 +0100
+Subject: [PATCH 07/11] ENH: Install testing data only with testing support
+
+This removes the installation of testing data when the testing support
+is not built.
+---
+ CMakeLists.txt                | 15 ++++---
+ Libs/MRML/Core/CMakeLists.txt | 81 ++++++++++++++++++-----------------
+ 2 files changed, 49 insertions(+), 47 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 09650e64b8..707d2d0cdf 100644
+index 8cef8b306f..870425e9b6 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1180,17 +1180,18 @@ endif()
+@@ -1196,17 +1196,18 @@ endif()
  #-----------------------------------------------------------------------------
  if(BUILD_TESTING)
    add_subdirectory(Testing)
@@ -124,3 +136,6 @@ index 540721fe4f..45b69783e4 100644
  # --------------------------------------------------------------------------
  # Set INCLUDE_DIRS variable
  # --------------------------------------------------------------------------
+-- 
+2.34.1
+

@@ -1,8 +1,19 @@
+From 5d8961c4140fdf9d7bf15d9a98e0af9d84be932e Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 24 Jan 2023 12:37:17 +0100
+Subject: [PATCH 06/11] ENH: Limit CPack on non-superbuild mode
+
+The current CPack infrastructure is thought with the superbuild mode in
+mind. This commit limits the packages considered in non-superbuild mode.
+---
+ CMake/SlicerCPack.cmake | 223 ++++++++++++++++++++--------------------
+ 1 file changed, 113 insertions(+), 110 deletions(-)
+
 diff --git a/CMake/SlicerCPack.cmake b/CMake/SlicerCPack.cmake
-index 24be5fa52d..c348cf9e62 100644
+index 24be5fa52d..1fca1f03b6 100644
 --- a/CMake/SlicerCPack.cmake
 +++ b/CMake/SlicerCPack.cmake
-@@ -129,130 +129,134 @@ if(NOT "${CTK_DIR}" STREQUAL "" AND EXISTS "${CTK_DIR}/CTK-build/CMakeCache.txt"
+@@ -129,130 +129,133 @@ if(NOT "${CTK_DIR}" STREQUAL "" AND EXISTS "${CTK_DIR}/CTK-build/CMakeCache.txt"
    set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${CTK_DIR}/CTK-build;CTK;RuntimePlugins;/")
  endif()
  
@@ -242,8 +253,10 @@ index 24be5fa52d..c348cf9e62 100644
 -  endif()
 -endforeach()
 +  endforeach()
-+
-+endif(Slicer_SUPERBUILD)
++endif() #Slicer_SUPERBUILD
  
  # Install Slicer
  set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${Slicer_BINARY_DIR};Slicer;RuntimeLibraries;/")
+-- 
+2.34.1
+

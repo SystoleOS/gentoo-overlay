@@ -57,46 +57,16 @@ RDEPEND="
 BDEPEND=">=dev-util/cmake-3.23.1"
 
 PATCHES=(
-	${FILESDIR}/0001-COMP-Add-the-VTK-CommonSystem-component.patch
-	${FILESDIR}/0002-Find-Eigen.patch
-    ${FILESDIR}/0003-COMP-Remove-use-UseqRestAPI.patch
-    ${FILESDIR}/0004-COMP-Remove-itkNamespace_h.patch
-    ${FILESDIR}/0005-Add-qRestAPI-include-dir.patch
-    ${FILESDIR}/0006-ENH-Enable-alternative-install-lib-directory.patch
-    ${FILESDIR}/0007-COMP-Remove-conditional-code-for-old-vtk.patch
-    ${FILESDIR}/0008-BUG-Limit-CPack-on-non-Superbuild.patch
-    ${FILESDIR}/0009-ENH-Install-testing-data-only-with-testing-support.patch
-
-	# ${FILESDIR}/0001-COMP-Remove-uneccessary-link-libraries-for-QTCore.patch
-	# ${FILESDIR}/0002-COMP-Fix-link-libraries-in-QTGUI.patch
-	# ${FILESDIR}/0003-COMP-Generate-and-Install-SlicerConfig-install-tree.patch
-	# ${FILESDIR}/0004-COMP-Setting-CMAKE_MODULE_PATH-to-account-for-CTK-an.patch
-	# ${FILESDIR}/0005-COMP-Add-installation-of-missing-files.patch
-    # ${FILESDIR}/0006-COMP-Enable-install-of-development-files-in-Slicer-l.patch
-	# ${FILESDIR}/0007-COMP-Adding-MRML_LIBRARIES-variable-to-install-confi.patch
-	# ${FILESDIR}/0008-COMP-Change-Slicer_ROOT-by-Slicer_HOME-in-UseSlicer..patch
-	# ${FILESDIR}/0009-COMP-Add-QTLOADABLEMODULES-dirs-in-intall-tree-confi.patch
-	# ${FILESDIR}/0010-COMP-Adding-conditional-for-installation-of-QT-desig.patch
-	# ${FILESDIR}/0011-COMP-Enable-installation-of-generated-.h-files-for-B.patch
-	# ${FILESDIR}/0012-COMP-Enable-installation-of-header-files-for-qMRMLWi.patch
-	# ${FILESDIR}/0013-COMP-Change-JsonCpp-by-jsoncpp.patch
-	# ${FILESDIR}/0014-COMP-Adding-link-directories-for-ModuleParser.patch
-	# ${FILESDIR}/0015-COMP-Change-installation-destination.patch
-	# ${FILESDIR}/0016-COMP-Change-GLOB-filter-for-installing-vtkITK-dev-co.patch
-	# ${FILESDIR}/0017-COMP-Add-Slicer_USE_PYTHONQT-as-condition-for-Module.patch
-	# ${FILESDIR}/0018-COMP-Adding-MRMLCLI-include-directories-to-Slicer_Ba.patch
-	# ${FILESDIR}/0019-COMP-Fix-install-path-for-CLI-modules.patch
-	# ${FILESDIR}/0020-COMP-Fix-ITKFactoryRegistration-issues-on-install-tr.patch
-	# ${FILESDIR}/0021-ENH-Enable-Python.patch
-	# ${FILESDIR}/0022-COMP-Set-missing-variables-in-SlicerConfig-install-c.patch
-	# ${FILESDIR}/0023-COMP-Add-needed-include-dirs-for-python-wrapping-of-.patch
-	# ${FILESDIR}/0024-ENH-Make-available-paths-to-installed-qt-loadable-mo.patch
-	# ${FILESDIR}/0025-ENH-Enable-installation-of-hierarchy-files-.txt-for-.patch
-	# ${FILESDIR}/0026-ENH-Change-SlicerApp-real-Slicer.patch
-	# ${FILESDIR}/0027-ENH-Enable-search-of-settings-in-etc-Slicer-for-ints.patch
-	# ${FILESDIR}/0028-ENH-Improve-directories-configuration.patch
-	# ${FILESDIR}/0029-COMP-Add-finding-of-vtkAddon-and-mod-on-Slicer_Libs_.patch
-	# ${FILESDIR}/0030-ENH-Adding-ModuleWizard.py-to-the-list-of-scripts-co.patch
+ ${FILESDIR}/0001-COMP-Add-vtk-CommonSystem-component-as-requirement.patch
+ ${FILESDIR}/0002-COMP-Find-Eigen-required.patch
+ ${FILESDIR}/0003-COMP-Adapt-to-new-qRestAPI-cmake.patch
+ ${FILESDIR}/0004-ENH-Make-optional-the-use-of-Slicer-ITK.patch
+ ${FILESDIR}/0005-ENH-Remove-conditional-code-for-old-VTK.patch
+ ${FILESDIR}/0006-ENH-Limit-CPack-on-non-superbuild-mode.patch
+ ${FILESDIR}/0007-ENH-Install-testing-data-only-with-testing-support.patch
+ ${FILESDIR}/0008-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
+ ${FILESDIR}/0009-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
+ ${FILESDIR}/0010-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
 )
 
 src_prepare() {
@@ -125,6 +95,7 @@ src_configure(){
 		-DSlicer_USE_CTKAPPLAUNCHER:BOOL=OFF
 		-DSlicer_USE_PYTHONQT:BOOL="$(usex python)"
 		-DSlicer_USE_QtTesting:BOOL=OFF
+		-DSlicer_USE_SlicerITK:BOOL=OFF
 		-DSlicer_USE_SimpleITK:BOOL=OFF
 		-DSlicer_VTK_RENDERING_BACKEND:STRING="OpenGL2"
 		-DSlicer_VTK_VERSION_MAJOR:STRING="9"
@@ -148,10 +119,6 @@ src_configure(){
 		-DSlicer_INSTALL_CLIMODULES_BIN_DIR:STRING="lib64/Slicer-5.1.0/cli-modules"
 		-DSlicer_INSTALL_CLIMODULES_LIB_DIR:STRING="lib64/Slicer-5.1.0/cli-modules"
 		-DSlicer_INSTALL_LIBEXEC_DIR:STRING="lib64/Slicer-5.1.0/libexec"
-		-DSlicer_INSTALL_CMAKE_CONFIG_DIR:STRING="lib64/cmake/Slicer"
-		-DSlicer_INSTALL_CMAKE_DIR:STRING="lib64/Slicer-5.1.0/CMake"
-		-DSlicer_INSTALL_SHARE_DIR:STRING="share/Slicer-5.1.0"
-		-DSlicer_INSTALL_LIBEXEC_DIR:STRING="/usr/bin"
 		-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
 		-DSlicer_BUILD_vtkAddon:BOOL=OFF
 	)

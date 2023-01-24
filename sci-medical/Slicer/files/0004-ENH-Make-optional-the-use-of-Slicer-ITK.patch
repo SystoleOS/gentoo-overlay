@@ -1,0 +1,98 @@
+From fc6ff2f72fbe682561f33835b74b6e1979e3749f Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 24 Jan 2023 11:46:12 +0100
+Subject: [PATCH 04/11] ENH: Make optional the use of Slicer ITK
+
+The Slicer superbuild is based on the use of a custom ITK. This commit
+makes optional the use of the custom ITK and leaves room for the use of
+other flavours of ITK (e.g., official ITK).
+---
+ CMakeLists.txt                                       | 8 ++++++++
+ Libs/ITKFactoryRegistration/CMakeLists.txt           | 4 ++++
+ Libs/ITKFactoryRegistration/itkFactoryRegistration.h | 3 +++
+ Libs/vtkITK/CMakeLists.txt                           | 4 ++++
+ Libs/vtkITK/vtkITK.h                                 | 3 +++
+ 5 files changed, 22 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9df1ca13b9..8cef8b306f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -362,6 +362,14 @@ option(Slicer_USE_QtTesting    "Integrate QtTesting framework into Slicer." ON)
+ mark_as_advanced(Slicer_USE_QtTesting)
+ mark_as_superbuild(Slicer_USE_QtTesting)
+ 
++#
++# The Slicer superbuild uses a custom ITK with minor modifications.
++# In a non-superbuild you may consider turning this flag OFF and use
++# another ITK flavour i.e., official ITK.
++#
++option(Slicer_USE_SlicerITK "Slicer builds with custom ITK" ON)
++mark_as_superbuild(Slicer_USE_SlicerITK)
++
+ option(Slicer_USE_SimpleITK "Build Slicer with SimpleITK support" ON)
+ mark_as_superbuild(Slicer_USE_SimpleITK)
+ 
+diff --git a/Libs/ITKFactoryRegistration/CMakeLists.txt b/Libs/ITKFactoryRegistration/CMakeLists.txt
+index d9d76b62a9..76875294e7 100644
+--- a/Libs/ITKFactoryRegistration/CMakeLists.txt
++++ b/Libs/ITKFactoryRegistration/CMakeLists.txt
+@@ -92,6 +92,10 @@ set(lib_name ${PROJECT_NAME})
+ 
+ add_library(${lib_name} SHARED ${srcs})
+ 
++if(Slicer_USE_SlicerITK)
++  target_compile_definitions(${lib_name} PUBLIC "SLICER_USE_SLICERITK")
++endif()
++
+ set(libs
+   ${ITK_LIBRARIES}
+   )
+diff --git a/Libs/ITKFactoryRegistration/itkFactoryRegistration.h b/Libs/ITKFactoryRegistration/itkFactoryRegistration.h
+index 974a3d426e..8594cca9b8 100644
+--- a/Libs/ITKFactoryRegistration/itkFactoryRegistration.h
++++ b/Libs/ITKFactoryRegistration/itkFactoryRegistration.h
+@@ -4,7 +4,10 @@
+ #define itkFactoryRegistration_h
+ 
+ #include "itkFactoryRegistrationConfigure.h"
++
++#ifdef SLICER_USE_SLICERITK
+ #include "itkNamespace.h"
++#endif
+ 
+ namespace itk {
+ 
+diff --git a/Libs/vtkITK/CMakeLists.txt b/Libs/vtkITK/CMakeLists.txt
+index da608e1ac9..f451099f8b 100644
+--- a/Libs/vtkITK/CMakeLists.txt
++++ b/Libs/vtkITK/CMakeLists.txt
+@@ -160,6 +160,10 @@ set(lib_name ${PROJECT_NAME})
+ set(srcs ${vtkITK_SRCS})
+ add_library(${lib_name} ${srcs})
+ 
++if(Slicer_USE_SlicerITK)
++  target_compile_definitions(${lib_name} PUBLIC "SLICER_USE_SLICERITK")
++endif()
++
+ set(libs
+   ${ITK_LIBRARIES}
+   ${VTK_LIBRARIES}
+diff --git a/Libs/vtkITK/vtkITK.h b/Libs/vtkITK/vtkITK.h
+index 785472ee33..0ce8ac3678 100644
+--- a/Libs/vtkITK/vtkITK.h
++++ b/Libs/vtkITK/vtkITK.h
+@@ -15,7 +15,10 @@
+ #ifndef __vtkITK_h
+ #define __vtkITK_h
+ 
++#ifdef SLICER_USE_SLICERITK
+ #include "itkNamespace.h"
++#endif
++
+ #include "vtkITKExport.h"
+ #include "vtkITKNumericTraits.h"
+ 
+-- 
+2.34.1
+
