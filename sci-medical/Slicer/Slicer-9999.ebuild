@@ -67,6 +67,7 @@ PATCHES=(
  ${FILESDIR}/0008-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
  ${FILESDIR}/0009-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
  ${FILESDIR}/0010-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
+ ${FILESDIR}/0011-ENH-Remove-the-App-real-suffix-from-Slicer-executabl.patch
 )
 
 src_prepare() {
@@ -121,6 +122,7 @@ src_configure(){
 		-DSlicer_INSTALL_LIBEXEC_DIR:STRING="lib64/Slicer-5.1.0/libexec"
 		-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
 		-DSlicer_BUILD_vtkAddon:BOOL=OFF
+        -DSlicerApp_APPLICATION_NAME:STRING="Slicer"
 	)
 
 	if use sitk; then
