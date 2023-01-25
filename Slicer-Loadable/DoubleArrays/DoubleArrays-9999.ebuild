@@ -10,7 +10,7 @@ inherit cmake python-single-r1 git-r3
 DESCRIPTION="DoubleArrays module for 3D-Slicer"
 
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
-EGIT_BRANCH="master"
+EGIT_BRANCH="main"
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.slicer.org/"
