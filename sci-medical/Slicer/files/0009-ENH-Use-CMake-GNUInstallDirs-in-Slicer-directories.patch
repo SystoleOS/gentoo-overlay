@@ -1,0 +1,92 @@
+From ec5d1bc8e372af5e9e2e5cbe92f49083c89ce005 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 24 Jan 2023 19:26:38 +0100
+Subject: [PATCH 09/11] ENH: Use CMake GNUInstallDirs in Slicer directories
+
+---
+ CMake/SlicerDirectories.cmake | 24 +++++++++++++++++++-----
+ CMakeLists.txt                |  4 ++--
+ Libs/CMakeLists.txt           |  3 ++-
+ 3 files changed, 23 insertions(+), 8 deletions(-)
+
+diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
+index 10785b6fd1..5cc6b25306 100644
+--- a/CMake/SlicerDirectories.cmake
++++ b/CMake/SlicerDirectories.cmake
+@@ -54,12 +54,14 @@ endif()
+ #-----------------------------------------------------------------------------
+ # Slicer relative directories
+ #-----------------------------------------------------------------------------
++include(GNUInstallDirs)
++
+ # for build tree
+-set(Slicer_BIN_DIR "bin")
+-set(Slicer_LIB_DIR "lib/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+-set(Slicer_INCLUDE_DIR "include/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+-set(Slicer_SHARE_DIR "share/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+-set(Slicer_LIBEXEC_DIR "libexec/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
++set(Slicer_BIN_DIR "${CMAKE_INSTALL_BINDIR}")
++set(Slicer_LIB_DIR "${CMAKE_INSTALL_LIBDIR}")
++set(Slicer_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
++set(Slicer_SHARE_DIR "${CMAKE_INSTALL_DATADIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
++set(Slicer_LIBEXEC_DIR "${CMAKE_INSTALL_LIBEXEC_DIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_ITKFACTORIES_DIR "${Slicer_LIB_DIR}/ITKFactories")
+ set(Slicer_QM_DIR "${Slicer_BIN_DIR}/translations")
+ 
+@@ -77,6 +79,18 @@ set(Slicer_INSTALL_LIBEXEC_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
+ set(Slicer_INSTALL_ITKFACTORIES_DIR "${Slicer_INSTALL_LIB_DIR}/ITKFactories")
+ set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
+ 
++# CMake install directories according to
++# https://cmake.org/cmake/help/latest/command/find_package.html
++if(WIN32)
++  #Corresponds to <prefix>/<name>*/cmake pattern
++  set(Slicer_INSTALL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/cmake")
++elseif(UNIX)
++  #Corresponds to <prefix>/share/<name>*/cmake pattern
++  set(Slicer_INSTALL_CMAKE_DIR "${Slicer_SHARE_DIR}/cmake")
++elseif(APPLE)
++  #Corresponds to <prefix>/<name>.framework/Resources/CMake pattern
++  set(Slicer_INSTALL_CMAKE_DIR "${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}.framework/Resources/CMake")
++endif()
+ 
+ #-----------------------------------------------------------------------------
+ # Slicer CLI relative directories
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 870425e9b6..d261e20b03 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1243,14 +1243,14 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+   file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.cmake")
+   install(
+     FILES ${cmake_files}
+-    DESTINATION ${Slicer_INSTALL_LIB_DIR}/CMake COMPONENT Development
++    DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
+     )
+ 
+   install(FILES
+     ${Slicer_BINARY_DIR}/UseSlicer.cmake
+     ${Slicer_BINARY_DIR}/SlicerConfig.cmake
+     ${Slicer_BINARY_DIR}/SlicerConfigVersion.cmake
+-    DESTINATION ${Slicer_INSTALL_LIB_DIR}
++    DESTINATION ${Slicer_INSTALL_CMAKE_DIR}
+     COMPONENT Development
+     )
+ endif()
+diff --git a/Libs/CMakeLists.txt b/Libs/CMakeLists.txt
+index ee716f7b8e..a31c8d013f 100644
+--- a/Libs/CMakeLists.txt
++++ b/Libs/CMakeLists.txt
+@@ -118,7 +118,8 @@ foreach(dir ${dirs})
+   endif()
+   set(${dir_noslash}_INSTALL_BIN_DIR ${Slicer_INSTALL_LIB_DIR})
+   set(${dir_noslash}_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR})
+-  set(${dir_noslash}_INSTALL_SHARE_DIR ${Slicer_INSTALL_ROOT}share/${dir_noslash})
++  set(${dir_noslash}_INSTALL_SHARE_DIR ${Slicer_INSTALL_SHARE_DIR}/${dir_noslash})
++  set(${dir_noslash}_INSTALL_INCLUDE_DIR ${Slicer_INSTALL_INCLUDE_DIR}/${dir_noslash})
+   set(${dir_noslash}_INSTALL_NO_DEVELOPMENT ${Slicer_INSTALL_NO_DEVELOPMENT})
+   set(${dir_noslash}_EXPORT_FILE ${Slicer_BINARY_DIR}/SlicerTargets.cmake)
+   set(${dir_noslash}_FOLDER Core-Libs/${dir_noslash})
+-- 
+2.34.1
+
