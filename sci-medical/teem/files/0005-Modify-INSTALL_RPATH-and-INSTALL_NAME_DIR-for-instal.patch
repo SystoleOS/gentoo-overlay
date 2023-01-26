@@ -1,0 +1,28 @@
+From 97fe1c7bc419166c3b20aaaccd527e69c72a3ca2 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 26 Jan 2023 08:20:12 +0100
+Subject: [PATCH 5/5] Modify INSTALL_RPATH and INSTALL_NAME_DIR for install
+ libs
+
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 115bca5a..beb4a38f 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -415,8 +415,8 @@ set_target_properties(teem PROPERTIES
+ else()
+ set_target_properties(teem PROPERTIES
+   BUILD_WITH_INSTALL_RPATH OFF
+-  INSTALL_RPATH ${Teem_LIB_INSTALL_DIR}
+-  INSTALL_NAME_DIR ${Teem_LIB_INSTALL_DIR}
++  INSTALL_RPATH ${CMAKE_INSTALL_PREFIX}/${Teem_LIB_INSTALL_DIR}
++  INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${Teem_LIB_INSTALL_DIR}
+   SOVERSION 1
+   VERSION ${Teem_VERSION_STRING}
+   )
+-- 
+2.34.1
+

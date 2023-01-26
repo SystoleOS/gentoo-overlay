@@ -1,3 +1,12 @@
+From e5b1bdf572734f47f5508b0b12832b67ffddee5d Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 26 Jan 2023 07:28:50 +0100
+Subject: [PATCH 3/5] Replace TEEM by Teem in CMake variables
+
+---
+ CMakeLists.txt | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 533a9b60..519b2cd6 100644
 --- a/CMakeLists.txt
@@ -74,3 +83,6 @@ index 533a9b60..519b2cd6 100644
    COMPONENT Development
    )
  endif()
+-- 
+2.34.1
+

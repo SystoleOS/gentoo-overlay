@@ -22,11 +22,12 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
 
 PATCHES=(
-
-	${FILESDIR}/0002-ENH-Remove_creation_of_TeemLibraryDepends_cmake.patch
-	${FILESDIR}/0001-ENH-Fix_install_when_TEEM_LIB_INSTALL_DIR_is_set.patch
-	${FILESDIR}/test.patch
-)
+    ${FILESDIR}/0001-Fix-install-when-TEEM_LIB_INSTALL_DIR-is-set.patch
+    ${FILESDIR}/0002-Remove-creation-of-TeemLibraryDepends.cmake.patch
+    ${FILESDIR}/0003-Replace-TEEM-by-Teem-in-CMake-variables.patch
+    ${FILESDIR}/0004-Change-CMake-files-installation-path.patch
+    ${FILESDIR}/0005-Modify-INSTALL_RPATH-and-INSTALL_NAME_DIR-for-instal.patch
+ )
 
 src_unpack(){
 
@@ -42,7 +43,8 @@ src_configure() {
 	mycmakeargs+=(
 		-DBUILD_SHARED_LIBS=ON
 		-DBUILD_TESTING=OFF
-		-DTeem_LIB_INSTALL_DIR=$(get_libdir)
+		-DTeem_LIB_INSTALL_DIR:STRING="$(get_libdir)"
+		-DTeem_SHARE_INSTALL_DIR:STRING="/usr/share"
 	)
 
 	cmake_src_configure
