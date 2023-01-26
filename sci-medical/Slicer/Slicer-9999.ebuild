@@ -72,6 +72,7 @@ PATCHES=(
     ${FILESDIR}/0013-ENH-Make-installed-CMake-files-available.patch
     ${FILESDIR}/0014-ENH-Add-CTK-as-requirement-in-UseSlicer.cmake.patch
     ${FILESDIR}/0015-ENH-Add-vtkAddon-as-a-requirement-in-UseSlicer.cmake.patch
+    ${FILESDIR}/0016-UGLY-ENH-Remove-extension-launcher-cmake-code-from-U.patch
 )
 
 src_prepare() {
@@ -88,6 +89,7 @@ src_configure(){
 		-DSlicer_SUPERBUILD:BOOL=OFF
 		-DBUILD_TESTING:BOOL=OFF
 		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
+        -DSlicer_DONT_USE_EXTENSION:BOOL=ON
 		-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli)"
 		-DSlicer_BUILD_CLI:BOOL=OFF
 		-DCMAKE_CXX_STANDARD:STRING="17"
