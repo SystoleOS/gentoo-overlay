@@ -1,0 +1,35 @@
+From d3926835428bd47c0aa547c1a1843d961600ebf2 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palolmar@ous-research.no>
+Date: Thu, 26 Jan 2023 14:24:10 +0100
+Subject: [PATCH 2/2] ENH: Add CMake directory to CMAKE_MODULE_PATH
+
+---
+ CMakeLists.txt                 | 1 +
+ vtkAddonInstallConfig.cmake.in | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 86b2a1c..26b6014 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -289,6 +289,7 @@ configure_file(
+ configure_file(
+   ${CMAKE_CURRENT_SOURCE_DIR}/vtkAddonInstallConfig.cmake.in
+   ${CMAKE_CURRENT_BINARY_DIR}/install/vtkAddonConfig.cmake
++  @ONLY
+   )
+ 
+ # --------------------------------------------------------------------------
+diff --git a/vtkAddonInstallConfig.cmake.in b/vtkAddonInstallConfig.cmake.in
+index 9a74e03..282536c 100644
+--- a/vtkAddonInstallConfig.cmake.in
++++ b/vtkAddonInstallConfig.cmake.in
+@@ -4,3 +4,5 @@ set(vtkAddon_LIB_DIR "@CMAKE_INSTALL_PREFIX@/@vtkAddon_INSTALL_LIB_DIR@")
+ set(VTK_DIR "@VTK_DIR@")
+ 
+ set(vtkAddon_USE_UTF8 "@vtkAddon_USE_UTF8@")
++
++list(APPEND CMAKE_MODULE_PATH ${vtkAddon_CMAKE_DIR})
+-- 
+2.34.1
+

@@ -34,7 +34,10 @@ RDEPEND="
 
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
-PATCHES=()
+PATCHES=(
+    ${FILESDIR}/0001-ENH-Add-versioning-and-use-of-CMake-GNUInstallDirs.patch
+    ${FILESDIR}/0002-ENH-Add-CMake-directory-to-CMAKE_MODULE_PATH.patch
+)
 
 src_unpack(){
 	default
@@ -53,7 +56,6 @@ src_configure(){
 			-DvtkAddon_WRAP_PYTHON:BOOL="$(usex python ON OFF)"
 			-DvtkAddon_INSTALL_NO_DEVELOPMENT:BOOL=OFF
 			-DvtkAddon_INSTALL_LIB_DIR:STRING="$(get_libdir)"
-			-DvtkAddon_INSTALL_CMAKE_DIR:STRING="$(get_libdir)/cmake/${PN}"
 		)
 
 		if use python; then

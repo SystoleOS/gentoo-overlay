@@ -71,6 +71,7 @@ PATCHES=(
     ${FILESDIR}/0012-ENH-Generate-and-Install-SlicerConfig-install-tree.patch
     ${FILESDIR}/0013-ENH-Make-installed-CMake-files-available.patch
     ${FILESDIR}/0014-ENH-Add-CTK-as-requirement-in-UseSlicer.cmake.patch
+    ${FILESDIR}/0015-ENH-Add-vtkAddon-as-a-requirement-in-UseSlicer.cmake.patch
 )
 
 src_prepare() {
