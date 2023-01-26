@@ -1,14 +1,14 @@
-From 80675a8144b2b48e23d01ab65ce0727d74e42663 Mon Sep 17 00:00:00 2001
+From 64aa55e7268b1d191d163d8790b5ecd77f80ade9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Tue, 10 Sep 2019 06:50:30 +0200
-Subject: [PATCH 2/3] ENH: Include missing files
+Subject: [PATCH 1/4] ENH: Include missing files
 
 ---
  CMakeLists.txt | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f3075ed9..078306fe 100644
+index ba6dba5e..c4911072 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -247,6 +247,12 @@ foreach(file
@@ -34,5 +34,5 @@ index f3075ed9..078306fe 100644
    install(FILES ${file} DESTINATION ${CTK_INSTALL_CMAKE_DIR} COMPONENT Development)
  endforeach()
 -- 
-2.24.1
+2.34.1
 

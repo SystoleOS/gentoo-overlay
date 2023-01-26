@@ -12,7 +12,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="be0e1429e3fce605a49d08d6b94563920b019dff"
+COMMIT="2daac1c6f3831d36acd8079f33000f0c9f4737ad"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -51,9 +51,10 @@ BDEPEND="app-arch/unzip"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 PATCHES=(
-	${FILESDIR}/0002-ENH-Include-missing-files.patch
-	${FILESDIR}/0003-ENH-Change-installation-path-for-python-wrapped-file.patch
-	${FILESDIR}/0004-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
+    ${FILESDIR}/0001-ENH-Include-missing-files.patch
+    ${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
+    ${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
+    ${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch
 )
 
 src_unpack() {
@@ -89,8 +90,8 @@ src_configure(){
 			-DCTK_LIB_Visualization/VTK/Widgets=ON
 			-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
 			-DCTK_SUPERBUILD=OFF
-			-DCTK_INSTALL_LIB_DIR=/usr/lib64
-			-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
+			-DCTK_INSTALL_LIB_DIR:STRING=$(get_libdir)
+			-DCTK_INSTALL_QTPLUGIN_DIR:STRING="$(get_libdir)/qt5/plugins"
 			# PythonQt wrapping
 			-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python)"
 			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python)"

@@ -70,6 +70,7 @@ PATCHES=(
     ${FILESDIR}/0011-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
     ${FILESDIR}/0012-ENH-Generate-and-Install-SlicerConfig-install-tree.patch
     ${FILESDIR}/0013-ENH-Make-installed-CMake-files-available.patch
+    ${FILESDIR}/0014-ENH-Add-CTK-as-requirement-in-UseSlicer.cmake.patch
 )
 
 src_prepare() {
