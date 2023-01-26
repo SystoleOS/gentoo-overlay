@@ -1,0 +1,39 @@
+From c49f8f1dff4c69a9182345b70d48a0cabbf0898e Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@rr-research.no>
+Date: Thu, 3 Oct 2019 10:13:12 +0200
+Subject: [PATCH] ENH: Generate and Install SlicerConfig (install tree)
+
+---
+ CMake/SlicerGenerateSlicerConfig.cmake | 5 +++++
+ CMakeLists.txt                         | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/CMake/SlicerGenerateSlicerConfig.cmake b/CMake/SlicerGenerateSlicerConfig.cmake
+index de7e1ce779..d2370a532b 100644
+--- a/CMake/SlicerGenerateSlicerConfig.cmake
++++ b/CMake/SlicerGenerateSlicerConfig.cmake
+@@ -191,3 +191,8 @@ set(Slicer_TARGETS_FILE "${Slicer_BINARY_DIR}/SlicerTargets.cmake")
+ configure_file(
+   ${Slicer_SOURCE_DIR}/CMake/SlicerConfig.cmake.in
+   ${Slicer_BINARY_DIR}/SlicerConfig.cmake @ONLY)
++
++# Configure SlicerConfig.cmake for the build tree.
++configure_file(
++  ${Slicer_SOURCE_DIR}/CMake/SlicerInstallConfig.cmake.in
++  ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake @ONLY)
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index d261e20b03..31ba06c9d9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1248,7 +1248,7 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+ 
+   install(FILES
+     ${Slicer_BINARY_DIR}/UseSlicer.cmake
+-    ${Slicer_BINARY_DIR}/SlicerConfig.cmake
++    ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake
+     ${Slicer_BINARY_DIR}/SlicerConfigVersion.cmake
+     DESTINATION ${Slicer_INSTALL_CMAKE_DIR}
+     COMPONENT Development
+-- 
+2.34.1
+

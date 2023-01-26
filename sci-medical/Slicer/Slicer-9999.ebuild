@@ -68,6 +68,8 @@ PATCHES=(
     ${FILESDIR}/0009-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
     ${FILESDIR}/0010-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
     ${FILESDIR}/0011-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
+    ${FILESDIR}/0012-ENH-Generate-and-Install-SlicerConfig-install-tree.patch
+    ${FILESDIR}/0013-ENH-Make-installed-CMake-files-available.patch
 )
 
 src_prepare() {
