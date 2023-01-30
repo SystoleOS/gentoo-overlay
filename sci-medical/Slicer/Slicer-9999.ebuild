@@ -73,7 +73,10 @@ PATCHES=(
     ${FILESDIR}/0014-ENH-Add-CTK-as-requirement-in-UseSlicer.cmake.patch
     ${FILESDIR}/0015-ENH-Add-vtkAddon-as-a-requirement-in-UseSlicer.cmake.patch
     ${FILESDIR}/0016-UGLY-ENH-Remove-extension-launcher-cmake-code-from-U.patch
-)
+    ${FILESDIR}/0017-GOOD-ENH-Installation-and-setup-qSlicerExport.h.in.patch
+    ${FILESDIR}/0018-UGLY-ENH-Add-templates-infrastructure.patch
+    ${FILESDIR}/0019-ENH-Update-SlicerInstallConfig.patch
+ )
 
 src_prepare() {
 

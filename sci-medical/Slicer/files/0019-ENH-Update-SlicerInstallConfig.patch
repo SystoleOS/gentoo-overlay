@@ -1,0 +1,133 @@
+From 6e574f6bc369a870327d969f3880ba4da6be97f5 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Sat, 28 Jan 2023 07:53:06 +0100
+Subject: [PATCH 19/19] ENH: Update SlicerInstallConfig
+
+---
+ Templates/SlicerInstallConfig.cmake.in | 93 ++++++++++++--------------
+ 1 file changed, 42 insertions(+), 51 deletions(-)
+
+diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
+index ce3e9451e4..713bbc8d0e 100644
+--- a/Templates/SlicerInstallConfig.cmake.in
++++ b/Templates/SlicerInstallConfig.cmake.in
+@@ -47,55 +47,46 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
+ # Set the Slicer_EXPORT_HEADER_TEMPLATE to the install dir
+ set(Slicer_EXPORT_HEADER_TEMPLATE "@Slicer_INSTALL_TEMPLATES_DIR@/qSlicerExport.h.in")
+ 
+-
+-# Slicer Libs library directories.
+-set(Slicer_Libs_LIBRARY_DIRS
+-  "${Slicer_HOME}/lib/IGT"
+-  "${Slicer_HOME}/lib/ITKCommandIO"
+-  "${Slicer_HOME}/lib/LoadableModule"
+-  "${Slicer_HOME}/lib/MGHImageIO"
+-  "${Slicer_HOME}/lib/MRML"
+-  "${Slicer_HOME}/lib/MRMLIDImageIO"
+-  "${Slicer_HOME}/lib/ModuleDescriptionParser"
+-  "${Slicer_HOME}/lib/Qdec"
+-  "${Slicer_HOME}/lib/tclap"
+-  "${Slicer_HOME}/lib/vtkAddon"
+-  "${Slicer_HOME}/lib/vtkITK"
+-  "${Slicer_HOME}/lib/vtkSegmentationCore"
+-  "${Slicer_HOME}/lib/vtkTeem"
+-  "${Slicer_HOME}/lib/TclTk/lib"
+-  "${Slicer_HOME}/lib/TclTk/lib/itcl@INCR_TCL_VERSION_DOT@"
+-  "${Slicer_HOME}/lib/TclTk/lib/itk@INCR_TCL_VERSION_DOT@"
+-  )
++set(Slicer_INCLUDE_DIR @CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_INCLUDE_DIR@)
+ 
+ # Slicer Libs include file directories.
+ set(Slicer_Libs_INCLUDE_DIRS
+-  "${Slicer_HOME}/include/IGT"
+-  "${Slicer_HOME}/include/ITKCommandIO"
+-  "${Slicer_HOME}/include/LoadableModule"
+-  "${Slicer_HOME}/include/MGHImageIO"
+-  "${Slicer_HOME}/include/MRML"
+-  "${Slicer_HOME}/include/MRMLIDImageIO"
+-  "${Slicer_HOME}/include/ModuleDescriptionParser"
+-  "${Slicer_HOME}/include/Qdec"
+-  "${Slicer_HOME}/include/tclap"
+-  "${Slicer_HOME}/include/vtkAddon"
+-  "${Slicer_HOME}/include/vtkITK"
+-  "${Slicer_HOME}/include/vtkSegmentationCore"
+-  "${Slicer_HOME}/include/vtkTeem"
++  "${Slicer_INCLUDE_DIR}"
++  "${Slicer_INCLUDE_DIR}/ITKFactoryRegistration"
++  "${Slicer_INCLUDE_DIR}/MRMLCLI"
++  "${Slicer_INCLUDE_DIR}/MRMLCore"
++  "${Slicer_INCLUDE_DIR}/MRMLDisplayableManager"
++  "${Slicer_INCLUDE_DIR}/MRMLIDImageIO"
++  "${Slicer_INCLUDE_DIR}/MRMLLogic"
++  "${Slicer_INCLUDE_DIR}/RemoteIO"
++  "${Slicer_INCLUDE_DIR}/qMRMLWidgets"
++  "${Slicer_INCLUDE_DIR}/vtkITK"
++  "${Slicer_INCLUDE_DIR}/vtkSegmentationCore"
++  "${Slicer_INCLUDE_DIR}/vtkTeem"
++  )
++
++ set(MRML_LIBRARIES
++    "MRMLCLI"
++    "MRMLCore"
++    "MRMLDisplayableManager"
++    "MRMLIDIO"
++    "MRMLLogic"
++    "qMRMLWidgets"
+   )
+ 
+-# Slicer Base library directories.
++# slicer Base library directories.
+ set(Slicer_Base_LIBRARY_DIRS
+   "${Slicer_HOME}/@Slicer_INSTALL_LIB_DIR@"
+   )
+ 
+ # Slicer Base include file directories.
+ set(Slicer_Base_INCLUDE_DIRS
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseCLI"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseGUI"
+-  "${Slicer_HOME}/@Slicer_INSTALL_INCLUDE_DIR@/SlicerBaseLogic"
++  "${Slicer_INCLUDE_DIR}/qSlicerApp"
++  "${Slicer_INCLUDE_DIR}/qSlicerBaseQTApp"
++  "${Slicer_INCLUDE_DIR}/qSlicerBaseQTCLI"
++  "${Slicer_INCLUDE_DIR}/qSlicerBaseQTCore"
++  "${Slicer_INCLUDE_DIR}/qSlicerBaseQTGUI"
++  "${Slicer_INCLUDE_DIR}/qSlicerModulesCore"
+   )
+ 
+ # The location of the UseSlicer.cmake file.
+@@ -125,18 +116,18 @@ endif()
+ 
+ # Components needed to build modules from outside a Slicer build tree or
+ # from outside a Slicer installation tree
+-set(TCLAP_DIR "${Slicer_HOME}/lib/tclap")
+-set(ModuleDescriptionParser_DIR "${Slicer_HOME}/lib/ModuleDescriptionParser")
+-set(GenerateCLP_DIR "${Slicer_HOME}/lib/GenerateCLP")
+-set(GenerateLM_DIR "${Slicer_HOME}/lib/GenerateLM")
+-set(ITK_DIR "${Slicer_HOME}/lib/${ITK_LIB_DIR}")
+-set(LoadableModule_DIR "${Slicer_HOME}/lib/LoadableModule")
+-set(Teem_DIR "${Slicer_HOME}/lib/Teem-@Teem_VERSION_MAJOR@.@Teem_VERSION_MINOR@.@Teem_VERSION_PATCH@")
+-set(VTK_DIR "${Slicer_HOME}/lib/vtk-@VTK_MAJOR_VERSION@.@VTK_MINOR_VERSION@")
+-set(PYTHON_INCLUDE_PATH "@PYTHON_INCLUDE_PATH@")
+-get_filename_component(PYTHON_LIB_FILE "${PYTHON_LIBRARY}" NAME)
+-set(PYTHON_LIBRARIES "${Slicer_HOME}/lib/Python/lib/${PYTHON_LIB_FILE}")
+-get_filename_component(PYTHON_INCLUDE_DIR "${PYTHON_INCLUDE_PATH}" NAME)
+-set(PYTHON_INCLUDE_PATH "${Slicer_HOME}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
++# set(TCLAP_DIR "${Slicer_HOME}/lib/tclap")
++# set(ModuleDescriptionParser_DIR "${Slicer_HOME}/lib/ModuleDescriptionParser")
++# set(GenerateCLP_DIR "${Slicer_HOME}/lib/GenerateCLP")
++# set(GenerateLM_DIR "${Slicer_HOME}/lib/GenerateLM")
++# set(ITK_DIR "${Slicer_HOME}/lib/${ITK_LIB_DIR}")
++# set(LoadableModule_DIR "${Slicer_HOME}/lib/LoadableModule")
++# set(Teem_DIR "${Slicer_HOME}/lib/Teem-@Teem_VERSION_MAJOR@.@Teem_VERSION_MINOR@.@Teem_VERSION_PATCH@")
++# set(VTK_DIR "${Slicer_HOME}/lib/vtk-@VTK_MAJOR_VERSION@.@VTK_MINOR_VERSION@")
++# set(PYTHON_INCLUDE_PATH "@PYTHON_INCLUDE_PATH@")
++# get_filename_component(PYTHON_LIB_FILE "${PYTHON_LIBRARY}" NAME)
++# set(PYTHON_LIBRARIES "${Slicer_HOME}/lib/Python/lib/${PYTHON_LIB_FILE}")
++# get_filename_component(PYTHON_INCLUDE_DIR "${PYTHON_INCLUDE_PATH}" NAME)
++# set(PYTHON_INCLUDE_PATH "${Slicer_HOME}/lib/Python/include/${PYTHON_INCLUDE_DIR}")
+ 
+ list(APPEND CMAKE_MODULE_PATH "@Slicer_INSTALL_CMAKE_DIR@")
+-- 
+2.34.1
+

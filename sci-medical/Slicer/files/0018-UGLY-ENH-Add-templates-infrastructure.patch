@@ -1,0 +1,408 @@
+From 43bfa428ec9a05d7e30b446167e9a11f8bffab85 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Fri, 27 Jan 2023 10:40:33 +0100
+Subject: [PATCH 18/19] UGLY:ENH: Add templates infrastructure
+
+---
+ CMake/ExternalData.cmake                      |  2 +-
+ CMake/LastConfigureStep/CMakeLists.txt        |  4 +--
+ CMake/SlicerCPack.cmake                       |  2 +-
+ ...igureDisplayableManagerObjectFactory.cmake |  4 +--
+ .../SlicerConfigureVersionHeaderTarget.cmake  |  7 ++++--
+ CMake/SlicerExtensionGenerateConfig.cmake     |  2 +-
+ CMake/SlicerGenerateSlicerConfig.cmake        |  6 ++---
+ CMake/SlicerMacroBuildApplication.cmake       |  4 +--
+ CMake/SlicerMacroBuildBaseQtLibrary.cmake     |  2 +-
+ CMakeLists.txt                                | 25 ++++++++-----------
+ ...rBlockBuildPackageAndUploadExtension.cmake |  2 +-
+ {CMake => Templates}/CTestCustom.cmake.in     |  0
+ .../ExternalData_config.cmake.in              |  0
+ .../MacOSXBundleInfo.plist.in                 |  0
+ .../SlicerCPackBundleFixup.cmake.in           |  0
+ {CMake => Templates}/SlicerConfig.cmake.in    |  4 +++
+ .../SlicerConfigVersion.cmake.in              |  0
+ .../SlicerExtensionCPackBundleFixup.cmake.in  |  0
+ .../SlicerExtensionConfig.cmake.in            |  0
+ .../SlicerInstallConfig.cmake.in              |  1 +
+ {CMake => Templates}/UseSlicer.cmake.in       |  0
+ {CMake => Templates}/qSlicerExport.h.in       |  0
+ {CMake => Templates}/vtkSlicerConfigure.h.in  |  0
+ .../vtkSlicerObjectFactory.cxx.in             |  0
+ .../vtkSlicerObjectFactory.h.in               |  0
+ .../vtkSlicerVersionConfigure.h.in            |  0
+ .../vtkSlicerVersionConfigureInternal.h.in    |  0
+ 27 files changed, 34 insertions(+), 31 deletions(-)
+ rename {CMake => Templates}/CTestCustom.cmake.in (100%)
+ rename {CMake => Templates}/ExternalData_config.cmake.in (100%)
+ rename {CMake => Templates}/MacOSXBundleInfo.plist.in (100%)
+ rename {CMake => Templates}/SlicerCPackBundleFixup.cmake.in (100%)
+ rename {CMake => Templates}/SlicerConfig.cmake.in (99%)
+ rename {CMake => Templates}/SlicerConfigVersion.cmake.in (100%)
+ rename {CMake => Templates}/SlicerExtensionCPackBundleFixup.cmake.in (100%)
+ rename {CMake => Templates}/SlicerExtensionConfig.cmake.in (100%)
+ rename {CMake => Templates}/SlicerInstallConfig.cmake.in (99%)
+ rename {CMake => Templates}/UseSlicer.cmake.in (100%)
+ rename {CMake => Templates}/qSlicerExport.h.in (100%)
+ rename {CMake => Templates}/vtkSlicerConfigure.h.in (100%)
+ rename {CMake => Templates}/vtkSlicerObjectFactory.cxx.in (100%)
+ rename {CMake => Templates}/vtkSlicerObjectFactory.h.in (100%)
+ rename {CMake => Templates}/vtkSlicerVersionConfigure.h.in (100%)
+ rename {CMake => Templates}/vtkSlicerVersionConfigureInternal.h.in (100%)
+
+diff --git a/CMake/ExternalData.cmake b/CMake/ExternalData.cmake
+index ccf3fddfb3..263b5df528 100644
+--- a/CMake/ExternalData.cmake
++++ b/CMake/ExternalData.cmake
+@@ -384,7 +384,7 @@ function(ExternalData_add_target target)
+ 
+   # Store configuration for use by build-time script.
+   set(config ${CMAKE_CURRENT_BINARY_DIR}/${target}_config.cmake)
+-  configure_file(${_ExternalData_SELF_DIR}/ExternalData_config.cmake.in ${config} @ONLY)
++  configure_file(${Slicer_TEMPLATES_DIR}/ExternalData_config.cmake.in ${config} @ONLY)
+ 
+   set(files "")
+ 
+diff --git a/CMake/LastConfigureStep/CMakeLists.txt b/CMake/LastConfigureStep/CMakeLists.txt
+index 072b9fb247..d54278e6d3 100644
+--- a/CMake/LastConfigureStep/CMakeLists.txt
++++ b/CMake/LastConfigureStep/CMakeLists.txt
+@@ -38,7 +38,7 @@ export(TARGETS ${Slicer_TARGETS} APPEND FILE ${Slicer_BINARY_DIR}/SlicerTargets.
+ include(${Slicer_SOURCE_DIR}/CMake/SlicerGenerateSlicerConfig.cmake)
+ 
+ #-----------------------------------------------------------------------------
+-include(SlicerPackageAndUploadTarget)
++#include(SlicerPackageAndUploadTarget)
+ 
+ #-----------------------------------------------------------------------------
+-include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
++#include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
+diff --git a/CMake/SlicerCPack.cmake b/CMake/SlicerCPack.cmake
+index 1fca1f03b6..15545e5137 100644
+--- a/CMake/SlicerCPack.cmake
++++ b/CMake/SlicerCPack.cmake
+@@ -218,7 +218,7 @@ if(Slicer_SUPERBUILD)
+     set(fixup_path @rpath)
+     set(slicer_cpack_bundle_fixup_directory ${Slicer_BINARY_DIR}/CMake/SlicerCPackBundleFixup)
+     configure_file(
+-      "${Slicer_SOURCE_DIR}/CMake/SlicerCPackBundleFixup.cmake.in"
++      "${Slicer_TEMPLATES_DIR}/SlicerCPackBundleFixup.cmake.in"
+       "${slicer_cpack_bundle_fixup_directory}/SlicerCPackBundleFixup.cmake"
+       @ONLY)
+     # HACK - For a given directory, "install(SCRIPT ...)" rule will be evaluated first,
+diff --git a/CMake/SlicerConfigureDisplayableManagerObjectFactory.cmake b/CMake/SlicerConfigureDisplayableManagerObjectFactory.cmake
+index 93de137ec8..a3e808c7bb 100644
+--- a/CMake/SlicerConfigureDisplayableManagerObjectFactory.cmake
++++ b/CMake/SlicerConfigureDisplayableManagerObjectFactory.cmake
+@@ -98,11 +98,11 @@ ${_export_header}
+     ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}Module.h
+     )
+   configure_file(
+-    ${Slicer_CMAKE_DIR}/vtkSlicerObjectFactory.h.in
++    ${Slicer_TEMPLATES_DIR}/vtkSlicerObjectFactory.h.in
+     ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}ObjectFactory.h
+     )
+   configure_file(
+-    ${Slicer_CMAKE_DIR}/vtkSlicerObjectFactory.cxx.in
++    ${Slicer_TEMPLATES_DIR}/vtkSlicerObjectFactory.cxx.in
+     ${CMAKE_CURRENT_BINARY_DIR}/${vtk-module}ObjectFactory.cxx
+     )
+ 
+diff --git a/CMake/SlicerConfigureVersionHeaderTarget.cmake b/CMake/SlicerConfigureVersionHeaderTarget.cmake
+index aac9e72203..694328064f 100644
+--- a/CMake/SlicerConfigureVersionHeaderTarget.cmake
++++ b/CMake/SlicerConfigureVersionHeaderTarget.cmake
+@@ -28,6 +28,7 @@
+ #  GIT_EXECUTABLE
+ #  Slicer_BINARY_DIR
+ #  Slicer_CMAKE_DIR
++#  Slicer_TEMPLATES_DIR
+ #
+ #  Slicer_MAIN_PROJECT_APPLICATION_NAME
+ #  <Slicer_MAIN_PROJECT_APPLICATION_NAME>_SOURCE_DIR
+@@ -62,6 +63,7 @@ set(expected_defined_vars
+   GIT_EXECUTABLE
+   Slicer_BINARY_DIR
+   Slicer_CMAKE_DIR
++  Slicer_TEMPLATES_DIR
+ 
+   Slicer_MAIN_PROJECT_APPLICATION_NAME # Used by SlicerVersion.cmake
+   ${Slicer_MAIN_PROJECT_APPLICATION_NAME}_SOURCE_DIR
+@@ -126,7 +128,8 @@ endif()
+ 
+ include(${Slicer_CMAKE_DIR}/SlicerVersion.cmake)
+ 
+-# Variables expected to be set by 'SlicerVersion' module.
++#
++#Variables expected to be set by 'SlicerVersion' module.
+ set(expected_defined_vars
+   Slicer_BUILDDATE
+   Slicer_VERSION
+@@ -151,6 +154,6 @@ foreach(var ${expected_defined_vars})
+ endforeach()
+ 
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/vtkSlicerVersionConfigure.h.in
++  ${Slicer_TEMPLATES_DIR}/vtkSlicerVersionConfigure.h.in
+   ${Slicer_BINARY_DIR}/vtkSlicerVersionConfigure.h
+   )
+diff --git a/CMake/SlicerExtensionGenerateConfig.cmake b/CMake/SlicerExtensionGenerateConfig.cmake
+index 917914ba0f..5d802c52f0 100644
+--- a/CMake/SlicerExtensionGenerateConfig.cmake
++++ b/CMake/SlicerExtensionGenerateConfig.cmake
+@@ -116,5 +116,5 @@ export(TARGETS ${Slicer_TARGETS} FILE ${EXTENSION_TARGETS_FILE})
+ 
+ # Configure <Extension>Config.cmake for the build tree.
+ configure_file(
+-  ${Slicer_CMAKE_DIR}/SlicerExtensionConfig.cmake.in
++  ${Slicer_TEMPLATES_DIR}/SlicerExtensionConfig.cmake.in
+   ${EXTENSION_SUPERBUILD_BINARY_DIR}/${EXTENSION_BUILD_SUBDIRECTORY}/${EXTENSION_NAME}Config.cmake @ONLY)
+diff --git a/CMake/SlicerGenerateSlicerConfig.cmake b/CMake/SlicerGenerateSlicerConfig.cmake
+index d2370a532b..0c37b22237 100644
+--- a/CMake/SlicerGenerateSlicerConfig.cmake
++++ b/CMake/SlicerGenerateSlicerConfig.cmake
+@@ -41,7 +41,7 @@ set(Slicer_PYTHON_MODULE_TEST_TEMPLATES_DIR_CONFIG ${Slicer_PYTHON_MODULE_TEST_T
+ 
+ # Path to extension CPack script(s)
+ set(Slicer_EXTENSION_CPACK_CONFIG ${Slicer_EXTENSION_CPACK})
+-set(Slicer_EXTENSION_CPACK_BUNDLE_FIXUP_CONFIG ${Slicer_SOURCE_DIR}/CMake/SlicerExtensionCPackBundleFixup.cmake.in)
++set(Slicer_EXTENSION_CPACK_BUNDLE_FIXUP_CONFIG ${Slicer_TEMPLATES_DIR}/SlicerExtensionCPackBundleFixup.cmake.in)
+ 
+ set(Slicer_GUI_LIBRARY_CONFIG ${Slicer_GUI_LIBRARY})
+ set(Slicer_CORE_LIBRARY_CONFIG ${Slicer_CORE_LIBRARY})
+@@ -189,10 +189,10 @@ set(Slicer_TARGETS_FILE "${Slicer_BINARY_DIR}/SlicerTargets.cmake")
+ 
+ # Configure SlicerConfig.cmake for the build tree.
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/SlicerConfig.cmake.in
++  ${Slicer_SOURCE_DIR}/Templates/SlicerConfig.cmake.in
+   ${Slicer_BINARY_DIR}/SlicerConfig.cmake @ONLY)
+ 
+ # Configure SlicerConfig.cmake for the build tree.
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/SlicerInstallConfig.cmake.in
++  ${Slicer_SOURCE_DIR}/Templates/SlicerInstallConfig.cmake.in
+   ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake @ONLY)
+diff --git a/CMake/SlicerMacroBuildApplication.cmake b/CMake/SlicerMacroBuildApplication.cmake
+index 3c142e051e..7ee7bc11ca 100644
+--- a/CMake/SlicerMacroBuildApplication.cmake
++++ b/CMake/SlicerMacroBuildApplication.cmake
+@@ -132,7 +132,7 @@ macro(slicerMacroBuildAppLibrary)
+   set(MY_LIBNAME ${lib_name})
+ 
+   configure_file(
+-    ${Slicer_SOURCE_DIR}/CMake/qSlicerExport.h.in
++    ${Slicer_TEMPLATES_DIR}/qSlicerExport.h.in
+     ${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADER_PREFIX}Export.h
+     )
+   set(dynamicHeaders
+@@ -450,7 +450,7 @@ macro(slicerMacroBuildApplication)
+         MACOSX_BUNDLE_BUNDLE_NAME "${SLICERAPP_APPLICATION_NAME} ${Slicer_MAIN_PROJECT_VERSION_FULL}"
+         MACOSX_BUNDLE_BUNDLE_VERSION "${Slicer_MAIN_PROJECT_VERSION_FULL}"
+         MACOSX_BUNDLE_GUI_IDENTIFIER "${Slicer_MACOSX_BUNDLE_GUI_IDENTIFIER}"
+-        MACOSX_BUNDLE_INFO_PLIST "${Slicer_CMAKE_DIR}/MacOSXBundleInfo.plist.in"
++        MACOSX_BUNDLE_INFO_PLIST "${Slicer_TEMPLATES_DIR}/MacOSXBundleInfo.plist.in"
+         LINK_FLAGS ${link_flags}
+       )
+     if("${Slicer_RELEASE_TYPE}" STREQUAL "Stable")
+diff --git a/CMake/SlicerMacroBuildBaseQtLibrary.cmake b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
+index 308c64099e..08ae70cec0 100644
+--- a/CMake/SlicerMacroBuildBaseQtLibrary.cmake
++++ b/CMake/SlicerMacroBuildBaseQtLibrary.cmake
+@@ -129,7 +129,7 @@ macro(SlicerMacroBuildBaseQtLibrary)
+   set(MY_LIBNAME ${lib_name})
+ 
+   configure_file(
+-    ${Slicer_SOURCE_DIR}/CMake/qSlicerExport.h.in
++    ${Slicer_TEMPLATES_DIR}/qSlicerExport.h.in
+     ${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADER_PREFIX}Export.h
+     )
+   set(dynamicHeaders
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3f3aba254b..c41649f984 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -59,6 +59,7 @@ set(CMAKE_MODULE_PATH
+   )
+ 
+ set(Slicer_CMAKE_DIR ${Slicer_SOURCE_DIR}/CMake)
++set(Slicer_TEMPLATES_DIR ${Slicer_SOURCE_DIR}/Templates)
+ set(Slicer_EXTENSIONS_CMAKE_DIR ${Slicer_SOURCE_DIR}/Extensions/CMake)
+ 
+ #-----------------------------------------------------------------------------
+@@ -449,7 +450,7 @@ endif()
+ # CTestCustom
+ #-----------------------------------------------------------------------------
+ configure_file(
+-  CMake/CTestCustom.cmake.in
++  Templates/CTestCustom.cmake.in
+   ${CMAKE_BINARY_DIR}/CTestCustom.cmake
+   COPYONLY
+   )
+@@ -1065,11 +1066,11 @@ endif()
+ #-----------------------------------------------------------------------------
+ set(Slicer_USE_FILE ${Slicer_BINARY_DIR}/UseSlicer.cmake)
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/UseSlicer.cmake.in
++  ${Slicer_TEMPLATES_DIR}/UseSlicer.cmake.in
+   ${Slicer_USE_FILE} COPYONLY)
+ 
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/SlicerConfigVersion.cmake.in
++  ${Slicer_TEMPLATES_DIR}/SlicerConfigVersion.cmake.in
+   ${Slicer_BINARY_DIR}/SlicerConfigVersion.cmake @ONLY)
+ 
+ set(Slicer_EXTENSION_GENERATE_CONFIG ${Slicer_SOURCE_DIR}/CMake/SlicerExtensionGenerateConfig.cmake)
+@@ -1084,11 +1085,11 @@ set(extensions_build_dir "${Slicer_BINARY_DIR}/E")
+ # Configure a no-op SlicerConfig and SlicerConfigVersion for bundled projects
+ set(Slicer_DIR ${extensions_build_dir})
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/SlicerConfig.cmake.in
++  ${Slicer_TEMPLATES_DIR}/SlicerConfig.cmake.in
+   ${Slicer_DIR}/SlicerConfig.cmake @ONLY)
+ 
+ configure_file(
+-  ${Slicer_SOURCE_DIR}/CMake/SlicerConfigVersion.cmake.in
++  ${Slicer_TEMPLATES_DIR}/SlicerConfigVersion.cmake.in
+   ${Slicer_DIR}/SlicerConfigVersion.cmake @ONLY)
+ 
+ #
+@@ -1170,7 +1171,7 @@ set(files
+   )
+ foreach(f ${files})
+   configure_file(
+-    ${CMAKE_CURRENT_SOURCE_DIR}/CMake/${f}.in
++    ${Slicer_TEMPLATES_DIR}/${f}.in
+     ${CMAKE_CURRENT_BINARY_DIR}/${f}
+     )
+ endforeach()
+@@ -1246,12 +1247,6 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+     DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
+     )
+ 
+-  file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.cmake")
+-  install(
+-    FILES ${cmake_files}
+-    DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
+-    )
+-
+   install(FILES
+     ${Slicer_BINARY_DIR}/UseSlicer.cmake
+     ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake
+@@ -1262,12 +1257,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+ endif()
+ 
+ #-----------------------------------------------------------------------------
+-# Install CMake modules
++# Install Templates
+ #-----------------------------------------------------------------------------
+ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+-  file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.in")
++  file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/Templates/*.in")
+   install(
+-    FILES "${cmake_files}"
++    FILES ${cmake_files}
+     DESTINATION ${Slicer_INSTALL_TEMPLATES_DIR} COMPONENT Development
+     )
+ endif()
+diff --git a/Extensions/CMake/SlicerBlockBuildPackageAndUploadExtension.cmake b/Extensions/CMake/SlicerBlockBuildPackageAndUploadExtension.cmake
+index b3e4d9be28..1c47e159d8 100644
+--- a/Extensions/CMake/SlicerBlockBuildPackageAndUploadExtension.cmake
++++ b/Extensions/CMake/SlicerBlockBuildPackageAndUploadExtension.cmake
+@@ -122,7 +122,7 @@ set(CTEST_DROP_SITE_CDASH TRUE)")
+   endif()
+   message(STATUS "CTestCustom.cmake has been written to: ${ctestconfig_dest_dir}")
+   configure_file(
+-    ${Slicer_CMAKE_DIR}/CTestCustom.cmake.in
++    ${Slicer_TEMPLATES_DIR}/CTestCustom.cmake.in
+     ${ctestconfig_dest_dir}/CTestCustom.cmake
+     COPYONLY
+     )
+diff --git a/CMake/CTestCustom.cmake.in b/Templates/CTestCustom.cmake.in
+similarity index 100%
+rename from CMake/CTestCustom.cmake.in
+rename to Templates/CTestCustom.cmake.in
+diff --git a/CMake/ExternalData_config.cmake.in b/Templates/ExternalData_config.cmake.in
+similarity index 100%
+rename from CMake/ExternalData_config.cmake.in
+rename to Templates/ExternalData_config.cmake.in
+diff --git a/CMake/MacOSXBundleInfo.plist.in b/Templates/MacOSXBundleInfo.plist.in
+similarity index 100%
+rename from CMake/MacOSXBundleInfo.plist.in
+rename to Templates/MacOSXBundleInfo.plist.in
+diff --git a/CMake/SlicerCPackBundleFixup.cmake.in b/Templates/SlicerCPackBundleFixup.cmake.in
+similarity index 100%
+rename from CMake/SlicerCPackBundleFixup.cmake.in
+rename to Templates/SlicerCPackBundleFixup.cmake.in
+diff --git a/CMake/SlicerConfig.cmake.in b/Templates/SlicerConfig.cmake.in
+similarity index 99%
+rename from CMake/SlicerConfig.cmake.in
+rename to Templates/SlicerConfig.cmake.in
+index 14d999ad18..499ec56674 100644
+--- a/CMake/SlicerConfig.cmake.in
++++ b/Templates/SlicerConfig.cmake.in
+@@ -538,3 +538,7 @@ include(${Slicer_CMAKE_DIR}/SlicerBlockFindQtAndCheckVersion.cmake)
+ if(EXISTS "@Slicer_TARGETS_FILE@" AND NOT TARGET SlicerBaseLogic)
+   include("@Slicer_TARGETS_FILE@")
+ endif()
++
++# --------------------------------------------------------------------------
++# Templates directory
++@Slicer_TEMPLATES_DIR@
+diff --git a/CMake/SlicerConfigVersion.cmake.in b/Templates/SlicerConfigVersion.cmake.in
+similarity index 100%
+rename from CMake/SlicerConfigVersion.cmake.in
+rename to Templates/SlicerConfigVersion.cmake.in
+diff --git a/CMake/SlicerExtensionCPackBundleFixup.cmake.in b/Templates/SlicerExtensionCPackBundleFixup.cmake.in
+similarity index 100%
+rename from CMake/SlicerExtensionCPackBundleFixup.cmake.in
+rename to Templates/SlicerExtensionCPackBundleFixup.cmake.in
+diff --git a/CMake/SlicerExtensionConfig.cmake.in b/Templates/SlicerExtensionConfig.cmake.in
+similarity index 100%
+rename from CMake/SlicerExtensionConfig.cmake.in
+rename to Templates/SlicerExtensionConfig.cmake.in
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
+similarity index 99%
+rename from CMake/SlicerInstallConfig.cmake.in
+rename to Templates/SlicerInstallConfig.cmake.in
+index 21bd3d49e9..ce3e9451e4 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/Templates/SlicerInstallConfig.cmake.in
+@@ -41,6 +41,7 @@ get_filename_component(Slicer_HOME ${Slicer_HOME} ABSOLUTE)
+ 
+ # The CMake macros dir.
+ set(Slicer_CMAKE_DIR "${Slicer_HOME}/@Slicer_INSTALL_LIB_DIR@/CMake")
++set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
+ 
+ 
+ # Set the Slicer_EXPORT_HEADER_TEMPLATE to the install dir
+diff --git a/CMake/UseSlicer.cmake.in b/Templates/UseSlicer.cmake.in
+similarity index 100%
+rename from CMake/UseSlicer.cmake.in
+rename to Templates/UseSlicer.cmake.in
+diff --git a/CMake/qSlicerExport.h.in b/Templates/qSlicerExport.h.in
+similarity index 100%
+rename from CMake/qSlicerExport.h.in
+rename to Templates/qSlicerExport.h.in
+diff --git a/CMake/vtkSlicerConfigure.h.in b/Templates/vtkSlicerConfigure.h.in
+similarity index 100%
+rename from CMake/vtkSlicerConfigure.h.in
+rename to Templates/vtkSlicerConfigure.h.in
+diff --git a/CMake/vtkSlicerObjectFactory.cxx.in b/Templates/vtkSlicerObjectFactory.cxx.in
+similarity index 100%
+rename from CMake/vtkSlicerObjectFactory.cxx.in
+rename to Templates/vtkSlicerObjectFactory.cxx.in
+diff --git a/CMake/vtkSlicerObjectFactory.h.in b/Templates/vtkSlicerObjectFactory.h.in
+similarity index 100%
+rename from CMake/vtkSlicerObjectFactory.h.in
+rename to Templates/vtkSlicerObjectFactory.h.in
+diff --git a/CMake/vtkSlicerVersionConfigure.h.in b/Templates/vtkSlicerVersionConfigure.h.in
+similarity index 100%
+rename from CMake/vtkSlicerVersionConfigure.h.in
+rename to Templates/vtkSlicerVersionConfigure.h.in
+diff --git a/CMake/vtkSlicerVersionConfigureInternal.h.in b/Templates/vtkSlicerVersionConfigureInternal.h.in
+similarity index 100%
+rename from CMake/vtkSlicerVersionConfigureInternal.h.in
+rename to Templates/vtkSlicerVersionConfigureInternal.h.in
+-- 
+2.34.1
+

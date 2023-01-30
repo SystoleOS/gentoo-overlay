@@ -1,7 +1,7 @@
-From 5c98573fd48d770f2b9609fbec9482596e55c798 Mon Sep 17 00:00:00 2001
+From 5032520d04935456f6c88d71a8fa911c4785af4f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 16:06:59 +0100
-Subject: [PATCH] UGLY:ENH: Remove extension/launcher cmake code from
+Subject: [PATCH 16/19] UGLY:ENH: Remove extension/launcher cmake code from
  UseSlicer.cmake
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH] UGLY:ENH: Remove extension/launcher cmake code from
  1 file changed, 84 deletions(-)
 
 diff --git a/CMake/UseSlicer.cmake.in b/CMake/UseSlicer.cmake.in
-index 79241a0ae6..e088926431 100644
+index 324d6a6a89..6be6f44fe3 100644
 --- a/CMake/UseSlicer.cmake.in
 +++ b/CMake/UseSlicer.cmake.in
-@@ -279,26 +279,6 @@ if(DEFINED CMAKE_OSX_DEPLOYMENT_TARGET)
+@@ -290,26 +290,6 @@ if(DEFINED CMAKE_OSX_DEPLOYMENT_TARGET)
    mark_as_superbuild(VARS CMAKE_OSX_DEPLOYMENT_TARGET:STRING ALL_PROJECTS)
  endif()
  
@@ -39,7 +39,7 @@ index 79241a0ae6..e088926431 100644
  #-----------------------------------------------------------------------------
  # Set Slicer_BUNDLE_EXTENSIONS_LOCATION variable
  #-----------------------------------------------------------------------------
-@@ -372,67 +352,3 @@ if(APPLE)
+@@ -383,67 +363,3 @@ if(APPLE)
    file(RELATIVE_PATH thirdparty_lib_relative_dir /${Slicer_INSTALL_THIRDPARTY_LIB_DIR} /${Slicer_INSTALL_ROOT})
    set(Slicer_INSTALL_THIRDPARTY_LIBRARY_LINK_FLAGS "-Wl,-rpath,@loader_path/${thirdparty_lib_relative_dir}")
  endif()

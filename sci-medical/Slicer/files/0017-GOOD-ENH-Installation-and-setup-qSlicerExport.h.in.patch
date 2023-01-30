@@ -1,0 +1,85 @@
+From fea431c772673100ef58c92499402ffb15d92ac5 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Fri, 27 Jan 2023 09:39:53 +0100
+Subject: [PATCH 17/19] GOOD:ENH: Installation and setup qSlicerExport.h.in
+
+---
+ CMake/SlicerDirectories.cmake      |  3 +++
+ CMake/SlicerInstallConfig.cmake.in |  5 +++++
+ CMakeLists.txt                     | 17 +++++++++++++++++
+ 3 files changed, 25 insertions(+)
+
+diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
+index 12e9169b1d..aaabd8d6ad 100644
+--- a/CMake/SlicerDirectories.cmake
++++ b/CMake/SlicerDirectories.cmake
+@@ -84,12 +84,15 @@ set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
+ if(WIN32)
+   #Corresponds to <prefix>/<name>*/cmake pattern
+   set(Slicer_INSTALL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/cmake")
++  set(Slicer_INSTALL_TEMPLATES_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/templates")
+ elseif(UNIX)
+   #Corresponds to <prefix>/share/<name>*/cmake pattern
+   set(Slicer_INSTALL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_SHARE_DIR}/cmake")
++  set(Slicer_INSTALL_TEMPLATES_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_SHARE_DIR}/templates")
+ elseif(APPLE)
+   #Corresponds to <prefix>/<name>.framework/Resources/CMake pattern
+   set(Slicer_INSTALL_CMAKE_DIR "${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}.framework/Resources/CMake")
++  set(Slicer_INSTALL_TEMPLATES_DIR "${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}.framework/Resources/Templates")
+ endif()
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/CMake/SlicerInstallConfig.cmake.in b/CMake/SlicerInstallConfig.cmake.in
+index 7955913b98..21bd3d49e9 100644
+--- a/CMake/SlicerInstallConfig.cmake.in
++++ b/CMake/SlicerInstallConfig.cmake.in
+@@ -42,6 +42,11 @@ get_filename_component(Slicer_HOME ${Slicer_HOME} ABSOLUTE)
+ # The CMake macros dir.
+ set(Slicer_CMAKE_DIR "${Slicer_HOME}/@Slicer_INSTALL_LIB_DIR@/CMake")
+ 
++
++# Set the Slicer_EXPORT_HEADER_TEMPLATE to the install dir
++set(Slicer_EXPORT_HEADER_TEMPLATE "@Slicer_INSTALL_TEMPLATES_DIR@/qSlicerExport.h.in")
++
++
+ # Slicer Libs library directories.
+ set(Slicer_Libs_LIBRARY_DIRS
+   "${Slicer_HOME}/lib/IGT"
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 31ba06c9d9..3f3aba254b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1246,6 +1246,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+     DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
+     )
+ 
++  file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.cmake")
++  install(
++    FILES ${cmake_files}
++    DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
++    )
++
+   install(FILES
+     ${Slicer_BINARY_DIR}/UseSlicer.cmake
+     ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake
+@@ -1255,6 +1261,17 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+     )
+ endif()
+ 
++#-----------------------------------------------------------------------------
++# Install CMake modules
++#-----------------------------------------------------------------------------
++if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
++  file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.in")
++  install(
++    FILES "${cmake_files}"
++    DESTINATION ${Slicer_INSTALL_TEMPLATES_DIR} COMPONENT Development
++    )
++endif()
++
+ #-----------------------------------------------------------------------------
+ # Create target to download data from the <Slicer_ExternalData_DATA_MANAGEMENT_TARGET> group.
+ # This must come after all tests have been added that reference the group, so we put it last.
+-- 
+2.34.1
+

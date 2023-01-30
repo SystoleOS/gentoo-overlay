@@ -1,7 +1,7 @@
 From 3e8d0cbaf6ab01c5af7dd1a7321ef19d8405928d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 12:16:14 +0100
-Subject: [PATCH] ENH: Make installed CMake files available
+Subject: [PATCH 13/19] ENH: Make installed CMake files available
 
 ---
  CMake/SlicerDirectories.cmake      | 2 +-
