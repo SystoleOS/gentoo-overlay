@@ -21,6 +21,7 @@ SLOT="0"
 
 DEPEND="
 	sci-medical/Slicer
+    Slicer-Loadable/SubjectHierarchy
 "
 
 RDEPEND="
@@ -31,7 +32,9 @@ RDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-Separate-Colors-in-a-different-module.patch
+	#${FILESDIR}/0001-Separate-Colors-in-a-different-module.patch
+    ${FILESDIR}/0001-ENH-Make-colors-a-separate-module.patch
+    ${FILESDIR}/test.patch
 )
 
 src_configure(){

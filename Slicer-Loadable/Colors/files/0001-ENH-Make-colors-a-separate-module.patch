@@ -1,0 +1,142 @@
+From 6fe132ed65c4779abf306f64979b4dfae2534918 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 26 Jan 2023 10:06:21 +0100
+Subject: [PATCH] ENH: Make colors a separate module
+
+---
+ Modules/Loadable/Colors/CMakeLists.txt            | 13 ++++++++++++-
+ Modules/Loadable/Colors/Logic/CMakeLists.txt      |  2 ++
+ Modules/Loadable/Colors/MRML/CMakeLists.txt       |  7 +++++++
+ Modules/Loadable/Colors/MRMLDM/CMakeLists.txt     |  6 ++++++
+ Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt |  1 +
+ Modules/Loadable/Colors/Widgets/CMakeLists.txt    |  4 +++-
+ 6 files changed, 31 insertions(+), 2 deletions(-)
+
+diff --git a/Modules/Loadable/Colors/CMakeLists.txt b/Modules/Loadable/Colors/CMakeLists.txt
+index b4356dee75..b80d372a52 100644
+--- a/Modules/Loadable/Colors/CMakeLists.txt
++++ b/Modules/Loadable/Colors/CMakeLists.txt
+@@ -1,5 +1,15 @@
+ #-----------------------------------------------------------------------------
+-set(MODULE_NAME Colors)
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(Colors)
++
++set(CMAKE_CXX_STANDARD 17)
++
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++#-----------------------------------------------------------------------------
++set(MODULE_NAME ${PROJECT_NAME})
+ set(MODULE_TITLE "${MODULE_NAME}")
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+@@ -26,6 +36,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${CMAKE_CURRENT_SOURCE_DIR}/SubjectHierarchyPlugins
+   ${CMAKE_CURRENT_BINARY_DIR}/SubjectHierarchyPlugins
+   ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
+   )
+ 
+ set(MODULE_SRCS
+diff --git a/Modules/Loadable/Colors/Logic/CMakeLists.txt b/Modules/Loadable/Colors/Logic/CMakeLists.txt
+index 3382081c22..7af619877e 100644
+--- a/Modules/Loadable/Colors/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Colors/Logic/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_COLORS_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${vtkAddon_INCLUDE_DIRS}
+   ${vtkSlicer${MODULE_NAME}ModuleMRML_INCLUDE_DIRS}
+   )
+ 
+@@ -15,6 +16,7 @@ set(${KIT}_SRCS
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
++  ${vtkAddon_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Colors/MRML/CMakeLists.txt b/Modules/Loadable/Colors/MRML/CMakeLists.txt
+index c1789ca18e..56d4a56fac 100644
+--- a/Modules/Loadable/Colors/MRML/CMakeLists.txt
++++ b/Modules/Loadable/Colors/MRML/CMakeLists.txt
+@@ -9,8 +9,15 @@ set(${KIT}_SRCS
+   vtkMRMLColorLegendDisplayNode.h
+   )
+ 
++set(${KIT}_INCLUDE_DIRECTORIES
++  ${vtkAddon_INCLUDE_DIRS}
++  )
++
+ set(${KIT}_TARGET_LIBRARIES
+   ${MRML_LIBRARIES}
++  ${VTK_LIBRARIES}
++  ${vtkAddon_LIBRARIES}
++  ${vtkSlicer${MODULE_NAME}ModuleMRMLDM}
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Colors/MRMLDM/CMakeLists.txt b/Modules/Loadable/Colors/MRMLDM/CMakeLists.txt
+index 981e04e478..386bf486ea 100644
+--- a/Modules/Loadable/Colors/MRMLDM/CMakeLists.txt
++++ b/Modules/Loadable/Colors/MRMLDM/CMakeLists.txt
+@@ -31,11 +31,17 @@ set(${KIT}_SRCS
+   ${displayable_manager_SRCS}
+   )
+ 
++set(${KIT}_INCLUDE_DIRECTORIES
++  ${vtkAddon_INCLUDE_DIRS}
++  )
++
+ set(${KIT}_TARGET_LIBRARIES
+   ${MRML_LIBRARIES}
++  ${MRMLDM_LIBRARIES}
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicer${MODULE_NAME}ModuleVTKWidgets
++  ${VTK_LIBRARIES}
+ )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt b/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt
+index 50b06726e3..2386c4c04b 100644
+--- a/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt
++++ b/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt
+@@ -13,6 +13,7 @@ set(${KIT}_SRCS
+   )
+ 
+ set(${KIT}_TARGET_LIBRARIES
++  ${VTK_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Colors/Widgets/CMakeLists.txt b/Modules/Loadable/Colors/Widgets/CMakeLists.txt
+index 0d18527f4b..cf1484f260 100644
+--- a/Modules/Loadable/Colors/Widgets/CMakeLists.txt
++++ b/Modules/Loadable/Colors/Widgets/CMakeLists.txt
+@@ -5,7 +5,8 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_MODULE_${MODULE_NAME_UPPER}_WIDGETS_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+-  ${vtkSlicer${MODULE_NAME}ModuleMRML_INCLUDE_DIRS}
++   ${vtkSlicer${MODULE_NAME}ModuleMRML_INCLUDE_DIRS}
++     ${vtkAddon_INCLUDE_DIRS}
+   )
+ 
+ set(${KIT}_SRCS
+@@ -28,6 +29,7 @@ set(${KIT}_RESOURCES
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   vtkSlicer${MODULE_NAME}ModuleMRML
++  ${CTK_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+-- 
+2.34.1
+
