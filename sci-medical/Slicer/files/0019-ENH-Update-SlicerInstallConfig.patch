@@ -1,7 +1,7 @@
 From 6e574f6bc369a870327d969f3880ba4da6be97f5 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Sat, 28 Jan 2023 07:53:06 +0100
-Subject: [PATCH 19/19] ENH: Update SlicerInstallConfig
+Subject: [PATCH 19/20] ENH: Update SlicerInstallConfig
 
 ---
  Templates/SlicerInstallConfig.cmake.in | 93 ++++++++++++--------------

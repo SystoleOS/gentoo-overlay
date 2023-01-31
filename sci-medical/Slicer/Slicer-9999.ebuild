@@ -76,6 +76,7 @@ PATCHES=(
     ${FILESDIR}/0017-GOOD-ENH-Installation-and-setup-qSlicerExport.h.in.patch
     ${FILESDIR}/0018-UGLY-ENH-Add-templates-infrastructure.patch
     ${FILESDIR}/0019-ENH-Update-SlicerInstallConfig.patch
+    ${FILESDIR}/0020-ENH-Enable-installation-of-SLicerBase-header-files.patch
  )
 
 src_prepare() {
