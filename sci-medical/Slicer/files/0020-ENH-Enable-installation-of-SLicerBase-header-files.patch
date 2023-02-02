@@ -1,7 +1,7 @@
-From a80aa0e7bd744c20130d72ecfbb4acbfcb3d0c80 Mon Sep 17 00:00:00 2001
+From c65757684a611c241dca6be72fcd7685a925819f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 30 Jan 2023 13:39:41 +0100
-Subject: [PATCH] ENH: Enable installation of SLicerBase header files
+Subject: [PATCH 20/22] ENH: Enable installation of SLicerBase header files
 
 ---
  Base/CMakeLists.txt                    | 27 ++++++++++++++++++++------
@@ -64,5 +64,5 @@ index 713bbc8d0e..1144b051ff 100644
  
  # The location of the UseSlicer.cmake file.
 -- 
-2.34.1
+2.39.1
 

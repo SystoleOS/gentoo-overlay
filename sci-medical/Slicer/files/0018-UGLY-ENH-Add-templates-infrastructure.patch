@@ -1,19 +1,19 @@
-From 43bfa428ec9a05d7e30b446167e9a11f8bffab85 Mon Sep 17 00:00:00 2001
+From 01342c2063dd51f50d11858311925d146d6c1b5a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 10:40:33 +0100
-Subject: [PATCH 18/20] UGLY:ENH: Add templates infrastructure
+Subject: [PATCH 18/22] UGLY:ENH: Add templates infrastructure
 
 ---
  CMake/ExternalData.cmake                      |  2 +-
  CMake/LastConfigureStep/CMakeLists.txt        |  4 +--
  CMake/SlicerCPack.cmake                       |  2 +-
  ...igureDisplayableManagerObjectFactory.cmake |  4 +--
- .../SlicerConfigureVersionHeaderTarget.cmake  |  7 ++++--
+ .../SlicerConfigureVersionHeaderTarget.cmake  |  7 +++--
  CMake/SlicerExtensionGenerateConfig.cmake     |  2 +-
  CMake/SlicerGenerateSlicerConfig.cmake        |  6 ++---
  CMake/SlicerMacroBuildApplication.cmake       |  4 +--
  CMake/SlicerMacroBuildBaseQtLibrary.cmake     |  2 +-
- CMakeLists.txt                                | 25 ++++++++-----------
+ CMakeLists.txt                                | 27 ++++++++-----------
  ...rBlockBuildPackageAndUploadExtension.cmake |  2 +-
  {CMake => Templates}/CTestCustom.cmake.in     |  0
  .../ExternalData_config.cmake.in              |  0
@@ -31,7 +31,7 @@ Subject: [PATCH 18/20] UGLY:ENH: Add templates infrastructure
  .../vtkSlicerObjectFactory.h.in               |  0
  .../vtkSlicerVersionConfigure.h.in            |  0
  .../vtkSlicerVersionConfigureInternal.h.in    |  0
- 27 files changed, 34 insertions(+), 31 deletions(-)
+ 27 files changed, 35 insertions(+), 32 deletions(-)
  rename {CMake => Templates}/CTestCustom.cmake.in (100%)
  rename {CMake => Templates}/ExternalData_config.cmake.in (100%)
  rename {CMake => Templates}/MacOSXBundleInfo.plist.in (100%)
@@ -218,7 +218,7 @@ index 308c64099e..08ae70cec0 100644
      )
    set(dynamicHeaders
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3f3aba254b..c41649f984 100644
+index 3f3aba254b..9ad40b87df 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -59,6 +59,7 @@ set(CMAKE_MODULE_PATH
@@ -227,6 +227,15 @@ index 3f3aba254b..c41649f984 100644
  set(Slicer_CMAKE_DIR ${Slicer_SOURCE_DIR}/CMake)
 +set(Slicer_TEMPLATES_DIR ${Slicer_SOURCE_DIR}/Templates)
  set(Slicer_EXTENSIONS_CMAKE_DIR ${Slicer_SOURCE_DIR}/Extensions/CMake)
+ 
+ #-----------------------------------------------------------------------------
+@@ -125,7 +126,7 @@ include(SlicerInitializeReleaseType)
+ # Set the header template which defines custom export/import macros
+ # for shared libraries
+ #-----------------------------------------------------------------------------
+-set(Slicer_EXPORT_HEADER_TEMPLATE "${Slicer_SOURCE_DIR}/CMake/qSlicerExport.h.in")
++set(Slicer_EXPORT_HEADER_TEMPLATE "${Slicer_SOURCE_DIR}/Templates/qSlicerExport.h.in")
+ set(Slicer_LOGOS_RESOURCE "${Slicer_SOURCE_DIR}/Resources/qSlicer.qrc")
  
  #-----------------------------------------------------------------------------
 @@ -449,7 +450,7 @@ endif()
@@ -404,5 +413,5 @@ similarity index 100%
 rename from CMake/vtkSlicerVersionConfigureInternal.h.in
 rename to Templates/vtkSlicerVersionConfigureInternal.h.in
 -- 
-2.34.1
+2.39.1
 

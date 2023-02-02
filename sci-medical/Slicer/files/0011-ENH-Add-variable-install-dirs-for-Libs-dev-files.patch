@@ -1,7 +1,7 @@
 From 3781a3682c0a02bc7dd3e803b7b8bde5cc4ecbf8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 10:58:45 +0100
-Subject: [PATCH 11/20] ENH: Add variable install dirs for Libs dev files
+Subject: [PATCH 11/22] ENH: Add variable install dirs for Libs dev files
 
 This removes the hardcoded `include` component of the installation path
 for the installation of development files. This affects
@@ -175,5 +175,5 @@ index a30ea518b3..c8ac7a7ef9 100644
  
  # --------------------------------------------------------------------------
 -- 
-2.34.1
+2.39.1
 
