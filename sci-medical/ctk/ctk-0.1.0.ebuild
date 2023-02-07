@@ -51,10 +51,10 @@ BDEPEND="app-arch/unzip"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 PATCHES=(
-    ${FILESDIR}/0001-ENH-Include-missing-files.patch
-    ${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
-    ${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
-    ${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch
+	${FILESDIR}/0001-ENH-Include-missing-files.patch
+	${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
+	${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
+	${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch
 )
 
 src_unpack() {
