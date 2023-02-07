@@ -1,16 +1,17 @@
-From 6fe2715ff3630ead239ed2bacbe1e831bfd6303d Mon Sep 17 00:00:00 2001
+From 8859899b0f16f236c0e79b984a13fc3f0639c1b8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:21:04 +0100
-Subject: [PATCH 23/23] ENH: Update Slicer build macros
+Subject: [PATCH] ENH: Update Slicer build macros
 
 This (1) adds libraries and (2) sets link directories for Slicer build
 macros.
 ---
  CMake/SlicerMacroBuildApplication.cmake    | 3 +++
- CMake/SlicerMacroBuildLoadableModule.cmake | 4 ++++
+ CMake/SlicerMacroBuildLoadableModule.cmake | 9 +++++++++
  CMake/SlicerMacroBuildModuleLogic.cmake    | 8 ++++++++
- CMake/SlicerMacroBuildModuleWidgets.cmake  | 7 +++++++
- 4 files changed, 22 insertions(+)
+ CMake/SlicerMacroBuildModuleMRML.cmake     | 7 +++++++
+ CMake/SlicerMacroBuildModuleWidgets.cmake  | 8 ++++++++
+ 5 files changed, 35 insertions(+)
 
 diff --git a/CMake/SlicerMacroBuildApplication.cmake b/CMake/SlicerMacroBuildApplication.cmake
 index 7ee7bc11ca..f79b7c8066 100644
@@ -27,20 +28,32 @@ index 7ee7bc11ca..f79b7c8066 100644
    if(APPLE)
      set(link_flags "-Wl,-rpath,@loader_path/../")
 diff --git a/CMake/SlicerMacroBuildLoadableModule.cmake b/CMake/SlicerMacroBuildLoadableModule.cmake
-index 624955260c..b73b117c05 100644
+index 624955260c..a4f899b9c8 100644
 --- a/CMake/SlicerMacroBuildLoadableModule.cmake
 +++ b/CMake/SlicerMacroBuildLoadableModule.cmake
-@@ -188,6 +188,9 @@ macro(slicerMacroBuildLoadableModule)
+@@ -101,6 +101,7 @@ macro(slicerMacroBuildLoadableModule)
+     ${Slicer_ModuleLogic_INCLUDE_DIRS}
+     ${Slicer_ModuleMRML_INCLUDE_DIRS}
+     ${LOADABLEMODULE_INCLUDE_DIRECTORIES}
++    ${vtkAddon_INCLUDE_DIRS}
+     )
+ 
+   #-----------------------------------------------------------------------------
+@@ -188,6 +189,13 @@ macro(slicerMacroBuildLoadableModule)
    # --------------------------------------------------------------------------
    # Build library
    # --------------------------------------------------------------------------
++
++  list(APPEND LOADABLEMODULE_TARGET_LIBRARIES
++    ${Slicer_Base_LIBRARIES}
++  )
 +
 +  link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
 +
    add_library(${lib_name}
      ${LOADABLEMODULE_SRCS}
      ${LOADABLEMODULE_MOC_OUTPUT}
-@@ -203,6 +206,7 @@ macro(slicerMacroBuildLoadableModule)
+@@ -203,6 +211,7 @@ macro(slicerMacroBuildLoadableModule)
      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
      )
    set_target_properties(${lib_name} PROPERTIES LABELS ${lib_name})
@@ -88,11 +101,36 @@ index 56b443918d..08e5b21f05 100644
    set_property(GLOBAL APPEND PROPERTY SLICER_MODULE_LOGIC_TARGETS ${MODULELOGIC_NAME})
  
    #-----------------------------------------------------------------------------
+diff --git a/CMake/SlicerMacroBuildModuleMRML.cmake b/CMake/SlicerMacroBuildModuleMRML.cmake
+index 01f55021eb..886f0909bb 100644
+--- a/CMake/SlicerMacroBuildModuleMRML.cmake
++++ b/CMake/SlicerMacroBuildModuleMRML.cmake
+@@ -51,6 +51,7 @@ macro(SlicerMacroBuildModuleMRML)
+   list(APPEND MODULEMRML_INCLUDE_DIRECTORIES
+     ${Slicer_Libs_INCLUDE_DIRS}
+     ${Slicer_ModuleMRML_INCLUDE_DIRS}
++    ${vtkAddon_INCLUDE_DIRS}
+     )
+ 
+   if(NOT DEFINED MODULEMRML_FOLDER AND DEFINED MODULE_NAME)
+@@ -62,6 +63,12 @@ macro(SlicerMacroBuildModuleMRML)
+     set(MODULEMRML_NO_INSTALL_OPTION "NO_INSTALL")
+   endif()
+ 
++  set(MODULEMRML_TARGET_LIBRARIES
++    ${MRML_LIBRARIES}
++    ${VTK_LIBRARIES}
++    ${vtkAddon_LIBRARIES}
++  )
++
+   SlicerMacroBuildModuleVTKLibrary(
+     NAME ${MODULEMRML_NAME}
+     EXPORT_DIRECTIVE ${MODULEMRML_EXPORT_DIRECTIVE}
 diff --git a/CMake/SlicerMacroBuildModuleWidgets.cmake b/CMake/SlicerMacroBuildModuleWidgets.cmake
-index 506fdb71e8..73d62ef330 100644
+index 506fdb71e8..d1963fb8aa 100644
 --- a/CMake/SlicerMacroBuildModuleWidgets.cmake
 +++ b/CMake/SlicerMacroBuildModuleWidgets.cmake
-@@ -57,10 +57,13 @@ macro(SlicerMacroBuildModuleWidgets)
+@@ -57,10 +57,14 @@ macro(SlicerMacroBuildModuleWidgets)
      ${Slicer_ModuleLogic_INCLUDE_DIRS}
      ${Slicer_ModuleMRML_INCLUDE_DIRS}
      ${Slicer_ModuleWidgets_INCLUDE_DIRS}
@@ -102,11 +140,12 @@ index 506fdb71e8..73d62ef330 100644
    list(APPEND MODULEWIDGETS_TARGET_LIBRARIES
      ${Slicer_GUI_LIBRARY}
 +    ${vtkAddon_LIBRARIES}
++    ${CTK_LIBRARIES}
 +    Qt::Xml
      )
  
    if(NOT DEFINED MODULEWIDGETS_FOLDER AND DEFINED MODULE_NAME)
-@@ -101,6 +104,8 @@ macro(SlicerMacroBuildModuleWidgets)
+@@ -101,6 +105,8 @@ macro(SlicerMacroBuildModuleWidgets)
      set(QM_OUTPUT_FILES )
    endif()
  
@@ -115,7 +154,7 @@ index 506fdb71e8..73d62ef330 100644
    # --------------------------------------------------------------------------
    # Build library
    # --------------------------------------------------------------------------
-@@ -119,6 +124,8 @@ macro(SlicerMacroBuildModuleWidgets)
+@@ -119,6 +125,8 @@ macro(SlicerMacroBuildModuleWidgets)
      )
  
    set_property(GLOBAL APPEND PROPERTY SLICER_MODULE_WIDGET_TARGETS ${MODULEWIDGETS_NAME})
