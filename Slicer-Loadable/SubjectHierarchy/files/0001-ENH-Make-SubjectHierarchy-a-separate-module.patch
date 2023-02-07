@@ -1,0 +1,92 @@
+From 50ac39c8984ccd4740aa1b81605a5355896f207b Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Mon, 6 Feb 2023 20:37:22 +0100
+Subject: [PATCH] ENH: Make SubjectHierarchy a separate module
+
+---
+ Modules/Loadable/SubjectHierarchy/CMakeLists.txt  | 15 +++++++++++++++
+ .../SubjectHierarchy/Widgets/CMakeLists.txt       | 11 +++++++++--
+ 2 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/Modules/Loadable/SubjectHierarchy/CMakeLists.txt b/Modules/Loadable/SubjectHierarchy/CMakeLists.txt
+index 92257e4aa7..81fcdc945f 100644
+--- a/Modules/Loadable/SubjectHierarchy/CMakeLists.txt
++++ b/Modules/Loadable/SubjectHierarchy/CMakeLists.txt
+@@ -1,9 +1,22 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(SubjectHierarchy)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME "SubjectHierarchy")
+ set(MODULE_TITLE "Subject Hierarchy")
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
++#-----------------------------------------------------------------------------
++set(CMAKE_CXX_STANDARD "17")
++
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ add_subdirectory(Logic)
+ add_subdirectory(Widgets)
+@@ -14,6 +27,7 @@ set(MODULE_EXPORT_DIRECTIVE "Q_SLICER_QTMODULES_${MODULE_NAME_UPPER}_EXPORT")
+ set(MODULE_INCLUDE_DIRECTORIES
+   ${Slicer_ModuleWidgets_INCLUDE_DIRS}
+   ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
+   )
+ 
+   set(MODULE_SRCS
+@@ -39,6 +53,7 @@ set(MODULE_UI_SRCS
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   qSlicer${MODULE_NAME}ModuleWidgets
++  ${vtkAddon_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt b/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt
+index 2ce4fbebc1..9372f1d22e 100644
+--- a/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt
++++ b/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt
+@@ -8,6 +8,8 @@ set(${KIT}_INCLUDE_DIRECTORIES
+   ${vtkSlicerSubjectHierarchyModuleLogic_INCLUDE_DIRS}
+   ${qSlicerTerminologiesModuleWidgets_INCLUDE_DIRS}
+   ${MRMLCore_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerTerminologiesModuleWidgets
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerTerminologiesModuleLogic
+   )
+ if(Slicer_BUILD_CLI_SUPPORT)
+   list(APPEND ${KIT}_INCLUDE_DIRECTORIES
+@@ -94,8 +96,10 @@ set_source_files_properties( qSlicerSubjectHierarchyAbstractPlugin.h WRAP_EXCLUD
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   qSlicerTerminologiesModuleWidgets
+-  MRMLCore
+-  vtkSlicerVolumesModuleLogic
++  ${MRML_LIBRARIES}
++  ${CTK_LIBRARIES}
++  ${Slicer_Base_LIBRARIES}
++  vtkSlicerTerminologiesModuleLogic
+   )
+ if(Slicer_BUILD_CLI_SUPPORT)
+   list(APPEND ${KIT}_TARGET_LIBRARIES
+@@ -103,6 +107,9 @@ if(Slicer_BUILD_CLI_SUPPORT)
+   )
+ endif()
+ 
++
++add_definitions(-DCTK_USE_QVTKOPENGLWIDGET -DCTK_HAS_QVTKOPENGLNATIVEWIDGET_H)
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleWidgets(
+   NAME ${KIT}
+-- 
+2.39.1
+
