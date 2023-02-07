@@ -1,7 +1,7 @@
-From 97ba113555f70916fb12cd8e09e0f08f2a3db190 Mon Sep 17 00:00:00 2001
+From 6dc700735cefd1979ef4a4695bdacabeae83a7b3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 14:39:55 +0100
-Subject: [PATCH 15/22] ENH: Add vtkAddon as a requirement in UseSlicer.cmake
+Subject: [PATCH 15/23] ENH: Add vtkAddon as a requirement in UseSlicer.cmake
 
 ---
  CMake/UseSlicer.cmake.in | 12 ++++++++++++

@@ -1,7 +1,7 @@
-From 01342c2063dd51f50d11858311925d146d6c1b5a Mon Sep 17 00:00:00 2001
+From 2cc78b7da634dfbe57b22c2ac669202d860ee4ba Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 10:40:33 +0100
-Subject: [PATCH 18/22] UGLY:ENH: Add templates infrastructure
+Subject: [PATCH 18/23] ENH: Add templates infrastructure
 
 ---
  CMake/ExternalData.cmake                      |  2 +-

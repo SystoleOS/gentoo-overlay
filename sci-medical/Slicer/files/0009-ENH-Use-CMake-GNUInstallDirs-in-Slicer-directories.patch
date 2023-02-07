@@ -1,16 +1,16 @@
-From ec5d1bc8e372af5e9e2e5cbe92f49083c89ce005 Mon Sep 17 00:00:00 2001
+From 834acd420bde84169ffb2f745784ab6bb63ad3c3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 19:26:38 +0100
-Subject: [PATCH 09/22] ENH: Use CMake GNUInstallDirs in Slicer directories
+Subject: [PATCH 09/23] ENH: Use CMake GNUInstallDirs in Slicer directories
 
 ---
- CMake/SlicerDirectories.cmake | 24 +++++++++++++++++++-----
- CMakeLists.txt                |  4 ++--
+ CMake/SlicerDirectories.cmake | 46 +++++++++++++++++++++++------------
+ CMakeLists.txt                |  4 +--
  Libs/CMakeLists.txt           |  3 ++-
- 3 files changed, 23 insertions(+), 8 deletions(-)
+ 3 files changed, 34 insertions(+), 19 deletions(-)
 
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index 10785b6fd1..5cc6b25306 100644
+index 10785b6fd1..fd52ad6d93 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
 @@ -54,12 +54,14 @@ endif()
@@ -33,10 +33,26 @@ index 10785b6fd1..5cc6b25306 100644
  set(Slicer_ITKFACTORIES_DIR "${Slicer_LIB_DIR}/ITKFactories")
  set(Slicer_QM_DIR "${Slicer_BIN_DIR}/translations")
  
-@@ -77,6 +79,18 @@ set(Slicer_INSTALL_LIBEXEC_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
- set(Slicer_INSTALL_ITKFACTORIES_DIR "${Slicer_INSTALL_LIB_DIR}/ITKFactories")
- set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
- 
+@@ -69,14 +71,26 @@ set(Slicer_BUNDLE_LOCATION "${Slicer_MAIN_PROJECT_APPLICATION_NAME}.app/Contents
+ if(APPLE)
+   set(Slicer_INSTALL_ROOT "${Slicer_BUNDLE_LOCATION}/") # Set to create Bundle
+ endif()
+-set(Slicer_INSTALL_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_BIN_DIR}")
+-set(Slicer_INSTALL_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIB_DIR}")
+-set(Slicer_INSTALL_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_INCLUDE_DIR}")
+-set(Slicer_INSTALL_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_SHARE_DIR}")
+-set(Slicer_INSTALL_LIBEXEC_DIR "${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
+-set(Slicer_INSTALL_ITKFACTORIES_DIR "${Slicer_INSTALL_LIB_DIR}/ITKFactories")
+-set(Slicer_INSTALL_QM_DIR "${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
+-
++set(Slicer_INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_BIN_DIR}")
++set(Slicer_INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_LIB_DIR}")
++set(Slicer_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_INCLUDE_DIR}")
++set(Slicer_INSTALL_SHARE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_SHARE_DIR}")
++set(Slicer_INSTALL_LIBEXEC_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
++set(Slicer_INSTALL_ITKFACTORIES_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_ITKFACTORIES_LIB_DIR}/ITKFactories")
++set(Slicer_INSTALL_QM_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
++
 +# CMake install directories according to
 +# https://cmake.org/cmake/help/latest/command/find_package.html
 +if(WIN32)
@@ -52,6 +68,19 @@ index 10785b6fd1..5cc6b25306 100644
  
  #-----------------------------------------------------------------------------
  # Slicer CLI relative directories
+@@ -93,9 +107,9 @@ set(Slicer_CLIMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
+ set(Slicer_CLIMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_CLIMODULES_SUBDIR}")
+ 
+ # for install tree
+-set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_BIN_DIR}")
+-set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_LIB_DIR}")
+-set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_SHARE_DIR}")
++set(Slicer_INSTALL_CLIMODULES_BIN_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_BIN_DIR}")
++set(Slicer_INSTALL_CLIMODULES_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_LIB_DIR}")
++set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_CLIMODULES_SHARE_DIR}")
+ 
+ 
+ #-----------------------------------------------------------------------------
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 870425e9b6..d261e20b03 100644
 --- a/CMakeLists.txt

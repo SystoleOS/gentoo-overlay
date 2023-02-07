@@ -1,7 +1,7 @@
-From 27be7571e8dc4d9ef3f05548917d9c2bcebb6a20 Mon Sep 17 00:00:00 2001
+From 2a03cd1dd2598cb41c3c5f7e891420ac85239c22 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 13:37:11 +0100
-Subject: [PATCH 14/22] ENH: Add CTK as requirement in UseSlicer.cmake
+Subject: [PATCH 14/23] ENH: Add CTK as requirement in UseSlicer.cmake
 
 This closes SystoleOS/gentoo-overlay#62
 ---

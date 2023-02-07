@@ -1,7 +1,7 @@
-From 5032520d04935456f6c88d71a8fa911c4785af4f Mon Sep 17 00:00:00 2001
+From 649f0d50348b8b6b209f7fa2db30b515484c590a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 16:06:59 +0100
-Subject: [PATCH 16/22] UGLY:ENH: Remove extension/launcher cmake code from
+Subject: [PATCH 16/23] ENH: Remove extension/launcher cmake code from
  UseSlicer.cmake
 
 ---

@@ -57,29 +57,31 @@ RDEPEND="
 BDEPEND=">=dev-util/cmake-3.23.1"
 
 PATCHES=(
- ${FILESDIR}/0001-COMP-Add-vtk-CommonSystem-component-as-requirement.patch
- ${FILESDIR}/0002-COMP-Find-Eigen-required.patch
- ${FILESDIR}/0003-COMP-Adapt-to-new-qRestAPI-cmake.patch
- ${FILESDIR}/0004-ENH-Make-optional-the-use-of-Slicer-ITK.patch
- ${FILESDIR}/0005-ENH-Remove-conditional-code-for-old-VTK.patch
- ${FILESDIR}/0006-ENH-Limit-CPack-on-non-superbuild-mode.patch
- ${FILESDIR}/0007-ENH-Install-testing-data-only-with-testing-support.patch
- ${FILESDIR}/0008-ENH-Remove-the-App-real-suffix-from-Slicer-executabl.patch
- ${FILESDIR}/0009-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
- ${FILESDIR}/0010-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
- ${FILESDIR}/0011-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
- ${FILESDIR}/0012-ENH-Generate-and-Install-SlicerConfig-install-tree.patch
- ${FILESDIR}/0013-ENH-Make-installed-CMake-files-available.patch
- ${FILESDIR}/0014-ENH-Add-CTK-as-requirement-in-UseSlicer.cmake.patch
- ${FILESDIR}/0015-ENH-Add-vtkAddon-as-a-requirement-in-UseSlicer.cmake.patch
- ${FILESDIR}/0016-UGLY-ENH-Remove-extension-launcher-cmake-code-from-U.patch
- ${FILESDIR}/0017-GOOD-ENH-Installation-and-setup-qSlicerExport.h.in.patch
- ${FILESDIR}/0018-UGLY-ENH-Add-templates-infrastructure.patch
- ${FILESDIR}/0019-ENH-Update-SlicerInstallConfig.patch
- ${FILESDIR}/0020-ENH-Enable-installation-of-SLicerBase-header-files.patch
- ${FILESDIR}/0021-ENH-Fix-qt-loadable-modules-installation-dirs.patch
- ${FILESDIR}/0022-ENH-Provide-an-install-version-ov-vtkSlicerConfigure.patch
- )
+	${FILESDIR}/0001-COMP-Add-vtk-CommonSystem-component-as-requirement.patch
+	${FILESDIR}/0002-COMP-Find-Eigen-required.patch
+	${FILESDIR}/0003-COMP-Adapt-to-new-qRestAPI-cmake.patch
+	${FILESDIR}/0004-ENH-Make-optional-the-use-of-Slicer-ITK.patch
+	${FILESDIR}/0005-ENH-Remove-conditional-code-for-old-VTK.patch
+	${FILESDIR}/0006-ENH-Limit-CPack-on-non-superbuild-mode.patch
+	${FILESDIR}/0007-ENH-Install-testing-data-only-with-testing-support.patch
+	${FILESDIR}/0008-ENH-Remove-the-App-real-suffix-from-Slicer-executabl.patch
+	${FILESDIR}/0009-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
+	${FILESDIR}/0010-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
+	${FILESDIR}/0011-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
+	${FILESDIR}/0012-ENH-Generate-and-Install-SlicerConfig-install-tree.patch
+	${FILESDIR}/0013-ENH-Make-installed-CMake-files-available.patch
+	${FILESDIR}/0014-ENH-Add-CTK-as-requirement-in-UseSlicer.cmake.patch
+	${FILESDIR}/0015-ENH-Add-vtkAddon-as-a-requirement-in-UseSlicer.cmake.patch
+	${FILESDIR}/0016-ENH-Remove-extension-launcher-cmake-code-from-UseSli.patch
+	${FILESDIR}/0017-ENH-Installation-and-setup-qSlicerExport.h.in.patch
+	${FILESDIR}/0018-ENH-Add-templates-infrastructure.patch
+	${FILESDIR}/0019-ENH-Update-SlicerInstallConfig.patch
+	${FILESDIR}/0020-ENH-Enable-installation-of-SLicerBase-header-files.patch
+	${FILESDIR}/0021-ENH-Fix-qt-loadable-modules-installation-dirs.patch
+	${FILESDIR}/0022-ENH-Provide-an-install-version-ov-vtkSlicerConfigure.patch
+	${FILESDIR}/0023-ENH-Update-Slicer-build-macros.patch
+	${FILESDIR}/test.patch
+)
 
 src_prepare() {
 
@@ -118,14 +120,8 @@ src_configure(){
 		-DCTK_INSTALL_QTPLUGIN_DIR:STRING="/usr/lib64/qt5/plugins"
 		-DQT_PLUGINS_DIR:STRING="/usr/lib64/designer"
 		-DSlicer_QtPlugins_DIR:STRING="/usr/lib64/designer"
-		-DSlicer_INSTALL_PYTHOND_LIB_DIR:STRING="$(get_libdir)"
-		-DSlicer_INSTALL_PYTHON_LIB_DIR:STRING="$(python_get_sitedir)"
-		-DSlicer_INSTALL_PYTHON_BIN_DIR:STRING="$(python_get_sitedir)"
-		-DSlicer_INSTALL_BIN_DIR:STRING="bin"
 		-DjqPlot_DIR:STRING="/usr/share/jqPlot"
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${BUILD_DIR}"
-		-DSlicer_INSTALL_LIBEXEC_DIR:STRING="lib64/Slicer-5.1.0/libexec"
-		-DSlicer_INSTALL_ITKFACTORYREGISTRATION_INCLUDE_DIR:STRING="include/ITKFactoryRegistration"
 		-DSlicer_BUILD_vtkAddon:BOOL=OFF
 	)
 
@@ -140,6 +136,6 @@ src_install(){
 
 	cmake_src_install
 
-	insinto /etc/Slicer
-	doins ${FILESDIR}/SlicerLauncherSettings.ini
+	# insinto /etc/Slicer
+	# doins ${FILESDIR}/SlicerLauncherSettings.ini
 }

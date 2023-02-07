@@ -1,19 +1,19 @@
-From d56b747b04744a027d74edbb51600a5ab15e788b Mon Sep 17 00:00:00 2001
+From 1a2b2ab32ad057c237bbce27437088ebf6fa6db1 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 16:31:51 +0100
-Subject: [PATCH 22/22] ENH: Provide an install version ov vtkSlicerConfigure.h
+Subject: [PATCH 22/23] ENH: Provide an install version ov vtkSlicerConfigure.h
 
 ---
- CMakeLists.txt                           |  11 +-
+ CMakeLists.txt                           |  13 ++-
  Templates/vtkSlicerInstallConfigure.h.in | 131 +++++++++++++++++++++++
- 2 files changed, 140 insertions(+), 2 deletions(-)
+ 2 files changed, 142 insertions(+), 2 deletions(-)
  create mode 100644 Templates/vtkSlicerInstallConfigure.h.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9ad40b87df..0e448d5584 100644
+index 9ad40b87df..e2ba1fec4e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1176,12 +1176,19 @@ foreach(f ${files})
+@@ -1176,12 +1176,21 @@ foreach(f ${files})
      )
  endforeach()
  
@@ -31,7 +31,9 @@ index 9ad40b87df..0e448d5584 100644
  
 -list(APPEND files vtkSlicerVersionConfigure.h)
 +set(files vtkSlicerVersionConfigure.h)
-+list(APPEND files install/vtkSlicerConfigure.h)
++list(APPEND files
++  vtkSlicerVersionConfigureInternal.h
++  install/vtkSlicerConfigure.h)
  
  if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
  foreach(f ${files})
