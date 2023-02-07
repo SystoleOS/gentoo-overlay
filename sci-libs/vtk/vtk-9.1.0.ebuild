@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -131,9 +131,9 @@ pkg_setup() {
 }
 
 src_unpack() {
-    default
+	default
 
-    mv ${WORKDIR}/VTK* ${S}
+	mv ${WORKDIR}/VTK* ${S}
 }
 src_prepare() {
 
@@ -178,7 +178,7 @@ src_configure() {
 	vtk_configure() {
 		local mycmakeargs=(
 			-Wno-dev
-            -DVTK_VERSION_FULL:STRING="9.1.0.20220125"
+			-DVTK_VERSION_FULL:STRING="9.1.0.20220125"
 			-DVTK_CUSTOM_LIBRARY_SUFFIX=""
 			-DBUILD_SHARED_LIBS=ON
 			-DVTK_USE_LARGE_DATA=ON
@@ -201,6 +201,7 @@ src_configure() {
 			-DVTK_USE_NVCONTROL=$(usex nvidia)
 			-DVTK_USE_X=$(usex X)
 			-DVTK_ENABLE_LOGGING=$(usex logging ON OFF)
+			-DVTK_RENDERING_BACKEND:STRING="OpenGL2"
 			# IO
 			-DVTK_MODULE_ENABLE_VTK_IOGDAL=$(usex gdal YES NO)
 			-DVTK_MODULE_ENABLE_VTK_IOGeoJSON=$(usex json YES NO)
