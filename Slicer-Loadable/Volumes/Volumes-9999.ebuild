@@ -34,7 +34,7 @@ RDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-Make-Volumes-a-separate-module.patch
+	${FILESDIR}/0001-ENH-Make-Volumes-a-separate-module.patch
 )
 
 src_configure(){
@@ -43,15 +43,11 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DBUILD_TESTING=OFF
-		-DCMAKE_CXX_STANDARD=11
-		-DCMAKE_INSTALL_RPATH=/usr/lib64/Slicer-4.11:/usr/lib64/ctk-0.1:/usr/lib64/Slicer-4.11/qt-loadable-modules:/usr/lib64/ITK-5.1.0
+		-DCMAKE_CXX_STANDARD=17
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR=lib64/Slicer-4.11/qt-loadable-modules
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR=/lib64/Slicer-4.11/qt-scripted-modules
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR=lib64/Slicer-4.11/qt-scripted-modules
 		-DPYTHON_INCLUDE_DIR="$(python_get_sitedir)"
 	)
 
