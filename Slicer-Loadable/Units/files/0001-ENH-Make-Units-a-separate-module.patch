@@ -1,0 +1,30 @@
+diff --git a/Modules/Loadable/Units/CMakeLists.txt b/Modules/Loadable/Units/CMakeLists.txt
+index 261ce97c8f..bffb8216dc 100644
+--- a/Modules/Loadable/Units/CMakeLists.txt
++++ b/Modules/Loadable/Units/CMakeLists.txt
+@@ -18,12 +18,25 @@
+ #
+ ################################################################################
+ 
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(Units)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME Units)
+ set(MODULE_TITLE ${MODULE_NAME})
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
++#-----------------------------------------------------------------------------
++set(CMAKE_CXX_STANDARD "17")
++
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ add_subdirectory(Logic)
+ add_subdirectory(Widgets)
