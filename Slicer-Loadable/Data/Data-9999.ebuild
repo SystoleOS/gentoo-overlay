@@ -35,7 +35,6 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Data-a-separate-module.patch
-	${FILESDIR}/test.patch
 )
 
 src_configure(){
