@@ -1,0 +1,63 @@
+From 5b8362618412dec9b36b7246ae531b28d28c3d16 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 8 Feb 2023 13:21:57 +0100
+Subject: [PATCH] ENH: Make Annotations a separate module
+
+---
+ Modules/Loadable/Annotations/CMakeLists.txt      | 12 ++++++++++++
+ Modules/Loadable/Annotations/MRML/CMakeLists.txt |  2 +-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/Modules/Loadable/Annotations/CMakeLists.txt b/Modules/Loadable/Annotations/CMakeLists.txt
+index ca92663a5f..7ab0be2f47 100644
+--- a/Modules/Loadable/Annotations/CMakeLists.txt
++++ b/Modules/Loadable/Annotations/CMakeLists.txt
+@@ -1,9 +1,19 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(Annotations)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME "Annotations")
+ set(MODULE_TITLE "${MODULE_NAME}")
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ add_subdirectory(MRML)
+ add_subdirectory(Logic)
+@@ -45,10 +55,12 @@ set(MODULE_RESOURCES
+   )
+ 
+ set(MODULE_TARGET_LIBRARIES
++  ${CTK_LIBRARIES}
+   qSlicerBaseQTCore
+   qMRMLWidgets
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  Qt::Xml
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Annotations/MRML/CMakeLists.txt b/Modules/Loadable/Annotations/MRML/CMakeLists.txt
+index 564915bf76..5f6c272680 100644
+--- a/Modules/Loadable/Annotations/MRML/CMakeLists.txt
++++ b/Modules/Loadable/Annotations/MRML/CMakeLists.txt
+@@ -47,7 +47,7 @@ set(${KIT}_SRCS
+   )
+ 
+ set(${KIT}_TARGET_LIBRARIES
+-  ${MRML_LIBRARIES}
++  ${ITK_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+-- 
+2.39.1
+
