@@ -1,4 +1,4 @@
-From 849ad22e547a8874fac1e7567fa8aafaab36e6e2 Mon Sep 17 00:00:00 2001
+From ad8e2bf899ad5794611a6e0c33ac1caa9f597ddd Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:21:04 +0100
 Subject: [PATCH] ENH: Update Slicer build macros
@@ -102,7 +102,7 @@ index 56b443918d..54ae50737f 100644
  
    #-----------------------------------------------------------------------------
 diff --git a/CMake/SlicerMacroBuildModuleMRML.cmake b/CMake/SlicerMacroBuildModuleMRML.cmake
-index 01f55021eb..886f0909bb 100644
+index 01f55021eb..3a7b554b31 100644
 --- a/CMake/SlicerMacroBuildModuleMRML.cmake
 +++ b/CMake/SlicerMacroBuildModuleMRML.cmake
 @@ -51,6 +51,7 @@ macro(SlicerMacroBuildModuleMRML)
@@ -120,7 +120,7 @@ index 01f55021eb..886f0909bb 100644
 +  set(MODULEMRML_TARGET_LIBRARIES
 +    ${MRML_LIBRARIES}
 +    ${VTK_LIBRARIES}
-+    ${vtkAddon_LIBRARIES}
++    vtkAddon
 +  )
 +
    SlicerMacroBuildModuleVTKLibrary(

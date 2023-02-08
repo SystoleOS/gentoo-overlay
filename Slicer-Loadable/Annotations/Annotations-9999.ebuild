@@ -32,11 +32,7 @@ RDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-COMP-Make-the-module-a-separate-project.patch
-	${FILESDIR}/0002-COMP-Add-PythonQt-include-directory.patch
-	${FILESDIR}/0003-COMP-Fix-compilation-error-on-wrapping.patch
-	${FILESDIR}/0004-COMP-Change-destination-dir-for-SubjectHierarchy-in-.patch
-	${FILESDIR}/0005-COMP-Remove-redundant-special-functions-declarations.patch
+	${FILESDIR}/0001-ENH-Make-Annotations-a-separate-module.patch
 )
 
 src_configure(){
@@ -47,16 +43,11 @@ src_configure(){
 		-DBUILD_TESTING:BOOL=OFF
 		-DCMAKE_CXX_STANDARD:STRING="11"
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
-		-DCMAKE_INSTALL_RPATH:STRING="/usr/$(get_libdir)/Slicer-4.11/qt-loadable-modules"
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL:BOOL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${WORKDIR}"
-		-DSlicer_INSTALL_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11"
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-loadable-modules"
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
 		-DPYTHON_INCLUDE_DIR:STRING="$(python_get_sitedir)"
 	)
 

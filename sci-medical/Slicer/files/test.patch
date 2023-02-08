@@ -1,14 +1,13 @@
-diff --git a/Base/QTCore/qSlicerCoreApplication.cxx b/Base/QTCore/qSlicerCoreApplication.cxx
-index 960aef54c9..436f50c383 100644
---- a/Base/QTCore/qSlicerCoreApplication.cxx
-+++ b/Base/QTCore/qSlicerCoreApplication.cxx
-@@ -1459,7 +1459,8 @@ QString qSlicerCoreApplication::launcherSettingsFilePath()const
-   QString appName = this->applicationName().replace("-tmp", "");
-   if (this->isInstalled())
-     {
--    return this->slicerHome() + "/" Slicer_BIN_DIR "/" + appName + "LauncherSettings.ini";
-+      return "/etc/Slicer/SlicerLauncherSettings.ini";
-+    //return this->slicerHome() + "/" Slicer_BIN_DIR "/" + appName + "LauncherSettings.ini";
-     }
-   else
-     {
+diff --git a/Modules/Loadable/Markups/MRML/CMakeLists.txt b/Modules/Loadable/Markups/MRML/CMakeLists.txt
+index 86720a9608..56b2e4fa6d 100644
+--- a/Modules/Loadable/Markups/MRML/CMakeLists.txt
++++ b/Modules/Loadable/Markups/MRML/CMakeLists.txt
+@@ -70,7 +70,7 @@ set(${KIT}_SRCS
+   )
+ 
+ set(${KIT}_TARGET_LIBRARIES
+-  ${MRML_LIBRARIES}
++  ${ITK_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------

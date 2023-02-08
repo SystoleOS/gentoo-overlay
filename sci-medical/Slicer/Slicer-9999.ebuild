@@ -80,6 +80,7 @@ PATCHES=(
 	${FILESDIR}/0021-ENH-Fix-qt-loadable-modules-installation-dirs.patch
 	${FILESDIR}/0022-ENH-Provide-an-install-version-ov-vtkSlicerConfigure.patch
 	${FILESDIR}/0023-ENH-Update-Slicer-build-macros.patch
+	${FILESDIR}/test.patch
 )
 
 src_prepare() {
