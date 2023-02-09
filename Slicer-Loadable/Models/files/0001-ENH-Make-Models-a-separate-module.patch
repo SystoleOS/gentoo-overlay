@@ -1,172 +1,122 @@
-From a8bf4c49613669ae42369b36784aba459765bb13 Mon Sep 17 00:00:00 2001
-From: Rafael Palomar <rafael.palomar@rr-research.no>
-Date: Sun, 19 Jan 2020 10:16:25 +0100
+From 0e705f3bf292d86029a4ecd884b61c93bed9fd7d Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 9 Feb 2023 10:49:02 +0100
 Subject: [PATCH] ENH: Make Models a separate module
 
 ---
- Modules/Loadable/Models/CMakeLists.txt        | 27 ++++++++++++++++++-
- Modules/Loadable/Models/Logic/CMakeLists.txt  |  6 +++++
- .../SubjectHierarchyPlugins/CMakeLists.txt    | 27 +++++++++++++------
- .../Loadable/Models/Widgets/CMakeLists.txt    | 13 ++++++++-
- 4 files changed, 63 insertions(+), 10 deletions(-)
+ Modules/Loadable/Models/CMakeLists.txt         | 16 +++++++++++++---
+ .../SubjectHierarchyPlugins/CMakeLists.txt     | 18 ++++++++++++++++--
+ Modules/Loadable/Models/Widgets/CMakeLists.txt |  5 ++++-
+ 3 files changed, 33 insertions(+), 6 deletions(-)
 
 diff --git a/Modules/Loadable/Models/CMakeLists.txt b/Modules/Loadable/Models/CMakeLists.txt
-index b30d82047..45a4577b1 100644
+index d8ab6e4fc0..e9132d9d9c 100644
 --- a/Modules/Loadable/Models/CMakeLists.txt
 +++ b/Modules/Loadable/Models/CMakeLists.txt
-@@ -1,3 +1,19 @@
+@@ -1,3 +1,8 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
 +project(Models)
-+
-+cmake_minimum_required(VERSION 3.0)
-+
-+find_package(Slicer REQUIRED)
-+include(${Slicer_USE_FILE})
-+
-+find_package(Qt5 COMPONENTS Widgets Network Xml PrintSupport REQUIRED)
-+find_package(VTK REQUIRED)
-+include(${VTK_USE_FILE})
-+
-+find_package(CTK REQUIRED)
-+include(${CTK_USE_FILE})
-+
-+find_package(ITK REQUIRED)
-+include(${ITK_USE_FILE})
  
  #-----------------------------------------------------------------------------
  set(MODULE_NAME Models)
-@@ -20,7 +36,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+@@ -5,6 +10,10 @@ set(MODULE_TITLE "${MODULE_NAME}")
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ add_subdirectory(Logic)
+ add_subdirectory(SubjectHierarchyPlugins)
+@@ -20,12 +29,13 @@ set(MODULE_INCLUDE_DIRECTORIES
    ${CMAKE_CURRENT_BINARY_DIR}/Logic
    ${CMAKE_CURRENT_SOURCE_DIR}/SubjectHierarchyPlugins
    ${CMAKE_CURRENT_BINARY_DIR}/SubjectHierarchyPlugins
 -  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerColorsModuleWidgets
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerColorsModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerColorsModuleLogic
    ${CMAKE_CURRENT_SOURCE_DIR}/Widgets
    ${CMAKE_CURRENT_BINARY_DIR}/Widgets
-   )
-@@ -55,12 +71,21 @@ set(MODULE_TARGET_LIBRARIES
-   qSlicer${MODULE_NAME}ModuleWidgets
-   vtkSlicer${MODULE_NAME}ModuleLogic
-   qSlicer${MODULE_NAME}SubjectHierarchyPlugins
-+  qMRMLWidgets
-+  qSlicerBaseQTGUI
-+  qSlicerBaseQTCore
+-  ${qSlicerColorsModuleWidgets_INCLUDE_DIRS}
+   ${vtkSlicerColorsModuleMRML_INCLUDE_DIRS}
+-  ${vtkSlicerColorsModuleLogic_INCLUDE_DIRS}
    )
  
- set(MODULE_RESOURCES
-   Resources/qSlicer${MODULE_NAME}Module.qrc
-   )
- 
-+link_directories(
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-+  ${Slicer_Libs_LIBRARY_DIRS}
-+  ${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR}
-+  )
-+
- #-----------------------------------------------------------------------------
- slicerMacroBuildLoadableModule(
-   NAME ${MODULE_NAME}
-diff --git a/Modules/Loadable/Models/Logic/CMakeLists.txt b/Modules/Loadable/Models/Logic/CMakeLists.txt
-index d6f0ceed8..03f265f39 100644
---- a/Modules/Loadable/Models/Logic/CMakeLists.txt
-+++ b/Modules/Loadable/Models/Logic/CMakeLists.txt
-@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
- set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
- 
- set(${KIT}_INCLUDE_DIRECTORIES
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerColorsModuleLogic
-   )
- 
- set(${KIT}_SRCS
-@@ -14,8 +15,13 @@ set(${KIT}_SRCS
- 
- set(${KIT}_TARGET_LIBRARIES
-   ${ITK_LIBRARIES}
-+  MRMLLogic
-+  MRMLCore
-+  SlicerBaseLogic
-   )
- 
-+link_directories(${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR})
-+
- #-----------------------------------------------------------------------------
- SlicerMacroBuildModuleLogic(
-   NAME ${KIT}
+ set(MODULE_SRCS
 diff --git a/Modules/Loadable/Models/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Loadable/Models/SubjectHierarchyPlugins/CMakeLists.txt
-index db8ed399f..3b2d3a30e 100644
+index db8ed399f3..6de14a30e2 100644
 --- a/Modules/Loadable/Models/SubjectHierarchyPlugins/CMakeLists.txt
 +++ b/Modules/Loadable/Models/SubjectHierarchyPlugins/CMakeLists.txt
-@@ -5,14 +5,13 @@ set(KIT ${PROJECT_NAME})
- set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_${MODULE_NAME_UPPER}_SUBJECT_HIERARCHY_PLUGINS_EXPORT")
- 
- set(${KIT}_INCLUDE_DIRECTORIES
--  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
--  ${vtkSlicerSubjectHierarchyModuleLogic_INCLUDE_DIRS}
--  ${qSlicerTerminologiesModuleWidgets_INCLUDE_DIRS}
--  ${vtkSlicerTerminologiesModuleLogic_INCLUDE_DIRS}
--  ${vtkSegmentationCore_INCLUDE_DIRS}
--  ${qMRMLWidgets_INCLUDE_DIRS}
--  ${MRMLLogic_INCLUDE_DIRS}
--  ${MRMLCore_INCLUDE_DIRS}
+@@ -10,9 +10,14 @@ set(${KIT}_INCLUDE_DIRECTORIES
+   ${qSlicerTerminologiesModuleWidgets_INCLUDE_DIRS}
+   ${vtkSlicerTerminologiesModuleLogic_INCLUDE_DIRS}
+   ${vtkSegmentationCore_INCLUDE_DIRS}
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
-+  ${Qt5Core_INCLUDE_DIRS}
-+  ${Qt5Widgets_INCLUDE_DIRS}
-+  ${Slicer_Libs_INCLUDE_DIRS}
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerTerminologiesModuleWidgets
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerTerminologiesModuleLogic
+   ${qMRMLWidgets_INCLUDE_DIRS}
+-  ${MRMLLogic_INCLUDE_DIRS}
+-  ${MRMLCore_INCLUDE_DIRS}
++  ${MRML_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
 +  ${Slicer_Base_INCLUDE_DIRS}
++  ${Slicer_Libs_INCLUDE_DIRS}
    )
  
  set(${KIT}_SRCS
-@@ -39,6 +38,18 @@ set(${KIT}_TARGET_LIBRARIES
+@@ -31,6 +36,8 @@ set(${KIT}_RESOURCES
+   Resources/${KIT}.qrc
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ set(${KIT}_TARGET_LIBRARIES
+   qSlicerSubjectHierarchyModuleWidgets
+@@ -39,6 +46,13 @@ set(${KIT}_TARGET_LIBRARIES
    qMRMLWidgets
    MRMLLogic
    MRMLCore
-+  Qt5::Core
-+  Qt5::Widgets
++  Qt::Core
++  Qt::Gui
 +  ${VTK_LIBRARIES}
++  ${vtkAddon_LIBRARIES}
++  ${Slicer_Base_LIBRARIES}
++  ${Slicer_LIBRARIES}
 +  ${CTK_LIBRARIES}
-+  qSlicerSubjectHierarchyModuleWidgets
-+  vtkSegmentationCore
-+  )
-+
-+link_directories(
-+  ${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR}
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-+  ${Slicer_Libs_LIB_DIRS}
    )
  
  #-----------------------------------------------------------------------------
 diff --git a/Modules/Loadable/Models/Widgets/CMakeLists.txt b/Modules/Loadable/Models/Widgets/CMakeLists.txt
-index 2647d7a9c..5e8db4e75 100644
+index 2647d7a9c7..4e1a1ebed1 100644
 --- a/Modules/Loadable/Models/Widgets/CMakeLists.txt
 +++ b/Modules/Loadable/Models/Widgets/CMakeLists.txt
-@@ -5,7 +5,9 @@ set(KIT ${PROJECT_NAME})
+@@ -5,7 +5,7 @@ set(KIT ${PROJECT_NAME})
  set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_QTMODULES_${MODULE_NAME_UPPER}_WIDGETS_EXPORT")
  
  set(${KIT}_INCLUDE_DIRECTORIES
 -  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
-+  ${Qt5Gui_INCLUDE_DIRS}
-+  ${Qt5Widgets_INCLUDE_DIRS}
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
    )
  
  set(${KIT}_SRCS
-@@ -26,6 +28,15 @@ set(${KIT}_RESOURCES
+@@ -26,6 +26,9 @@ set(${KIT}_RESOURCES
  
  set(${KIT}_TARGET_LIBRARIES
    qSlicerSubjectHierarchyModuleWidgets
-+  ${CTK_LIBRARIES}
-+  Qt5::Widgets
-+  qMRMLWidgets
-+  MRMLCore
-+  )
-+
-+link_directories(
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-+  ${Slicer_Base_LIBRARY_DIRS}
++  ${Slicer_Base_LIBRARIES}
++  ${Slicer_LIBRARIES}
++  ${MRML_LIBRARIES}
    )
  
  #-----------------------------------------------------------------------------
 -- 
-2.24.1
+2.39.1
 
