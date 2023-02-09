@@ -1,116 +1,88 @@
-From 2b8fa19b1d3dc47d461b66c597e4450a53ed96c0 Mon Sep 17 00:00:00 2001
-From: Rafael Palomar <rafael.palomar@rr-research.no>
-Date: Sun, 19 Jan 2020 13:13:55 +0100
-Subject: [PATCH 1/3] ENH: Make SceneViews a separate module
+From 3f5ec8669a8cc00c3a160c66fb5b3d8dca7533cd Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 9 Feb 2023 15:59:37 +0100
+Subject: [PATCH] ENH: Make SceneViews a separate module
 
 ---
- Modules/Loadable/SceneViews/CMakeLists.txt    | 26 ++++++++++++++++++-
- .../Loadable/SceneViews/Logic/CMakeLists.txt  |  9 +++++++
- .../SubjectHierarchyPlugins/CMakeLists.txt    | 16 +++++++++---
- 3 files changed, 47 insertions(+), 4 deletions(-)
+ Modules/Loadable/SceneViews/CMakeLists.txt        | 15 ++++++++++++++-
+ .../SubjectHierarchyPlugins/CMakeLists.txt        | 11 +++++++++--
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/Modules/Loadable/SceneViews/CMakeLists.txt b/Modules/Loadable/SceneViews/CMakeLists.txt
-index e51d0e3e77..f8f447efe2 100644
+index e51d0e3e77..b3b473ec32 100644
 --- a/Modules/Loadable/SceneViews/CMakeLists.txt
 +++ b/Modules/Loadable/SceneViews/CMakeLists.txt
-@@ -1,3 +1,19 @@
+@@ -1,3 +1,8 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
 +project(SceneViews)
-+
-+cmake_minimum_required(VERSION 3.0)
-+
-+find_package(Slicer REQUIRED)
-+include(${Slicer_USE_FILE})
-+
-+find_package(Qt5 COMPONENTS Widgets Network Xml PrintSupport REQUIRED)
-+find_package(VTK REQUIRED)
-+include(${VTK_USE_FILE})
-+
-+find_package(CTK REQUIRED)
-+include(${CTK_USE_FILE})
-+
-+find_package(ITK REQUIRED)
-+include(${ITK_USE_FILE})
  
  #-----------------------------------------------------------------------
  set(MODULE_NAME SceneViews)
-@@ -20,7 +36,8 @@ set(MODULE_INCLUDE_DIRECTORIES
+@@ -5,6 +10,10 @@ set(MODULE_TITLE "Scene Views")
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ add_subdirectory(Logic)
+ add_subdirectory(SubjectHierarchyPlugins)
+@@ -20,7 +29,9 @@ set(MODULE_INCLUDE_DIRECTORIES
    ${CMAKE_CURRENT_BINARY_DIR}/Logic
    ${CMAKE_CURRENT_SOURCE_DIR}/SubjectHierarchyPlugins
    ${CMAKE_CURRENT_BINARY_DIR}/SubjectHierarchyPlugins
 -  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
-+  ${Qt5Xml_INCLUDE_DIRS}
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
++  ${Slicer_Libs_INCLUDE_DIRS}
++  ${CTK_INCLUDE_DIRS}
    )
  
  set(GUI_SRCS
-@@ -55,6 +72,13 @@ set(MODULE_TARGET_LIBRARIES
+@@ -55,6 +66,8 @@ set(MODULE_TARGET_LIBRARIES
    qMRMLWidgets
    vtkSlicer${MODULE_NAME}ModuleLogic
    qSlicer${MODULE_NAME}SubjectHierarchyPlugins
-+  qSlicerBaseQTGUI
 +  ${CTK_LIBRARIES}
-+  )
-+
-+link_directories(
-+  ${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR}
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-   )
- 
- #-----------------------------------------------------------------------------
-diff --git a/Modules/Loadable/SceneViews/Logic/CMakeLists.txt b/Modules/Loadable/SceneViews/Logic/CMakeLists.txt
-index eb3237f815..540f97ed7b 100644
---- a/Modules/Loadable/SceneViews/Logic/CMakeLists.txt
-+++ b/Modules/Loadable/SceneViews/Logic/CMakeLists.txt
-@@ -15,6 +15,15 @@ set(${KIT}_SRCS
-   )
- 
- set(${KIT}_TARGET_LIBRARIES
-+  MRMLLogic
-+  MRMLCore
-+  SlicerBaseLogic
-+  ${VTK_LIBRARIES}
-+  )
-+
-+link_directories(
-+  ${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR}
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
++  Qt::Xml
    )
  
  #-----------------------------------------------------------------------------
 diff --git a/Modules/Loadable/SceneViews/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Loadable/SceneViews/SubjectHierarchyPlugins/CMakeLists.txt
-index 0ec7d66e7c..1db699334c 100644
+index 0ec7d66e7c..fcb9a7fed6 100644
 --- a/Modules/Loadable/SceneViews/SubjectHierarchyPlugins/CMakeLists.txt
 +++ b/Modules/Loadable/SceneViews/SubjectHierarchyPlugins/CMakeLists.txt
-@@ -5,8 +5,10 @@ set(KIT ${PROJECT_NAME})
- set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_${MODULE_NAME_UPPER}_SUBJECT_HIERARCHY_PLUGINS_EXPORT")
+@@ -6,8 +6,10 @@ set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_${MODULE_NAME_UPPER}_SUBJECT_HIERARCHY_PLU
  
  set(${KIT}_INCLUDE_DIRECTORIES
--  ${MRMLCore_INCLUDE_DIRS}
+   ${MRMLCore_INCLUDE_DIRS}
 -  ${vtkSlicerSubjectHierarchyModuleLogic_INCLUDE_DIRS}
-+  ${Slicer_Libs_INCLUDE_DIRS}
+-  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
 +  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
-+  ${Qt5Core_INCLUDE_DIRS}
-+  ${Qt5Widgets_INCLUDE_DIRS}
-   ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSubjectHierarchyModuleLogic
++  ${MRML_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
    )
  
-@@ -30,7 +32,15 @@ set(${KIT}_RESOURCES
- set(${KIT}_TARGET_LIBRARIES
+ set(${KIT}_SRCS
+@@ -31,8 +33,13 @@ set(${KIT}_TARGET_LIBRARIES
    vtkSlicerSubjectHierarchyModuleLogic
    qSlicerSubjectHierarchyModuleWidgets
--  ${QT_LIBRARIES}
-+  Qt5::Core
+   ${QT_LIBRARIES}
 +  ${VTK_LIBRARIES}
-+  MRMLLogic
-+  MRMLCore
-+  )
-+
-+link_directories(
-+  ${Slicer_HOME}/${Slicer_INSTALL_LIB_DIR}
-+  ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
++  vtkAddon
++  ${MRML_LIBRARIES}
    )
  
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
  #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleQtLibrary(
+   NAME ${KIT}
 -- 
-2.24.1
+2.39.1
 

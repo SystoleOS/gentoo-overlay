@@ -33,8 +33,6 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-SceneViews-a-separate-module.patch
-	${FILESDIR}/0002-COMP-Fix-compilation-error-on-python-wrapping.patch
-	${FILESDIR}/0003-COMP-Remove-redundant-declaration-of-special-functio.patch
 )
 
 src_configure(){
@@ -43,15 +41,11 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
-		-DCMAKE_CXX_STANDARD="11"
-		-DCMAKE_INSTALL_RPATH="/usr/$(get_libdir)/Slicer-4.11/qt-loadable-modules"
+		-DCMAKE_CXX_STANDARD="17"
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
 		-D${PN}_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL:BOOL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-loadable-modules"
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
 		-DPYTHON_INCLUDE_DIR="$(python_get_sitedir)"
 	)
 
