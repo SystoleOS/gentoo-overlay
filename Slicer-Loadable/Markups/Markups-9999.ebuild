@@ -22,7 +22,6 @@ SLOT="0"
 DEPEND="
 	sci-medical/Slicer
 	Slicer-Loadable/SubjectHierarchy
-	Slicer-Loadable/Annotations
 "
 
 RDEPEND="
@@ -34,7 +33,6 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Markups-a-separate-module.patch
-	${FILESDIR}/test.patch
 )
 
 src_configure(){
