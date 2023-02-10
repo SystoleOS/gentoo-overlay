@@ -1,12 +1,12 @@
-From 50ac39c8984ccd4740aa1b81605a5355896f207b Mon Sep 17 00:00:00 2001
+From 7ce2ae342c9c43e8254e7cbbd74958accd67075d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:37:22 +0100
 Subject: [PATCH] ENH: Make SubjectHierarchy a separate module
 
 ---
  Modules/Loadable/SubjectHierarchy/CMakeLists.txt  | 15 +++++++++++++++
- .../SubjectHierarchy/Widgets/CMakeLists.txt       | 11 +++++++++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
+ .../SubjectHierarchy/Widgets/CMakeLists.txt       | 12 ++++++++++--
+ 2 files changed, 25 insertions(+), 2 deletions(-)
 
 diff --git a/Modules/Loadable/SubjectHierarchy/CMakeLists.txt b/Modules/Loadable/SubjectHierarchy/CMakeLists.txt
 index 92257e4aa7..81fcdc945f 100644
@@ -52,7 +52,7 @@ index 92257e4aa7..81fcdc945f 100644
  
  set(MODULE_RESOURCES
 diff --git a/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt b/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt
-index 2ce4fbebc1..9372f1d22e 100644
+index 2ce4fbebc1..ad5bdeb2da 100644
 --- a/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt
 +++ b/Modules/Loadable/SubjectHierarchy/Widgets/CMakeLists.txt
 @@ -8,6 +8,8 @@ set(${KIT}_INCLUDE_DIRECTORIES
@@ -64,7 +64,7 @@ index 2ce4fbebc1..9372f1d22e 100644
    )
  if(Slicer_BUILD_CLI_SUPPORT)
    list(APPEND ${KIT}_INCLUDE_DIRECTORIES
-@@ -94,8 +96,10 @@ set_source_files_properties( qSlicerSubjectHierarchyAbstractPlugin.h WRAP_EXCLUD
+@@ -94,8 +96,11 @@ set_source_files_properties( qSlicerSubjectHierarchyAbstractPlugin.h WRAP_EXCLUD
  set(${KIT}_TARGET_LIBRARIES
    vtkSlicer${MODULE_NAME}ModuleLogic
    qSlicerTerminologiesModuleWidgets
@@ -74,10 +74,11 @@ index 2ce4fbebc1..9372f1d22e 100644
 +  ${CTK_LIBRARIES}
 +  ${Slicer_Base_LIBRARIES}
 +  vtkSlicerTerminologiesModuleLogic
++  qMRMLWidgets
    )
  if(Slicer_BUILD_CLI_SUPPORT)
    list(APPEND ${KIT}_TARGET_LIBRARIES
-@@ -103,6 +107,9 @@ if(Slicer_BUILD_CLI_SUPPORT)
+@@ -103,6 +108,9 @@ if(Slicer_BUILD_CLI_SUPPORT)
    )
  endif()
  
