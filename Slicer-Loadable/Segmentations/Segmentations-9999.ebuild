@@ -34,9 +34,6 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-Segmentations-a-separate-module.patch
-	${FILESDIR}/0002-COMP-Change-destination-dir-for-python-files.patch
-	${FILESDIR}/0003-COMP-Add-missing-include-dirs-and-libraries.patch
-	${FILESDIR}/0004-COMP-Adding-vtkITK-link-to-logic-segmentations.patch
 )
 
 src_configure(){
@@ -45,17 +42,13 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
-		-DCMAKE_CXX_STANDARD:STRING="11"
-		-DCMAKE_INSTALL_RPATH:STRING="/usr/$(get_libdir)/Slicer-4.11/qt-loadable-modules"
+		-DCMAKE_CXX_STANDARD:STRING="17"
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleMRML_DEVELOPMENT_INSTALL:BOOL=ON
 		-DvtkSlicer${PN}ModuleMRMLDisplayableManager_DEVELOPMENT_INSTALL:BOOL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING=${WORKDIR}
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-loadable-modules"
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="$(get_libdir)/Slicer-4.11/qt-scripted-modules"
 		-DPYTHON_INCLUDE_DIR:STRING="$(python_get_sitedir)"
 	)
 
