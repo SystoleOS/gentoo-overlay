@@ -48,6 +48,7 @@ src_configure(){
 		-DqSlicer${PN}ModuleWidgets_DEVELOPMENT_INSTALL=ON
 		-DvtkSlicer${PN}ModuleLogic_DEVELOPMENT_INSTALL=ON
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
+		-DSlicer_DEVELOPMENT_INSTALL:BOOL=ON
 		-DPYTHON_INCLUDE_DIR="$(python_get_sitedir)"
 	)
 
