@@ -1,17 +1,17 @@
-From 63b3de206bcbf5c754d24e5870e499bfd501434d Mon Sep 17 00:00:00 2001
+From b12ef54afae6efbedd8e5ed873c449ce02da708e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Sat, 28 Jan 2023 07:53:06 +0100
 Subject: [PATCH 19/24] ENH: Update SlicerInstallConfig
 
 ---
- Templates/SlicerInstallConfig.cmake.in | 130 ++++++++++++++-----------
- 1 file changed, 71 insertions(+), 59 deletions(-)
+ Templates/SlicerInstallConfig.cmake.in | 135 ++++++++++++++-----------
+ 1 file changed, 76 insertions(+), 59 deletions(-)
 
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index ce3e9451e4..6548449132 100644
+index ce3e9451e4..e54fa960aa 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
-@@ -47,57 +47,71 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
+@@ -47,57 +47,76 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
  # Set the Slicer_EXPORT_HEADER_TEMPLATE to the install dir
  set(Slicer_EXPORT_HEADER_TEMPLATE "@Slicer_INSTALL_TEMPLATES_DIR@/qSlicerExport.h.in")
  
@@ -108,6 +108,11 @@ index ce3e9451e4..6548449132 100644
 +  "${Slicer_INCLUDE_DIR}/qSlicerBaseQTCore"
 +  "${Slicer_INCLUDE_DIR}/qSlicerBaseQTGUI"
 +  "${Slicer_INCLUDE_DIR}/qSlicerModulesCore"
++<<<<<<< Updated upstream
++=======
++  "${Slicer_INCLUDE_DIR}/SlicerBaseLogic"
++  "${Slicer_INCLUDE_DIR}/SlicerBaseCLI"
++>>>>>>> Stashed changes
    )
  
 +# Slicer Base libraries
@@ -123,7 +128,7 @@ index ce3e9451e4..6548449132 100644
  # The location of the UseSlicer.cmake file.
  set(Slicer_USE_FILE "@Slicer_INSTALL_CMAKE_DIR@/UseSlicer.cmake")
  
-@@ -116,27 +130,25 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
+@@ -116,27 +135,25 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "@Slicer_INSTALL_CLIMODULES_SHARE_DIR@")
  

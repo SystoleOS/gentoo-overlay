@@ -1,4 +1,4 @@
-From 55f2bfbcc91f21d8cfcd7a739a1778c7e2c511da Mon Sep 17 00:00:00 2001
+From 8933e3550a5cc07789022bb7fbfc50dcccac6147 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 30 Jan 2023 13:39:41 +0100
 Subject: [PATCH 20/24] ENH: Enable installation of SLicerBase header files
@@ -8,8 +8,8 @@ Subject: [PATCH 20/24] ENH: Enable installation of SLicerBase header files
  Base/QTApp/CMakeLists.txt              | 19 ++++++++++++
  Base/QTCLI/CMakeLists.txt              | 17 +++++++++++
  Base/QTGUI/CMakeLists.txt              | 35 ++++++++++++++++++++++
- Templates/SlicerInstallConfig.cmake.in |  1 +
- 5 files changed, 106 insertions(+), 6 deletions(-)
+ Templates/SlicerInstallConfig.cmake.in |  3 --
+ 5 files changed, 105 insertions(+), 9 deletions(-)
 
 diff --git a/Base/CMakeLists.txt b/Base/CMakeLists.txt
 index 87b56a1678..f6db47f78d 100644
@@ -179,14 +179,18 @@ index d5413d555d..333b39c955 100644
  # Slicer icon engine
  #-----------------------------------------------------------------------------
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index 6548449132..08adefacb9 100644
+index e54fa960aa..a47618c12f 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
-@@ -100,6 +100,7 @@ set(Slicer_Base_INCLUDE_DIRS
+@@ -100,11 +100,8 @@ set(Slicer_Base_INCLUDE_DIRS
    "${Slicer_INCLUDE_DIR}/qSlicerBaseQTCore"
    "${Slicer_INCLUDE_DIR}/qSlicerBaseQTGUI"
    "${Slicer_INCLUDE_DIR}/qSlicerModulesCore"
-+  "${Slicer_INCLUDE_DIR}/SlicerBaseLogic"
+-<<<<<<< Updated upstream
+-=======
+   "${Slicer_INCLUDE_DIR}/SlicerBaseLogic"
+   "${Slicer_INCLUDE_DIR}/SlicerBaseCLI"
+->>>>>>> Stashed changes
    )
  
  # Slicer Base libraries
