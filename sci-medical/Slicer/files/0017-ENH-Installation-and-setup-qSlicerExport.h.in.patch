@@ -1,7 +1,7 @@
 From e866eaff87e9a224da91d856f1389e2d31bf564b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 09:39:53 +0100
-Subject: [PATCH 17/23] ENH: Installation and setup qSlicerExport.h.in
+Subject: [PATCH 17/24] ENH: Installation and setup qSlicerExport.h.in
 
 ---
  CMake/SlicerDirectories.cmake      |  3 +++
@@ -81,5 +81,5 @@ index 31ba06c9d9..3f3aba254b 100644
  # Create target to download data from the <Slicer_ExternalData_DATA_MANAGEMENT_TARGET> group.
  # This must come after all tests have been added that reference the group, so we put it last.
 -- 
-2.39.1
+2.39.2
 

@@ -1,17 +1,17 @@
-From 3e2f2d0470156173dea9e1cf5a7bc9d75a42c19c Mon Sep 17 00:00:00 2001
+From 63b3de206bcbf5c754d24e5870e499bfd501434d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Sat, 28 Jan 2023 07:53:06 +0100
-Subject: [PATCH 19/23] ENH: Update SlicerInstallConfig
+Subject: [PATCH 19/24] ENH: Update SlicerInstallConfig
 
 ---
- Templates/SlicerInstallConfig.cmake.in | 113 ++++++++++++-------------
- 1 file changed, 56 insertions(+), 57 deletions(-)
+ Templates/SlicerInstallConfig.cmake.in | 130 ++++++++++++++-----------
+ 1 file changed, 71 insertions(+), 59 deletions(-)
 
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index ce3e9451e4..987a93a6f8 100644
+index ce3e9451e4..6548449132 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
-@@ -47,57 +47,58 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
+@@ -47,57 +47,71 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
  # Set the Slicer_EXPORT_HEADER_TEMPLATE to the install dir
  set(Slicer_EXPORT_HEADER_TEMPLATE "@Slicer_INSTALL_TEMPLATES_DIR@/qSlicerExport.h.in")
  
@@ -38,7 +38,7 @@ index ce3e9451e4..987a93a6f8 100644
 +set(Slicer_INCLUDE_DIR @Slicer_INSTALL_INCLUDE_DIR@)
  
  # Slicer Libs include file directories.
- set(Slicer_Libs_INCLUDE_DIRS
+-set(Slicer_Libs_INCLUDE_DIRS
 -  "${Slicer_HOME}/include/IGT"
 -  "${Slicer_HOME}/include/ITKCommandIO"
 -  "${Slicer_HOME}/include/LoadableModule"
@@ -52,29 +52,44 @@ index ce3e9451e4..987a93a6f8 100644
 -  "${Slicer_HOME}/include/vtkITK"
 -  "${Slicer_HOME}/include/vtkSegmentationCore"
 -  "${Slicer_HOME}/include/vtkTeem"
-+  "${Slicer_INCLUDE_DIR}"
-+  "${Slicer_INCLUDE_DIR}/ITKFactoryRegistration"
+-  )
+ 
+-# Slicer Base library directories.
++set(MRML_INCLUDE_DIRS
 +  "${Slicer_INCLUDE_DIR}/MRMLCLI"
 +  "${Slicer_INCLUDE_DIR}/MRMLCore"
 +  "${Slicer_INCLUDE_DIR}/MRMLDisplayableManager"
 +  "${Slicer_INCLUDE_DIR}/MRMLIDImageIO"
 +  "${Slicer_INCLUDE_DIR}/MRMLLogic"
++)
++
++set(MRML_LIBRARIES
++  "MRMLCLI"
++  "MRMLCore"
++  "MRMLDisplayableManager"
++  "MRMLIDIO"
++  "MRMLLogic"
++)
++
++set(Slicer_Libs_INCLUDE_DIRS
++  "${Slicer_INCLUDE_DIR}"
++  "${MRML_INCLUDE_DIRS}"
++  "${Slicer_INCLUDE_DIR}/ITKFactoryRegistration"
 +  "${Slicer_INCLUDE_DIR}/RemoteIO"
 +  "${Slicer_INCLUDE_DIR}/qMRMLWidgets"
 +  "${Slicer_INCLUDE_DIR}/vtkITK"
 +  "${Slicer_INCLUDE_DIR}/vtkSegmentationCore"
 +  "${Slicer_INCLUDE_DIR}/vtkTeem"
-   )
- 
--# Slicer Base library directories.
-+ set(MRML_LIBRARIES
-+    "MRMLCLI"
-+    "MRMLCore"
-+    "MRMLDisplayableManager"
-+    "MRMLIDIO"
-+    "MRMLLogic"
-+    "qMRMLWidgets"
-+  )
++)
++
++set(Slicer_LIBRARIES
++  "ITKFactoryRegistration"
++  "RemoteIO"
++  "qMRMLWidgets"
++  "vtkITK"
++  "vtkSegmentationCore"
++  "vtkTeem"
++)
 +
 +# slicer Base library directories.
  set(Slicer_Base_LIBRARY_DIRS
@@ -108,7 +123,7 @@ index ce3e9451e4..987a93a6f8 100644
  # The location of the UseSlicer.cmake file.
  set(Slicer_USE_FILE "@Slicer_INSTALL_CMAKE_DIR@/UseSlicer.cmake")
  
-@@ -116,27 +117,25 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
+@@ -116,27 +130,25 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "@Slicer_INSTALL_CLIMODULES_SHARE_DIR@")
  
@@ -154,5 +169,5 @@ index ce3e9451e4..987a93a6f8 100644
  
  list(APPEND CMAKE_MODULE_PATH "@Slicer_INSTALL_CMAKE_DIR@")
 -- 
-2.39.1
+2.39.2
 
