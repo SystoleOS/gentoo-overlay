@@ -33,7 +33,7 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
-		-DCMAKE_CXX_STANDARD:STRING="11"
+		-DCMAKE_CXX_STANDARD:STRING="17"
 	)
 
 	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/CLI/${PN}"

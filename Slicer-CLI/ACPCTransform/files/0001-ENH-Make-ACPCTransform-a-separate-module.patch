@@ -1,5 +1,14 @@
+From db3e53876f8e27a5732193cd4894bb436ba5bc82 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 21 Feb 2023 10:06:10 +0100
+Subject: [PATCH] ENH: Make ACPCTransform a separate module
+
+---
+ Modules/CLI/ACPCTransform/CMakeLists.txt | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
 diff --git a/Modules/CLI/ACPCTransform/CMakeLists.txt b/Modules/CLI/ACPCTransform/CMakeLists.txt
-index b938e5bb83..e5b19e8b5c 100644
+index b938e5bb83..fde200d8fa 100644
 --- a/Modules/CLI/ACPCTransform/CMakeLists.txt
 +++ b/Modules/CLI/ACPCTransform/CMakeLists.txt
 @@ -1,7 +1,14 @@
@@ -26,7 +35,7 @@ index b938e5bb83..e5b19e8b5c 100644
  #-----------------------------------------------------------------------------
  SEMMacroBuildCLI(
    NAME ${MODULE_NAME}
-@@ -25,12 +34,14 @@ SEMMacroBuildCLI(
+@@ -25,14 +34,23 @@ SEMMacroBuildCLI(
      ${VTK_LIBRARIES}
      vtkSlicerMarkupsModuleMRML
    INCLUDE_DIRECTORIES
@@ -40,6 +49,18 @@ index b938e5bb83..e5b19e8b5c 100644
 -    ${vtkSlicerMarkupsModuleMRML_INCLUDE_DIRS}
 +    ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
 +    ${vtkAddon_INCLUDE_DIRS}
++  INSTALL_RUNTIME_DESTINATION ${Slicer_INSTALL_CLIMODULES_BIN_DIR}
++  INSTALL_LIBRARY_DESTINATION ${Slicer_INSTALL_CLIMODULES_LIB_DIR}
++  INSTALL_ARCHIVE_DESTINATION ${Slicer_INSTALL_CLIMODULES_LIB_DIR}
    )
  
++set_target_properties(${MODULE_NAME}Lib PROPERTIES
++  INSTALL_RPATH
++  "${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}")
++
  #-----------------------------------------------------------------------------
+ if(BUILD_TESTING)
+   add_subdirectory(Testing)
+-- 
+2.39.2
+
