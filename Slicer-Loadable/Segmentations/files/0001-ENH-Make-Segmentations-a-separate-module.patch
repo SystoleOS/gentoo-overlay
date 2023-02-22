@@ -1,4 +1,4 @@
-From 75d53349b51a5d37e87b95580bd88572c82e87cd Mon Sep 17 00:00:00 2001
+From 94e97aaaf2296088858aef4fc13006ae56b1a9ee Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 9 Feb 2023 16:33:11 +0100
 Subject: [PATCH] ENH: Make Segmentations a separate module
@@ -13,10 +13,10 @@ Subject: [PATCH] ENH: Make Segmentations a separate module
  6 files changed, 44 insertions(+), 15 deletions(-)
 
 diff --git a/Modules/Loadable/Segmentations/CMakeLists.txt b/Modules/Loadable/Segmentations/CMakeLists.txt
-index e2aa488864..51974272fe 100644
+index 7cdd231b04..eac659a972 100644
 --- a/Modules/Loadable/Segmentations/CMakeLists.txt
 +++ b/Modules/Loadable/Segmentations/CMakeLists.txt
-@@ -1,9 +1,19 @@
+@@ -1,8 +1,18 @@
 +#-----------------------------------------------------------------------------
 +cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
 +
@@ -25,7 +25,6 @@ index e2aa488864..51974272fe 100644
 +
  #-----------------------------------------------------------------------------
  set(MODULE_NAME "Segmentations")
- set(MODULE_TITLE ${MODULE_NAME})
  
  string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
  
@@ -36,7 +35,7 @@ index e2aa488864..51974272fe 100644
  #-----------------------------------------------------------------------------
  add_subdirectory(MRML)
  add_subdirectory(Logic)
-@@ -22,9 +32,9 @@ set(MODULE_INCLUDE_DIRECTORIES
+@@ -21,9 +31,9 @@ set(MODULE_INCLUDE_DIRECTORIES
    ${qSlicerSegmentationsModuleWidgets_INCLUDE_DIRS}
    ${qSlicerSegmentationsEditorEffects_INCLUDE_DIRS}
    ${qSlicerSegmentationsSubjectHierarchyPlugins_INCLUDE_DIRS}
@@ -174,5 +173,5 @@ index 99389d32fc..d84e15a81b 100644
  
  set(${KIT}_SRCS
 -- 
-2.39.1
+2.39.2
 
