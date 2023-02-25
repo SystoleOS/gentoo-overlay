@@ -1,17 +1,17 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python2_7 )
+PYTHON_COMPAT=( python3_{9,10} )
 
-inherit cmake
+inherit cmake python-single-r1
 
 DESCRIPTION="PyhtonQt for CTK"
 
 HOMEPAGE="https://github.com/commontk/PythonQt"
 
-SRC_URI="https://github.com/commontk/PythonQt/archive/dafdb7255b82163329672edebba4f267958c7376.zip -> ${P}.zip"
+SRC_URI="https://github.com/commontk/PythonQt/archive/c4a5a155b2942d4b003862c3317105b4a1ea6755.zip -> ${P}.zip"
 
 LICENSE="BSD LGPL-2"
 KEYWORDS="~amd64"
@@ -24,14 +24,30 @@ DEPEND="
 	dev-qt/designer
 	!dev-python/PythonQt
 "
-RDEPEND="${DEPEND}"
-BDEPEND="app-arch/unzip"
+RDEPEND="
+	${DEPEND}
+	${PYTHON_DEPS}
+"
+BDEPEND="
+	${RDEPEND}
+	app-arch/unzip
+"
+
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+
+PATCHES=(
+	${FILESDIR}/0001-ENH-Improve-python-detection-and-include-dirs.patch
+)
 
 src_unpack(){
 
 	default
 
 	mv ${WORKDIR}/* ${WORKDIR}/${P}
+}
+
+pkg_setup() {
+	python-single-r1_pkg_setup
 }
 
 src_configure() {
@@ -43,11 +59,7 @@ src_configure() {
 		-DBUILD_TESTING=OFF
 		-DPythonQt_INSTALL_LIBRARY_DIR=$(get_libdir)
 		-DPythonQt_QT_VERSION=5
-		-DQT_QMAKE_EXECUTABLE=/usr/lib64/qt5/bin/qmake
-	)
-
-	# PythonQt Wrapping
-	mycmakeargs+=(
+		-DPython3_INCLUDE_DIR:FILEPATH=$(python_get_includedir)
 		-DPythonQt_Wrap_QtAll=ON
 	)
 

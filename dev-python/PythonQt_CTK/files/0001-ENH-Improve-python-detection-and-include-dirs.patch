@@ -1,0 +1,34 @@
+From b6e1e231b4c4c255e2ca23e20ba939906fb5fbef Mon Sep 17 00:00:00 2001
+From: RafaelPalomar <rafael.palomar@ous-research.no>
+Date: Sat, 25 Feb 2023 06:51:42 +0100
+Subject: [PATCH] ENH: Improve python detection and include dirs
+
+---
+ CMakeLists.txt | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index f97e8a5..2de247b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -53,8 +53,15 @@ endif()
+ #-----------------------------------------------------------------------------
+ # Python libraries
+ 
+-find_package(PythonLibs REQUIRED)
+-include_directories("${PYTHON_INCLUDE_DIR}")
++find_package(Python3 REQUIRED Development.Module)
++if("${Python3_VERSION_MAJOR}.${Python3_VERSION_MINOR}" VERSION_GREATER "3.9")
++  include_directories(
++    "${Python3_INCLUDE_DIRS}"
++    "${Python3_INCLUDE_DIRS}/cpython"
++  )
++else()
++  include_directories("${Python3_INCLUDE_DIRS}")
++endif()
+ add_definitions(
+   -DPYTHONQT_USE_RELEASE_PYTHON_FALLBACK
+   -DPYTHONQT_SUPPORT_NAME_PROPERTY
+-- 
+2.39.2
+
