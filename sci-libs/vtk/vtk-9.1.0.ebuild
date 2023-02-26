@@ -93,7 +93,7 @@ RDEPEND="
 		dev-qt/qtx11extras:5
 		dev-qt/qtquickcontrols:5
 		$(python_gen_cond_dep '
-			python? ( dev-python/PyQt5[${PYTHON_USEDEP}] )
+			python? ( dev-python/PyQt5[${PYTHON_USEDEP},opengl,gui,widgets] )
 		')
 	)
 	R? ( dev-lang/R )
