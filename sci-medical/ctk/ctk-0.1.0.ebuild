@@ -2,9 +2,9 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9,10,11})
+PYTHON_COMPAT=( python3_{9,10})
 
-inherit python-r1 cmake
+inherit python-single-r1 cmake
 
 # Short one-line description of this package.
 DESCRIPTION="A set of common support code for medical imaging, surgical navigation, and related purposes"
@@ -41,12 +41,16 @@ DEPEND="
 	dev-qt/qtxml
 	sci-libs/itk
 "
+
 RDEPEND="
 	${DEPEND}
 	python? ( ${PYTHON_DEPS} )
 "
 
-BDEPEND="app-arch/unzip"
+BDEPEND="
+	app-arch/unzip
+	${RDEPEND}
+"
 
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
@@ -65,61 +69,46 @@ src_unpack() {
 	mv ${WORKDIR}/CTK-${COMMIT} ${WORKDIR}/${PN}-${PV} || die
 }
 
-src_prepare() {
 
-	cmake_src_prepare
+pkg_setup() {
+	use python && python-single-r1_pkg_setup
 }
 
 src_configure(){
 
-	configure() {
+	local mycmakeargs=()
 
-		local mycmakeargs=()
+	mycmakeargs+=(
+		-DCTK_QT_VERSION=5
+		-DBUILD_TESTING=OFF
+		-DCTK_BUILD_QTDESIGNER_PLUGINS=ON
+		-DCTK_BUILD_SHARED_LIBS=ON
+		-DCTK_ENABLE_DICOM=OFF
+		-DCTK_ENABLE_PluginFramework=OFF
+		-DCTK_ENABLE_Widgets=ON
+		-DCTK_LIB_Core=ON
+		-DCTK_LIB_ImageProcessing/ITK/Core=ON
+		-DCTK_LIB_Visualization/VTK/Core=ON
+		-DCTK_LIB_Visualization/VTK/Widgets=ON
+		-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
+		-DCTK_SUPERBUILD=OFF
+		-DCTK_INSTALL_LIB_DIR:STRING=$(get_libdir)
+		-DCTK_INSTALL_QTPLUGIN_DIR:STRING="$(get_libdir)/qt5/plugins"
+		# PythonQt wrapping
+		-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTCORE:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTGUI:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTUITOOLS:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTNETWORK:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Widgets:BOOL="$(usex python)"
+		-DCTK_ENABLE_Python_Wrapping:BOOL="$(usex python)"
+	)
 
-		mycmakeargs+=(
-			-DCTK_QT_VERSION=5
-			-DBUILD_TESTING=OFF
-			-DCTK_BUILD_QTDESIGNER_PLUGINS=ON
-			-DCTK_BUILD_SHARED_LIBS=ON
-			-DCTK_ENABLE_DICOM=OFF
-			-DCTK_ENABLE_PluginFramework=OFF
-			-DCTK_ENABLE_Widgets=ON
-			-DCTK_LIB_Core=ON
-			-DCTK_LIB_ImageProcessing/ITK/Core=ON
-			-DCTK_LIB_Visualization/VTK/Core=ON
-			-DCTK_LIB_Visualization/VTK/Widgets=ON
-			-DCTK_LIB_Visualization/VTK/Widgets_USE_TRANSFER_FUNCTION_CHARTS=ON
-			-DCTK_SUPERBUILD=OFF
-			-DCTK_INSTALL_LIB_DIR:STRING=$(get_libdir)
-			-DCTK_INSTALL_QTPLUGIN_DIR:STRING="$(get_libdir)/qt5/plugins"
-			# PythonQt wrapping
-			-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTCORE:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTGUI:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTUITOOLS:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTNETWORK:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL="$(usex python)"
-			-DCTK_LIB_Scripting/Python/Widgets:BOOL="$(usex python)"
-			-DCTK_ENABLE_Python_Wrapping:BOOL="$(usex python)"
-		)
+	if use python;then
+	   mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
+	fi
 
-		if use python;then
-			mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
-		fi
-
-		cmake_src_configure
-	}
-
-	python_foreach_impl run_in_build_dir configure
-}
-
-src_compile()
-{
-	python_foreach_impl run_in_build_dir cmake_src_compile
-}
-
-src_install()
-{
-	python_foreach_impl run_in_build_dir cmake_src_install
+	   cmake_src_configure
 }
