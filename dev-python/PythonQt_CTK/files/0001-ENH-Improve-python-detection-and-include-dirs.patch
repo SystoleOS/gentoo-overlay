@@ -1,7 +1,7 @@
 From b6e1e231b4c4c255e2ca23e20ba939906fb5fbef Mon Sep 17 00:00:00 2001
 From: RafaelPalomar <rafael.palomar@ous-research.no>
 Date: Sat, 25 Feb 2023 06:51:42 +0100
-Subject: [PATCH] ENH: Improve python detection and include dirs
+Subject: [PATCH 1/2] ENH: Improve python detection and include dirs
 
 ---
  CMakeLists.txt | 11 +++++++++--

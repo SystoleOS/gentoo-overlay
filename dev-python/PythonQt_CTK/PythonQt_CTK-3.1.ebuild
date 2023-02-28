@@ -37,6 +37,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Improve-python-detection-and-include-dirs.patch
+	${FILESDIR}/0002-ENH-Remove-unconditionall-undefs.patch
 )
 
 src_unpack(){

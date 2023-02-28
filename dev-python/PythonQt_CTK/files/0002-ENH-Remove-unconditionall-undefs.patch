@@ -1,0 +1,40 @@
+From 9b0605c8051dbab8d2fcd650a8f61e6bc4645a4f Mon Sep 17 00:00:00 2001
+From: RafaelPalomar <rafael.palomar@ous-research.no>
+Date: Tue, 28 Feb 2023 12:15:49 +0100
+Subject: [PATCH 2/2] ENH: Remove unconditionall undefs
+
+This commits helps solving SystoleOS/gentoo-overlay#74 by removing the
+conditional undefs that causes non-defined types when use with Python
+3.10. Check referenced issue for more information.
+---
+ src/PythonQtPythonInclude.h | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/src/PythonQtPythonInclude.h b/src/PythonQtPythonInclude.h
+index f4c012f..869fb79 100644
+--- a/src/PythonQtPythonInclude.h
++++ b/src/PythonQtPythonInclude.h
+@@ -34,9 +34,17 @@
+ #define __PythonQtPythonInclude_h
+ 
+ // Undefine macros that Python.h defines to avoid redefinition warning.
+-#undef _POSIX_C_SOURCE
+-#undef _POSIX_THREADS
+-#undef _XOPEN_SOURCE
++#ifdef _POSIX_C_SOURCE
++#  undef _POSIX_C_SOURCE
++#endif
++
++/* #ifdef _POSIX_THREADS */
++/* #  undef _POSIX_THREADS */
++/* #endif */
++
++#ifdef _XOPEN_SOURCE
++#  undef _XOPEN_SOURCE
++#endif
+ 
+ // Undefine Qt keywords that conflict with Python headers
+ #ifdef slots
+-- 
+2.39.2
+
