@@ -1,4 +1,4 @@
-From d3926835428bd47c0aa547c1a1843d961600ebf2 Mon Sep 17 00:00:00 2001
+From ffc203ae84006994d75c0f8de6b3eac7c6b43f85 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palolmar@ous-research.no>
 Date: Thu, 26 Jan 2023 14:24:10 +0100
 Subject: [PATCH 2/2] ENH: Add CMake directory to CMAKE_MODULE_PATH
@@ -31,5 +31,5 @@ index 9a74e03..282536c 100644
 +
 +list(APPEND CMAKE_MODULE_PATH ${vtkAddon_CMAKE_DIR})
 -- 
-2.34.1
+2.39.2
 
