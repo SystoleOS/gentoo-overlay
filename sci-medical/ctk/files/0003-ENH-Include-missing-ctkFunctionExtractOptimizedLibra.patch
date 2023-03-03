@@ -1,7 +1,7 @@
-From 0333f4e905ff67de20a790a4b1ce5cc439207bc0 Mon Sep 17 00:00:00 2001
+From 8cd1443f4709ba1c413770359c0769e0e4430d1c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Sun, 22 Mar 2020 21:26:45 +0100
-Subject: [PATCH 3/4] ENH: Include missing
+Subject: [PATCH 3/6] ENH: Include missing
  ctkFunctionExtractOptimizedLibrary.cmake
 
 ---
@@ -21,5 +21,5 @@ index 42325ed1..4ecf5546 100644
  set(CTK_PYTHON_COMPILE_FILE_SCRIPT_DIR "${CMAKE_BINARY_DIR}/CMakeFiles")
  
 -- 
-2.34.1
+2.39.2
 

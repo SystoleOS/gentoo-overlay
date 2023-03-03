@@ -1,0 +1,59 @@
+From c3c59f44c012cf9b571ffb786e48d2d32c291d21 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Fri, 3 Mar 2023 13:24:24 +0100
+Subject: [PATCH] ENH: Modernize Python detection
+
+---
+ CMakeLists.txt                                   | 13 +------------
+ Libs/Scripting/Python/Core/Python/CMakeLists.txt |  5 +----
+ 2 files changed, 2 insertions(+), 16 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 846be299..7bd89402 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -893,18 +893,7 @@ endif()
+ 
+ # Check if dependencies are satisfied
+ if(CTK_LIB_Scripting/Python/Core)
+-  if(NOT PYTHONINTERP_FOUND)
+-    find_package(PythonInterp)
+-    if(NOT PYTHONINTERP_FOUND)
+-      message(FATAL_ERROR "PYTHON_EXECUTABLE variable should be set to build CTK_LIB_Scripting/Python")
+-    endif()
+-  endif()
+-  if(NOT PYTHONLIBS_FOUND)
+-    find_package(PythonLibs)
+-    if(NOT PYTHONLIBS_FOUND)
+-      message(FATAL_ERROR "PYTHON_LIBRARIES and PYTHON_INCLUDE_DIRS should be set to build CTK_LIB_Scripting/Python")
+-    endif()
+-  endif()
++    find_package(Python3 REQUIRED Interpreter Development.Module)
+ endif()
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Libs/Scripting/Python/Core/Python/CMakeLists.txt b/Libs/Scripting/Python/Core/Python/CMakeLists.txt
+index 0f52c18d..6c7486f9 100644
+--- a/Libs/Scripting/Python/Core/Python/CMakeLists.txt
++++ b/Libs/Scripting/Python/Core/Python/CMakeLists.txt
+@@ -38,16 +38,13 @@ list(APPEND KIT_PYTHON_SCRIPTS ${CMAKE_CURRENT_BINARY_DIR}/ctk/__init__.py)
+ set(KIT_PYTHON_RESOURCES
+   )
+ 
+-if(NOT DEFINED PYTHON_SITE_DIR)
+-  set(PYTHON_SITE_DIR ${CTK_INSTALL_BIN_DIR})
+-endif()
+ 
+ ctkMacroCompilePythonScript(
+   TARGET_NAME ${PROJECT_NAME}
+   SCRIPTS "${KIT_PYTHON_SCRIPTS}"
+   RESOURCES "${KIT_PYTHON_RESOURCES}"
+   DESTINATION_DIR ${CTK_BINARY_DIR}/bin/Python
+-  INSTALL_DIR ${PYTHON_SITE_DIR}
++  INSTALL_DIR ${Python3_SITELIB}
+   NO_INSTALL_SUBDIR
+   )
+ 
+-- 
+2.39.2
+

@@ -59,6 +59,7 @@ PATCHES=(
 	${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
 	${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
 	${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch
+	${FILESDIR}/0006-ENH-Modernize-Python-detection.patch
 )
 
 src_unpack() {
@@ -106,9 +107,13 @@ src_configure(){
 		-DCTK_ENABLE_Python_Wrapping:BOOL="$(usex python)"
 	)
 
-	if use python;then
-	   mycmakeargs+=(-DPYTHON_SITE_DIR=$(python_get_sitedir))
+	if use python; then
+	   mycmakeargs+=(
+		   -DPython3_INCLUDE_DIR:FILEPATH="$(python_get_includedir)"
+		   -DPython3_LIBRARY:FILEPATH="$(python_get_library_path)"
+		   -DPython3_EXECUTABLE:FILEPATH="${PYTHON}"
+	   )
 	fi
 
-	   cmake_src_configure
+	cmake_src_configure
 }
