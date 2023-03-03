@@ -260,31 +260,16 @@ src_configure() {
 			$(vtk_enable_external logging loguru)
 		fi
 
-		if use python && python_is_python3; then
-
+		if use python; then
 			mycmakeargs+=(
-				-DVTK_PYTHON_VERSION="3"
 				-DPython3_EXECUTABLE="${PYTHON}"
-				-DVTK_MODULE_ENABLE_VTK_mpi4py=$(usex mpi YES NO)
-				$(vtk_enable_external mpi mpi4py)
+				-DVTK_ENABLE_WRAPPING=ON
+				-DVTK_MODULE_ENABLE_VTK_Python="WANT"
+				-DVTK_MODULE_ENABLE_VTK_PythonInterpreter="WANT"
+				-DVTK_MODULE_ENABLE_VTK_WrappingPythonCore="WANT"
+				-DVTK_PYTHON_SITE_PACKAGES_SUFFIX="lib/${EPYTHON}/site-packages"
 			)
-
-			case "${EPYTHON}" in
-
-				# Python >=3.7 installs in /usr/lib
-				python3.[7,8,9,10])
-					mycmakeargs+=(
-						-DVTK_PYTHON_SITE_PACKAGES_SUFFIX=lib/${EPYTHON}/site-packages
-					)
-					;;
-
-				# Python < 3.7 installs in /usr/lib64
-				python3.6)
-					mycmakeargs+=(
-						-DVTK_PYTHON_SITE_PACKAGES_SUFFIX=lib64/${EPYTHON}/site-packages
-					)
-					;;
-			esac
+			use rendering && mycmakeargs+=( -DVTK_MODULE_ENABLE_VTK_PythonContext2D="WANT" )
 		fi
 
 		if use R; then
