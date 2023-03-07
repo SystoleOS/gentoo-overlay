@@ -28,6 +28,10 @@ RDEPEND="
 	${PYTHON_DEPS}
 "
 
+BDEPEND="
+	sci-medical/ctk
+"
+
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-DataProbe-a-separate-module.patch
 )
