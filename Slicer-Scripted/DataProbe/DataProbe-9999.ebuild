@@ -29,7 +29,7 @@ RDEPEND="
 "
 
 BDEPEND="
-	sci-medical/ctk
+	sci-medical/ctk[python]
 "
 
 PATCHES=(
