@@ -1,7 +1,7 @@
 From 7e43283fff03d0465f397205c5d5ad1380d7ae23 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 09:39:53 +0100
-Subject: [PATCH 17/26] ENH: Installation and setup qSlicerExport.h.in
+Subject: [PATCH 17/27] ENH: Installation and setup qSlicerExport.h.in
 
 ---
  CMake/SlicerDirectories.cmake      |  3 +++

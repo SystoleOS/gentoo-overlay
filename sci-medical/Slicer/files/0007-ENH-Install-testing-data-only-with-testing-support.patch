@@ -1,7 +1,7 @@
 From ce595fa0417d5b330f73acf4bfebf44fd04f59e4 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:41:00 +0100
-Subject: [PATCH 07/26] ENH: Install testing data only with testing support
+Subject: [PATCH 07/27] ENH: Install testing data only with testing support
 
 This removes the installation of testing data when the testing support
 is not built.

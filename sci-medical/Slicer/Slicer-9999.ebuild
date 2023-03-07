@@ -67,6 +67,7 @@ PATCHES=(
 	${FILESDIR}/0005-ENH-Remove-conditional-code-for-old-VTK.patch
 	${FILESDIR}/0006-ENH-Limit-CPack-on-non-superbuild-mode.patch
 	${FILESDIR}/0007-ENH-Install-testing-data-only-with-testing-support.patch
+	# NOTE: This should be neede further down the road
 	#${FILESDIR}/0008-ENH-Remove-the-App-real-suffix-from-Slicer-executabl.patch
 	${FILESDIR}/0009-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
 	${FILESDIR}/0010-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
@@ -86,6 +87,7 @@ PATCHES=(
 	${FILESDIR}/0024-ENH-Enable-installation-of-Libs-dev-files.patch
 	${FILESDIR}/0025-ENH-Make-Testing-subdirs-subject-to-BUILD_TESTING.patch
 	${FILESDIR}/0026-ENH-Add-python-support.patch
+	${FILESDIR}/0027-ENH-Disable-variable-setting-in-UseSlicer.cmake.in.patch
 )
 
 src_prepare() {

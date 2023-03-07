@@ -1,7 +1,7 @@
 From 12e009926c408173050952667bc62df8524481ce Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
-Subject: [PATCH 26/26] ENH: Add python support
+Subject: [PATCH 26/27] ENH: Add python support
 
 ---
  Base/Python/CMakeLists.txt                    | 59 ++++++++++++-------
