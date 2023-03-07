@@ -1,7 +1,7 @@
 From c3c59f44c012cf9b571ffb786e48d2d32c291d21 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 3 Mar 2023 13:24:24 +0100
-Subject: [PATCH] ENH: Modernize Python detection
+Subject: [PATCH 6/6] ENH: Modernize Python detection
 
 ---
  CMakeLists.txt                                   | 13 +------------

@@ -1,0 +1,96 @@
+From a3c91573f81e4068c38c7f7f586a1d56cba5843e Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 7 Mar 2023 09:31:28 +0100
+Subject: [PATCH] ENH: Remove installation step from
+ ctkMacroCompilePythonScript
+
+This is an API-breaking change. It requires that all users of
+`ctkMacroCompilePythonScript` modify the call to remove the install dir
+and. From now on, the users are responsible for installing the files.
+---
+ CMake/ctkMacroCompilePythonScript.cmake       | 37 ++++++++++---------
+ .../Python/Core/Python/CMakeLists.txt         | 10 ++++-
+ 2 files changed, 28 insertions(+), 19 deletions(-)
+
+diff --git a/CMake/ctkMacroCompilePythonScript.cmake b/CMake/ctkMacroCompilePythonScript.cmake
+index 1945d06e..310108d1 100644
+--- a/CMake/ctkMacroCompilePythonScript.cmake
++++ b/CMake/ctkMacroCompilePythonScript.cmake
+@@ -25,13 +25,13 @@ set(CTK_PYTHON_COMPILE_FILE_SCRIPT_DIR "${CMAKE_BINARY_DIR}/CMakeFiles")
+ #! \ingroup CMakeAPI
+ macro(ctkMacroCompilePythonScript)
+   ctkMacroParseArguments(MY
+-    "TARGET_NAME;SCRIPTS;RESOURCES;SOURCE_DIR;DESTINATION_DIR;INSTALL_DIR"
+-    "NO_INSTALL_SUBDIR;GLOBAL_TARGET"
++    "TARGET_NAME;SCRIPTS;RESOURCES;SOURCE_DIR;DESTINATION_DIR"
++    "GLOBAL_TARGET"
+     ${ARGN}
+     )
+ 
+   # Sanity checks
+-  foreach(varname TARGET_NAME SCRIPTS DESTINATION_DIR INSTALL_DIR)
++  foreach(varname TARGET_NAME SCRIPTS DESTINATION_DIR)
+     if(NOT DEFINED MY_${varname})
+       message(FATAL_ERROR "${varname} is mandatory")
+     endif()
+@@ -88,20 +88,23 @@ macro(ctkMacroCompilePythonScript)
+     endforeach()
+   endif()
+ 
+-  set(MY_DIRECTORY_TO_INSTALL ${MY_DESTINATION_DIR})
+-  if(MY_NO_INSTALL_SUBDIR)
+-    set(MY_DIRECTORY_TO_INSTALL ${MY_DESTINATION_DIR}/)
+-  endif()
+-
+-  if(MY_SCRIPTS)
+-    install(FILES ${MY_SCRIPTS}
+-      DESTINATION "${MY_INSTALL_DIR}" COMPONENT RuntimeLibraries)
+-  endif()
+-
+-  if(MY_RESOURCES)
+-    install(FILES ${MY_RESOURCES}
+-      DESTINATION "${MY_INSTALL_DIR}" COMPONENT RuntimeLibraries)
+-  endif()
++  # set(MY_DIRECTORY_TO_INSTALL ${MY_DESTINATION_DIR})
++  # if(MY_NO_INSTALL_SUBDIR)
++  #   set(MY_DIRECTORY_TO_INSTALL ${MY_DESTINATION_DIR}/)
++  # endif()
++
++  # # Install python module / resources directory
++  # install(DIRECTORY "${MY_DIRECTORY_TO_INSTALL}/"
++  #   DESTINATION "${MY_INSTALL_DIR}" COMPONENT RuntimeLibraries
++  #   FILES_MATCHING
++  #     PATTERN "*.py"
++  #     PATTERN "*.pyc"
++  #     PATTERN "*.png"
++  #     PATTERN "*.ui"
++  #     PATTERN "CMakeFiles" EXCLUDE
++  #     PATTERN "ITKFactoryRegistration" EXCLUDE
++  #     PATTERN "compile_*_python_scripts.py" EXCLUDE
++  #  )
+ 
+   if(NOT MY_GLOBAL_TARGET)
+     ctkFunctionAddCompilePythonScriptTargets(${target})
+diff --git a/Libs/Scripting/Python/Core/Python/CMakeLists.txt b/Libs/Scripting/Python/Core/Python/CMakeLists.txt
+index 6c7486f9..a482befb 100644
+--- a/Libs/Scripting/Python/Core/Python/CMakeLists.txt
++++ b/Libs/Scripting/Python/Core/Python/CMakeLists.txt
+@@ -44,7 +44,13 @@ ctkMacroCompilePythonScript(
+   SCRIPTS "${KIT_PYTHON_SCRIPTS}"
+   RESOURCES "${KIT_PYTHON_RESOURCES}"
+   DESTINATION_DIR ${CTK_BINARY_DIR}/bin/Python
+-  INSTALL_DIR ${Python3_SITELIB}
+-  NO_INSTALL_SUBDIR
+   )
+ 
++# Install python module / resources directory
++install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/"
++  DESTINATION "${Python3_SITELIB}" COMPONENT RuntimeLibraries
++  FILES_MATCHING
++  PATTERN "*.py"
++  PATTERN "*.pyc"
++  PATTERN "CMakeFiles" EXCLUDE
++)
+-- 
+2.39.2
+

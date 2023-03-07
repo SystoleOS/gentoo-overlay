@@ -12,7 +12,7 @@ DESCRIPTION="A set of common support code for medical imaging, surgical navigati
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
-COMMIT="2daac1c6f3831d36acd8079f33000f0c9f4737ad"
+COMMIT="95dac75b80562b81db10555db5807648f4d17dee"
 
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
@@ -59,7 +59,9 @@ PATCHES=(
 	${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
 	${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
 	${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch
+	${FILESDIR}/0005-ENH-Enable-more-selective-installation-of-python-fil.patch
 	${FILESDIR}/0006-ENH-Modernize-Python-detection.patch
+	${FILESDIR}/0007-ENH-Remove-installation-step-from-ctkMacroCompilePyt.patch
 )
 
 src_unpack() {
