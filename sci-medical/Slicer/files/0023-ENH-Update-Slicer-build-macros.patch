@@ -1,7 +1,7 @@
-From d08639fa011c0133c932fd47983db2e36bd0ff22 Mon Sep 17 00:00:00 2001
+From 3834734bb3ad087223fd4f770aef77ab0b163043 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:21:04 +0100
-Subject: [PATCH 23/24] ENH: Update Slicer build macros
+Subject: [PATCH 23/26] ENH: Update Slicer build macros
 
 This (1) adds libraries and (2) sets link directories for Slicer build
 macros.
@@ -15,7 +15,7 @@ macros.
  6 files changed, 36 insertions(+)
 
 diff --git a/CMake/SlicerMacroBuildApplication.cmake b/CMake/SlicerMacroBuildApplication.cmake
-index 7ee7bc11ca..f79b7c8066 100644
+index 3ee6e3e471..ce07ec7b39 100644
 --- a/CMake/SlicerMacroBuildApplication.cmake
 +++ b/CMake/SlicerMacroBuildApplication.cmake
 @@ -442,6 +442,9 @@ macro(slicerMacroBuildApplication)

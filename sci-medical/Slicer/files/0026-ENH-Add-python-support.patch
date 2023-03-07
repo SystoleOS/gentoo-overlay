@@ -1,0 +1,376 @@
+From 12e009926c408173050952667bc62df8524481ce Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 7 Mar 2023 15:17:05 +0100
+Subject: [PATCH 26/26] ENH: Add python support
+
+---
+ Base/Python/CMakeLists.txt                    | 59 ++++++++++++-------
+ Base/QTApp/CMakeLists.txt                     |  6 +-
+ Base/QTGUI/qSlicerPythonManager.cxx           |  3 +-
+ CMake/SlicerDirectories.cmake                 | 14 +++--
+ CMake/SlicerMacroBuildScriptedModule.cmake    | 15 ++++-
+ CMakeLists.txt                                | 30 ++++------
+ Libs/MRML/Core/CMakeLists.txt                 |  1 +
+ .../DisplayableManager/Python/CMakeLists.txt  |  3 +-
+ Libs/vtkTeem/CMakeLists.txt                   |  9 ++-
+ Templates/SlicerInstallConfig.cmake.in        |  5 ++
+ Templates/vtkSlicerConfigure.h.in             |  1 +
+ Templates/vtkSlicerInstallConfigure.h.in      |  2 +
+ 12 files changed, 95 insertions(+), 53 deletions(-)
+
+diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
+index b4f753e216..eafab3e7f4 100644
+--- a/Base/Python/CMakeLists.txt
++++ b/Base/Python/CMakeLists.txt
+@@ -1,26 +1,26 @@
+ 
+ set(Slicer_PYTHON_SCRIPTS
+-  slicer/__init__
+-  slicer/logic
+-  slicer/parameterNodeWrapper/__init__
+-  slicer/parameterNodeWrapper/default
+-  slicer/parameterNodeWrapper/guiCreation
+-  slicer/parameterNodeWrapper/guiConnectors
+-  slicer/parameterNodeWrapper/parameterInfo
+-  slicer/parameterNodeWrapper/parameterPack
+-  slicer/parameterNodeWrapper/serializers
+-  slicer/parameterNodeWrapper/util
+-  slicer/parameterNodeWrapper/validators
+-  slicer/parameterNodeWrapper/wrapper
+-  slicer/ScriptedLoadableModule
+-  slicer/slicerqt
+-  slicer/testing
+-  slicer/util
+-  mrml
+-  vtkAddon
+-  vtkITK
+-  vtkSegmentationCore
+-  vtkTeem
++  slicer/__init__.py
++  slicer/logic.py
++  slicer/parameterNodeWrapper/__init__.py
++  slicer/parameterNodeWrapper/default.py
++  slicer/parameterNodeWrapper/guiCreation.py
++  slicer/parameterNodeWrapper/guiConnectors.py
++  slicer/parameterNodeWrapper/parameterInfo.py
++  slicer/parameterNodeWrapper/parameterPack.py
++  slicer/parameterNodeWrapper/serializers.py
++  slicer/parameterNodeWrapper/util.py
++  slicer/parameterNodeWrapper/validators.py
++  slicer/parameterNodeWrapper/wrapper.py
++  slicer/ScriptedLoadableModule.py
++  slicer/slicerqt.py
++  slicer/testing.py
++  slicer/util.py
++  mrml.py
++  vtkAddon.py
++  vtkITK.py
++  vtkSegmentationCore.py
++  vtkTeem.py
+   )
+ 
+ set(Slicer_PYTHON_MODULES_CONFIG "
+@@ -70,5 +70,20 @@ ctkMacroCompilePythonScript(
+   SCRIPTS "${Slicer_PYTHON_SCRIPTS}"
+   RESOURCES "${Slicer_PYTHON_RESOURCES}"
+   DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python
+-  INSTALL_DIR ${Slicer_INSTALL_BIN_DIR}
+   )
++
++# Install python module / resources directory
++install(DIRECTORY "${Slicer_BINARY_DIR}/bin/Python/"
++  DESTINATION "${Python3_SITELIB}" COMPONENT RuntimeLibraries
++  FILES_MATCHING
++  PATTERN "*.py"
++  PATTERN "*.pyc"
++)
++
++# Install python module / resources directory
++install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/"
++  DESTINATION "${Python3_SITELIB}" COMPONENT RuntimeLibraries
++  FILES_MATCHING
++  PATTERN "*.py"
++  PATTERN "*.pyc"
++)
+diff --git a/Base/QTApp/CMakeLists.txt b/Base/QTApp/CMakeLists.txt
+index 819e0e3277..652d5b99ba 100644
+--- a/Base/QTApp/CMakeLists.txt
++++ b/Base/QTApp/CMakeLists.txt
+@@ -59,6 +59,10 @@ endif()
+ set(KIT_resources
+   )
+ 
++if(Slicer_USE_PYTHONQT)
++  set(WRAP_PYTHONQT WRAP_PYTHONQT)
++endif()
++
+ SlicerMacroBuildBaseQtLibrary(
+   NAME ${PROJECT_NAME}
+   EXPORT_DIRECTIVE ${KIT_export_directive}
+@@ -68,7 +72,7 @@ SlicerMacroBuildBaseQtLibrary(
+   UI_SRCS ${KIT_UI_SRCS}
+   TARGET_LIBRARIES ${KIT_target_libraries}
+   RESOURCES ${KIT_resources}
+-  WRAP_PYTHONQT
++  ${WRAP_PYTHONQT}
+   )
+ 
+ # --------------------------------------------------------------------------
+diff --git a/Base/QTGUI/qSlicerPythonManager.cxx b/Base/QTGUI/qSlicerPythonManager.cxx
+index 2a3c1c8959..13d83087b2 100644
+--- a/Base/QTGUI/qSlicerPythonManager.cxx
++++ b/Base/QTGUI/qSlicerPythonManager.cxx
+@@ -17,6 +17,7 @@
+ // Slicer includes
+ #include "qSlicerApplication.h"
+ #include "qSlicerPythonManager.h"
++#include "vtkSlicerConfigure.h"
+ 
+ //-----------------------------------------------------------------------------
+ qSlicerPythonManager::qSlicerPythonManager(QObject* _parent) : Superclass(_parent)
+@@ -42,7 +43,7 @@ void qSlicerPythonManager::executeInitializationScripts()
+     }
+ 
+   // Evaluate application script
+-  this->executeFile(app->slicerHome() + "/bin/Python/slicer/slicerqt.py");
++  this->executeFile(QString(Slicer_PYTHON_BIN_DIR)+"/slicer/slicerqt.py");
+ }
+ 
+ //-----------------------------------------------------------------------------
+diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
+index 1525e35c2e..80575be2af 100644
+--- a/CMake/SlicerDirectories.cmake
++++ b/CMake/SlicerDirectories.cmake
+@@ -59,6 +59,7 @@ include(GNUInstallDirs)
+ # for build tree
+ set(Slicer_BIN_DIR "${CMAKE_INSTALL_BINDIR}")
+ set(Slicer_LIB_DIR "${CMAKE_INSTALL_LIBDIR}")
++set(Slicer_LIB_SLICER_DIR "${CMAKE_INSTALL_LIBDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_SHARE_DIR "${CMAKE_INSTALL_DATADIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_LIBEXEC_DIR "${CMAKE_INSTALL_LIBEXECDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+@@ -73,12 +74,15 @@ if(APPLE)
+ endif()
+ set(Slicer_INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_BIN_DIR}")
+ set(Slicer_INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_LIB_DIR}")
++set(Slicer_INSTALL_LIB_SLICER_DIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+ set(Slicer_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_INCLUDE_DIR}")
+ set(Slicer_INSTALL_SHARE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_SHARE_DIR}")
+ set(Slicer_INSTALL_LIBEXEC_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_LIBEXEC_DIR}")
+ set(Slicer_INSTALL_ITKFACTORIES_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_ITKFACTORIES_LIB_DIR}/ITKFactories")
+ set(Slicer_INSTALL_QM_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_QM_DIR}")
+ 
++set(Slicer_PYTHON_BIN_DIR "${Python3_SITELIB}")
++
+ # CMake install directories according to
+ # https://cmake.org/cmake/help/latest/command/find_package.html
+ if(WIN32)
+@@ -153,11 +157,11 @@ set(Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTSCRIP
+ set(Slicer_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
+ 
+ # for install tree
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_BIN_DIR}")
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_LIB_DIR}")
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR}")
+-set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_QTSCRIPTEDMODULES_SHARE_DIR}")
+-
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_INSTALL_BIN_DIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_INSTALL_LIB_DIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_PYTHON_LIB_DIR "${Slicer_INSTALL_LIB_DIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}/Python")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INSTALL_INCLUDE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_INSTALL_SHARE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
+ 
+ # --------------------------------------------------------------------------
+ # ThirdParty: Used to superbuild projects built in Slicer extension.
+diff --git a/CMake/SlicerMacroBuildScriptedModule.cmake b/CMake/SlicerMacroBuildScriptedModule.cmake
+index 3cf67d4653..49069c065f 100644
+--- a/CMake/SlicerMacroBuildScriptedModule.cmake
++++ b/CMake/SlicerMacroBuildScriptedModule.cmake
+@@ -102,8 +102,19 @@ macro(slicerMacroBuildScriptedModule)
+     SCRIPTS "${MY_SLICER_SCRIPTS}"
+     RESOURCES "${MY_SLICER_RESOURCES}"
+     DESTINATION_DIR ${CMAKE_BINARY_DIR}/${Slicer_QTSCRIPTEDMODULES_LIB_DIR}${_destination_subdir}
+-    INSTALL_DIR ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}
+-    ${_no_install_subdir_option}
++    )
++
++   # Install python module / resources directory
++   install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/"
++     DESTINATION "${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}" COMPONENT RuntimeLibraries
++     FILES_MATCHING
++       PATTERN "*.py"
++       PATTERN "*.pyc"
++       PATTERN "*.png"
++       PATTERN "*.ui"
++       PATTERN "CMakeFiles" EXCLUDE
++       PATTERN "ITKFactoryRegistration" EXCLUDE
++       PATTERN "compile_*_python_scripts.py" EXCLUDE
+     )
+ 
+   if(BUILD_TESTING AND MY_SLICER_WITH_GENERIC_TESTS)
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e2ba1fec4e..14ef933b47 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -153,6 +153,10 @@ mark_as_superbuild(GIT_EXECUTABLE)
+ find_package(Patch REQUIRED)
+ mark_as_superbuild(Patch_EXECUTABLE)
+ 
++if(Slicer_USE_PYTHONQT)
++  find_package(Python3 REQUIRED Interpreter Development.Module)
++endif()
++
+ #-----------------------------------------------------------------------------
+ # Qt requirements
+ #-----------------------------------------------------------------------------
+@@ -767,14 +771,6 @@ foreach(dep QT ${Slicer_DEPENDENCIES})
+   endif()
+ endforeach()
+ 
+-#-----------------------------------------------------------------------------
+-# Update CMake module path
+-#------------------------------------------------------------------------------
+-set(CMAKE_MODULE_PATH
+-  ${vtkAddon_CMAKE_DIR}
+-  ${CMAKE_MODULE_PATH}
+-  )
+-
+ #-----------------------------------------------------------------------------
+ # Folders
+ #-----------------------------------------------------------------------------
+@@ -897,18 +893,11 @@ include(ctkFunctionAddExecutableUtf8)
+ # Set Slicer_PYTHON_VERSION and Slicer_PYTHON_VERSION_DOT
+ #-----------------------------------------------------------------------------
+ if(Slicer_USE_PYTHONQT)
+-  find_package(PythonLibs ${Slicer_REQUIRED_PYTHON_VERSION_DOT} REQUIRED)
+-  find_package(PythonInterp ${Slicer_REQUIRED_PYTHON_VERSION_DOT} REQUIRED)
+-
+-  # Extract python lib path
+-  get_filename_component(PYTHON_DIR_PATH ${PYTHON_EXECUTABLE} PATH)
+-  set(PYTHON_LIBRARY_PATH ${PYTHON_DIR_PATH}/../lib)
+-  if(WIN32)
+-    set(PYTHON_LIBRARY_PATH ${PYTHON_DIR_PATH})
+-  endif()
++  # find_package(PythonLibs ${Slicer_REQUIRED_PYTHON_VERSION_DOT} REQUIRED)
++  # find_package(PythonInterp ${Slicer_REQUIRED_PYTHON_VERSION_DOT} REQUIRED)
+ 
+   # Extract python version components
+-  ctkMacroSetPaths("${PYTHON_LIBRARY_PATH}")
++  ctkMacroSetPaths("${Python3_LIBRARY_DIRS}")
+   function(_python_sys_attribute attribute varname)
+     execute_process(
+       COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.${attribute})"
+@@ -949,6 +938,11 @@ if(Slicer_USE_PYTHONQT)
+   set(Slicer_VTK_WRAP_HIERARCHY_DIR ${Slicer_BINARY_DIR})
+ endif()
+ 
++#-----------------------------------------------------------------------------
++# vtkAddon
++#-----------------------------------------------------------------------------
++find_package(vtkAddon REQUIRED)
++
+ #-----------------------------------------------------------------------------
+ # Teem
+ #-----------------------------------------------------------------------------
+diff --git a/Libs/MRML/Core/CMakeLists.txt b/Libs/MRML/Core/CMakeLists.txt
+index c9bcb281a7..bdf42da526 100644
+--- a/Libs/MRML/Core/CMakeLists.txt
++++ b/Libs/MRML/Core/CMakeLists.txt
+@@ -304,6 +304,7 @@ set(libs
+   ${ITK_LIBRARIES}
+   ${VTK_LIBRARIES}
+   VTK::IOInfovis
++  VTK::WrappingPythonCore
+   ${LibArchive_LIBRARY}
+   )
+ if(MRML_USE_vtkTeem)
+diff --git a/Libs/MRML/DisplayableManager/Python/CMakeLists.txt b/Libs/MRML/DisplayableManager/Python/CMakeLists.txt
+index 9e5501cde2..5624624060 100644
+--- a/Libs/MRML/DisplayableManager/Python/CMakeLists.txt
++++ b/Libs/MRML/DisplayableManager/Python/CMakeLists.txt
+@@ -1,12 +1,11 @@
+ 
+ 
+ set(displayableManager_PYTHON_SCRIPTS
+-  mrmlDisplayableManager/vtkScriptedExampleDisplayableManager
++  mrmlDisplayableManager/vtkScriptedExampleDisplayableManager.py
+   )
+ 
+ ctkMacroCompilePythonScript(
+   TARGET_NAME mrmlDisplayableManager
+   SCRIPTS "${displayableManager_PYTHON_SCRIPTS}"
+   DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python
+-  INSTALL_DIR ${Slicer_INSTALL_BIN_DIR}
+   )
+diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
+index c8ac7a7ef9..0eeb3cccf3 100644
+--- a/Libs/vtkTeem/CMakeLists.txt
++++ b/Libs/vtkTeem/CMakeLists.txt
+@@ -45,6 +45,10 @@ include(${Teem_USE_FILE})
+ #     See https://sourceforge.net/p/teem/code/4168/
+ set(Teem_LIBRARIES teem)
+ 
++if(VTK_WRAP_PYTHON)
++  find_package(vtkAddon REQUIRED)
++endif()
++
+ # --------------------------------------------------------------------------
+ # Configure headers
+ # --------------------------------------------------------------------------
+@@ -61,9 +65,10 @@ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+   set(${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT ON)
+ endif()
+ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+-  file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.(h|txx)")
++  file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
++  file(GLOB templates "${CMAKE_CURRENT_SOURCE_DIR}/*.txx")
+   install(
+-    FILES ${headers} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
++    FILES ${headers} ${templates} ${CMAKE_CURRENT_BINARY_DIR}/${configure_header_file}
+     DESTINATION ${${PROJECT_NAME}_INSTALL_INCLUDE_DIR} COMPONENT Development)
+ endif()
+ 
+diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
+index a47618c12f..1f9b9fbd78 100644
+--- a/Templates/SlicerInstallConfig.cmake.in
++++ b/Templates/SlicerInstallConfig.cmake.in
+@@ -137,6 +137,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
+ set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR@")
+ set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR@")
+ 
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR@")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR@")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_INCLUDE_DIR@")
++set(Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR "@Slicer_INSTALL_QTSCRIPTEDMODULES_SHARE_DIR@")
++
+ # Components needed to build modules from outside a Slicer build tree or
+ # from outside a Slicer installation tree
+ # set(TCLAP_DIR "${Slicer_HOME}/lib/tclap")
+diff --git a/Templates/vtkSlicerConfigure.h.in b/Templates/vtkSlicerConfigure.h.in
+index 09a2f9ebd1..f46c85c85a 100644
+--- a/Templates/vtkSlicerConfigure.h.in
++++ b/Templates/vtkSlicerConfigure.h.in
+@@ -89,6 +89,7 @@
+ #  define Slicer_PYTHON_VERSION_DOT "@Slicer_PYTHON_VERSION_DOT@"
+ #  define Slicer_PYTHON_VERSION "@Slicer_PYTHON_VERSION@"
+ #  define PYTHON_SITE_PACKAGES_SUBDIR "@PYTHON_SITE_PACKAGES_SUBDIR@"
++#  define Slicer_PYTHON_BIN_DIR "@Slicer_PYTHON_BIN_DIR@"
+ #endif //Slicer_USE_PYTHONQT
+ 
+ #cmakedefine Slicer_BUILD_QTLOADABLEMODULES
+diff --git a/Templates/vtkSlicerInstallConfigure.h.in b/Templates/vtkSlicerInstallConfigure.h.in
+index bda250a648..ed9f94b975 100644
+--- a/Templates/vtkSlicerInstallConfigure.h.in
++++ b/Templates/vtkSlicerInstallConfigure.h.in
+@@ -91,6 +91,8 @@
+ #  define PYTHON_SITE_PACKAGES_SUBDIR "@PYTHON_SITE_PACKAGES_SUBDIR@"
+ #endif //Slicer_USE_PYTHONQT
+ 
++#define Slicer_PYTHON_BIN_DIR "@Slicer_PYTHON_BIN_DIR@"
++
+ #cmakedefine Slicer_BUILD_QTLOADABLEMODULES
+ #define Slicer_QTLOADABLEMODULES_SUBDIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_QTLOADABLEMODULES_SUBDIR@"
+ #define Slicer_QTLOADABLEMODULES_BIN_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR@"
+-- 
+2.39.2
+

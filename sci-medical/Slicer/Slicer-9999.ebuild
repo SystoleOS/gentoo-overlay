@@ -2,9 +2,9 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9..11} )
+PYTHON_COMPAT=( python3_{9,10} )
 
-inherit cmake python-any-r1 git-r3
+inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
 DESCRIPTION="3D Slicer is an open source software for medical image processing and visualization"
@@ -51,10 +51,13 @@ DEPEND="
 
 RDEPEND="
 	${DEPEND}
-	python? ( ${PYTHON_DEPS} )
+	python? (
+		${PYTHON_DEPS}
+		dev-python/scipy
+		)
 "
 
-BDEPEND=">=dev-util/cmake-3.23.1"
+BDEPEND="<dev-util/cmake-3.25"
 
 PATCHES=(
 	${FILESDIR}/0001-COMP-Add-vtk-CommonSystem-component-as-requirement.patch
@@ -81,12 +84,18 @@ PATCHES=(
 	${FILESDIR}/0022-ENH-Provide-an-install-version-ov-vtkSlicerConfigure.patch
 	${FILESDIR}/0023-ENH-Update-Slicer-build-macros.patch
 	${FILESDIR}/0024-ENH-Enable-installation-of-Libs-dev-files.patch
+	${FILESDIR}/0025-ENH-Make-Testing-subdirs-subject-to-BUILD_TESTING.patch
+	${FILESDIR}/0026-ENH-Add-python-support.patch
 )
 
 src_prepare() {
 
 	cmake_src_prepare
 	cp ${FILESDIR}/FindPythonQt.cmake ${S}/CMake
+}
+
+pkg_setup() {
+	use python && python-single-r1_pkg_setup
 }
 
 src_configure(){
@@ -98,7 +107,7 @@ src_configure(){
 		-DBUILD_TESTING:BOOL=OFF
 		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
 		-DSlicer_DONT_USE_EXTENSION:BOOL=ON
-		-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli)"
+		-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli ON OFF)"
 		-DSlicer_BUILD_CLI:BOOL=OFF
 		-DCMAKE_CXX_STANDARD:STRING="17"
 		-DSlicer_REQUIRED_QT_VERSION:STRING="5"
@@ -108,7 +117,7 @@ src_configure(){
 		-DSlicer_BUILD_QTSCRIPTEDMODULES:BOOL=OFF
 		-DSlicer_BUILD_QT_DESIGNER_PLUGINS:BOOL=ON
 		-DSlicer_USE_CTKAPPLAUNCHER:BOOL=OFF
-		-DSlicer_USE_PYTHONQT:BOOL="$(usex python)"
+		-DSlicer_USE_PYTHONQT:BOOL=$(usex python ON OFF)
 		-DSlicer_USE_QtTesting:BOOL=OFF
 		-DSlicer_USE_SlicerITK:BOOL=OFF
 		-DSlicer_USE_SimpleITK:BOOL=OFF
@@ -123,10 +132,15 @@ src_configure(){
 		-DjqPlot_DIR:STRING="/usr/share/jqPlot"
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${BUILD_DIR}"
 		-DSlicer_BUILD_vtkAddon:BOOL=OFF
+		-DSlicer_USE_SimpleITK:BOOL=$(usex sitk ON OFF)
 	)
 
-	if use sitk; then
-		mycmakeargs+=(-DSlicer_USE_SimpleITK:BOOL=ON)
+	if use python; then
+	   mycmakeargs+=(
+		   -DPython3_INCLUDE_DIR:FILEPATH="$(python_get_includedir)"
+		   -DPython3_LIBRARY:FILEPATH="$(python_get_library_path)"
+		   -DPython3_EXECUTABLE:FILEPATH="${PYTHON}"
+	   )
 	fi
 
 	cmake_src_configure
