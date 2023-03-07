@@ -67,7 +67,7 @@ PATCHES=(
 	${FILESDIR}/0005-ENH-Remove-conditional-code-for-old-VTK.patch
 	${FILESDIR}/0006-ENH-Limit-CPack-on-non-superbuild-mode.patch
 	${FILESDIR}/0007-ENH-Install-testing-data-only-with-testing-support.patch
-	${FILESDIR}/0008-ENH-Remove-the-App-real-suffix-from-Slicer-executabl.patch
+	#${FILESDIR}/0008-ENH-Remove-the-App-real-suffix-from-Slicer-executabl.patch
 	${FILESDIR}/0009-ENH-Use-CMake-GNUInstallDirs-in-Slicer-directories.patch
 	${FILESDIR}/0010-ENH-Use-slicer-installation-dirs-for-base-dev-compon.patch
 	${FILESDIR}/0011-ENH-Add-variable-install-dirs-for-Libs-dev-files.patch
@@ -149,6 +149,7 @@ src_configure(){
 src_install(){
 
 	cmake_src_install
+	dobin ${FILESDIR}/Slicer
 
 	# insinto /etc/Slicer
 	# doins ${FILESDIR}/SlicerLauncherSettings.ini

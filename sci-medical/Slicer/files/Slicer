@@ -1,0 +1,2 @@
+#!/bin/bash
+PYTHONPATH=$PYTHONPATH:/usr/lib64/Slicer-5.3/qt-scripted-modules:/usr/lib64/ SlicerApp-real --additional-module-paths /usr/lib64/Slicer-5.3/cli-modules /usr/lib64/Slicer-5.3/qt-loadable-modules/ /usr/lib64/Slicer-5.3/qt-scripted-modules
