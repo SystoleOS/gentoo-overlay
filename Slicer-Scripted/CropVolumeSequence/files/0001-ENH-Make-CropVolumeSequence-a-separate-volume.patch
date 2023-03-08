@@ -1,0 +1,27 @@
+From 8d72713c4cbe74d4a6d5226930799d99558f76cb Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 8 Mar 2023 10:38:08 +0100
+Subject: [PATCH] ENH: Make CropVolumeSequence a separate volume
+
+---
+ Modules/Scripted/CropVolumeSequence/CMakeLists.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Modules/Scripted/CropVolumeSequence/CMakeLists.txt b/Modules/Scripted/CropVolumeSequence/CMakeLists.txt
+index adf25235ba..9edae04bec 100644
+--- a/Modules/Scripted/CropVolumeSequence/CMakeLists.txt
++++ b/Modules/Scripted/CropVolumeSequence/CMakeLists.txt
+@@ -1,3 +1,10 @@
++cmake_minimum_required(VERSION 3.0)
++
++project(CropVolumeSequence)
++
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME CropVolumeSequence)
+ 
+-- 
+2.39.2
+
