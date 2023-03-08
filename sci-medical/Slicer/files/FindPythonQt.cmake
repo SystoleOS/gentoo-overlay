@@ -4,11 +4,8 @@
 #
 
 # Python is required
-if(NOT PYTHONLIBS_FOUND)
-  find_package(PythonLibs)
-  if(NOT PYTHONLIBS_FOUND)
-    message(FATAL_ERROR "error: Python is required to build PythonQt")
-  endif()
+if(NOT Python3_FOUND)
+  find_package(Python3 REQUIRED Interpreter Development.Module)
 endif()
 
 if(NOT EXISTS "${PYTHONQT_INSTALL_DIR}")
@@ -23,14 +20,14 @@ find_path(PYTHONQT_INCLUDE_DIR PythonQt.h
   PATHS "${PYTHONQT_INSTALL_DIR}/include/PythonQt"
         "${PYTHONQT_INSTALL_DIR}/src"
   DOC "Path to the PythonQt include directory")
-find_library(PYTHONQT_LIBRARY_RELEASE PythonQt PATHS "${PYTHONQT_INSTALL_DIR}/lib" DOC "The PythonQt library.")
+find_library(PYTHONQT_LIBRARY_RELEASE PythonQt PATHS "${PYTHONQT_INSTALL_DIR}/lib" "${PYTHONQT_INSTALL_DIR}/lib64" DOC "The PythonQt library.")
 find_library(PYTHONQT_LIBRARY_DEBUG NAMES PythonQt${CTK_CMAKE_DEBUG_POSTFIX} PythonQt${CMAKE_DEBUG_POSTFIX} PythonQt PATHS "${PYTHONQT_INSTALL_DIR}/lib" DOC "The PythonQt library.")
 set(PYTHONQT_LIBRARY)
 if(PYTHONQT_LIBRARY_RELEASE)
-  list(APPEND PYTHONQT_LIBRARY optimized ${PYTHONQT_LIBRARY_RELEASE})
+  list(APPEND PYTHONQT_LIBRARY "optimized" ${PYTHONQT_LIBRARY_RELEASE})
 endif()
 if(PYTHONQT_LIBRARY_DEBUG)
-  list(APPEND PYTHONQT_LIBRARY debug ${PYTHONQT_LIBRARY_DEBUG})
+  list(APPEND PYTHONQT_LIBRARY "debug" ${PYTHONQT_LIBRARY_DEBUG})
 endif()
 
 mark_as_advanced(PYTHONQT_INSTALL_DIR)

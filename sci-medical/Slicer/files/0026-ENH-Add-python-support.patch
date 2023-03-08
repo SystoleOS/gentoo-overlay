@@ -1,4 +1,4 @@
-From 12e009926c408173050952667bc62df8524481ce Mon Sep 17 00:00:00 2001
+From e24e8d61faca140e44850f1ef9ac07d2b3f7a8e1 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
 Subject: [PATCH 26/27] ENH: Add python support
@@ -14,9 +14,10 @@ Subject: [PATCH 26/27] ENH: Add python support
  .../DisplayableManager/Python/CMakeLists.txt  |  3 +-
  Libs/vtkTeem/CMakeLists.txt                   |  9 ++-
  Templates/SlicerInstallConfig.cmake.in        |  5 ++
+ Templates/UseSlicer.cmake.in                  |  1 +
  Templates/vtkSlicerConfigure.h.in             |  1 +
  Templates/vtkSlicerInstallConfigure.h.in      |  2 +
- 12 files changed, 95 insertions(+), 53 deletions(-)
+ 13 files changed, 96 insertions(+), 53 deletions(-)
 
 diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
 index b4f753e216..eafab3e7f4 100644
@@ -331,7 +332,7 @@ index c8ac7a7ef9..0eeb3cccf3 100644
  endif()
  
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index a47618c12f..1f9b9fbd78 100644
+index d66c5880d7..f40f569d7b 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
 @@ -137,6 +137,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
@@ -346,6 +347,18 @@ index a47618c12f..1f9b9fbd78 100644
  # Components needed to build modules from outside a Slicer build tree or
  # from outside a Slicer installation tree
  # set(TCLAP_DIR "${Slicer_HOME}/lib/tclap")
+diff --git a/Templates/UseSlicer.cmake.in b/Templates/UseSlicer.cmake.in
+index 526ab4ce25..4431e1f483 100644
+--- a/Templates/UseSlicer.cmake.in
++++ b/Templates/UseSlicer.cmake.in
+@@ -165,6 +165,7 @@ endif()
+ # See https://github.com/commontk/PythonQt/issues/7
+ # and https://github.com/commontk/PythonQt/issues/8
+ if(Slicer_USE_PYTHONQT)
++  find_package(Python3 REQUIRED Interpreter Development.Module)
+   find_package(PythonQt)
+ endif()
+ 
 diff --git a/Templates/vtkSlicerConfigure.h.in b/Templates/vtkSlicerConfigure.h.in
 index 09a2f9ebd1..f46c85c85a 100644
 --- a/Templates/vtkSlicerConfigure.h.in

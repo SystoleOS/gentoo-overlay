@@ -1,4 +1,4 @@
-From cbb0f51e27bf6c1fd6c7d6f3d27a556d30383752 Mon Sep 17 00:00:00 2001
+From 2364732b6e3d3f8e1cc392043ba5511878575869 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 11:15:28 +0100
 Subject: [PATCH 21/27] ENH: Fix qt-loadable-modules installation dirs

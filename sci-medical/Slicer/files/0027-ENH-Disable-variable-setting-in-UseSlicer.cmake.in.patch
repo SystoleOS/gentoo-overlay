@@ -1,4 +1,4 @@
-From 9b81f02ae13fe426f9d1aa27ba2d5b802c6f96d6 Mon Sep 17 00:00:00 2001
+From bf70237cbb5b6cfb327cb1bb6ab685131d2656f6 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 19:04:09 +0100
 Subject: [PATCH 27/27] ENH: Disable variable setting in UseSlicer.cmake.in
@@ -8,10 +8,10 @@ Subject: [PATCH 27/27] ENH: Disable variable setting in UseSlicer.cmake.in
  1 file changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/Templates/UseSlicer.cmake.in b/Templates/UseSlicer.cmake.in
-index 526ab4ce25..d34fe7a2f7 100644
+index 4431e1f483..ca2191d087 100644
 --- a/Templates/UseSlicer.cmake.in
 +++ b/Templates/UseSlicer.cmake.in
-@@ -304,36 +304,36 @@ endif()
+@@ -305,36 +305,36 @@ endif()
  #-----------------------------------------------------------------------------
  # Set SlicerExecutionModel_DEFAULT_CLI_*_OUTPUT_DIRECTORY variables
  #-----------------------------------------------------------------------------

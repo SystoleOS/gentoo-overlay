@@ -1,4 +1,4 @@
-From f407dd15e931b40b827d4aca6763cbe94e944c28 Mon Sep 17 00:00:00 2001
+From 84d7ca8043a2c8bc9addbdde3c5b4917f878b727 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 30 Jan 2023 13:39:41 +0100
 Subject: [PATCH 20/27] ENH: Enable installation of SLicerBase header files
@@ -179,7 +179,7 @@ index d5413d555d..333b39c955 100644
  # Slicer icon engine
  #-----------------------------------------------------------------------------
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index e54fa960aa..a47618c12f 100644
+index 268f886e19..d66c5880d7 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
 @@ -100,11 +100,8 @@ set(Slicer_Base_INCLUDE_DIRS
