@@ -12,7 +12,7 @@ DESCRIPTION="General-purpose features that may be integrated into VTK library in
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/vtkAddon"
 
-SRC_URI="https://github.com/Slicer/vtkAddon/archive/fb7edc86fc16ace43398f6743eff5a47f8ca0328.tar.gz -> vtkAddon.tar.gz"
+SRC_URI="https://github.com/Slicer/vtkAddon/archive/0bcff8277cde13edc9033d2cfe5697e3036fbcd7.tar.gz -> vtkAddon.tar.gz"
 
 LICENSE="BSD"
 
@@ -37,6 +37,7 @@ REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 PATCHES=(
 	${FILESDIR}/0001-ENH-Add-versioning-and-use-of-CMake-GNUInstallDirs.patch
 	${FILESDIR}/0002-ENH-Add-CMake-directory-to-CMAKE_MODULE_PATH.patch
+	${FILESDIR}/0003-ENH-Modernize-Python-finding.patch
 )
 
 src_unpack(){

@@ -1,7 +1,7 @@
 From ffc203ae84006994d75c0f8de6b3eac7c6b43f85 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palolmar@ous-research.no>
 Date: Thu, 26 Jan 2023 14:24:10 +0100
-Subject: [PATCH 2/2] ENH: Add CMake directory to CMAKE_MODULE_PATH
+Subject: [PATCH 2/3] ENH: Add CMake directory to CMAKE_MODULE_PATH
 
 ---
  CMakeLists.txt                 | 1 +
