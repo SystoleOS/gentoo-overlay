@@ -1,13 +1,116 @@
-From c3c59f44c012cf9b571ffb786e48d2d32c291d21 Mon Sep 17 00:00:00 2001
+From e1862ecca8b01d0989e5235f73246a11784026bb Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 3 Mar 2023 13:24:24 +0100
-Subject: [PATCH 6/6] ENH: Modernize Python detection
+Subject: [PATCH 6/7] ENH: Modernize Python detection
 
 ---
+ CMake/ctkMacroBuildLibWrapper.cmake              |  6 +++---
+ CMake/ctkMacroCompilePythonScript.cmake          |  6 +++---
+ CMakeExternals/PythonQt.cmake                    |  6 +++---
+ CMakeExternals/VTK.cmake                         |  6 +++---
  CMakeLists.txt                                   | 13 +------------
  Libs/Scripting/Python/Core/Python/CMakeLists.txt |  5 +----
- 2 files changed, 2 insertions(+), 16 deletions(-)
+ 6 files changed, 14 insertions(+), 28 deletions(-)
 
+diff --git a/CMake/ctkMacroBuildLibWrapper.cmake b/CMake/ctkMacroBuildLibWrapper.cmake
+index b1e2580e..5d5775a2 100644
+--- a/CMake/ctkMacroBuildLibWrapper.cmake
++++ b/CMake/ctkMacroBuildLibWrapper.cmake
+@@ -99,8 +99,8 @@ macro(ctkMacroBuildLibWrapper)
+   # Since the PythonQt decorator depends on PythonQt, Python and VTK, let's link against
+   # these ones to avoid complaints of MSVC
+   # Note: "LINK_DIRECTORIES" has to be invoked before "ADD_LIBRARY"
+-  ctkFunctionExtractOptimizedLibrary(PYTHON_LIBRARIES PYTHON_LIBRARY)
+-  set(my_EXTRA_PYTHON_LIBRARIES ${PYTHON_LIBRARY} ${PYTHONQT_LIBRARIES})
++  ctkFunctionExtractOptimizedLibrary(Python3_LIBRARIES Python3_LIBRARY)
++  set(my_EXTRA_Python3_LIBRARIES ${Python3_LIBRARY} ${PYTHONQT_LIBRARIES})
+ 
+   # Does a header having the expected filename exists ?
+   string(REGEX REPLACE "^CTK" "ctk" lib_name_lc_ctk ${lib_name})
+@@ -131,7 +131,7 @@ macro(ctkMacroBuildLibWrapper)
+     endif()
+   endif()
+   add_library(${lib_name}PythonQt ${MY_WRAPPER_LIBRARY_TYPE} ${KIT_PYTHONQT_SRCS})
+-  target_link_libraries(${lib_name}PythonQt ${lib_name} ${my_EXTRA_PYTHON_LIBRARIES})
++  target_link_libraries(${lib_name}PythonQt ${lib_name} ${my_EXTRA_Python3_LIBRARIES})
+   if(MY_WRAPPER_LIBRARY_TYPE STREQUAL "STATIC")
+     if(CMAKE_SIZEOF_VOID_P EQUAL 8) # 64-bit
+       set_target_properties(${lib_name}PythonQt PROPERTIES COMPILE_FLAGS "-fPIC")
+diff --git a/CMake/ctkMacroCompilePythonScript.cmake b/CMake/ctkMacroCompilePythonScript.cmake
+index 1945d06e..0a677508 100644
+--- a/CMake/ctkMacroCompilePythonScript.cmake
++++ b/CMake/ctkMacroCompilePythonScript.cmake
+@@ -162,11 +162,11 @@ function(_ctk_add_compile_python_directories_target target)
+     endif()
+ 
+     # Extract python lib path
+-    ctkFunctionExtractOptimizedLibrary(PYTHON_LIBRARIES PYTHON_LIBRARY)
+-    get_filename_component(PYTHON_LIBRARY_PATH "${PYTHON_LIBRARY}" PATH)
++    ctkFunctionExtractOptimizedLibrary(Python3_LIBRARIES Python3_LIBRARY)
++    get_filename_component(Python3_LIBRARY_PATH "${Python3_LIBRARY}" PATH)
+ 
+     # Configure cmake script associated with the custom command
+-    # required to properly update the library path with PYTHON_LIBRARY_PATH
++    # required to properly update the library path with Python3_LIBRARY_PATH
+     set(compile_all_cmake_script "${CMAKE_CURRENT_BINARY_DIR}/compile_${target}_python_scripts.cmake")
+     configure_file(
+       ${CTK_CMAKE_DIR}/ctk_compile_python_scripts.cmake.in
+diff --git a/CMakeExternals/PythonQt.cmake b/CMakeExternals/PythonQt.cmake
+index 5c6e1911..c1accb3c 100644
+--- a/CMakeExternals/PythonQt.cmake
++++ b/CMakeExternals/PythonQt.cmake
+@@ -79,7 +79,7 @@ if(NOT DEFINED PYTHONQT_INSTALL_DIR)
+     endif()
+   endif()
+ 
+-  ctkFunctionExtractOptimizedLibrary(PYTHON_LIBRARIES PYTHON_LIBRARY)
++  ctkFunctionExtractOptimizedLibrary(Python3_LIBRARIES Python3_LIBRARY)
+ 
+   if (CTK_QT_VERSION VERSION_GREATER "4")
+     set(revision_tag c4a5a155b2942d4b003862c3317105b4a1ea6755) # patched-9
+@@ -114,7 +114,7 @@ if(NOT DEFINED PYTHONQT_INSTALL_DIR)
+       -DPythonQt_QT_VERSION:STRING=${CTK_QT_VERSION}
+       -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
+       -DPYTHON_INCLUDE_DIR2:PATH=${PYTHON_INCLUDE_DIR2}
+-      -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
++      -DPython3_LIBRARY:FILEPATH=${Python3_LIBRARY}
+       ${ep_PythonQt_args}
+     DEPENDS
+       ${${proj}_DEPENDENCIES}
+@@ -133,7 +133,7 @@ mark_as_superbuild(
+     PYTHON_EXECUTABLE:FILEPATH # FindPythonInterp expects PYTHON_EXECUTABLE variable to be defined
+     PYTHON_INCLUDE_DIR:PATH # FindPythonQt expects PYTHON_INCLUDE_DIR variable to be defined
+     PYTHON_INCLUDE_DIR2:PATH
+-    PYTHON_LIBRARY:FILEPATH # FindPythonQt expects PYTHON_LIBRARY variable to be defined
++    Python3_LIBRARY:FILEPATH # FindPythonQt expects Python3_LIBRARY variable to be defined
+   LABELS "FIND_PACKAGE_VARS"
+   )
+ mark_as_superbuild(
+diff --git a/CMakeExternals/VTK.cmake b/CMakeExternals/VTK.cmake
+index 5f344a71..06c6cd44 100644
+--- a/CMakeExternals/VTK.cmake
++++ b/CMakeExternals/VTK.cmake
+@@ -80,17 +80,17 @@ if(NOT DEFINED VTK_DIR AND NOT ${CMAKE_PROJECT_NAME}_USE_SYSTEM_${proj})
+     if(VTK_PYTHON_VERSION VERSION_GREATER "2.7")
+       set(Python3_EXECUTABLE ${PYTHON_EXECUTABLE})
+       set(Python3_INCLUDE_DIR ${PYTHON_INCLUDE_DIR})
+-      set(Python3_LIBRARY ${PYTHON_LIBRARY})
++      set(Python3_LIBRARY ${Python3_LIBRARY})
+       find_package(Python3 COMPONENTS Interpreter Development)
+     endif()
+ 
+-    ctkFunctionExtractOptimizedLibrary(PYTHON_LIBRARIES PYTHON_LIBRARY)
++    ctkFunctionExtractOptimizedLibrary(Python3_LIBRARIES Python3_LIBRARY)
+     list(APPEND additional_vtk_cmakevars
+       -DVTK_PYTHON_VERSION:STRING=${VTK_PYTHON_VERSION}
+       # FindPythonInterp, FindPythonLibs
+       -DPYTHON_EXECUTABLE:PATH=${PYTHON_EXECUTABLE}
+       -DPYTHON_INCLUDE_DIR:PATH=${PYTHON_INCLUDE_DIR}
+-      -DPYTHON_LIBRARY:FILEPATH=${PYTHON_LIBRARY}
++      -DPython3_LIBRARY:FILEPATH=${Python3_LIBRARY}
+       -DPYTHON_DEBUG_LIBRARIES:FILEPATH=${PYTHON_DEBUG_LIBRARIES}
+       )
+     if(VTK_PYTHON_VERSION VERSION_GREATER "2.7")
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 846be299..7bd89402 100644
 --- a/CMakeLists.txt

@@ -1,7 +1,7 @@
 From 6d4667870ae7938e329e203e8ca2fbd3f4c5269c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 1 Mar 2023 17:30:39 +0100
-Subject: [PATCH 5/6] ENH: Enable more selective installation of python files
+Subject: [PATCH 5/7] ENH: Enable more selective installation of python files
 
 This patch replaces the whole-directory installation mechanism for
 python files by a mechanism that selectively install the scripts and the
