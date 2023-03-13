@@ -1,4 +1,4 @@
-From 6a1f6b3b3d28f5f90506e7e5f868fc080be1c2a0 Mon Sep 17 00:00:00 2001
+From d723636e02110fee3b359f05e287a3cf7fa3274c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 12:16:14 +0100
 Subject: [PATCH 13/27] ENH: Make installed CMake files available

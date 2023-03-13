@@ -1,4 +1,4 @@
-From 10189c3b0870f6914479089b1c4aafbaf05b3ed7 Mon Sep 17 00:00:00 2001
+From d81138e1e183c061c2466a25c39efae4c25ade62 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 10:40:33 +0100
 Subject: [PATCH 18/27] ENH: Add templates infrastructure
@@ -218,10 +218,10 @@ index 308c64099e..08ae70cec0 100644
      )
    set(dynamicHeaders
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 3f3aba254b..9ad40b87df 100644
+index 11107eb130..c936e72d22 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -59,6 +59,7 @@ set(CMAKE_MODULE_PATH
+@@ -63,6 +63,7 @@ set(CMAKE_MODULE_PATH
    )
  
  set(Slicer_CMAKE_DIR ${Slicer_SOURCE_DIR}/CMake)
@@ -229,7 +229,7 @@ index 3f3aba254b..9ad40b87df 100644
  set(Slicer_EXTENSIONS_CMAKE_DIR ${Slicer_SOURCE_DIR}/Extensions/CMake)
  
  #-----------------------------------------------------------------------------
-@@ -125,7 +126,7 @@ include(SlicerInitializeReleaseType)
+@@ -129,7 +130,7 @@ include(SlicerInitializeReleaseType)
  # Set the header template which defines custom export/import macros
  # for shared libraries
  #-----------------------------------------------------------------------------
@@ -238,7 +238,7 @@ index 3f3aba254b..9ad40b87df 100644
  set(Slicer_LOGOS_RESOURCE "${Slicer_SOURCE_DIR}/Resources/qSlicer.qrc")
  
  #-----------------------------------------------------------------------------
-@@ -449,7 +450,7 @@ endif()
+@@ -453,7 +454,7 @@ endif()
  # CTestCustom
  #-----------------------------------------------------------------------------
  configure_file(
@@ -247,7 +247,7 @@ index 3f3aba254b..9ad40b87df 100644
    ${CMAKE_BINARY_DIR}/CTestCustom.cmake
    COPYONLY
    )
-@@ -1065,11 +1066,11 @@ endif()
+@@ -1069,11 +1070,11 @@ endif()
  #-----------------------------------------------------------------------------
  set(Slicer_USE_FILE ${Slicer_BINARY_DIR}/UseSlicer.cmake)
  configure_file(
@@ -261,7 +261,7 @@ index 3f3aba254b..9ad40b87df 100644
    ${Slicer_BINARY_DIR}/SlicerConfigVersion.cmake @ONLY)
  
  set(Slicer_EXTENSION_GENERATE_CONFIG ${Slicer_SOURCE_DIR}/CMake/SlicerExtensionGenerateConfig.cmake)
-@@ -1084,11 +1085,11 @@ set(extensions_build_dir "${Slicer_BINARY_DIR}/E")
+@@ -1088,11 +1089,11 @@ set(extensions_build_dir "${Slicer_BINARY_DIR}/E")
  # Configure a no-op SlicerConfig and SlicerConfigVersion for bundled projects
  set(Slicer_DIR ${extensions_build_dir})
  configure_file(
@@ -275,7 +275,7 @@ index 3f3aba254b..9ad40b87df 100644
    ${Slicer_DIR}/SlicerConfigVersion.cmake @ONLY)
  
  #
-@@ -1170,7 +1171,7 @@ set(files
+@@ -1174,7 +1175,7 @@ set(files
    )
  foreach(f ${files})
    configure_file(
@@ -284,7 +284,7 @@ index 3f3aba254b..9ad40b87df 100644
      ${CMAKE_CURRENT_BINARY_DIR}/${f}
      )
  endforeach()
-@@ -1246,12 +1247,6 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1250,12 +1251,6 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
      DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
      )
  
@@ -297,7 +297,7 @@ index 3f3aba254b..9ad40b87df 100644
    install(FILES
      ${Slicer_BINARY_DIR}/UseSlicer.cmake
      ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake
-@@ -1262,12 +1257,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1266,12 +1261,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
  endif()
  
  #-----------------------------------------------------------------------------

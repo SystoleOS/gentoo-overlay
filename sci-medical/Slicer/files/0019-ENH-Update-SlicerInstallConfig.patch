@@ -1,18 +1,35 @@
-From bd03ad022ad2c59683a0e51164c95ccef6ffe2fb Mon Sep 17 00:00:00 2001
+From ec1d21c85b0d7f5413ff0110b6df6edb72694a54 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Sat, 28 Jan 2023 07:53:06 +0100
 Subject: [PATCH 19/27] ENH: Update SlicerInstallConfig
 
 This closes SystoleOS/gentoo-overlay#76.
 ---
- Templates/SlicerInstallConfig.cmake.in | 137 ++++++++++++++-----------
- 1 file changed, 78 insertions(+), 59 deletions(-)
+ Templates/SlicerInstallConfig.cmake.in | 143 ++++++++++++++-----------
+ 1 file changed, 82 insertions(+), 61 deletions(-)
 
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index ce3e9451e4..268f886e19 100644
+index ce3e9451e4..a752c9d0c6 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
-@@ -47,57 +47,76 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
+@@ -1,4 +1,4 @@
+-#
++#"
+ # SlicerConfig.cmake - Slicer CMake configuration file for external projects
+ #
+ # This file is configured by Slicer and used by UseSlicer.cmake module
+@@ -27,7 +27,9 @@ set(Slicer_USE_IGSTK "@Slicer_USE_IGSTK@")
+ set(Slicer_USE_NAVITRACK "@Slicer_USE_NAVITRACK@")
+ set(Slicer_USE_NUMPY "@Slicer_USE_NUMPY@")
+ set(Slicer_USE_SCIPY "@Slicer_USE_SCIPY@")
+-set(Slicer_USE_PYTHONQT "@Slicer_USE_PYTHONQT@")
++if(NOT DEFINED Slicer_USE_PYTHONQT)
++  set(Slicer_USE_PYTHONQT "@Slicer_USE_PYTHONQT@")
++endif()
+ set(Slicer_USE_OPENTRACKER "@Slicer_USE_OPENTRACKER@")
+ 
+ # Slicer could be installed anywhere, so set all paths based on where
+@@ -47,57 +49,76 @@ set(Slicer_TEMPLATES_DIR "@Slicer_INSTALL_TEMPLATES_DIR@")
  # Set the Slicer_EXPORT_HEADER_TEMPLATE to the install dir
  set(Slicer_EXPORT_HEADER_TEMPLATE "@Slicer_INSTALL_TEMPLATES_DIR@/qSlicerExport.h.in")
  
@@ -129,7 +146,7 @@ index ce3e9451e4..268f886e19 100644
  # The location of the UseSlicer.cmake file.
  set(Slicer_USE_FILE "@Slicer_INSTALL_CMAKE_DIR@/UseSlicer.cmake")
  
-@@ -116,27 +135,27 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
+@@ -116,27 +137,27 @@ set(Slicer_INSTALL_CLIMODULES_BIN_DIR "@Slicer_INSTALL_CLIMODULES_BIN_DIR@")
  set(Slicer_INSTALL_CLIMODULES_LIB_DIR "@Slicer_INSTALL_CLIMODULES_LIB_DIR@")
  set(Slicer_INSTALL_CLIMODULES_SHARE_DIR "@Slicer_INSTALL_CLIMODULES_SHARE_DIR@")
  

@@ -1,4 +1,4 @@
-From 576bc58319a1866b4d3c33e74c656e952b61775c Mon Sep 17 00:00:00 2001
+From 6661d54658009170db6c5ba97816a4cc0b84484e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 09:55:32 +0100
 Subject: [PATCH 02/27] COMP: Find Eigen (required)
@@ -8,10 +8,10 @@ Subject: [PATCH 02/27] COMP: Find Eigen (required)
  1 file changed, 5 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 61888bf000..9df1ca13b9 100644
+index fa278fdff3..5d371dcc8f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -860,6 +860,11 @@ if(NOT TARGET ${VTK_GUI_SUPPORT_QT_TARGET_NAME})
+@@ -864,6 +864,11 @@ if(NOT TARGET ${VTK_GUI_SUPPORT_QT_TARGET_NAME})
  endif()
  set(VTK_RENDERING_BACKEND "${Slicer_VTK_RENDERING_BACKEND}")
  

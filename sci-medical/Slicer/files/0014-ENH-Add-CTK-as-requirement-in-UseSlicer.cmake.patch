@@ -1,4 +1,4 @@
-From 56502d38920ce0f47fc2f46ecf24aa4ee96c4478 Mon Sep 17 00:00:00 2001
+From 1faecf4f70aa113a62209f21266be3d87cd61031 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 13:37:11 +0100
 Subject: [PATCH 14/27] ENH: Add CTK as requirement in UseSlicer.cmake

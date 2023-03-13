@@ -1,4 +1,4 @@
-From 7e43283fff03d0465f397205c5d5ad1380d7ae23 Mon Sep 17 00:00:00 2001
+From 112ca2cbae3ffa3dd8ab298b026a0ec440c77420 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 09:39:53 +0100
 Subject: [PATCH 17/27] ENH: Installation and setup qSlicerExport.h.in
@@ -46,10 +46,10 @@ index 7955913b98..21bd3d49e9 100644
  set(Slicer_Libs_LIBRARY_DIRS
    "${Slicer_HOME}/lib/IGT"
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 31ba06c9d9..3f3aba254b 100644
+index 6d5e229aa5..11107eb130 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1246,6 +1246,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1250,6 +1250,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
      DESTINATION ${Slicer_INSTALL_CMAKE_DIR} COMPONENT Development
      )
  
@@ -62,7 +62,7 @@ index 31ba06c9d9..3f3aba254b 100644
    install(FILES
      ${Slicer_BINARY_DIR}/UseSlicer.cmake
      ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake
-@@ -1255,6 +1261,17 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1259,6 +1265,17 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
      )
  endif()
  

@@ -1,4 +1,4 @@
-From 49c2544e1c9ba32e6b74750439da33e83be9ecdc Mon Sep 17 00:00:00 2001
+From 8e453577280eb619d6c66ffd51faefc2e0faf9d0 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 09:51:51 +0100
 Subject: [PATCH 01/27] COMP: Add vtk CommonSystem component as requirement
@@ -8,10 +8,10 @@ Subject: [PATCH 01/27] COMP: Add vtk CommonSystem component as requirement
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c5345e20e4..61888bf000 100644
+index 4738ca1f73..fa278fdff3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -560,6 +560,7 @@ message(STATUS "  Slicer_VTK_VERSION_MAJOR is ${Slicer_VTK_VERSION_MAJOR}")
+@@ -564,6 +564,7 @@ message(STATUS "  Slicer_VTK_VERSION_MAJOR is ${Slicer_VTK_VERSION_MAJOR}")
  # Slicer_VTK_COMPONENTS
  #-----------------------------------------------------------------------------
  set(Slicer_VTK_COMPONENTS

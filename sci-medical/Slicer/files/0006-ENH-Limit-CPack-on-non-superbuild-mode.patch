@@ -1,4 +1,4 @@
-From 52e09f47cb335939c7300742447e61999b8852e4 Mon Sep 17 00:00:00 2001
+From b27f3c461d673638b7a6291c11d6709b826dd21e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:37:17 +0100
 Subject: [PATCH 06/27] ENH: Limit CPack on non-superbuild mode

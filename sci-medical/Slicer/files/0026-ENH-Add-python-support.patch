@@ -1,29 +1,44 @@
-From e24e8d61faca140e44850f1ef9ac07d2b3f7a8e1 Mon Sep 17 00:00:00 2001
+From 80cac1c42c7d276d802f533a5ba3b0ae337fa034 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
 Subject: [PATCH 26/27] ENH: Add python support
 
 ---
- Base/Python/CMakeLists.txt                    | 59 ++++++++++++-------
+ Base/Logic/CMakeLists.txt                     |  2 +-
+ Base/Python/CMakeLists.txt                    | 61 ++++++++++++-------
  Base/QTApp/CMakeLists.txt                     |  6 +-
  Base/QTGUI/qSlicerPythonManager.cxx           |  3 +-
  CMake/SlicerDirectories.cmake                 | 14 +++--
  CMake/SlicerMacroBuildScriptedModule.cmake    | 15 ++++-
- CMakeLists.txt                                | 30 ++++------
+ CMakeLists.txt                                | 30 ++++-----
  Libs/MRML/Core/CMakeLists.txt                 |  1 +
+ Libs/MRML/DisplayableManager/CMakeLists.txt   |  2 +-
  .../DisplayableManager/Python/CMakeLists.txt  |  3 +-
  Libs/vtkTeem/CMakeLists.txt                   |  9 ++-
  Templates/SlicerInstallConfig.cmake.in        |  5 ++
  Templates/UseSlicer.cmake.in                  |  1 +
  Templates/vtkSlicerConfigure.h.in             |  1 +
  Templates/vtkSlicerInstallConfigure.h.in      |  2 +
- 13 files changed, 96 insertions(+), 53 deletions(-)
+ 15 files changed, 99 insertions(+), 56 deletions(-)
 
+diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
+index 3d5d78c469..3822e358d9 100644
+--- a/Base/Logic/CMakeLists.txt
++++ b/Base/Logic/CMakeLists.txt
+@@ -166,7 +166,7 @@ if(Slicer_USE_PYTHONQT)
+     )
+   list(APPEND libs
+     ${VTK_COMMON_PYTHON_LIBRARY}
+-    ${PYTHON_LIBRARY} # At some point, VTK should be updated to expose VTK_PYTHON_LIBRARY
++    ${Python3_LIBRARY} # At some point, VTK should be updated to expose VTK_PYTHON_LIBRARY
+     )
+ endif()
+ 
 diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
-index b4f753e216..eafab3e7f4 100644
+index 13f2ae2f77..3dd6008093 100644
 --- a/Base/Python/CMakeLists.txt
 +++ b/Base/Python/CMakeLists.txt
-@@ -1,26 +1,26 @@
+@@ -1,27 +1,27 @@
  
  set(Slicer_PYTHON_SCRIPTS
 -  slicer/__init__
@@ -35,6 +50,7 @@ index b4f753e216..eafab3e7f4 100644
 -  slicer/parameterNodeWrapper/parameterInfo
 -  slicer/parameterNodeWrapper/parameterPack
 -  slicer/parameterNodeWrapper/serializers
+-  slicer/parameterNodeWrapper/types
 -  slicer/parameterNodeWrapper/util
 -  slicer/parameterNodeWrapper/validators
 -  slicer/parameterNodeWrapper/wrapper
@@ -56,6 +72,7 @@ index b4f753e216..eafab3e7f4 100644
 +  slicer/parameterNodeWrapper/parameterInfo.py
 +  slicer/parameterNodeWrapper/parameterPack.py
 +  slicer/parameterNodeWrapper/serializers.py
++  slicer/parameterNodeWrapper/types.py
 +  slicer/parameterNodeWrapper/util.py
 +  slicer/parameterNodeWrapper/validators.py
 +  slicer/parameterNodeWrapper/wrapper.py
@@ -71,7 +88,7 @@ index b4f753e216..eafab3e7f4 100644
    )
  
  set(Slicer_PYTHON_MODULES_CONFIG "
-@@ -70,5 +70,20 @@ ctkMacroCompilePythonScript(
+@@ -71,5 +71,20 @@ ctkMacroCompilePythonScript(
    SCRIPTS "${Slicer_PYTHON_SCRIPTS}"
    RESOURCES "${Slicer_PYTHON_RESOURCES}"
    DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python
@@ -210,10 +227,10 @@ index 3cf67d4653..49069c065f 100644
  
    if(BUILD_TESTING AND MY_SLICER_WITH_GENERIC_TESTS)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index e2ba1fec4e..14ef933b47 100644
+index 0e63e9ab04..0cc2a1a02d 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -153,6 +153,10 @@ mark_as_superbuild(GIT_EXECUTABLE)
+@@ -157,6 +157,10 @@ mark_as_superbuild(GIT_EXECUTABLE)
  find_package(Patch REQUIRED)
  mark_as_superbuild(Patch_EXECUTABLE)
  
@@ -224,7 +241,7 @@ index e2ba1fec4e..14ef933b47 100644
  #-----------------------------------------------------------------------------
  # Qt requirements
  #-----------------------------------------------------------------------------
-@@ -767,14 +771,6 @@ foreach(dep QT ${Slicer_DEPENDENCIES})
+@@ -771,14 +775,6 @@ foreach(dep QT ${Slicer_DEPENDENCIES})
    endif()
  endforeach()
  
@@ -239,7 +256,7 @@ index e2ba1fec4e..14ef933b47 100644
  #-----------------------------------------------------------------------------
  # Folders
  #-----------------------------------------------------------------------------
-@@ -897,18 +893,11 @@ include(ctkFunctionAddExecutableUtf8)
+@@ -901,18 +897,11 @@ include(ctkFunctionAddExecutableUtf8)
  # Set Slicer_PYTHON_VERSION and Slicer_PYTHON_VERSION_DOT
  #-----------------------------------------------------------------------------
  if(Slicer_USE_PYTHONQT)
@@ -261,7 +278,7 @@ index e2ba1fec4e..14ef933b47 100644
    function(_python_sys_attribute attribute varname)
      execute_process(
        COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.${attribute})"
-@@ -949,6 +938,11 @@ if(Slicer_USE_PYTHONQT)
+@@ -953,6 +942,11 @@ if(Slicer_USE_PYTHONQT)
    set(Slicer_VTK_WRAP_HIERARCHY_DIR ${Slicer_BINARY_DIR})
  endif()
  
@@ -285,6 +302,19 @@ index c9bcb281a7..bdf42da526 100644
    ${LibArchive_LIBRARY}
    )
  if(MRML_USE_vtkTeem)
+diff --git a/Libs/MRML/DisplayableManager/CMakeLists.txt b/Libs/MRML/DisplayableManager/CMakeLists.txt
+index 1b5d8aab12..68be089beb 100644
+--- a/Libs/MRML/DisplayableManager/CMakeLists.txt
++++ b/Libs/MRML/DisplayableManager/CMakeLists.txt
+@@ -174,7 +174,7 @@ if(MRMLDisplayableManager_USE_PYTHON)
+     )
+   list(APPEND libs
+     ${VTK_COMMON_PYTHON_LIBRARY} # For vtkPythonUtils
+-    ${PYTHON_LIBRARY} # At some point, VTK should be updated to expose VTK_PYTHON_LIBRARY
++    ${Python3_LIBRARY} # At some point, VTK should be updated to expose VTK_PYTHON_LIBRARY
+     )
+ endif()
+ 
 diff --git a/Libs/MRML/DisplayableManager/Python/CMakeLists.txt b/Libs/MRML/DisplayableManager/Python/CMakeLists.txt
 index 9e5501cde2..5624624060 100644
 --- a/Libs/MRML/DisplayableManager/Python/CMakeLists.txt
@@ -332,10 +362,10 @@ index c8ac7a7ef9..0eeb3cccf3 100644
  endif()
  
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index d66c5880d7..f40f569d7b 100644
+index 5440387626..ca14230176 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
-@@ -137,6 +137,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
+@@ -139,6 +139,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
  set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR@")
  set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR@")
  
