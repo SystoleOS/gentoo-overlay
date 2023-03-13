@@ -1,4 +1,4 @@
-From 33ddfd17237b501eec82ae0d9c1b4fd73e6bb3e9 Mon Sep 17 00:00:00 2001
+From 3e3bc7a7362f45d9dd9a789d848be52c95c2423a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 09:31:28 +0100
 Subject: [PATCH 7/7] ENH: Remove installation step from
@@ -13,7 +13,7 @@ and. From now on, the users are responsible for installing the files.
  2 files changed, 28 insertions(+), 19 deletions(-)
 
 diff --git a/CMake/ctkMacroCompilePythonScript.cmake b/CMake/ctkMacroCompilePythonScript.cmake
-index 0a677508..4811346b 100644
+index 2f828392..9672a1bb 100644
 --- a/CMake/ctkMacroCompilePythonScript.cmake
 +++ b/CMake/ctkMacroCompilePythonScript.cmake
 @@ -25,13 +25,13 @@ set(CTK_PYTHON_COMPILE_FILE_SCRIPT_DIR "${CMAKE_BINARY_DIR}/CMakeFiles")
