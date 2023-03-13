@@ -22,6 +22,7 @@ SLOT="0"
 DEPEND="
 	sci-medical/ctk[python]
 	sci-medical/Slicer[python]
+	Slicer-Loadable/SubjectHierarchy[python]
 "
 
 RDEPEND="
