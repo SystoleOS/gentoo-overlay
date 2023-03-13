@@ -20,7 +20,7 @@ LICENSE="Apache-2.0"
 
 SLOT="0"
 
-IUSE="python"
+IUSE="python DICOM"
 
 DEPEND="
 	python? (
@@ -39,7 +39,7 @@ DEPEND="
 	dev-qt/qtwidgets
 	dev-qt/qtxmlpatterns
 	dev-qt/qtxml
-	sci-libs/itk
+	sci-libs/itk[DICOM?]
 "
 
 RDEPEND="
@@ -86,7 +86,7 @@ src_configure(){
 		-DBUILD_TESTING=OFF
 		-DCTK_BUILD_QTDESIGNER_PLUGINS=ON
 		-DCTK_BUILD_SHARED_LIBS=ON
-		-DCTK_ENABLE_DICOM=OFF
+		-DCTK_ENABLE_DICOM:BOOL=$(usex DICOM ON OFF)
 		-DCTK_ENABLE_PluginFramework=OFF
 		-DCTK_ENABLE_Widgets=ON
 		-DCTK_LIB_Core=ON
@@ -98,15 +98,15 @@ src_configure(){
 		-DCTK_INSTALL_LIB_DIR:STRING=$(get_libdir)
 		-DCTK_INSTALL_QTPLUGIN_DIR:STRING="$(get_libdir)/qt5/plugins"
 		# PythonQt wrapping
-		-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTCORE:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTGUI:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTUITOOLS:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTNETWORK:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL="$(usex python)"
-		-DCTK_LIB_Scripting/Python/Widgets:BOOL="$(usex python)"
-		-DCTK_ENABLE_Python_Wrapping:BOOL="$(usex python)"
+		-DCTK_LIB_Scripting/Python/Core:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_USE_VTK:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTCORE:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTGUI:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTUITOOLS:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTNETWORK:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Core_PYTHONQT_WRAP_QTWEBKIT:BOOL="$(usex python ON OFF)"
+		-DCTK_LIB_Scripting/Python/Widgets:BOOL="$(usex python ON OFF)"
+		-DCTK_ENABLE_Python_Wrapping:BOOL="$(usex python ON OFF)"
 	)
 
 	if use python; then
