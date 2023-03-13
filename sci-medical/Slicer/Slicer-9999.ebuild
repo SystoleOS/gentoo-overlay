@@ -19,12 +19,12 @@ LICENSE="BSD"
 
 SLOT="0"
 
-IUSE="python cli sitk"
+IUSE="python cli DICOM sitk"
 
 DEPEND="
-	python? ( sci-medical/ctk[python]
+	python? ( sci-medical/ctk[python,DICOM?]
 				sci-libs/vtkAddon[python] )
-	!python? ( sci-medical/ctk
+	!python? ( sci-medical/ctk[DICOM?]
 				sci-libs/vtkAddon )
 	dev-qt/qtcore
 	dev-qt/linguist-tools
@@ -109,11 +109,11 @@ src_configure(){
 		-DBUILD_TESTING:BOOL=OFF
 		-DSlicer_BUILD_EXTENSIONMANAGER_SUPPORT:BOOL=OFF
 		-DSlicer_DONT_USE_EXTENSION:BOOL=ON
-		-DSlicer_BUILD_CLI_SUPPORT:BOOL="$(usex cli ON OFF)"
+		-DSlicer_BUILD_CLI_SUPPORT:BOOL=$(usex cli ON OFF)
 		-DSlicer_BUILD_CLI:BOOL=OFF
 		-DCMAKE_CXX_STANDARD:STRING="17"
 		-DSlicer_REQUIRED_QT_VERSION:STRING="5"
-		-DSlicer_BUILD_DICOM_SUPPORT:BOOL=OFF
+		-DSlicer_BUILD_DICOM_SUPPORT:BOOL=$(usex DICOM ON OFF)
 		-DSlicer_BUILD_ITKPython:BOOL=OFF
 		-DSlicer_BUILD_QTLOADABLEMODULES:BOOL=OFF
 		-DSlicer_BUILD_QTSCRIPTEDMODULES:BOOL=OFF
