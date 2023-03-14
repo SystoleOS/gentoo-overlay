@@ -1,0 +1,33 @@
+From 9d47897da15013b7c4494c45ca9f899fa18716d3 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 14 Mar 2023 07:11:22 +0100
+Subject: [PATCH] ENH: Make Endoscopy a separate module
+
+---
+ Modules/Scripted/Endoscopy/CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Modules/Scripted/Endoscopy/CMakeLists.txt b/Modules/Scripted/Endoscopy/CMakeLists.txt
+index 23033e472d..3bf5d5167f 100644
+--- a/Modules/Scripted/Endoscopy/CMakeLists.txt
++++ b/Modules/Scripted/Endoscopy/CMakeLists.txt
+@@ -1,7 +1,16 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(Endoscpy)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME Endoscopy)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+   ${MODULE_NAME}.py
+-- 
+2.39.2
+

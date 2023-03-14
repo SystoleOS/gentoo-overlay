@@ -2,7 +2,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9..10} )
 
 inherit cmake python-single-r1 git-r3
 
@@ -20,7 +20,8 @@ LICENSE="BSD"
 SLOT="0"
 
 DEPEND="
-	sci-medical/Slicer
+	sci-medical/ctk[python]
+	sci-medical/Slicer[python]
 "
 
 RDEPEND="
@@ -31,7 +32,7 @@ RDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-the-Endoscopy-scripted-module-a-separate-mo.patch
+	${FILESDIR}/0001-ENH-Make-Endoscopy-a-separate-module.patch
 )
 
 src_prepare() {
@@ -48,10 +49,9 @@ src_configure(){
 		-DBUILD_TESTING:BOOL=OFF
 		-DCMAKE_CXX_STANDARD:STRING="11"
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
-		-DSlicer_QTLOADABLEMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-loadable-modules"
-		-DSlicer_QTSCRIPTEDMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
-		-DSlicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR:STRING="lib64/Slicer-4.11/qt-scripted-modules"
-		-DPYTHON_INCLUDE_DIR:STRING="$(python_get_sitedir)"
+		-DPython3_INCLUDE_DIR:FILEPATH="$(python_get_includedir)"
+		-DPython3_LIBRARY:FILEPATH="$(python_get_library_path)"
+		-DPython3_EXECUTABLE:FILEPATH="${PYTHON}"
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
 	)
 
