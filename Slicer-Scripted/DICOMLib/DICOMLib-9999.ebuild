@@ -28,6 +28,7 @@ DEPEND="
 RDEPEND="
 	${DEPEND}
 	${PYTHON_DEPS}
+	>=sci-medical/pydicom-2.3.1
 "
 
 BDEPEND=""
