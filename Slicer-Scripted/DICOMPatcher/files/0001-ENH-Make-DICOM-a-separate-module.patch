@@ -1,0 +1,32 @@
+From cb25df99fa58385a94f5c4bbb389b581531fb987 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 14 Mar 2023 08:13:36 +0100
+Subject: [PATCH] ENH: Make DICOMPatcher a separate module
+
+---
+ Modules/Scripted/DICOMPatcher/CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Modules/Scripted/DICOMPatcher/CMakeLists.txt b/Modules/Scripted/DICOMPatcher/CMakeLists.txt
+index c36cc73805..dee5aa14ab 100644
+--- a/Modules/Scripted/DICOMPatcher/CMakeLists.txt
++++ b/Modules/Scripted/DICOMPatcher/CMakeLists.txt
+@@ -1,6 +1,15 @@
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(DICOMPatcher)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME DICOMPatcher)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+   ${MODULE_NAME}.py
+-- 
+2.39.2
+
