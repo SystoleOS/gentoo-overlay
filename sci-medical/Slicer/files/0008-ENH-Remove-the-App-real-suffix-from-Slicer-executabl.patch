@@ -1,7 +1,7 @@
 From 042803b6cb07879e27831896f2c07670f550fa9d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 11:08:38 +0100
-Subject: [PATCH 08/28] ENH: Remove the 'App-real' suffix from Slicer
+Subject: [PATCH 08/29] ENH: Remove the 'App-real' suffix from Slicer
  executable
 
 ---

@@ -1,7 +1,7 @@
 From e93f4d4307da019bdfcf2ba39e4bc92aeca67306 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:37:17 +0100
-Subject: [PATCH 06/28] ENH: Limit CPack on non-superbuild mode
+Subject: [PATCH 06/29] ENH: Limit CPack on non-superbuild mode
 
 The current CPack infrastructure is thought with the superbuild mode in
 mind. This commit limits the packages considered in non-superbuild mode.

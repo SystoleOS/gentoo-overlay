@@ -88,6 +88,7 @@ PATCHES=(
 	${FILESDIR}/0026-ENH-Add-python-support.patch
 	${FILESDIR}/0027-ENH-Disable-variable-setting-in-UseSlicer.cmake.in.patch
 	${FILESDIR}/0028-COMP-Fix-missing-QSslConfiguration-include.patch
+	${FILESDIR}/0029-BAD-ENH-Enable-installation-of-utility-scripts.patch
 )
 
 src_prepare() {

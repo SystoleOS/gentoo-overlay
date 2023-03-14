@@ -1,7 +1,7 @@
 From 495e09f2c68ef7958a1d96c71c05fb1fc4840803 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 21 Feb 2023 07:08:46 +0100
-Subject: [PATCH 24/28] ENH: Enable installation of Libs dev files
+Subject: [PATCH 24/29] ENH: Enable installation of Libs dev files
 
 This enables the installation of development files (ui_.h, .h and .txx
 files) for Slicer libraries MRML/Widgets, vtkITK and vtkSegmentationCore.

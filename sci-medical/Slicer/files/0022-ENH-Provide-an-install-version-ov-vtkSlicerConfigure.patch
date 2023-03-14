@@ -1,7 +1,7 @@
 From 4946d223d16fbe959279126529c3fed6361b1d54 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 16:31:51 +0100
-Subject: [PATCH 22/28] ENH: Provide an install version ov vtkSlicerConfigure.h
+Subject: [PATCH 22/29] ENH: Provide an install version ov vtkSlicerConfigure.h
 
 ---
  CMakeLists.txt                           |  13 ++-
