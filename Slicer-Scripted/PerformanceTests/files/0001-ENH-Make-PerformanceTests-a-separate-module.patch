@@ -1,0 +1,32 @@
+From 67c3eee9e4747fdb181e57dfa201d811b24db57a Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 14 Mar 2023 17:12:26 +0100
+Subject: [PATCH] ENH: Make PerformanceTests a separate module
+
+---
+ Modules/Scripted/PerformanceTests/CMakeLists.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/Modules/Scripted/PerformanceTests/CMakeLists.txt b/Modules/Scripted/PerformanceTests/CMakeLists.txt
+index a64cbd19ab..1bb2be1cb3 100644
+--- a/Modules/Scripted/PerformanceTests/CMakeLists.txt
++++ b/Modules/Scripted/PerformanceTests/CMakeLists.txt
+@@ -1,7 +1,15 @@
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(PerformanceTests)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME PerformanceTests)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+   ${MODULE_NAME}.py
+-- 
+2.39.2
+
