@@ -22,10 +22,8 @@ SLOT="0"
 IUSE="python cli DICOM sitk"
 
 DEPEND="
-	python? ( sci-medical/ctk[python,DICOM?]
-				sci-libs/vtkAddon[python] )
-	!python? ( sci-medical/ctk[DICOM?]
-				sci-libs/vtkAddon )
+	sci-medical/ctk[python?,DICOM?]
+	sci-libs/vtkAddon[python?]
 	dev-qt/qtcore
 	dev-qt/linguist-tools
 	dev-qt/qtmultimedia[widgets]
@@ -36,6 +34,7 @@ DEPEND="
 	dev-qt/qtsvg
 	dev-qt/qtwebengine
 	dev-qt/qtwebchannel
+	dev-qt/qtnetwork
 	dev-qt/qtscript
 	dev-qt/designer
 	dev-libs/rapidjson
@@ -88,6 +87,7 @@ PATCHES=(
 	${FILESDIR}/0025-ENH-Make-Testing-subdirs-subject-to-BUILD_TESTING.patch
 	${FILESDIR}/0026-ENH-Add-python-support.patch
 	${FILESDIR}/0027-ENH-Disable-variable-setting-in-UseSlicer.cmake.in.patch
+	${FILESDIR}/0028-COMP-Fix-missing-QSslConfiguration-include.patch
 )
 
 src_prepare() {

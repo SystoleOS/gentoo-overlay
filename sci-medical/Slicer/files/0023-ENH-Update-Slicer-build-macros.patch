@@ -1,7 +1,7 @@
-From 42467d0674b1c31a032445c245e38f27a823c815 Mon Sep 17 00:00:00 2001
+From 660e58c98adf013679dbcd81a852635ca1e30f89 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:21:04 +0100
-Subject: [PATCH 23/27] ENH: Update Slicer build macros
+Subject: [PATCH 23/28] ENH: Update Slicer build macros
 
 This (1) adds libraries and (2) sets link directories for Slicer build
 macros.

@@ -1,7 +1,7 @@
-From 73d57c64ceec5df60efe60778355d3e45600f0d4 Mon Sep 17 00:00:00 2001
+From 3946e54939b63b67f245c690ce1d8331715ad9dd Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 11:46:12 +0100
-Subject: [PATCH 04/27] ENH: Make optional the use of Slicer ITK
+Subject: [PATCH 04/28] ENH: Make optional the use of Slicer ITK
 
 The Slicer superbuild is based on the use of a custom ITK. This commit
 makes optional the use of the custom ITK and leaves room for the use of

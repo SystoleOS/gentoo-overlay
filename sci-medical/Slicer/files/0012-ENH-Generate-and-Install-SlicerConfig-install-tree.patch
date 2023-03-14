@@ -1,7 +1,7 @@
-From 21a3e05a15fcd7e75cabb2304397161942c5cbe2 Mon Sep 17 00:00:00 2001
+From a9e1635ae7154074fc3dcab249f87b4701a3cf37 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:13:12 +0200
-Subject: [PATCH 12/27] ENH: Generate and Install SlicerConfig (install tree)
+Subject: [PATCH 12/28] ENH: Generate and Install SlicerConfig (install tree)
 
 ---
  CMake/SlicerGenerateSlicerConfig.cmake | 5 +++++

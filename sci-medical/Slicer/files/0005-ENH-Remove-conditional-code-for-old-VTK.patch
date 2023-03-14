@@ -1,7 +1,7 @@
-From 56632e73329de8853dc6209211e07e2a009fcad7 Mon Sep 17 00:00:00 2001
+From 2ae3a0650d9c5e390b21024f5792a88968ea28ba Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:16:32 +0100
-Subject: [PATCH 05/27] ENH: Remove conditional code for old VTK
+Subject: [PATCH 05/28] ENH: Remove conditional code for old VTK
 
 This commit removes some conditional coding having to do with the use of
 an earlier version of VTK. The main issue is that VTK determines its

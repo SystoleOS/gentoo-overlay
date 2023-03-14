@@ -1,7 +1,7 @@
-From d723636e02110fee3b359f05e287a3cf7fa3274c Mon Sep 17 00:00:00 2001
+From 63cdeefcb8c8797242c4988e24b83290d160e4cb Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 12:16:14 +0100
-Subject: [PATCH 13/27] ENH: Make installed CMake files available
+Subject: [PATCH 13/28] ENH: Make installed CMake files available
 
 ---
  CMake/SlicerDirectories.cmake      | 2 +-

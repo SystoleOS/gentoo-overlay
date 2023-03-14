@@ -1,7 +1,7 @@
-From 550aa612a22907ad709fbcb60ea8a461a2880bfd Mon Sep 17 00:00:00 2001
+From d33b445440ebf29e5af9f5708d08af9f6f10375d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 09:20:18 +0100
-Subject: [PATCH 10/27] ENH: Use slicer installation dirs for base dev
+Subject: [PATCH 10/28] ENH: Use slicer installation dirs for base dev
  components
 
 This makes installation of development components in `Base/CLI` and

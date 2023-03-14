@@ -1,7 +1,7 @@
-From 5eed2e99218d1721fbc623537e251cc7c5d33d81 Mon Sep 17 00:00:00 2001
+From cdd283f23634b3faecad90fd8f655861cccbcdf7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 19:04:09 +0100
-Subject: [PATCH 27/27] ENH: Disable variable setting in UseSlicer.cmake.in
+Subject: [PATCH 27/28] ENH: Disable variable setting in UseSlicer.cmake.in
 
 ---
  Templates/UseSlicer.cmake.in | 52 ++++++++++++++++++------------------
