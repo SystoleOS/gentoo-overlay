@@ -1,0 +1,32 @@
+From bf4f0d487cf969949a223178a0141a5c83bb2a5b Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 14 Mar 2023 17:26:00 +0100
+Subject: [PATCH] ENH: Make SampleData a separate module
+
+---
+ Modules/Scripted/SampleData/CMakeLists.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/Modules/Scripted/SampleData/CMakeLists.txt b/Modules/Scripted/SampleData/CMakeLists.txt
+index d839c7d7f1..76f29611ec 100644
+--- a/Modules/Scripted/SampleData/CMakeLists.txt
++++ b/Modules/Scripted/SampleData/CMakeLists.txt
+@@ -1,7 +1,15 @@
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(SampleData)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME SampleData)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+   ${MODULE_NAME}.py
+-- 
+2.39.2
+
