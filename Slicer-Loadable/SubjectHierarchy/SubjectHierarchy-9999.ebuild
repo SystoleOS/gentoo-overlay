@@ -22,10 +22,8 @@ SLOT="0"
 IUSE="python"
 
 DEPEND="
-	python? ( sci-medical/ctk[python]
-			  sci-medical/Slicer[python] )
-	!python? ( sci-medical/ctk
-			   sci-medical/Slicer )
+	sci-medical/ctk[python?]
+	sci-medical/Slicer[python?]
 	Slicer-Loadable/Terminologies
 "
 
@@ -36,7 +34,11 @@ RDEPEND="
 		dev-python/scipy
 		)
 "
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+REQUIRED_USE="
+	python? (
+		${PYTHON_REQUIRED_USE}
+		)
+"
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Make-SubjectHierarchy-a-separate-module.patch
