@@ -15,7 +15,8 @@ inherit python-single-r1 cmake java-pkg-opt-2 virtualx webapp
 DESCRIPTION="This is the 3D Slicer Visualization Toolkit"
 HOMEPAGE="https://github.com/slicer/vtk"
 
-SRC_URI="https://github.com/Slicer/VTK/archive/97a187572d4000cd820f9fc887f21eaf0bde857c.tar.gz -> vtk-9.1.0.tar.gz"
+SRC_URI="https://github.com/Slicer/VTK/archive/6efd97c519d0cb813a31e52c232161e73b64a7e8.tar.gz -> vtk-9.1.0.tar.gz"
+
 
 LICENSE="BSD LGPL-2"
 SLOT="0"
@@ -264,12 +265,12 @@ src_configure() {
 			mycmakeargs+=(
 				-DPython3_EXECUTABLE="${PYTHON}"
 				-DVTK_ENABLE_WRAPPING=ON
-				-DVTK_MODULE_ENABLE_VTK_Python="WANT"
-				-DVTK_MODULE_ENABLE_VTK_PythonInterpreter="WANT"
-				-DVTK_MODULE_ENABLE_VTK_WrappingPythonCore="WANT"
+				-DVTK_MODULE_ENABLE_VTK_Python:STRING="YES"
+				-DVTK_MODULE_ENABLE_VTK_PythonInterpreter:STRING="YES"
+				-DVTK_MODULE_ENABLE_VTK_WrappingPythonCore:STRING="YES"
 				-DVTK_PYTHON_SITE_PACKAGES_SUFFIX="lib/${EPYTHON}/site-packages"
 			)
-			use rendering && mycmakeargs+=( -DVTK_MODULE_ENABLE_VTK_PythonContext2D="WANT" )
+			use rendering && mycmakeargs+=( -DVTK_MODULE_ENABLE_VTK_PythonContext2D="YES" )
 		fi
 
 		if use R; then
