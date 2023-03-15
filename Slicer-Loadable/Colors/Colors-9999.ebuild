@@ -45,6 +45,10 @@ PATCHES=(
 	${FILESDIR}/0001-ENH-Make-colors-a-separate-module.patch
 )
 
+pkg_setup() {
+	use python && python-single-r1_pkg_setup
+}
+
 src_configure(){
 
 	local mycmakeargs=()
