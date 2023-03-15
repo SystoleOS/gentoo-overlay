@@ -1,13 +1,16 @@
-From 044083a10cfb1b76d7d563b7220501e96baa102f Mon Sep 17 00:00:00 2001
+From 5c0a4fd12d160a666687898bea82887209d50102 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Feb 2023 14:01:23 +0100
 Subject: [PATCH] ENH: Make colors a separate module
 
 ---
  Modules/Loadable/Colors/CMakeLists.txt           | 16 +++++++++++++++-
+ Modules/Loadable/Colors/Logic/CMakeLists.txt     |  1 +
+ Modules/Loadable/Colors/MRML/CMakeLists.txt      |  7 +++++++
  .../SubjectHierarchyPlugins/CMakeLists.txt       | 15 ++++++++++++---
+ .../Loadable/Colors/VTKWidgets/CMakeLists.txt    |  1 +
  Modules/Loadable/Colors/Widgets/CMakeLists.txt   |  1 +
- 3 files changed, 28 insertions(+), 4 deletions(-)
+ 6 files changed, 37 insertions(+), 4 deletions(-)
 
 diff --git a/Modules/Loadable/Colors/CMakeLists.txt b/Modules/Loadable/Colors/CMakeLists.txt
 index 19e100d51d..2ef064d1b4 100644
@@ -45,6 +48,43 @@ index 19e100d51d..2ef064d1b4 100644
    )
  
  set(MODULE_SRCS
+diff --git a/Modules/Loadable/Colors/Logic/CMakeLists.txt b/Modules/Loadable/Colors/Logic/CMakeLists.txt
+index 3382081c22..d22aa64b18 100644
+--- a/Modules/Loadable/Colors/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Colors/Logic/CMakeLists.txt
+@@ -15,6 +15,7 @@ set(${KIT}_SRCS
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
++  ${Python3_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/Modules/Loadable/Colors/MRML/CMakeLists.txt b/Modules/Loadable/Colors/MRML/CMakeLists.txt
+index c1789ca18e..f4ee73cbba 100644
+--- a/Modules/Loadable/Colors/MRML/CMakeLists.txt
++++ b/Modules/Loadable/Colors/MRML/CMakeLists.txt
+@@ -11,8 +11,14 @@ set(${KIT}_SRCS
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   ${MRML_LIBRARIES}
++  ${Python3_LIBRARIES}
+   )
+ 
++set(DISABLE_WRAP_PYTHON)
++if(NOT Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+@@ -20,4 +26,5 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
 diff --git a/Modules/Loadable/Colors/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Loadable/Colors/SubjectHierarchyPlugins/CMakeLists.txt
 index 4d9825858c..d8d6f9f209 100644
 --- a/Modules/Loadable/Colors/SubjectHierarchyPlugins/CMakeLists.txt
@@ -81,6 +121,18 @@ index 4d9825858c..d8d6f9f209 100644
  #-----------------------------------------------------------------------------
  SlicerMacroBuildModuleQtLibrary(
    NAME ${KIT}
+diff --git a/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt b/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt
+index 50b06726e3..24fdc7095a 100644
+--- a/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt
++++ b/Modules/Loadable/Colors/VTKWidgets/CMakeLists.txt
+@@ -13,6 +13,7 @@ set(${KIT}_SRCS
+   )
+ 
+ set(${KIT}_TARGET_LIBRARIES
++  ${Python3_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
 diff --git a/Modules/Loadable/Colors/Widgets/CMakeLists.txt b/Modules/Loadable/Colors/Widgets/CMakeLists.txt
 index 0d18527f4b..a7748bbdcf 100644
 --- a/Modules/Loadable/Colors/Widgets/CMakeLists.txt
