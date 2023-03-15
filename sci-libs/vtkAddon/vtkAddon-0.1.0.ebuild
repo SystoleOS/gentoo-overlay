@@ -12,7 +12,7 @@ DESCRIPTION="General-purpose features that may be integrated into VTK library in
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/vtkAddon"
 
-SRC_URI="https://github.com/Slicer/vtkAddon/archive/0bcff8277cde13edc9033d2cfe5697e3036fbcd7.tar.gz -> vtkAddon.tar.gz"
+SRC_URI="https://github.com/Slicer/vtkAddon/archive/4413fde380b744ab221f7beb4410e11a5158b496.tar.gz -> vtkAddon.tar.gz"
 
 LICENSE="BSD"
 
