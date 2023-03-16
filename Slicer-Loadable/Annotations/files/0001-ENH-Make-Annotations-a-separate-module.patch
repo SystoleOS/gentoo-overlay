@@ -1,15 +1,17 @@
-From 03ccd3517ac3b4027d667d88347716a569176303 Mon Sep 17 00:00:00 2001
+From 5d3de17e04e0b1a4c20c8fcf499464013689d7d9 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 8 Feb 2023 13:21:57 +0100
 Subject: [PATCH] ENH: Make Annotations a separate module
 
 ---
- Modules/Loadable/Annotations/CMakeLists.txt      | 12 ++++++++++++
- Modules/Loadable/Annotations/MRML/CMakeLists.txt |  2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ Modules/Loadable/Annotations/CMakeLists.txt     | 17 +++++++++++++++++
+ .../Loadable/Annotations/Logic/CMakeLists.txt   |  7 +++++++
+ .../Loadable/Annotations/MRML/CMakeLists.txt    |  9 ++++++++-
+ .../Annotations/qSlicerAnnotationsModule.cxx    |  2 +-
+ 4 files changed, 33 insertions(+), 2 deletions(-)
 
 diff --git a/Modules/Loadable/Annotations/CMakeLists.txt b/Modules/Loadable/Annotations/CMakeLists.txt
-index fff9aa0212..69605c0974 100644
+index fff9aa0212..faa01b20e1 100644
 --- a/Modules/Loadable/Annotations/CMakeLists.txt
 +++ b/Modules/Loadable/Annotations/CMakeLists.txt
 @@ -1,8 +1,18 @@
@@ -31,7 +33,7 @@ index fff9aa0212..69605c0974 100644
  #-----------------------------------------------------------------------------
  add_subdirectory(MRML)
  add_subdirectory(Logic)
-@@ -44,10 +54,12 @@ set(MODULE_RESOURCES
+@@ -44,12 +54,19 @@ set(MODULE_RESOURCES
    )
  
  set(MODULE_TARGET_LIBRARIES
@@ -43,12 +45,42 @@ index fff9aa0212..69605c0974 100644
 +  Qt::Xml
    )
  
++if (Slicer_USE_PYTHONQT)
++  add_compile_definitions(Annotations_USE_PYTHONQT)
++  list(APPEND MODULE_INCLUDE_DIRECTORIES ${PYTHONQT_INCLUDE_DIR})
++endif()
++
  #-----------------------------------------------------------------------------
+ slicerMacroBuildLoadableModule(
+   NAME ${MODULE_NAME}
+diff --git a/Modules/Loadable/Annotations/Logic/CMakeLists.txt b/Modules/Loadable/Annotations/Logic/CMakeLists.txt
+index 0080a18501..9d6caf3372 100644
+--- a/Modules/Loadable/Annotations/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Annotations/Logic/CMakeLists.txt
+@@ -16,6 +16,12 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerAnnotationsModuleMRML
+   )
+ 
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if (Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Python3_LIBRARIES})
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+@@ -23,4 +29,5 @@ SlicerMacroBuildModuleLogic(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
 diff --git a/Modules/Loadable/Annotations/MRML/CMakeLists.txt b/Modules/Loadable/Annotations/MRML/CMakeLists.txt
-index 564915bf76..5f6c272680 100644
+index 564915bf76..65bc7bfd6c 100644
 --- a/Modules/Loadable/Annotations/MRML/CMakeLists.txt
 +++ b/Modules/Loadable/Annotations/MRML/CMakeLists.txt
-@@ -47,7 +47,7 @@ set(${KIT}_SRCS
+@@ -47,9 +47,15 @@ set(${KIT}_SRCS
    )
  
  set(${KIT}_TARGET_LIBRARIES
@@ -56,7 +88,34 @@ index 564915bf76..5f6c272680 100644
 +  ${ITK_LIBRARIES}
    )
  
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if (Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Python3_LIBRARIES})
++endif()
++
  #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+@@ -57,4 +63,5 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+diff --git a/Modules/Loadable/Annotations/qSlicerAnnotationsModule.cxx b/Modules/Loadable/Annotations/qSlicerAnnotationsModule.cxx
+index 3202f8cc84..e04ddcab3a 100644
+--- a/Modules/Loadable/Annotations/qSlicerAnnotationsModule.cxx
++++ b/Modules/Loadable/Annotations/qSlicerAnnotationsModule.cxx
+@@ -10,7 +10,7 @@
+ #include "GUI/qSlicerAnnotationModuleSnapShotDialog.h"
+ 
+ // PythonQt includes
+-#ifdef Slicer_USE_PYTHONQT
++#ifdef Annotations_USE_PYTHONQT
+ #include "PythonQt.h"
+ #endif
+ 
 -- 
 2.39.2
 
