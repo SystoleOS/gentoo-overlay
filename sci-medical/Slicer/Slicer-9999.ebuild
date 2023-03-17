@@ -53,9 +53,12 @@ RDEPEND="
 	python? (
 		${PYTHON_DEPS}
 		dev-python/scipy
+		dev-python/numpy
 		)
 "
 
+# NOTE: This is due to incompatibilities with some versions of cmake
+# for reference see https://github.com/Slicer/Slicer/pull/6852
 BDEPEND="<dev-util/cmake-3.25"
 
 PATCHES=(
