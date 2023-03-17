@@ -1,0 +1,35 @@
+From 0b36fe7cab9c729137d825d7181ce98eeff4fe97 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Fri, 17 Mar 2023 14:01:16 +0100
+Subject: [PATCH] ENH: Make WebServer a separate module
+
+---
+ Modules/Scripted/WebServer/CMakeLists.txt | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/Modules/Scripted/WebServer/CMakeLists.txt b/Modules/Scripted/WebServer/CMakeLists.txt
+index 6c6d694714..734a8a9aa1 100644
+--- a/Modules/Scripted/WebServer/CMakeLists.txt
++++ b/Modules/Scripted/WebServer/CMakeLists.txt
+@@ -1,6 +1,17 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(WebServer)
++
++#-----------------------------------------------------------------------------
++set(MODULE_NAME "WebServer")
++
++string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
+ #-----------------------------------------------------------------------------
+-set(MODULE_NAME WebServer)
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+-- 
+2.39.2
+
