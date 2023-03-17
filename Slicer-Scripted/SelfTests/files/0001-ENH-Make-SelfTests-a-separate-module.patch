@@ -1,0 +1,33 @@
+From 4950a2aac80e66f5339cde30cadf3143fb40927c Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Fri, 17 Mar 2023 13:46:42 +0100
+Subject: [PATCH] ENH: Make SelfTests a separate module
+
+---
+ Modules/Scripted/SelfTests/CMakeLists.txt | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Modules/Scripted/SelfTests/CMakeLists.txt b/Modules/Scripted/SelfTests/CMakeLists.txt
+index d75551724b..6489e1ce63 100644
+--- a/Modules/Scripted/SelfTests/CMakeLists.txt
++++ b/Modules/Scripted/SelfTests/CMakeLists.txt
+@@ -1,7 +1,16 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(SelfTests)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME SelfTests)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+   ${MODULE_NAME}.py
+-- 
+2.39.2
+
