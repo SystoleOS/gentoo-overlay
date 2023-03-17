@@ -1,0 +1,77 @@
+From 503cc44aa5ee48103a7a036fd7be21977c6885f1 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Fri, 17 Mar 2023 13:29:38 +0100
+Subject: [PATCH] ENH: Make SegmentStatistics a separate module
+
+---
+ Modules/Scripted/SegmentStatistics/CMakeLists.txt    | 10 ++++++++++
+ .../SegmentStatisticsPlugins/CMakeLists.txt          | 12 +++++++++---
+ .../SubjectHierarchyPlugins/CMakeLists.txt           | 12 +++++++++---
+ 3 files changed, 28 insertions(+), 6 deletions(-)
+
+diff --git a/Modules/Scripted/SegmentStatistics/CMakeLists.txt b/Modules/Scripted/SegmentStatistics/CMakeLists.txt
+index b75ae9c219..2b48fe22c9 100644
+--- a/Modules/Scripted/SegmentStatistics/CMakeLists.txt
++++ b/Modules/Scripted/SegmentStatistics/CMakeLists.txt
+@@ -1,6 +1,16 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(SegmentStatistics)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME SegmentStatistics)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ add_subdirectory(SubjectHierarchyPlugins)
+ add_subdirectory(SegmentStatisticsPlugins)
+ 
+diff --git a/Modules/Scripted/SegmentStatistics/SegmentStatisticsPlugins/CMakeLists.txt b/Modules/Scripted/SegmentStatistics/SegmentStatisticsPlugins/CMakeLists.txt
+index d6d81dfbbd..20ab57ad50 100644
+--- a/Modules/Scripted/SegmentStatistics/SegmentStatisticsPlugins/CMakeLists.txt
++++ b/Modules/Scripted/SegmentStatistics/SegmentStatisticsPlugins/CMakeLists.txt
+@@ -13,7 +13,13 @@ ctkMacroCompilePythonScript(
+   TARGET_NAME SegmentStatisticsPlugins
+   SCRIPTS "${SegmentStatisticsPlugins_PYTHON_SCRIPTS}"
+   RESOURCES "${SegmentStatisticsPlugins_PYTHON_RESOURCES}"
+-  DESTINATION_DIR ${Slicer_BINARY_DIR}/${Slicer_QTSCRIPTEDMODULES_LIB_DIR}/SegmentStatisticsPlugins
+-  INSTALL_DIR ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}/SegmentStatisticsPlugins
+-  NO_INSTALL_SUBDIR
++  DESTINATION_DIR "${CMAKE_CURRENT_BINARY_DIR}/SegmentStatisticsPlugins"
+   )
++
++# Install python module / resources directory
++install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/"
++  DESTINATION "${Python3_SITELIB}" COMPONENT RuntimeLibraries
++  FILES_MATCHING
++  PATTERN "*.py"
++  PATTERN "*.pyc"
++)
+diff --git a/Modules/Scripted/SegmentStatistics/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Scripted/SegmentStatistics/SubjectHierarchyPlugins/CMakeLists.txt
+index 832a2e1835..f5bdec1cc6 100644
+--- a/Modules/Scripted/SegmentStatistics/SubjectHierarchyPlugins/CMakeLists.txt
++++ b/Modules/Scripted/SegmentStatistics/SubjectHierarchyPlugins/CMakeLists.txt
+@@ -9,7 +9,13 @@ ctkMacroCompilePythonScript(
+   TARGET_NAME ${MODULE_NAME}SubjectHierarchyPlugins
+   SCRIPTS "${${MODULE_NAME}SubjectHierarchyPlugins_PYTHON_SCRIPTS}"
+   RESOURCES "${${MODULE_NAME}SubjectHierarchyPlugins_PYTHON_RESOURCES}"
+-  DESTINATION_DIR ${Slicer_BINARY_DIR}/${Slicer_QTSCRIPTEDMODULES_LIB_DIR}/SubjectHierarchyPlugins
+-  INSTALL_DIR ${Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR}/SubjectHierarchyPlugins
+-  NO_INSTALL_SUBDIR
++  DESTINATION_DIR "${CMAKE_CURRENT_BINARY_DIR}/SubjectHierarchyPlugins"
+   )
++
++# Install python module / resources directory
++install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/"
++  DESTINATION "${Python3_SITELIB}" COMPONENT RuntimeLibraries
++  FILES_MATCHING
++  PATTERN "*.py"
++  PATTERN "*.pyc"
++)
+-- 
+2.39.2
+
