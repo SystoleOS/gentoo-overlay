@@ -45,7 +45,7 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
-		-DCMAKE_CXX_STANDARD:STRING="11"
+		-DCMAKE_CXX_STANDARD:STRING="17"
 		-DPython3_INCLUDE_DIR:FILEPATH="$(python_get_includedir)"
 		-DPython3_LIBRARY:FILEPATH="$(python_get_library_path)"
 		-DPython3_EXECUTABLE:FILEPATH="${PYTHON}"
