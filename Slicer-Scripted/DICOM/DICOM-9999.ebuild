@@ -21,6 +21,7 @@ SLOT="0"
 
 DEPEND="
 	sci-medical/Slicer[python]
+	Slicer-Loadable/SubjectHierarchy[python]
 	Slicer-Scripted/DICOMLib
 "
 
