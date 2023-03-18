@@ -21,6 +21,7 @@ SLOT="0"
 
 DEPEND="
 	sci-medical/Slicer[python]
+	Slicer-Scripted/DICOM
 	>=sci-medical/pydicom-2.3.1
 "
 
