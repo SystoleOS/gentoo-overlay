@@ -1,4 +1,4 @@
-From 79335ecfffaa5921083203183421688ca9df474a Mon Sep 17 00:00:00 2001
+From c8d1da741f0873f5197ba83b31b04b71ce8de121 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 10:40:33 +0100
 Subject: [PATCH 18/29] ENH: Add templates infrastructure
@@ -77,7 +77,7 @@ index 072b9fb247..d54278e6d3 100644
 -include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
 +#include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
 diff --git a/CMake/SlicerCPack.cmake b/CMake/SlicerCPack.cmake
-index b54fc6de0c..3c0a4401a1 100644
+index 93107a7857..e43bf2d1f5 100644
 --- a/CMake/SlicerCPack.cmake
 +++ b/CMake/SlicerCPack.cmake
 @@ -218,7 +218,7 @@ if(Slicer_SUPERBUILD)
@@ -183,7 +183,7 @@ index d2370a532b..0c37b22237 100644
 +  ${Slicer_SOURCE_DIR}/Templates/SlicerInstallConfig.cmake.in
    ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake @ONLY)
 diff --git a/CMake/SlicerMacroBuildApplication.cmake b/CMake/SlicerMacroBuildApplication.cmake
-index 0080043263..3ee6e3e471 100644
+index 5ce01cd67d..b6a29a051c 100644
 --- a/CMake/SlicerMacroBuildApplication.cmake
 +++ b/CMake/SlicerMacroBuildApplication.cmake
 @@ -132,7 +132,7 @@ macro(slicerMacroBuildAppLibrary)
@@ -195,7 +195,7 @@ index 0080043263..3ee6e3e471 100644
      ${CMAKE_CURRENT_BINARY_DIR}/${MY_EXPORT_HEADER_PREFIX}Export.h
      )
    set(dynamicHeaders
-@@ -450,7 +450,7 @@ macro(slicerMacroBuildApplication)
+@@ -462,7 +462,7 @@ macro(slicerMacroBuildApplication)
          MACOSX_BUNDLE_BUNDLE_NAME "${SLICERAPP_APPLICATION_NAME} ${Slicer_MAIN_PROJECT_VERSION_FULL}"
          MACOSX_BUNDLE_BUNDLE_VERSION "${Slicer_MAIN_PROJECT_VERSION_FULL}"
          MACOSX_BUNDLE_GUI_IDENTIFIER "${Slicer_MACOSX_BUNDLE_GUI_IDENTIFIER}"
@@ -218,7 +218,7 @@ index 308c64099e..08ae70cec0 100644
      )
    set(dynamicHeaders
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 11107eb130..c936e72d22 100644
+index 65abd4ffdc..51e8cb1aac 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -63,6 +63,7 @@ set(CMAKE_MODULE_PATH

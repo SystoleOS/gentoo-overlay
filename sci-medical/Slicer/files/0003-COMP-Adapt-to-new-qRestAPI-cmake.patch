@@ -1,4 +1,4 @@
-From a972976b15b089674c669bb1eab4e0ec4d8be0ec Mon Sep 17 00:00:00 2001
+From 06b6813da9350a3c6e23369968497d142ad9e362 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 10:01:23 +0100
 Subject: [PATCH 03/29] COMP: Adapt to new qRestAPI cmake

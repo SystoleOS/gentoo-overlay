@@ -1,4 +1,4 @@
-From 3946e54939b63b67f245c690ce1d8331715ad9dd Mon Sep 17 00:00:00 2001
+From 2fa0e7afb3b85b2c1a31e81155d4ec6d5760c5de Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 11:46:12 +0100
 Subject: [PATCH 04/29] ENH: Make optional the use of Slicer ITK
@@ -15,7 +15,7 @@ other flavours of ITK (e.g., official ITK).
  5 files changed, 22 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5d371dcc8f..f91abdbfe6 100644
+index 546e5d2acd..92fe7bb493 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -366,6 +366,14 @@ option(Slicer_USE_QtTesting    "Integrate QtTesting framework into Slicer." ON)

@@ -1,4 +1,4 @@
-From 4946d223d16fbe959279126529c3fed6361b1d54 Mon Sep 17 00:00:00 2001
+From e0b864cd522971a2c7c6fb8c168311e5850e07bd Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 16:31:51 +0100
 Subject: [PATCH 22/29] ENH: Provide an install version ov vtkSlicerConfigure.h
@@ -10,7 +10,7 @@ Subject: [PATCH 22/29] ENH: Provide an install version ov vtkSlicerConfigure.h
  create mode 100644 Templates/vtkSlicerInstallConfigure.h.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c936e72d22..0e63e9ab04 100644
+index 51e8cb1aac..c611cde149 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1180,12 +1180,21 @@ foreach(f ${files})

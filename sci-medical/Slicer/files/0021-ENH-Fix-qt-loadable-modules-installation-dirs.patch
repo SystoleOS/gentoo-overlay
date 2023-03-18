@@ -1,4 +1,4 @@
-From d0c26e87148be64af6c720b47ed567dd1ed9e905 Mon Sep 17 00:00:00 2001
+From c74f1c49ec844d2f1fde8948e13c5a0e8aa0d635 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 11:15:28 +0100
 Subject: [PATCH 21/29] ENH: Fix qt-loadable-modules installation dirs
@@ -10,10 +10,10 @@ This fixes SystoleOS/gentoo-overlay#68
  2 files changed, 5 insertions(+), 12 deletions(-)
 
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index 26a05f2656..1525e35c2e 100644
+index 0a9ec77e59..020af1695c 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
-@@ -131,12 +131,11 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTLOADA
+@@ -139,12 +139,11 @@ set(Slicer_QTLOADABLEMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTLOADA
  set(Slicer_QTLOADABLEMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTLOADABLEMODULES_SUBDIR}")
  
  # for install tree

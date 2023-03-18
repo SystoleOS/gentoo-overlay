@@ -1,4 +1,4 @@
-From 042803b6cb07879e27831896f2c07670f550fa9d Mon Sep 17 00:00:00 2001
+From 971d83ca54202d18cde81fe01edeb18aec6b94bf Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 11:08:38 +0100
 Subject: [PATCH 08/29] ENH: Remove the 'App-real' suffix from Slicer
@@ -9,10 +9,10 @@ Subject: [PATCH 08/29] ENH: Remove the 'App-real' suffix from Slicer
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMake/SlicerMacroBuildApplication.cmake b/CMake/SlicerMacroBuildApplication.cmake
-index c8428fe796..0080043263 100644
+index 637659c6fe..5ce01cd67d 100644
 --- a/CMake/SlicerMacroBuildApplication.cmake
 +++ b/CMake/SlicerMacroBuildApplication.cmake
-@@ -428,7 +428,7 @@ macro(slicerMacroBuildApplication)
+@@ -440,7 +440,7 @@ macro(slicerMacroBuildApplication)
    endif()
  
    set(executable_name ${SLICERAPP_APPLICATION_NAME})

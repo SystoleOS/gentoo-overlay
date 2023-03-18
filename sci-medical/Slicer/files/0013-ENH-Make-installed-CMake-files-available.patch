@@ -1,4 +1,4 @@
-From 63cdeefcb8c8797242c4988e24b83290d160e4cb Mon Sep 17 00:00:00 2001
+From 651415b75c59167d112b5f25e1ca9a0a6a9710e5 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 12:16:14 +0100
 Subject: [PATCH 13/29] ENH: Make installed CMake files available
@@ -9,10 +9,10 @@ Subject: [PATCH 13/29] ENH: Make installed CMake files available
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index fda50a5a86..218fa633b7 100644
+index 29aa4f7a14..26112ae38b 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
-@@ -86,7 +86,7 @@ if(WIN32)
+@@ -94,7 +94,7 @@ if(WIN32)
    set(Slicer_INSTALL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/cmake")
  elseif(UNIX)
    #Corresponds to <prefix>/share/<name>*/cmake pattern

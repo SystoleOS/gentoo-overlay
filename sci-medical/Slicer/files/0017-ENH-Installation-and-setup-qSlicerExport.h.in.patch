@@ -1,4 +1,4 @@
-From bb7b47fbd390d6898b9d9fa7b92086297f7b044e Mon Sep 17 00:00:00 2001
+From 77a6e384cfe6ba0da40cadcac022a2fcb9e37cf2 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 09:39:53 +0100
 Subject: [PATCH 17/29] ENH: Installation and setup qSlicerExport.h.in
@@ -10,10 +10,10 @@ Subject: [PATCH 17/29] ENH: Installation and setup qSlicerExport.h.in
  3 files changed, 25 insertions(+)
 
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index 218fa633b7..26a05f2656 100644
+index 26112ae38b..0a9ec77e59 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
-@@ -84,12 +84,15 @@ set(Slicer_INSTALL_QM_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slice
+@@ -92,12 +92,15 @@ set(Slicer_INSTALL_QM_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slice
  if(WIN32)
    #Corresponds to <prefix>/<name>*/cmake pattern
    set(Slicer_INSTALL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}/${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}/cmake")
@@ -46,7 +46,7 @@ index 7955913b98..21bd3d49e9 100644
  set(Slicer_Libs_LIBRARY_DIRS
    "${Slicer_HOME}/lib/IGT"
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6d5e229aa5..11107eb130 100644
+index e9cfb67100..65abd4ffdc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1250,6 +1250,12 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)

@@ -1,4 +1,4 @@
-From e51c6f1d8e5b22455a80f64f39932731637da637 Mon Sep 17 00:00:00 2001
+From f3b285b188259e979159a6b22729e3f7d37b1da7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 09:55:32 +0100
 Subject: [PATCH 02/29] COMP: Find Eigen (required)
@@ -8,7 +8,7 @@ Subject: [PATCH 02/29] COMP: Find Eigen (required)
  1 file changed, 5 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fa278fdff3..5d371dcc8f 100644
+index 96df9bc8d8..546e5d2acd 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -864,6 +864,11 @@ if(NOT TARGET ${VTK_GUI_SUPPORT_QT_TARGET_NAME})

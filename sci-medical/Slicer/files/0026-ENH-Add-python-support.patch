@@ -1,4 +1,4 @@
-From 83fbf4044eaf7dec1d0463ef848a4047de3ce7f6 Mon Sep 17 00:00:00 2001
+From d71ada6d6b835f267080f74ba466057990bfd70f Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
 Subject: [PATCH 26/29] ENH: Add python support
@@ -9,7 +9,9 @@ Subject: [PATCH 26/29] ENH: Add python support
  Base/QTApp/CMakeLists.txt                     |  6 +-
  Base/QTGUI/qSlicerPythonManager.cxx           |  3 +-
  CMake/SlicerDirectories.cmake                 | 14 +++--
+ CMake/SlicerMacroBuildModuleQtLibrary.cmake   |  4 +-
  CMake/SlicerMacroBuildScriptedModule.cmake    | 15 ++++-
+ ...licerMacroPythonWrapModuleVTKLibrary.cmake |  7 +--
  CMakeLists.txt                                | 30 ++++-----
  Libs/MRML/Core/CMakeLists.txt                 |  1 +
  Libs/MRML/DisplayableManager/CMakeLists.txt   |  2 +-
@@ -19,7 +21,7 @@ Subject: [PATCH 26/29] ENH: Add python support
  Templates/UseSlicer.cmake.in                  |  1 +
  Templates/vtkSlicerConfigure.h.in             |  1 +
  Templates/vtkSlicerInstallConfigure.h.in      |  2 +
- 15 files changed, 99 insertions(+), 56 deletions(-)
+ 17 files changed, 103 insertions(+), 63 deletions(-)
 
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
 index 3d5d78c469..3822e358d9 100644
@@ -156,10 +158,10 @@ index 2a3c1c8959..13d83087b2 100644
  
  //-----------------------------------------------------------------------------
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index 1525e35c2e..80575be2af 100644
+index 020af1695c..ef46730629 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
-@@ -59,6 +59,7 @@ include(GNUInstallDirs)
+@@ -67,6 +67,7 @@ include(GNUInstallDirs)
  # for build tree
  set(Slicer_BIN_DIR "${CMAKE_INSTALL_BINDIR}")
  set(Slicer_LIB_DIR "${CMAKE_INSTALL_LIBDIR}")
@@ -167,7 +169,7 @@ index 1525e35c2e..80575be2af 100644
  set(Slicer_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
  set(Slicer_SHARE_DIR "${CMAKE_INSTALL_DATADIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
  set(Slicer_LIBEXEC_DIR "${CMAKE_INSTALL_LIBEXECDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
-@@ -73,12 +74,15 @@ if(APPLE)
+@@ -81,12 +82,15 @@ if(APPLE)
  endif()
  set(Slicer_INSTALL_BIN_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_BIN_DIR}")
  set(Slicer_INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/${Slicer_INSTALL_ROOT}${Slicer_LIB_DIR}")
@@ -183,7 +185,7 @@ index 1525e35c2e..80575be2af 100644
  # CMake install directories according to
  # https://cmake.org/cmake/help/latest/command/find_package.html
  if(WIN32)
-@@ -153,11 +157,11 @@ set(Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTSCRIP
+@@ -161,11 +165,11 @@ set(Slicer_QTSCRIPTEDMODULES_INCLUDE_DIR "${Slicer_INCLUDE_DIR}/${Slicer_QTSCRIP
  set(Slicer_QTSCRIPTEDMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_QTSCRIPTEDMODULES_SUBDIR}")
  
  # for install tree
@@ -200,6 +202,21 @@ index 1525e35c2e..80575be2af 100644
  
  # --------------------------------------------------------------------------
  # ThirdParty: Used to superbuild projects built in Slicer extension.
+diff --git a/CMake/SlicerMacroBuildModuleQtLibrary.cmake b/CMake/SlicerMacroBuildModuleQtLibrary.cmake
+index 8d83a5534b..2047af0a4f 100644
+--- a/CMake/SlicerMacroBuildModuleQtLibrary.cmake
++++ b/CMake/SlicerMacroBuildModuleQtLibrary.cmake
+@@ -235,8 +235,8 @@ macro(SlicerMacroBuildModuleQtLibrary)
+       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_BIN_DIR}"
+       LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
+       ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
+-      INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR}
+-      INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
++      INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
++      INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
+       ${MODULEQTLIBRARY_NO_INSTALL_OPTION}
+       )
+     if(NOT "${MODULEQTLIBRARY_FOLDER}" STREQUAL "")
 diff --git a/CMake/SlicerMacroBuildScriptedModule.cmake b/CMake/SlicerMacroBuildScriptedModule.cmake
 index 3cf67d4653..49069c065f 100644
 --- a/CMake/SlicerMacroBuildScriptedModule.cmake
@@ -226,8 +243,26 @@ index 3cf67d4653..49069c065f 100644
      )
  
    if(BUILD_TESTING AND MY_SLICER_WITH_GENERIC_TESTS)
+diff --git a/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake b/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
+index c2bf8e3d98..fcb0cb0e85 100644
+--- a/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
++++ b/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
+@@ -73,11 +73,8 @@ macro(SlicerMacroPythonWrapModuleVTKLibrary)
+   vtkMacroKitPythonWrap(
+     KIT_NAME ${PYTHONWRAPMODULEVTKLIBRARY_NAME}
+     KIT_SRCS ${PYTHONWRAPMODULEVTKLIBRARY_SRCS}
+-    KIT_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_BIN_DIR}"
+-    KIT_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
+-    KIT_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
+-    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR}
+-    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
++    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
+     KIT_PYTHON_LIBRARIES ${PYTHONWRAPMODULEVTKLIBRARY_Wrapped_LIBRARIES}
+     )
+ 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0e63e9ab04..0cc2a1a02d 100644
+index c611cde149..c43fdb7a79 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -157,6 +157,10 @@ mark_as_superbuild(GIT_EXECUTABLE)

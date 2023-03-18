@@ -1,4 +1,4 @@
-From b4fb6a91462f0c442c49e6080f6d58ab813bf39e Mon Sep 17 00:00:00 2001
+From 54b12706160347cd035f318d5807ccfd50841b52 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 14 Mar 2023 16:34:32 +0100
 Subject: [PATCH 29/29] BAD-ENH: Enable installation of utility scripts
@@ -10,10 +10,10 @@ Subject: [PATCH 29/29] BAD-ENH: Enable installation of utility scripts
  3 files changed, 12 insertions(+)
 
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index 80575be2af..8b5a4f3fbc 100644
+index ef46730629..cbed306a26 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
-@@ -182,3 +182,6 @@ set(Slicer_THIRDPARTY_SHARE_DIR ${Slicer_SHARE_DIR})
+@@ -190,3 +190,6 @@ set(Slicer_THIRDPARTY_SHARE_DIR ${Slicer_SHARE_DIR})
  set(Slicer_INSTALL_THIRDPARTY_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_BIN_DIR}")
  set(Slicer_INSTALL_THIRDPARTY_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_LIB_DIR}")
  set(Slicer_INSTALL_THIRDPARTY_SHARE_DIR "${Slicer_INSTALL_ROOT}${Slicer_THIRDPARTY_SHARE_DIR}")
@@ -21,7 +21,7 @@ index 80575be2af..8b5a4f3fbc 100644
 +set(Slicer_UTILITY_SCRIPTS_DIR "${CMAKE_SOURCE_DIR}/Utilities/Scripts")
 +set(Slicer_INSTALL_UTILITY_SCRIPTS_DIR "${Slicer_INSTALL_LIBEXEC_DIR}/Utilities/Scripts")
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 0cc2a1a02d..5a22937a29 100644
+index c43fdb7a79..8db125907c 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1274,6 +1274,13 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)

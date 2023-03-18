@@ -1,4 +1,4 @@
-From 1a872c8439ecbb6aec638483c39236045e8d747e Mon Sep 17 00:00:00 2001
+From ec90a86817dc77a725904245f2caf2bbb42a115e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 19:26:38 +0100
 Subject: [PATCH 09/29] ENH: Use CMake GNUInstallDirs in Slicer directories
@@ -10,10 +10,10 @@ Subject: [PATCH 09/29] ENH: Use CMake GNUInstallDirs in Slicer directories
  3 files changed, 34 insertions(+), 20 deletions(-)
 
 diff --git a/CMake/SlicerDirectories.cmake b/CMake/SlicerDirectories.cmake
-index 10785b6fd1..fda50a5a86 100644
+index 6c15bcf9ae..29aa4f7a14 100644
 --- a/CMake/SlicerDirectories.cmake
 +++ b/CMake/SlicerDirectories.cmake
-@@ -54,12 +54,14 @@ endif()
+@@ -62,12 +62,14 @@ mark_as_superbuild(CMAKE_INSTALL_LIBDIR:PATH)
  #-----------------------------------------------------------------------------
  # Slicer relative directories
  #-----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ index 10785b6fd1..fda50a5a86 100644
 +
  # for build tree
 -set(Slicer_BIN_DIR "bin")
--set(Slicer_LIB_DIR "lib/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
+-set(Slicer_LIB_DIR "${CMAKE_INSTALL_LIBDIR}/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
 -set(Slicer_INCLUDE_DIR "include/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
 -set(Slicer_SHARE_DIR "share/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
 -set(Slicer_LIBEXEC_DIR "libexec/${Slicer_MAIN_PROJECT_APPLICATION_NAME}-${Slicer_VERSION_MAJOR}.${Slicer_VERSION_MINOR}")
@@ -33,7 +33,7 @@ index 10785b6fd1..fda50a5a86 100644
  set(Slicer_ITKFACTORIES_DIR "${Slicer_LIB_DIR}/ITKFactories")
  set(Slicer_QM_DIR "${Slicer_BIN_DIR}/translations")
  
-@@ -69,14 +71,26 @@ set(Slicer_BUNDLE_LOCATION "${Slicer_MAIN_PROJECT_APPLICATION_NAME}.app/Contents
+@@ -77,14 +79,26 @@ set(Slicer_BUNDLE_LOCATION "${Slicer_MAIN_PROJECT_APPLICATION_NAME}.app/Contents
  if(APPLE)
    set(Slicer_INSTALL_ROOT "${Slicer_BUNDLE_LOCATION}/") # Set to create Bundle
  endif()
@@ -68,7 +68,7 @@ index 10785b6fd1..fda50a5a86 100644
  
  #-----------------------------------------------------------------------------
  # Slicer CLI relative directories
-@@ -93,10 +107,9 @@ set(Slicer_CLIMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
+@@ -101,10 +115,9 @@ set(Slicer_CLIMODULES_LIB_DIR "${Slicer_LIB_DIR}/${Slicer_CLIMODULES_SUBDIR}")
  set(Slicer_CLIMODULES_SHARE_DIR "${Slicer_SHARE_DIR}/${Slicer_CLIMODULES_SUBDIR}")
  
  # for install tree
@@ -83,7 +83,7 @@ index 10785b6fd1..fda50a5a86 100644
  #-----------------------------------------------------------------------------
  # Qt Loadable Modules relative directories
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 413605d0a1..45e74f950a 100644
+index a4ef60f21a..f4c56967c9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -1247,14 +1247,14 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)

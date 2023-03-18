@@ -1,4 +1,4 @@
-From 660e58c98adf013679dbcd81a852635ca1e30f89 Mon Sep 17 00:00:00 2001
+From 7e2649e3a3cc8ad2fabfb5158d2ed7145b6ad9ee Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:21:04 +0100
 Subject: [PATCH 23/29] ENH: Update Slicer build macros
@@ -15,10 +15,10 @@ macros.
  6 files changed, 36 insertions(+)
 
 diff --git a/CMake/SlicerMacroBuildApplication.cmake b/CMake/SlicerMacroBuildApplication.cmake
-index 3ee6e3e471..ce07ec7b39 100644
+index b6a29a051c..525a4e9753 100644
 --- a/CMake/SlicerMacroBuildApplication.cmake
 +++ b/CMake/SlicerMacroBuildApplication.cmake
-@@ -442,6 +442,9 @@ macro(slicerMacroBuildApplication)
+@@ -454,6 +454,9 @@ macro(slicerMacroBuildApplication)
      LABELS ${SLICERAPP_NAME}
      OUTPUT_NAME ${executable_name}
      )
@@ -63,7 +63,7 @@ index 624955260c..a4f899b9c8 100644
    target_link_libraries(${lib_name}
      # The two PUBLIC keywords are not a duplication, they allow developers to
 diff --git a/CMake/SlicerMacroBuildModuleLogic.cmake b/CMake/SlicerMacroBuildModuleLogic.cmake
-index 56b443918d..54ae50737f 100644
+index 5eb7572d96..948115a898 100644
 --- a/CMake/SlicerMacroBuildModuleLogic.cmake
 +++ b/CMake/SlicerMacroBuildModuleLogic.cmake
 @@ -53,6 +53,7 @@ macro(SlicerMacroBuildModuleLogic)
@@ -103,7 +103,7 @@ index 56b443918d..54ae50737f 100644
  
    #-----------------------------------------------------------------------------
 diff --git a/CMake/SlicerMacroBuildModuleMRML.cmake b/CMake/SlicerMacroBuildModuleMRML.cmake
-index 01f55021eb..192ef4f843 100644
+index 061cf2f126..5102171dc5 100644
 --- a/CMake/SlicerMacroBuildModuleMRML.cmake
 +++ b/CMake/SlicerMacroBuildModuleMRML.cmake
 @@ -51,6 +51,7 @@ macro(SlicerMacroBuildModuleMRML)
