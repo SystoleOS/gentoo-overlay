@@ -1,0 +1,33 @@
+From 94f73ef56c31ab537971fa3d955b485da02a791e Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 15 Mar 2023 11:34:38 +0100
+Subject: [PATCH] ENH: Make ScreenCapture a separate module
+
+---
+ Modules/Scripted/ScreenCapture/CMakeLists.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Modules/Scripted/ScreenCapture/CMakeLists.txt b/Modules/Scripted/ScreenCapture/CMakeLists.txt
+index 7ae35c3dfa..c460b1b008 100644
+--- a/Modules/Scripted/ScreenCapture/CMakeLists.txt
++++ b/Modules/Scripted/ScreenCapture/CMakeLists.txt
+@@ -1,6 +1,16 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(ScreenCapture)
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME ScreenCapture)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ set(MODULE_PYTHON_SCRIPTS
+   ${MODULE_NAME}.py
+-- 
+2.39.2
+
