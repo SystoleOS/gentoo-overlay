@@ -28,7 +28,6 @@ RDEPEND="
 	${DEPEND}
 	python? (
 		${PYTHON_DEPS}
-		dev-python/scipy
 		)
 "
 
