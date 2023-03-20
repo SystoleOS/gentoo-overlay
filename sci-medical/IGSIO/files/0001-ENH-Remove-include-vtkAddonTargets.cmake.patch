@@ -1,0 +1,24 @@
+From 9106c303f09677886c4508d7f3eb165bcf570509 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Mon, 20 Mar 2023 14:31:46 +0100
+Subject: [PATCH] ENH: Remove include vtkAddonTargets.cmake
+
+---
+ IGSIOCommon/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/IGSIOCommon/CMakeLists.txt b/IGSIOCommon/CMakeLists.txt
+index 8d1645a..6f42202 100644
+--- a/IGSIOCommon/CMakeLists.txt
++++ b/IGSIOCommon/CMakeLists.txt
+@@ -4,7 +4,6 @@ IF (IGSIO_USE_3DSlicer)
+   FIND_PACKAGE(Slicer REQUIRED)
+ ELSE()
+   FIND_PACKAGE(vtkAddon REQUIRED)
+-  INCLUDE(${vtkAddon_DIR}/vtkAddonTargets.cmake)
+ ENDIF()
+ 
+ # --------------------------------------------------------------------------
+-- 
+2.39.2
+
