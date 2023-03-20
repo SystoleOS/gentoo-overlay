@@ -1,7 +1,7 @@
 From 9106c303f09677886c4508d7f3eb165bcf570509 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 20 Mar 2023 14:31:46 +0100
-Subject: [PATCH] ENH: Remove include vtkAddonTargets.cmake
+Subject: [PATCH 1/2] ENH: Remove include vtkAddonTargets.cmake
 
 ---
  IGSIOCommon/CMakeLists.txt | 1 -
