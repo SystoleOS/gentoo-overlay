@@ -1,17 +1,19 @@
-From 4344b9cfca346406a0fe11a2cb59a45eb1f5404c Mon Sep 17 00:00:00 2001
+From a64b138cbb6e2ca984d0910bca822f69d9485245 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 20 Mar 2023 17:50:49 +0100
 Subject: [PATCH 2/2] ENH: Enable install tree
 
 ---
- CMake/GenerateIGSIOConfig.cmake | 20 +++++++++++++++++--
- CMake/IGSIOMacros.cmake         | 10 +++++++---
- CMakeLists.txt                  | 34 ++++++++++++++++++++++++++++-----
- IGSIOCalibration/CMakeLists.txt |  2 +-
- IGSIOCommon/CMakeLists.txt      |  9 +++++++++
- IGSIOInstallConfig.cmake.in     | 34 +++++++++++++++++++++++++++++++++
- SequenceIO/CMakeLists.txt       |  9 +++++++++
- 7 files changed, 107 insertions(+), 11 deletions(-)
+ CMake/GenerateIGSIOConfig.cmake     | 20 ++++++++++++++--
+ CMake/IGSIOMacros.cmake             | 10 +++++---
+ CMakeLists.txt                      | 36 +++++++++++++++++++++++++----
+ Codecs/CMakeLists.txt               |  9 ++++++++
+ IGSIOCalibration/CMakeLists.txt     | 11 ++++++++-
+ IGSIOCommon/CMakeLists.txt          | 15 ++++++++++++
+ IGSIOInstallConfig.cmake.in         | 30 ++++++++++++++++++++++++
+ SequenceIO/CMakeLists.txt           | 11 +++++++++
+ VolumeReconstruction/CMakeLists.txt | 11 ++++++++-
+ 9 files changed, 141 insertions(+), 12 deletions(-)
  create mode 100644 IGSIOInstallConfig.cmake.in
 
 diff --git a/CMake/GenerateIGSIOConfig.cmake b/CMake/GenerateIGSIOConfig.cmake
@@ -50,7 +52,7 @@ index b3f199a..0b67e4d 100644
 +CONFIGURE_FILE(${IGSIO_SOURCE_DIR}/IGSIOInstallConfig.cmake.in
 +               ${IGSIO_BINARY_DIR}/install/IGSIOConfig.cmake @ONLY IMMEDIATE)
 diff --git a/CMake/IGSIOMacros.cmake b/CMake/IGSIOMacros.cmake
-index 6d717de..6889483 100644
+index 6d717de..ca12b40 100644
 --- a/CMake/IGSIOMacros.cmake
 +++ b/CMake/IGSIOMacros.cmake
 @@ -12,9 +12,13 @@ MACRO(IGSIOInstallLibrary _target_name _variable_root)
@@ -64,8 +66,8 @@ index 6d717de..6889483 100644
 +    INSTALL(FILES ${${_variable_root}_HDRS}
 +      DESTINATION "${IGSIO_INSTALL_INCLUDE_DIR}" COMPONENT Development
      )
-+
 +  ENDIF()
++
    GET_TARGET_PROPERTY(_library_type ${_target_name} TYPE)
    IF(${_library_type} STREQUAL SHARED_LIBRARY AND MSVC)
      INSTALL(FILES "$<TARGET_PDB_FILE:${_target_name}>" OPTIONAL
@@ -78,7 +80,7 @@ index 6d717de..6889483 100644
      )
  ENDMACRO()
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index cc213d2..80a4cf7 100644
+index cc213d2..ea197c3 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -16,6 +16,10 @@ SET(CMAKE_MODULE_PATH
@@ -128,25 +130,47 @@ index cc213d2..80a4cf7 100644
    INCLUDE(CMakePackageConfigHelpers)
    write_basic_package_version_file(
      "${CMAKE_CURRENT_BINARY_DIR}/IGSIOConfigVersion.cmake"
-@@ -189,4 +201,16 @@ ELSE()
+@@ -189,4 +201,18 @@ ELSE()
    LIST(APPEND IGSIO_INSTALL_CMAKE_FILES} "${CMAKE_CURRENT_BINARY_DIR}/IGSIOConfigVersion.cmake")
    INCLUDE(${CMAKE_SOURCE_DIR}/CMake/GenerateIGSIOConfig.cmake)
  
 +  #-----------------------------------------------------------------------------
-+  # Install CMake files
-+  list(APPEND IGSIO_CMAKE_FILES
-+    ${CMAKE_CURRENT_BINARY_DIR}/install/IGSIOConfig.cmake
-+  )
-+
++  # Install development files
 +  IF(NOT IGSIO_NO_DEVELOPMENT_INSTALL)
++    LIST(APPEND IGSIO_CMAKE_FILES ${CMAKE_CURRENT_BINARY_DIR}/install/IGSIOConfig.cmake)
 +    INSTALL(FILES ${IGSIO_CMAKE_FILES}
-+    DESTINATION ${IGSIO_INSTALL_CMAKE_DIR}
-+    COMPONENT Development)
++      DESTINATION ${IGSIO_INSTALL_CMAKE_DIR}
++      COMPONENT Development)
++
++    LIST(APPEND IGSIO_CONFIGURE_HEADER ${CMAKE_CURRENT_BINARY_DIR}/igsioConfigure.h)
++    INSTALL(FILES ${IGSIO_CONFIGURE_HEADER}
++      DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR}
++      COMPONENT Development)
 +  ENDIF()
 +
  ENDIF()
+diff --git a/Codecs/CMakeLists.txt b/Codecs/CMakeLists.txt
+index 144e533..aca9ab5 100644
+--- a/Codecs/CMakeLists.txt
++++ b/Codecs/CMakeLists.txt
+@@ -78,6 +78,15 @@ TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC $<INSTALL_INTERFACE:${${PROJEC
+ 
+ GENERATE_EXPORT_HEADER(${PROJECT_NAME})
+ 
++#-----------------------------------------------------------------------------
++# Install the development files
++IF(NOT IGSIO_NO_DEVELOPMENT_INSTALL)
++  FILE(GLOB ${PROJECT_NAME}_HEADERS "*.h")
++  FILE(GLOB ${PROJECT_NAME}_GENERATED_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
++  INSTALL(FILES ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_GENERATED_HEADERS}
++    DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
++ENDIF()
++
+ SET_PROPERTY(GLOBAL APPEND PROPERTY IGSIO_TARGETS ${PROJECT_NAME})
+ 
+ SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} CACHE INTERNAL "")
 diff --git a/IGSIOCalibration/CMakeLists.txt b/IGSIOCalibration/CMakeLists.txt
-index 109f4a0..68cf438 100644
+index 109f4a0..92df190 100644
 --- a/IGSIOCalibration/CMakeLists.txt
 +++ b/IGSIOCalibration/CMakeLists.txt
 @@ -31,7 +31,7 @@ ADD_LIBRARY(vtk${PROJECT_NAME} ${${PROJECT_NAME}_SRCS} ${${PROJECT_NAME}_HDRS})
@@ -158,11 +182,24 @@ index 109f4a0..68cf438 100644
  TARGET_LINK_LIBRARIES(vtk${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_LIBS})
  
  SET_PROPERTY(GLOBAL APPEND PROPERTY IGSIO_TARGETS vtk${PROJECT_NAME})
+@@ -49,3 +49,12 @@ SET(vcProj_vtk${PROJECT_NAME} vtk${PROJECT_NAME};${IGSIO_BINARY_DIR}/src/${PROJE
+ # Install
+ #
+ IGSIOInstallLibrary(vtk${PROJECT_NAME} ${PROJECT_NAME})
++
++#-----------------------------------------------------------------------------
++# Install the development files
++IF(NOT IGSIO_NO_DEVELOPMENT_INSTALL)
++  #FILE(GLOB ${PROJECT_NAME}_HEADERS "*.h") # This is already installed
++  FILE(GLOB ${PROJECT_NAME}_GENERATED_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
++  INSTALL(FILES ${${PROJECT_NAME}_GENERATED_HEADERS}
++    DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
++ENDIF()
 diff --git a/IGSIOCommon/CMakeLists.txt b/IGSIOCommon/CMakeLists.txt
-index 6f42202..d1a11ed 100644
+index 6f42202..0b973e1 100644
 --- a/IGSIOCommon/CMakeLists.txt
 +++ b/IGSIOCommon/CMakeLists.txt
-@@ -94,11 +94,20 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+@@ -94,6 +94,8 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME}
    PRIVATE ${${PROJECT_NAME}_LIBS_PRIVATE}
    )
  
@@ -171,40 +208,48 @@ index 6f42202..d1a11ed 100644
  INSTALL(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
    RUNTIME DESTINATION ${IGSIO_INSTALL_BIN_DIR} COMPONENT RuntimeLibraries
    LIBRARY DESTINATION ${IGSIO_INSTALL_LIB_DIR} COMPONENT RuntimeLibraries
-   ARCHIVE DESTINATION ${IGSIO_INSTALL_LIB_DIR} COMPONENT Development)
+@@ -106,6 +108,19 @@ TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC $<INSTALL_INTERFACE:${${PROJEC
+ 
+ GENERATE_EXPORT_HEADER(${PROJECT_NAME})
  
 +#-----------------------------------------------------------------------------
 +# Install the development files
 +IF(NOT IGSIO_NO_DEVELOPMENT_INSTALL)
 +  FILE(GLOB ${PROJECT_NAME}_HEADERS "*.h")
-+  INSTALL(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
++  FILE(GLOB ${PROJECT_NAME}_TEMPLATES "*.txx")
++  FILE(GLOB ${PROJECT_NAME}_GENERATED_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
++  INSTALL(FILES
++    ${${PROJECT_NAME}_HEADERS}
++    ${${PROJECT_NAME}_TEMPLATES}
++    ${${PROJECT_NAME}_GENERATED_HEADERS}
++    DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
 +ENDIF()
 +
- FOREACH(p IN LISTS ${PROJECT_NAME}_INCLUDE_DIRS)
-   TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${p}>)
- ENDFOREACH()
+ SET_PROPERTY(GLOBAL APPEND PROPERTY IGSIO_TARGETS ${PROJECT_NAME})
+ 
+ SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} CACHE INTERNAL "")
 diff --git a/IGSIOInstallConfig.cmake.in b/IGSIOInstallConfig.cmake.in
 new file mode 100644
-index 0000000..b9817b7
+index 0000000..6732c43
 --- /dev/null
 +++ b/IGSIOInstallConfig.cmake.in
-@@ -0,0 +1,34 @@
+@@ -0,0 +1,30 @@
 +#-----------------------------------------------------------------------------
 +#
 +# IGSIOConfig.cmake - IGSIO CMake configuration file for external projects.
 +#
 +
 +# The vtkIGSIOCommon include file directories
-+SET(VTKIGSIOCOMMON_INCLUDE_DIRS "@IGSIO_INSTALL_INCLUDE_DIR@")
++SET(VTKIGSIOCOMMON_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/@IGSIO_INSTALL_INCLUDE_DIR@")
 +
 +# The vtkSequenceIO include file directories.
-+SET(VTKSEQUENCEIO_INCLUDE_DIRS "@IGSIO_INSTALL_INCLUDE_DIR@")
++SET(VTKSEQUENCEIO_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/@IGSIO_INSTALL_INCLUDE_DIR@")
 +
 +# The vtkVolumeReconstruction include file directories.
-+SET(VTKVOLUMERECONSTRUCTION_INCLUDE_DIRS "@IGSIO_INSTALL_INCLUDE_DIR@")
++SET(VTKVOLUMERECONSTRUCTION_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/@IGSIO_INSTALL_INCLUDE_DIR@")
 +
 +# The vtkIGSIOCalibration include file directories.
-+SET(VTKIGSIOCALIBRATION_INCLUDE_DIRS "@IGSIO_INSTALL_INCLUDE_DIR@")
++SET(VTKIGSIOCALIBRATION_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/@IGSIO_INSTALL_INCLUDE_DIR@")
 +
 +# SET(VTK_DIR "@VTK_DIR@")
 +
@@ -219,15 +264,11 @@ index 0000000..b9817b7
 +SET(IGSIO_SEQUENCEIO_ENABLE_MKV "@IGSIO_SEQUENCEIO_ENABLE_MKV@")
 +SET(IGSIO_BUILD_VOLUMERECONSTRUCTION "@IGSIO_BUILD_VOLUMERECONSTRUCTION@")
 +SET(IGSIO_USE_VP9 "@IGSIO_USE_VP9@")
-+
-+# The IGSIO library targets.
-+SET(IGSIO_LIBRARY_TARGETS_FILE "@IGSIO_LIBRARY_TARGETS_FILE_CONFIG@")
-+INCLUDE(${IGSIO_LIBRARY_TARGETS_FILE})
 diff --git a/SequenceIO/CMakeLists.txt b/SequenceIO/CMakeLists.txt
-index 34cddbd..5ba52b0 100644
+index 34cddbd..3511750 100644
 --- a/SequenceIO/CMakeLists.txt
 +++ b/SequenceIO/CMakeLists.txt
-@@ -79,11 +79,20 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME}
+@@ -79,6 +79,8 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME}
    PRIVATE ${${PROJECT_NAME}_LIBS_PRIVATE}
    )
  
@@ -236,18 +277,49 @@ index 34cddbd..5ba52b0 100644
  INSTALL(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
    RUNTIME DESTINATION ${IGSIO_INSTALL_BIN_DIR} COMPONENT RuntimeLibraries
    LIBRARY DESTINATION ${IGSIO_INSTALL_LIB_DIR} COMPONENT RuntimeLibraries
-   ARCHIVE DESTINATION ${IGSIO_INSTALL_LIB_DIR} COMPONENT Development)
+@@ -95,6 +97,15 @@ SET_PROPERTY(GLOBAL APPEND PROPERTY IGSIO_TARGETS ${PROJECT_NAME})
+ 
+ SET(${PROJECT_NAME}_INCLUDE_DIRS ${${PROJECT_NAME}_INCLUDE_DIRS} CACHE INTERNAL "")
  
 +#-----------------------------------------------------------------------------
 +# Install the development files
 +IF(NOT IGSIO_NO_DEVELOPMENT_INSTALL)
 +  FILE(GLOB ${PROJECT_NAME}_HEADERS "*.h")
-+  INSTALL(FILES ${${PROJECT_NAME}_HEADERS} DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
++  FILE(GLOB ${PROJECT_NAME}_GENERATED_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
++  INSTALL(FILES ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_GENERATED_HEADERS}
++    DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
 +ENDIF()
 +
- FOREACH(p IN LISTS ${PROJECT_NAME}_INCLUDE_DIRS)
-   TARGET_INCLUDE_DIRECTORIES(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${p}>)
- ENDFOREACH()
+ # --------------------------------------------------------------------------
+ # Testing
+ IF(BUILD_TESTING)
+diff --git a/VolumeReconstruction/CMakeLists.txt b/VolumeReconstruction/CMakeLists.txt
+index 048f396..ef5d39a 100644
+--- a/VolumeReconstruction/CMakeLists.txt
++++ b/VolumeReconstruction/CMakeLists.txt
+@@ -69,6 +69,15 @@ INSTALL(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}
+ GENERATE_EXPORT_HEADER(${PROJECT_NAME})
+ SET_PROPERTY(GLOBAL APPEND PROPERTY IGSIO_TARGETS ${PROJECT_NAME})
+ 
++#-----------------------------------------------------------------------------
++# Install the development files
++IF(NOT IGSIO_NO_DEVELOPMENT_INSTALL)
++  FILE(GLOB ${PROJECT_NAME}_HEADERS "*.h")
++  FILE(GLOB ${PROJECT_NAME}_GENERATED_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
++  INSTALL(FILES ${${PROJECT_NAME}_HEADERS} ${${PROJECT_NAME}_GENERATED_HEADERS}
++    DESTINATION ${IGSIO_INSTALL_INCLUDE_DIR})
++ENDIF()
++
+ # --------------------------------------------------------------------------
+ # Set external MS project
+ SET(IGSIOLIB_DEPENDENCIES ${IGSIOLIB_DEPENDENCIES} ${PROJECT_NAME} CACHE INTERNAL "" FORCE)
+@@ -128,4 +137,4 @@ ENDIF()
+ #
+ IF(BUILD_TESTING)
+   ADD_SUBDIRECTORY(Testing)
+-ENDIF()
+\ No newline at end of file
++ENDIF()
 -- 
 2.39.2
 
