@@ -1,0 +1,115 @@
+From 14161d1b63c7c8c5d784a446e8564b518eccfd32 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 22 Mar 2023 14:23:41 +0100
+Subject: [PATCH] ENH: Make Sequences a separate module
+
+---
+ Modules/Loadable/Sequences/CMakeLists.txt                | 9 +++++++++
+ Modules/Loadable/Sequences/Logic/CMakeLists.txt          | 1 +
+ Modules/Loadable/Sequences/MRML/CMakeLists.txt           | 8 ++++++++
+ Modules/Loadable/Sequences/Widgets/CMakeLists.txt        | 5 +++--
+ .../Sequences/Widgets/DesignerPlugins/CMakeLists.txt     | 3 +++
+ 5 files changed, 24 insertions(+), 2 deletions(-)
+
+diff --git a/Modules/Loadable/Sequences/CMakeLists.txt b/Modules/Loadable/Sequences/CMakeLists.txt
+index 8f58b50974..7397656da6 100644
+--- a/Modules/Loadable/Sequences/CMakeLists.txt
++++ b/Modules/Loadable/Sequences/CMakeLists.txt
+@@ -1,9 +1,18 @@
++#-----------------------------------------------------------------------------
++cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
++
++#-----------------------------------------------------------------------------
++project(Sequences)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME Sequences)
+ 
+ string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+ 
++#-----------------------------------------------------------------------------
++find_package(Slicer REQUIRED)
++include(${Slicer_USE_FILE})
++
+ #-----------------------------------------------------------------------------
+ add_subdirectory(MRML)
+ add_subdirectory(Logic)
+diff --git a/Modules/Loadable/Sequences/Logic/CMakeLists.txt b/Modules/Loadable/Sequences/Logic/CMakeLists.txt
+index 5f4c591549..6c86839444 100644
+--- a/Modules/Loadable/Sequences/Logic/CMakeLists.txt
++++ b/Modules/Loadable/Sequences/Logic/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+diff --git a/Modules/Loadable/Sequences/MRML/CMakeLists.txt b/Modules/Loadable/Sequences/MRML/CMakeLists.txt
+index b42aad6aa0..3dd5a0d042 100644
+--- a/Modules/Loadable/Sequences/MRML/CMakeLists.txt
++++ b/Modules/Loadable/Sequences/MRML/CMakeLists.txt
+@@ -18,9 +18,16 @@ set(${KIT}_SRCS
+ set(${KIT}_TARGET_LIBRARIES
+   ${ITK_LIBRARIES}
+   ${MRML_LIBRARIES}
++  ${Python3_LIBRARIES}
+   SlicerBaseLogic
+   )
+ 
++set(DISABLE_WRAP_PYTHON)
++if(NOT Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Pyhton3_LIBRARIES})
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+@@ -28,4 +35,5 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+diff --git a/Modules/Loadable/Sequences/Widgets/CMakeLists.txt b/Modules/Loadable/Sequences/Widgets/CMakeLists.txt
+index 08b15e0ae0..d4cc65e65b 100644
+--- a/Modules/Loadable/Sequences/Widgets/CMakeLists.txt
++++ b/Modules/Loadable/Sequences/Widgets/CMakeLists.txt
+@@ -36,6 +36,7 @@ set(${KIT}_RESOURCES
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
+   )
+ 
+ #-----------------------------------------------------------------------------
+@@ -51,8 +52,8 @@ SlicerMacroBuildModuleWidgets(
+   WRAP_PYTHONQT
+   )
+ 
+-#-----------------------------------------------------------------------------
+-add_subdirectory(DesignerPlugins)
++# #-----------------------------------------------------------------------------
++# add_subdirectory(DesignerPlugins)
+ 
+ # Testing
+ if(BUILD_TESTING)
+diff --git a/Modules/Loadable/Sequences/Widgets/DesignerPlugins/CMakeLists.txt b/Modules/Loadable/Sequences/Widgets/DesignerPlugins/CMakeLists.txt
+index c1f3767e41..3bee306816 100644
+--- a/Modules/Loadable/Sequences/Widgets/DesignerPlugins/CMakeLists.txt
++++ b/Modules/Loadable/Sequences/Widgets/DesignerPlugins/CMakeLists.txt
+@@ -29,6 +29,9 @@ set(${KIT}_TARGET_LIBRARIES
+   qSlicer${MODULE_NAME}ModuleWidgets
+   )
+ 
++# NOTE: this is due to https://github.com/commontk/CTK/issues/1073
++set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
++
+ #-----------------------------------------------------------------------------
+ ctkMacroBuildQtDesignerPlugin(
+   NAME ${KIT}
+-- 
+2.39.2
+
