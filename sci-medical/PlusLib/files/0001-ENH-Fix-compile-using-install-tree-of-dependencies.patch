@@ -1,15 +1,18 @@
-From 568e95e82da916e6d276e469239a2d03286052f5 Mon Sep 17 00:00:00 2001
+From 40872916ca5cccc56dfd25b54647342e0f444677 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 21 Mar 2023 09:36:46 +0100
-Subject: [PATCH] ENH: Fix compile using install tree of dependencies
+Subject: [PATCH 1/2] ENH: Fix compile using install tree of dependencies
 
 ---
  CMakeLists.txt                              |  16 +-
- src/CMakeLists.txt                          |   4 +-
+ src/CMakeLists.txt                          |  12 +-
+ src/PlusCalibration/CMakeLists.txt          |  19 +-
  src/PlusCommon/CMakeLists.txt               |  22 +-
  src/PlusDataCollection/CMakeLists.txt       | 873 ++++++++++----------
- src/PlusVolumeReconstruction/CMakeLists.txt |   4 +-
- 5 files changed, 464 insertions(+), 455 deletions(-)
+ src/PlusRendering/CMakeLists.txt            |  10 +-
+ src/PlusVolumeReconstruction/CMakeLists.txt |   5 +-
+ src/PlusWidgets/CMakeLists.txt              |   8 +-
+ 8 files changed, 496 insertions(+), 469 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 03313de9..1a3bc646 100644
@@ -40,7 +43,7 @@ index 03313de9..1a3bc646 100644
  # Use solution folders.
  IF(MSVC OR ${CMAKE_GENERATOR} MATCHES "Xcode")
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index 5e7f0ff7..ca931b2e 100644
+index 5e7f0ff7..9e2dc742 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
 @@ -1,6 +1,6 @@
@@ -51,13 +54,81 @@ index 5e7f0ff7..ca931b2e 100644
  
  IF(VTK_VERSION VERSION_LESS 8.9.0)
    INCLUDE(${VTK_USE_FILE})
-@@ -570,4 +570,4 @@ INSTALL(FILES
+@@ -14,9 +14,11 @@ ENDIF()
+ 
+ # --------------------------------------------------------------------------
+ # Determine if rendering is enabled in VTK
+-SET(PLUS_RENDERING_ENABLED ON)
+-IF (VTK_RENDERING_BACKEND STREQUAL None)
+-  SET(PLUS_RENDERING_ENABLED OFF)
++IF(NOT DEFINED PLUS_RENDERING_ENABLED)
++  SET(PLUS_RENDERING_ENABLED ON)
++  IF (VTK_RENDERING_BACKEND STREQUAL None)
++    SET(PLUS_RENDERING_ENABLED OFF)
++  ENDIF()
+ ENDIF()
+ 
+ # --------------------------------------------------------------------------
+@@ -570,4 +572,4 @@ INSTALL(FILES
    "${CMAKE_BINARY_DIR}/CMakeFiles/install/UsePlusLib.cmake"
    "${CMAKE_CURRENT_BINARY_DIR}/PlusLibConfigVersion.cmake"
    DESTINATION "${PLUSLIB_CMAKE_INSTALL}"
 -  )
 \ No newline at end of file
 +  )
+diff --git a/src/PlusCalibration/CMakeLists.txt b/src/PlusCalibration/CMakeLists.txt
+index 0b68ce96..707ec02a 100644
+--- a/src/PlusCalibration/CMakeLists.txt
++++ b/src/PlusCalibration/CMakeLists.txt
+@@ -140,7 +140,7 @@ IF(PLUSBUILD_BUILD_PlusLib_TOOLS)
+   # Link the executable to the algo library.
+   TARGET_LINK_LIBRARIES( ConvertFcsvToXml
+     vtk${PROJECT_NAME}
+-    ITKCommon
++    ${ITK_LIBRARIES}
+     vtkPlusDataCollection
+     )
+ 
+@@ -152,20 +152,29 @@ IF(PLUSBUILD_BUILD_PlusLib_TOOLS)
+   # Link the executable to the algo library.
+   TARGET_LINK_LIBRARIES( ConvertXmlToFcsv
+     vtk${PROJECT_NAME}
+-    ITKCommon
++    ${ITK_LIBRARIES}
+     vtkPlusDataCollection
+     )
+ 
+   #--------------------------------------------------------------------------------------------
+   ADD_EXECUTABLE(TemporalCalibration Tools/TemporalCalibration.cxx)
+   SET_TARGET_PROPERTIES(TemporalCalibration PROPERTIES FOLDER Tools)
+-  TARGET_LINK_LIBRARIES(TemporalCalibration vtkPlusCommon vtk${PROJECT_NAME} vtkPlusDataCollection)
++  TARGET_LINK_LIBRARIES(TemporalCalibration
++    vtkPlusCommon
++    vtk${PROJECT_NAME}
++    vtkPlusDataCollection
++    ${ITK_LIBRARIES})
+   GENERATE_HELP_DOC(TemporalCalibration)
+ 
+   #--------------------------------------------------------------------------------------------
+   ADD_EXECUTABLE(ProbeCalibration Tools/ProbeCalibration.cxx)
+   SET_TARGET_PROPERTIES(ProbeCalibration PROPERTIES FOLDER Tools)
+-  TARGET_LINK_LIBRARIES(ProbeCalibration itkvnl itkvnl_algo vtk${PROJECT_NAME} vtkPlusDataCollection )
++  TARGET_LINK_LIBRARIES(ProbeCalibration
++    itkvnl
++    itkvnl_algo
++    vtk${PROJECT_NAME}
++    vtkPlusDataCollection
++    ${ITK_LIBRARIES})
+   GENERATE_HELP_DOC(ProbeCalibration)
+ 
+   INSTALL(
+@@ -190,4 +199,4 @@ PlusLibInstallLibrary(vtk${PROJECT_NAME} ${PROJECT_NAME})
+ #
+ IF(BUILD_TESTING)
+   ADD_SUBDIRECTORY (Testing)
+-ENDIF()
+\ No newline at end of file
++ENDIF()
 diff --git a/src/PlusCommon/CMakeLists.txt b/src/PlusCommon/CMakeLists.txt
 index 77a4e41e..98f57981 100644
 --- a/src/PlusCommon/CMakeLists.txt
@@ -2678,8 +2749,34 @@ index 2b2a1d1b..c94c071c 100644
  ENDIF()
  
  # --------------------------------------------------------------------------
+diff --git a/src/PlusRendering/CMakeLists.txt b/src/PlusRendering/CMakeLists.txt
+index 67c8ddfa..de2e9873 100644
+--- a/src/PlusRendering/CMakeLists.txt
++++ b/src/PlusRendering/CMakeLists.txt
+@@ -55,10 +55,10 @@ IF(PLUSBUILD_BUILD_PlusLib_TOOLS)
+   ADD_EXECUTABLE(ModelRenderer Tools/ModelRenderer.cxx )
+   SET_TARGET_PROPERTIES(ModelRenderer PROPERTIES FOLDER Tools)
+   TARGET_LINK_LIBRARIES(ModelRenderer vtkPlusCommon vtk${PROJECT_NAME} ${PLUSLIB_VTK_PREFIX}IOGeometry)
+-  IF(NOT VTK_VERSION VERSION_LESS 9.0.0)
+-    # vtk_module_autoinit is needed
+-    vtk_module_autoinit(TARGETS ModelRenderer MODULES ${VTK_LIBRARIES})
+-  ENDIF()
++  # IF(NOT VTK_VERSION VERSION_LESS 9.0.0)
++  #   # vtk_module_autoinit is needed
++  #   vtk_module_autoinit(TARGETS ModelRenderer MODULES ${VTK_LIBRARIES})
++  # ENDIF()
+ 
+   INSTALL(TARGETS ModelRenderer
+     RUNTIME DESTINATION bin COMPONENT RuntimeExecutables
+@@ -75,4 +75,4 @@ PlusLibInstallLibrary(vtk${PROJECT_NAME} ${PROJECT_NAME})
+ #
+ IF(BUILD_TESTING)
+   SUBDIRS(Testing)
+-ENDIF()
+\ No newline at end of file
++ENDIF()
 diff --git a/src/PlusVolumeReconstruction/CMakeLists.txt b/src/PlusVolumeReconstruction/CMakeLists.txt
-index ad120d29..d21fc58f 100644
+index ad120d29..c2ec1541 100644
 --- a/src/PlusVolumeReconstruction/CMakeLists.txt
 +++ b/src/PlusVolumeReconstruction/CMakeLists.txt
 @@ -10,9 +10,11 @@ SET(${PROJECT_NAME}_HDRS
@@ -2694,10 +2791,42 @@ index ad120d29..d21fc58f 100644
    ${VTKVOLUMERECONSTRUCTION_INCLUDE_DIRS}
    CACHE INTERNAL "" FORCE )
  
-@@ -104,4 +106,4 @@ PlusLibInstallLibrary(vtk${PROJECT_NAME} ${PROJECT_NAME})
+@@ -63,6 +65,7 @@ IF(PLUSBUILD_BUILD_PlusLib_TOOLS)
+     ${PLUSLIB_VTK_PREFIX}FiltersSources 
+     ${PLUSLIB_VTK_PREFIX}FiltersGeneral
+     ${PLUSLIB_VTK_PREFIX}IOLegacy
++    ${VTK_LIBRARIES}
+     )
+   GENERATE_HELP_DOC(CreateSliceModels)
+ 
+@@ -104,4 +107,4 @@ PlusLibInstallLibrary(vtk${PROJECT_NAME} ${PROJECT_NAME})
  #
  IF(BUILD_TESTING)
    SUBDIRS(Testing)
+-ENDIF()
+\ No newline at end of file
++ENDIF()
+diff --git a/src/PlusWidgets/CMakeLists.txt b/src/PlusWidgets/CMakeLists.txt
+index 3acc02e3..2ebfce88 100644
+--- a/src/PlusWidgets/CMakeLists.txt
++++ b/src/PlusWidgets/CMakeLists.txt
+@@ -81,6 +81,12 @@ LIST(REMOVE_DUPLICATES PLUSLIB_DEPENDENCIES)
+ # Add this variable to UsePlusLib.cmake.in INCLUDE_PLUSLIB_MS_PROJECTS macro
+ SET(vcProj_${PROJECT_NAME} ${PROJECT_NAME};${PlusLib_BINARY_DIR}/src/PlusWidgets/${PROJECT_NAME}.vcxproj CACHE INTERNAL "" FORCE)
+ 
++# NOTE: This is added here so these files are installed by the macro
++list(APPEND ${PROJECT_NAME}_HDRS
++  ${CMAKE_CURRENT_BINARY_DIR}/PlusWidgets_autogen/include/ui_QPlusDeviceSetSelectorWidget.h
++  ${CMAKE_CURRENT_BINARY_DIR}/PlusWidgets_autogen/include/ui_QPlusConfigFileSaverDialog.h
++)
++
+ # --------------------------------------------------------------------------
+ # Install
+ #
+@@ -90,4 +96,4 @@ PlusLibInstallLibrary(${PROJECT_NAME} ${PROJECT_NAME})
+ # Testing
+ IF(BUILD_TESTING)
+   ADD_SUBDIRECTORY (Testing)
 -ENDIF()
 \ No newline at end of file
 +ENDIF()

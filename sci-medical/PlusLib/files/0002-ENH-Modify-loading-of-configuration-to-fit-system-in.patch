@@ -1,0 +1,65 @@
+From 87e6fc81e743f057e92ce4cf35d441b1def17493 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 22 Mar 2023 09:51:37 +0100
+Subject: [PATCH 2/2] ENH: Modify loading of configuration to fit system
+ install
+
+---
+ CMakeLists.txt                   | 5 +++++
+ src/PlusCommon/vtkPlusConfig.cxx | 3 +--
+ src/PlusConfigure.h.in           | 2 ++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 1a3bc646..71f24ac8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -30,6 +30,11 @@ SET(PLUSLIB_ARCHIVE_INSTALL "${CMAKE_INSTALL_LIBDIR}")
+ SET(PLUSLIB_SHARE_INSTALL "${CMAKE_INSTALL_DATAROOTDIR}/${PLUSLIB_INSTALL_FOLDERNAME}")
+ SET(PLUSLIB_DATA_INSTALL "${PLUSLIB_SHARE_INSTALL}/data")
+ SET(PLUSLIB_CMAKE_INSTALL "${PLUSLIB_SHARE_INSTALL}/cmake")
++# NOTE: I think this should not be necessary. This configuration file is provided by PlusApp, for which PlusLib is a dependency
++# A solution for this could be have a zero default configuration file and let PlusApp deal with setting a default configuration file.
++IF(NOT DEFINED PLUSLIB_APPLICATION_DEFAULT_CONFIG_FILE)
++  SET(PLUSLIB_APPLICATION_DEFAULT_CONFIG_FILE "PlusConfig.xml")
++ENDIF()
+ 
+ # Use solution folders.
+ IF(MSVC OR ${CMAKE_GENERATOR} MATCHES "Xcode")
+diff --git a/src/PlusCommon/vtkPlusConfig.cxx b/src/PlusCommon/vtkPlusConfig.cxx
+index b899fea0..c59d0493 100644
+--- a/src/PlusCommon/vtkPlusConfig.cxx
++++ b/src/PlusCommon/vtkPlusConfig.cxx
+@@ -27,7 +27,6 @@
+ #include <mach-o/dyld.h>
+ #endif
+ 
+-static const char APPLICATION_CONFIGURATION_FILE_NAME[] = "PlusConfig.xml";
+ 
+ 
+ vtkPlusConfig* vtkPlusConfig::Instance = NULL;
+@@ -359,7 +358,7 @@ PlusStatus vtkPlusConfig::LoadApplicationConfiguration()
+ #elif __APPLE__
+     this->SetEditorApplicationExecutable("TextEdit");
+ #endif
+-    saveNeeded = true;
++    // saveNeeded = true;
+   }
+ 
+   // Read output directory
+diff --git a/src/PlusConfigure.h.in b/src/PlusConfigure.h.in
+index d3536848..c24d43b2 100644
+--- a/src/PlusConfigure.h.in
++++ b/src/PlusConfigure.h.in
+@@ -145,6 +145,8 @@
+ 
+ #cmakedefine PLUS_RENDERING_ENABLED
+ 
++static const char APPLICATION_CONFIGURATION_FILE_NAME[] = "@PLUSLIB_APPLICATION_DEFAULT_CONFIG_FILE@";
++
+ // Frequently needed STL includes
+ #include <sstream>
+ #include <iostream>
+-- 
+2.39.2
+

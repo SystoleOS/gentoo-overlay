@@ -1,0 +1,86 @@
+From 701e810082e0158baf61d8e6aae0375a986cec51 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Tue, 21 Mar 2023 11:37:48 +0100
+Subject: [PATCH] ENH: Enable installation of development files
+
+---
+ CMakeLists.txt       | 18 +++++++++++-------
+ Logic/CMakeLists.txt | 10 +++++++---
+ 2 files changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e010b6e..6e0c46d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,30 +13,34 @@ set (CMAKE_CXX_STANDARD 11)
+ 
+ set(OpenIGTLinkIO_VERSION_SUFFIX "") # add a version suffix for parallel multi-version install
+ 
+-IF(NOT OpenIGTLinkIO_BINARY_INSTALL)
++IF(NOT DEFINED OpenIGTLinkIO_BINARY_INSTALL)
+   set(OpenIGTLinkIO_BINARY_INSTALL "bin")
+ ENDIF()
+ 
+-IF(NOT OpenIGTLinkIO_LIBRARY_INSTALL)
++IF(NOT DEFINED OpenIGTLinkIO_LIBRARY_INSTALL)
+   set(OpenIGTLinkIO_LIBRARY_INSTALL "lib")
+ ENDIF()
+ 
+-IF(NOT OpenIGTLinkIO_ARCHIVE_INSTALL)
++IF(NOT DEFINED OpenIGTLinkIO_ARCHIVE_INSTALL)
+   set(OpenIGTLinkIO_ARCHIVE_INSTALL "lib")
+ ENDIF()
+ 
+-IF(NOT OpenIGTLinkIO_CMAKE_INSTALL)
++IF(NOT DEFINED OpenIGTLinkIO_CMAKE_INSTALL)
+   set(OpenIGTLinkIO_CMAKE_INSTALL "${OpenIGTLinkIO_LIBRARY_INSTALL}/cmake")
+ ENDIF()
+ 
+-IF(NOT OpenIGTLinkIO_PACKAGE_INSTALL)
++IF(NOT DEFINED OpenIGTLinkIO_PACKAGE_INSTALL)
+   set(OpenIGTLinkIO_PACKAGE_INSTALL "${OpenIGTLinkIO_CMAKE_INSTALL}/igtlio${OpenIGTLinkIO_VERSION_SUFFIX}")
+ ENDIF()
+ 
+-IF(NOT OpenIGTLinkIO_INCLUDE_INSTALL)
++IF(NOT DEFINED OpenIGTLinkIO_INCLUDE_INSTALL)
+   set(OpenIGTLinkIO_INCLUDE_INSTALL "include/igtlio${OpenIGTLinkIO_VERSION_SUFFIX}")
+ ENDIF()
+ 
++IF(NOT DEFINED OpenIGTLinkIO_NO_INSTALL_DEVELOPMENT)
++  set(OpenIGTLinkIO_NO_INSTALL_DEVELOPMENT OFF)
++ENDIF()
++
+ ###########################################################
+ # Re-used components
+ include(GenerateExportHeader)
+@@ -56,7 +60,7 @@ include(${OpenIGTLink_USE_FILE})
+ 
+ ###########################################################
+ # Configuration
+-if(NOT BUILD_SHARED_LIBS)
++if(NOT DEFINED BUILD_SHARED_LIBS)
+   set(BUILD_SHARED_LIBS ON CACHE BOOL "Build shared or static libs")
+ endif()
+ 
+diff --git a/Logic/CMakeLists.txt b/Logic/CMakeLists.txt
+index cf2cfda..f7c637d 100644
+--- a/Logic/CMakeLists.txt
++++ b/Logic/CMakeLists.txt
+@@ -66,6 +66,10 @@ INSTALL(TARGETS ${PROJECT_NAME} EXPORT OpenIGTLinkIO
+   ARCHIVE DESTINATION "${OpenIGTLinkIO_ARCHIVE_INSTALL}" COMPONENT Development
+   )
+ 
+-INSTALL(FILES 
+-  ${${PROJECT_NAME}_HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Export.h" DESTINATION "${OpenIGTLinkIO_INCLUDE_INSTALL}" COMPONENT Includes
+-  )
+\ No newline at end of file
++if(NOT OpenIGTLinkIO_NO_INSTALL_DEVELOPMENT)
++  FILE(GLOB OpenIGTLinkIO_Logic_HEADERS "*.h")
++  INSTALL(FILES ${OpenIGTLinkIO_Logic_HEADERS} DESTINATION ${OpenIGTLinkIO_INCLUDE_INSTALL} COMPONENT Includes)
++  INSTALL(FILES
++    ${${PROJECT_NAME}_HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Export.h" DESTINATION "${OpenIGTLinkIO_INCLUDE_INSTALL}" COMPONENT Includes
++  )
++endif()
+-- 
+2.39.2
+
