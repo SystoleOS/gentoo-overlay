@@ -22,6 +22,7 @@ RDEPEND="
 "
 
 PATCHES=(
+	${FILESDIR}/0001-ENH-Enable-installation-of-development-files.patch
 )
 
 src_configure(){
@@ -30,11 +31,11 @@ src_configure(){
 
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
-		-DCMAKE_BUILD_TYPE:STRING=Release
 		# TODO: This should be fixed in VTK so we don't need to specify the VTK_DIR or ITK_DIR
 		-DVTK_DIR:STRING=/usr/lib64/cmake/vtk-9.1
 		-DOpenIGTLink_DIR:FILEPATH=/usr/lib64/cmake/igtl-3.1
 		-DOpenIGTLinkIO_LIBRARY_INSTALL:STRING=$(get_libdir)
+		-DOpenIGTLinkIO_NO_INSTALL_DEVELOPMENT:BOOL=OFF
 	)
 
 	cmake_src_configure
