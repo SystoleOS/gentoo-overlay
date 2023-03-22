@@ -1,4 +1,4 @@
-From 7e2649e3a3cc8ad2fabfb5158d2ed7145b6ad9ee Mon Sep 17 00:00:00 2001
+From b09b207756169de8709135592a19948f67d02aae Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 6 Feb 2023 20:21:04 +0100
 Subject: [PATCH 23/29] ENH: Update Slicer build macros

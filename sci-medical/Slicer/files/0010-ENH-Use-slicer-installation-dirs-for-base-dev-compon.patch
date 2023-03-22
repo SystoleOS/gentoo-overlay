@@ -1,4 +1,4 @@
-From 6936f8d218e3e6f8094b534c3623a840496bb97f Mon Sep 17 00:00:00 2001
+From f3e77b39f71e88f42bfa43897de18a54b2cff4ad Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 09:20:18 +0100
 Subject: [PATCH 10/29] ENH: Use slicer installation dirs for base dev

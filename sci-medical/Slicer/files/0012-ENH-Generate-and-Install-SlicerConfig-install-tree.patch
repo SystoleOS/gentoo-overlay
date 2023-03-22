@@ -1,4 +1,4 @@
-From d72a7d9ddbbad501a8386eaea7bbf013f052d263 Mon Sep 17 00:00:00 2001
+From e6e11e492fea0bf3c1c3e579c6892ba32ac48574 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:13:12 +0200
 Subject: [PATCH 12/29] ENH: Generate and Install SlicerConfig (install tree)

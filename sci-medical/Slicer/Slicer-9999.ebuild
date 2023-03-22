@@ -84,7 +84,7 @@ PATCHES=(
 	${FILESDIR}/0019-ENH-Update-SlicerInstallConfig.patch
 	${FILESDIR}/0020-ENH-Enable-installation-of-SLicerBase-header-files.patch
 	${FILESDIR}/0021-ENH-Fix-qt-loadable-modules-installation-dirs.patch
-	${FILESDIR}/0022-ENH-Provide-an-install-version-ov-vtkSlicerConfigure.patch
+	${FILESDIR}/0022-ENH-Provide-an-install-version-of-vtkSlicerConfigure.patch
 	${FILESDIR}/0023-ENH-Update-Slicer-build-macros.patch
 	${FILESDIR}/0024-ENH-Enable-installation-of-Libs-dev-files.patch
 	${FILESDIR}/0025-ENH-Make-Testing-subdirs-subject-to-BUILD_TESTING.patch

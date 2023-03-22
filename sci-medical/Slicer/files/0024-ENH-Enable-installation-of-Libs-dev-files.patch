@@ -1,4 +1,4 @@
-From 15f72a2ad0a471b9e9871a4d9100dca228188738 Mon Sep 17 00:00:00 2001
+From 3d04f6e591c4199a6960c68fd1662639d2a79525 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 21 Feb 2023 07:08:46 +0100
 Subject: [PATCH 24/29] ENH: Enable installation of Libs dev files

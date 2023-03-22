@@ -1,4 +1,4 @@
-From d71ada6d6b835f267080f74ba466057990bfd70f Mon Sep 17 00:00:00 2001
+From 63a64be756b8a9c4315077ed05d75f72c7b54658 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
 Subject: [PATCH 26/29] ENH: Add python support
@@ -262,7 +262,7 @@ index c2bf8e3d98..fcb0cb0e85 100644
      )
  
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index c611cde149..c43fdb7a79 100644
+index fc342c2611..6035613ce8 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -157,6 +157,10 @@ mark_as_superbuild(GIT_EXECUTABLE)
@@ -397,7 +397,7 @@ index c8ac7a7ef9..0eeb3cccf3 100644
  endif()
  
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index 5440387626..ca14230176 100644
+index 4fe61b0b39..67cf9a556c 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
 @@ -139,6 +139,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
