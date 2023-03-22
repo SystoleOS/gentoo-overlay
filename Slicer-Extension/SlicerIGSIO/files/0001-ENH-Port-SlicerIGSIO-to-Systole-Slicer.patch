@@ -1,0 +1,305 @@
+From e84982d77498b95c9dd00c53af9b344c00a778ab Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Wed, 22 Mar 2023 19:01:33 +0100
+Subject: [PATCH] ENH: Port SlicerIGSIO to Systole Slicer
+
+---
+ CMakeLists.txt                        | 17 +++++++----------
+ MetafileImporter/CMakeLists.txt       |  6 ++++--
+ MetafileImporter/Logic/CMakeLists.txt | 10 ++++++++++
+ SequenceIO/CMakeLists.txt             |  8 +++++---
+ SequenceIO/Logic/CMakeLists.txt       | 10 +++++++++-
+ SequenceIO/MRML/CMakeLists.txt        |  8 ++++++++
+ SlicerIGSIOCommon/CMakeLists.txt      | 14 ++++++++------
+ VideoUtil/CMakeLists.txt              |  3 +++
+ VideoUtil/Logic/CMakeLists.txt        |  8 ++++++++
+ 9 files changed, 62 insertions(+), 22 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 3a73805..d671a23 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -53,9 +53,6 @@ endif()
+ #-----------------------------------------------------------------------------
+ # Extension dependencies
+ 
+-find_package(Git REQUIRED)
+-mark_as_superbuild(GIT_EXECUTABLE)
+-
+ mark_as_superbuild(VP9_DIR)
+ mark_as_superbuild(IGSIO_DIR)
+ 
+@@ -72,10 +69,10 @@ set(SlicerIGSIO_CUSTOM_CONFIG "include(\"${IGSIO_DIR}/IGSIOConfig.cmake\")")
+ include(${Slicer_EXTENSION_GENERATE_CONFIG})
+ 
+ #-----------------------------------------------------------------------------
+-set(EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS)
+-list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${IGSIO_DIR};IGSIO;RuntimeLibraries;/")
+-set(${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS "${EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS}" CACHE STRING "List of external projects to install" FORCE)
+-list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${EXTENSION_NAME};ALL;/")
+-list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS}")
+-message(CPACK_INSTALL_CMAKE_PROJECTS ${CPACK_INSTALL_CMAKE_PROJECTS})
+-include(${Slicer_EXTENSION_CPACK})
++# set(EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS)
++# list(APPEND EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS "${IGSIO_DIR};IGSIO;RuntimeLibraries;/")
++# set(${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS "${EXTENSION_CPACK_INSTALL_CMAKE_PROJECTS}" CACHE STRING "List of external projects to install" FORCE)
++# list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${EXTENSION_NAME};ALL;/")
++# list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${${EXTENSION_NAME}_CPACK_INSTALL_CMAKE_PROJECTS}")
++# message(CPACK_INSTALL_CMAKE_PROJECTS ${CPACK_INSTALL_CMAKE_PROJECTS})
++# include(${Slicer_EXTENSION_CPACK})
+diff --git a/MetafileImporter/CMakeLists.txt b/MetafileImporter/CMakeLists.txt
+index fb8693b..2074a1c 100644
+--- a/MetafileImporter/CMakeLists.txt
++++ b/MetafileImporter/CMakeLists.txt
+@@ -15,8 +15,9 @@ set(MODULE_EXPORT_DIRECTIVE "Q_SLICER_QTMODULES_${MODULE_NAME_UPPER}_EXPORT")
+ set(MODULE_INCLUDE_DIRECTORIES
+   ${CMAKE_CURRENT_SOURCE_DIR}/Logic
+   ${CMAKE_CURRENT_BINARY_DIR}/Logic
+-  ${vtkSlicerSequencesModuleLogic_INCLUDE_DIRS} # for creating sequence browser node
+-  ${qSlicerSequencesModule_INCLUDE_DIRS} # for selecting as active browser node in toolbar
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleLogic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/Sequences
+   )
+ 
+ set(MODULE_SRCS
+@@ -46,6 +47,7 @@ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   vtkSlicerSequencesModuleLogic
+   qSlicerSequencesModuleWidgets
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/MetafileImporter/Logic/CMakeLists.txt b/MetafileImporter/Logic/CMakeLists.txt
+index aea0313..5a926a5 100644
+--- a/MetafileImporter/Logic/CMakeLists.txt
++++ b/MetafileImporter/Logic/CMakeLists.txt
+@@ -5,6 +5,8 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleLogic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -17,6 +19,13 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerSequencesModuleMRML
+   )
+ 
++
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if(Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Python3_LIBRARIES})
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+@@ -24,4 +33,5 @@ SlicerMacroBuildModuleLogic(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+diff --git a/SequenceIO/CMakeLists.txt b/SequenceIO/CMakeLists.txt
+index a321bb7..f89735b 100644
+--- a/SequenceIO/CMakeLists.txt
++++ b/SequenceIO/CMakeLists.txt
+@@ -1,9 +1,8 @@
+ cmake_minimum_required(VERSION 2.8)
+ 
++
+ find_package(IGSIO REQUIRED)
+-if (DEFINED Slicer_EXTENSION_SOURCE_DIRS) # Custom build
+-  find_package(vtkAddon REQUIRED)
+-endif()
++find_package(vtkAddon REQUIRED)
+ 
+ set(MODULE_NAME "SequenceIO")
+ set(MODULE_TITLE "SequenceIO")
+@@ -44,8 +43,11 @@ set(MODULE_TARGET_LIBRARIES
+   vtkIGSIOCommon
+   vtkSequenceIO
+   vtkSlicerIGSIOCommon
++  ${CTK_LIBRARIES}
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ slicerMacroBuildLoadableModule(
+   NAME ${MODULE_NAME}
+diff --git a/SequenceIO/Logic/CMakeLists.txt b/SequenceIO/Logic/CMakeLists.txt
+index 514726e..d766bb9 100644
+--- a/SequenceIO/Logic/CMakeLists.txt
++++ b/SequenceIO/Logic/CMakeLists.txt
+@@ -9,7 +9,8 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${vtkSlicerSequencesModuleMRML_INCLUDE_DIRS}
+   ${vtkSlicer${MODULE_NAME}ModuleMRML_INCLUDE_DIRS}
+-  ${VTKIGSIOCOMMON_INCLUDES}
++  ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -23,6 +24,12 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   )
+ 
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if (Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Python3_LIBRARIES})
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+@@ -30,6 +37,7 @@ SlicerMacroBuildModuleLogic(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+ 
+ 
+diff --git a/SequenceIO/MRML/CMakeLists.txt b/SequenceIO/MRML/CMakeLists.txt
+index af120e7..c251b8e 100644
+--- a/SequenceIO/MRML/CMakeLists.txt
++++ b/SequenceIO/MRML/CMakeLists.txt
+@@ -21,6 +21,13 @@ set(${KIT}_TARGET_LIBRARIES
+   ${VTKSEQUENCEIO_LIBRARIES}
+   )
+ 
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if (Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Python3_LIBRARIES})
++endif()
++
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+@@ -28,4 +35,5 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+diff --git a/SlicerIGSIOCommon/CMakeLists.txt b/SlicerIGSIOCommon/CMakeLists.txt
+index 66952db..d756c86 100644
+--- a/SlicerIGSIOCommon/CMakeLists.txt
++++ b/SlicerIGSIOCommon/CMakeLists.txt
+@@ -3,11 +3,8 @@ project(vtkSlicerIGSIOCommon)
+ # --------------------------------------------------------------------------
+ # Sources
+ # --------------------------------------------------------------------------
+-
+ find_package(IGSIO REQUIRED)
+-if (DEFINED Slicer_EXTENSION_SOURCE_DIRS) # Custom build
+-  find_package(vtkAddon REQUIRED)
+-endif()
++find_package(vtkAddon REQUIRED)
+ 
+ set(SlicerIGSIOCommon_SRCS
+   vtkSlicerIGSIOCommon.cxx
+@@ -25,6 +22,8 @@ set(SlicerIGSIOCommon_INCLUDE_DIRS
+   ${VTKSEQUENCEIO_INCLUDE_DIRS}
+   ${vtkSlicerSequencesModuleMRML_INCLUDE_DIRS}
+   ${vtkSlicerVolumesModuleLogic_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
+   CACHE INTERNAL "" FORCE)
+ 
+ # --------------------------------------------------------------------------
+@@ -38,9 +37,12 @@ set(SlicerIGSIOCommon_LIBS ${SlicerIGSIOCommon_LIBS}
+   vtkSequenceIO
+   vtkSlicerSequencesModuleMRML
+   vtkSlicerVolumesModuleLogic
++  vtkAddon
+   )
+ 
+ include_directories( ${SlicerIGSIOCommon_INCLUDE_DIRS} )
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ add_library(${PROJECT_NAME} ${SlicerIGSIOCommon_SRCS})
+ target_link_libraries( ${PROJECT_NAME} ${SlicerIGSIOCommon_LIBS} )
+ 
+@@ -69,7 +71,7 @@ install(TARGETS ${PROJECT_NAME}
+ # --------------------------------------------------------------------------
+ # Python Wrapping
+ # --------------------------------------------------------------------------
+-if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
++if(Slicer_USE_PYTHONQT AND BUILD_SHARED_LIBS)
+ 
+   set(Slicer_Wrapped_LIBRARIES
+     )
+@@ -108,4 +110,4 @@ if(VTK_WRAP_PYTHON AND BUILD_SHARED_LIBS)
+   if(${VTK_VERSION} VERSION_LESS "8.90")
+     set_property(GLOBAL APPEND PROPERTY Slicer_TARGETS ${PROJECT_NAME}PythonD)
+   endif()
+-endif()
+\ No newline at end of file
++endif()
+diff --git a/VideoUtil/CMakeLists.txt b/VideoUtil/CMakeLists.txt
+index f0c6373..be492d3 100644
+--- a/VideoUtil/CMakeLists.txt
++++ b/VideoUtil/CMakeLists.txt
+@@ -23,6 +23,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${VTKSEQUENCEIO_INCLUDES}
+   ${VTKIGSIOCOMMON_INCLUDES}
+   ${SlicerIGSIOCommon_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
+   )
+ 
+ set(MODULE_SRCS
+@@ -51,6 +52,8 @@ set(MODULE_TARGET_LIBRARIES
+   vtkSequenceIO
+   vtkSlicerIGSIOCommon
+   vtkSlicerSequencesModuleMRML
++  ${CTK_LIBRARIES}
++  qMRMLWidgets
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/VideoUtil/Logic/CMakeLists.txt b/VideoUtil/Logic/CMakeLists.txt
+index 9dd8ecf..4767124 100644
+--- a/VideoUtil/Logic/CMakeLists.txt
++++ b/VideoUtil/Logic/CMakeLists.txt
+@@ -9,6 +9,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${vtkSlicerSequencesModuleMRML_INCLUDE_DIRS}
+   ${VTKSEQUENCEIO_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -22,6 +23,12 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerSequenceIOModuleMRML
+   )
+ 
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if (Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES ${Python3_LIBRARIES})
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+@@ -29,6 +36,7 @@ SlicerMacroBuildModuleLogic(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+ 
+ 
+-- 
+2.39.2
+
