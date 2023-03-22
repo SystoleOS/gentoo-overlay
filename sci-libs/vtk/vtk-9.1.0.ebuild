@@ -21,7 +21,7 @@ SRC_URI="https://github.com/Slicer/VTK/archive/6efd97c519d0cb813a31e52c232161e73
 LICENSE="BSD LGPL-2"
 SLOT="0"
 
-IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R +rendering tbb test tcl theora nvidia +views web +X xdmf2"
+IUSE="aqua boost doc examples exodus gdal gl2ps imaging java json logging mpi odbc offscreen postgres python +qt5 R +rendering tbb test tcl theora nvidia stl +views web +X xdmf2"
 
 REQUIRED_USE="
 	java? ( qt5 )
@@ -233,6 +233,7 @@ src_configure() {
 			-DVTK_GROUP_ENABLE_MPI=$(usex mpi YES NO)
 			-DVTK_USE_MPI=$(usex mpi ON OFF)
 			-DVTK_MODULE_ENABLE_VTK_mpi=$(usex mpi YES NO)
+			-DVTK_MODULE_ENABLE_VTK_FiltersParallel=YES
 			# Enable the use of external libraries (if proceeds)
 			$(vtk_enable_external doubleconversion)
 			$(vtk_enable_external eigen)
@@ -249,6 +250,7 @@ src_configure() {
 			$(vtk_enable_external theora theora ogg)
 			$(vtk_enable_external tiff)
 			$(vtk_enable_external zlib)
+			-DVTK_MODULE_ENABLE_VTK_IOGeometry=$(usex stl YES NO)
 		)
 
 		if use java; then
