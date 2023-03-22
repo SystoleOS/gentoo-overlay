@@ -1,0 +1,259 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2ac6de7..032b283 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -10,6 +10,16 @@ INCLUDE(${CMAKE_CURRENT_SOURCE_DIR}/CMake/PlusAppMacros.cmake)
+ FIND_PACKAGE(PlusLib REQUIRED NO_MODULE)
+ INCLUDE(${PlusLib_USE_FILE})
+ 
++# ------------------------------------------------------------------------
++# IGSIO
++# --------------------------------------------------------------------------
++FIND_PACKAGE(IGSIO REQUIRED NO_MODULE)
++
++# ------------------------------------------------------------------------
++# vtkAddon
++# --------------------------------------------------------------------------
++FIND_PACKAGE(vtkAddon REQUIRED NO_MODULE)
++
+ IF(VTK_VERSION VERSION_LESS 8.9.0)
+   SET(PLUSAPP_VTK_PREFIX vtk)
+ ELSE()
+@@ -37,6 +47,62 @@ SET(PLUSAPP_PACKAGE_EDITION "" CACHE STRING "Specifies a name that refers to the
+ 
+ MESSAGE(STATUS "PlusApp version: ${PLUSAPP_VERSION}")
+ 
++#-----------------------------------------------------------------------------
++# Installation vars.
++# PLUSAPP_INSTALL_BIN_DIR          - binary dir(executables)
++# PLUSAPP_INSTALL_LIB_DIR          - library dir(libs)
++# PLUSAPP_INSTALL_DATA_DIR         - share dir(say, examples, data, etc)
++# PLUSAPP_INSTALL_CONFIG_DIR       - config dir(configuration files)
++# PLUSAPP_INSTALL_SCRIPTS_DIR      - scripts dir
++# PLUSAPP_INSTALL_INCLUDE_DIR      - include dir(headers)
++# PLUSAPP_INSTALL_PACKAGE_DIR      - package/export configuration files
++# PLUSAPP_INSTALL_NO_DEVELOPMENT   - do not install development files
++# PLUSAPP_INSTALL_NO_RUNTIME       - do not install runtime files
++# PLUSAPP_INSTALL_NO_DOCUMENTATION - do not install documentation files
++# Applications
++# RuntimeLibraries
++# Development
++
++include(GNUInstallDirs)
++
++SET(PLUSAPP_SUBDIR "PlusApp_v${PLUSAPP_VERSION_MAJOR}.${PLUSAPP_VERSION_MINOR}.${PLUSAPP_VERSION_PATCH}")
++
++IF(NOT DEFINED PLUSAPP_INSTALL_SYSCONF_DIR)
++  SET(PLUSAPP_INSTALL_SYSCONF_DIR "${CMAKE_INSTALL_SYSCONFDIR}")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_BIN_DIR)
++  SET(PLUSAPP_INSTALL_BIN_DIR "${CMAKE_INSTALL_BINDIR}")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_LIB_DIR)
++  SET(PLUSAPP_INSTALL_LIB_DIR "${CMAKE_INSTALL_LIBDIR}")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_DATA_DIR)
++  SET(PLUSAPP_INSTALL_DATA_DIR "${CMAKE_INSTALL_DATAROOTDIR}")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_CONFIG_DIR)
++  SET(PLUSAPP_INSTALL_CONFIG_DIR "${CMAKE_INSTALL_DATAROOTDIR}/${PLUSAPP_SUBDIR}/config")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_SCRIPTS_DIR)
++  SET(PLUSAPP_INSTALL_SCRIPTS_DIR "scripts")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_INCLUDE_DIR)
++  SET(PLUSAPP_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_INCLUDEDIR}")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_DOCUMENTATION_DIR)
++  SET(PLUSAPP_INSTALL_DOCUMENTATION_DIR "doc")
++ENDIF()
++
++IF(NOT DEFINED PLUSAPP_INSTALL_NO_DOCUMENTATION)
++  SET(PLUSAPP_INSTALL_NO_DOCUMENTATION 0)
++ENDIF()
++
+ # --------------------------------------------------------------------------
+ # Testing
+ # --------------------------------------------------------------------------
+@@ -171,7 +237,7 @@ ELSE()
+ ENDIF()
+ 
+ SET(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/Install)
+-SET(INSTALL_DESTINATION_DIR "PlusApp_v${PLUSAPP_VERSION_MAJOR}.${PLUSAPP_VERSION_MINOR}.${PLUSAPP_VERSION_PATCH}")
++SET(INSTALL_DESTINATION_DIR "${PLUSAPP_SUBDIR}")
+ 
+ OPTION(PLUSAPP_BUILD_DiagnosticTools "Build the DiagnosticTools" ON)
+ OPTION(PLUSAPP_BUILD_fCal "Build the fCal application (Qt)" ON)
+@@ -202,7 +268,7 @@ ENDMACRO()
+ # --------------------------------------------------------------------------
+ # Packaging
+ # --------------------------------------------------------------------------
+-INCLUDE (${CMAKE_CURRENT_SOURCE_DIR}/CPackConfig.cmake)
++# INCLUDE (${CMAKE_CURRENT_SOURCE_DIR}/CPackConfig.cmake)
+ 
+ # --------------------------------------------------------------------------
+ # Qt
+@@ -382,4 +448,4 @@ ENDIF()
+ #-----------------------------------------------------------------------------
+ # Install files
+ # --------------------------------------------------------------------------
+-INCLUDE(InstallFiles.cmake)
+\ No newline at end of file
++INCLUDE(InstallFiles.cmake)
+diff --git a/DiagnosticTools/CMakeLists.txt b/DiagnosticTools/CMakeLists.txt
+index c64af34..3201d03 100644
+--- a/DiagnosticTools/CMakeLists.txt
++++ b/DiagnosticTools/CMakeLists.txt
+@@ -4,6 +4,10 @@ ENDIF()
+ 
+ ADD_EXECUTABLE(DiagDataCollection DiagDataCollection.cxx)
+ TARGET_LINK_LIBRARIES(DiagDataCollection PUBLIC vtkPlusDataCollection vtkPlusCommon ${_IGT_LIB})
++TARGET_INCLUDE_DIRECTORIES(DiagDataCollection PUBLIC
++  ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
++)
+ GENERATE_HELP_DOC(DiagDataCollection)
+ 
+ #-------------------------------------------------------------------------------------------- 
+@@ -11,6 +15,10 @@ GENERATE_HELP_DOC(DiagDataCollection)
+ IF (PLUS_USE_OpenIGTLink)
+   ADD_EXECUTABLE(TrackingDataServer TrackingDataServer.cxx)
+   TARGET_LINK_LIBRARIES(TrackingDataServer PUBLIC vtkPlusCommon vtkPlusServer OpenIGTLink)
++  TARGET_INCLUDE_DIRECTORIES(TrackingDataServer PUBLIC
++    ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++    ${vtkAddon_INCLUDE_DIRS}
++  )
+   GENERATE_HELP_DOC(TrackingDataServer)
+ ENDIF()
+ 
+diff --git a/InstallFiles.cmake b/InstallFiles.cmake
+index 93e7e59..2d2f507 100644
+--- a/InstallFiles.cmake
++++ b/InstallFiles.cmake
+@@ -387,6 +387,6 @@ ENDIF()
+ 
+ INSTALL(FILES
+   ${CMAKE_CURRENT_BINARY_DIR}/PlusConfig.xml
+-  DESTINATION ${PLUSAPP_INSTALL_BIN_DIR}
++  DESTINATION ${PLUSAPP_INSTALL_CONFIG_DIR}
+   COMPONENT Data
+   )
+diff --git a/PlusServerLauncher/CMakeLists.txt b/PlusServerLauncher/CMakeLists.txt
+index 42e431e..ec8bc37 100644
+--- a/PlusServerLauncher/CMakeLists.txt
++++ b/PlusServerLauncher/CMakeLists.txt
+@@ -60,7 +60,6 @@ AddPlusQt5Executable( PlusServerLauncher ${APP_MODE}
+   ${PlusServerLauncher_SRCS} 
+   ${PlusServerLauncher_UI_HDRS} 
+   ${PlusServerLauncher_UI_SRCS} 
+-  ${PlusServerLauncher_QT_Resources}
+   )
+ SET_TARGET_PROPERTIES(PlusServerLauncher PROPERTIES COMPILE_DEFINTIIONS 
+   ${Qt5Widgets_COMPILE_DEFINITIONS} 
+@@ -69,6 +68,8 @@ SET_TARGET_PROPERTIES(PlusServerLauncher PROPERTIES COMPILE_DEFINTIIONS
+ target_include_directories(PlusServerLauncher PRIVATE 
+   ${CMAKE_CURRENT_BINARY_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}
++  ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
+   )
+ TARGET_LINK_LIBRARIES( PlusServerLauncher PRIVATE ${PlusServerLauncher_LIBS} )
+ 
+@@ -79,4 +80,4 @@ IF(PLUSAPP_INSTALL_BIN_DIR)
+     DESTINATION ${PLUSAPP_INSTALL_BIN_DIR}
+     COMPONENT RuntimeExecutables
+     )
+-ENDIF()
+\ No newline at end of file
++ENDIF()
+diff --git a/PlusServerLauncher/PlusServerLauncherMainWindow.cxx b/PlusServerLauncher/PlusServerLauncherMainWindow.cxx
+index effd7e5..fbf0b96 100644
+--- a/PlusServerLauncher/PlusServerLauncherMainWindow.cxx
++++ b/PlusServerLauncher/PlusServerLauncherMainWindow.cxx
+@@ -264,6 +264,8 @@ PlusStatus PlusServerLauncherMainWindow::ReadConfiguration()
+ {
+   std::string applicationConfigurationFilePath = vtkPlusConfig::GetInstance()->GetApplicationConfigurationFilePath();
+ 
++  std::cout << applicationConfigurationFilePath << std::endl;
++
+   // Read configuration from file
+   vtkSmartPointer<vtkXMLDataElement> applicationConfigurationRoot;
+   if (vtksys::SystemTools::FileExists(applicationConfigurationFilePath.c_str(), true))
+@@ -272,7 +274,10 @@ PlusStatus PlusServerLauncherMainWindow::ReadConfiguration()
+   }
+ 
+   int currentTab = 0;
+-  applicationConfigurationRoot->GetScalarAttribute("CurrentTab", currentTab);
++  if (applicationConfigurationRoot)
++    {
++    applicationConfigurationRoot->GetScalarAttribute("CurrentTab", currentTab);
++    }
+   ui.tabWidget->setCurrentIndex(currentTab);
+ 
+   return PLUS_SUCCESS;
+diff --git a/PointSetExtractor/CMakeLists.txt b/PointSetExtractor/CMakeLists.txt
+index 75db8a1..99302e0 100644
+--- a/PointSetExtractor/CMakeLists.txt
++++ b/PointSetExtractor/CMakeLists.txt
+@@ -6,7 +6,12 @@ IF(PLUS_RENDERING_ENABLED)
+ ENDIF()
+ 
+ ADD_EXECUTABLE(PointSetExtractor PointSetExtractor.cxx)
++
+ SET_TARGET_PROPERTIES(PointSetExtractor PROPERTIES FOLDER Utilities)
++TARGET_INCLUDE_DIRECTORIES(PointSetExtractor PUBLIC
++  ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
++)
+ TARGET_LINK_LIBRARIES(PointSetExtractor PUBLIC 
+   vtkPlusCommon
+   ${PLUSAPP_VTK_PREFIX}InteractionStyle
+diff --git a/SpatialSensorFusion/CMakeLists.txt b/SpatialSensorFusion/CMakeLists.txt
+index 5950608..beb318b 100644
+--- a/SpatialSensorFusion/CMakeLists.txt
++++ b/SpatialSensorFusion/CMakeLists.txt
+@@ -3,6 +3,10 @@
+ ADD_EXECUTABLE(SpatialSensorFusion SpatialSensorFusion.cxx)
+ SET_TARGET_PROPERTIES(SpatialSensorFusion PROPERTIES FOLDER Utilities)
+ TARGET_LINK_LIBRARIES(SpatialSensorFusion PUBLIC vtkxio vtkPlusCommon)
++TARGET_INCLUDE_DIRECTORIES(SpatialSensorFusion PUBLIC
++  ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
++)
+ GENERATE_HELP_DOC(SpatialSensorFusion)
+ 
+ # --------------------------------------------------------------------------
+@@ -18,4 +22,4 @@ ENDIF()
+ # Testing
+ IF(BUILD_TESTING)
+   ADD_SUBDIRECTORY(Testing)
+-ENDIF()
+\ No newline at end of file
++ENDIF()
+diff --git a/fCal/CMakeLists.txt b/fCal/CMakeLists.txt
+index e92ecd8..7e2b03f 100644
+--- a/fCal/CMakeLists.txt
++++ b/fCal/CMakeLists.txt
+@@ -118,6 +118,8 @@ target_include_directories(fCal PUBLIC
+   ${CMAKE_CURRENT_BINARY_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}/Toolboxes
++  ${VTKIGSIOCOMMON_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
+   )
+ 
+ IF(NOT (MSVC OR ${CMAKE_GENERATOR} MATCHES "Xcode"))
+@@ -140,4 +142,4 @@ ENDIF()
+ # Testing
+ IF(BUILD_TESTING)
+   ADD_SUBDIRECTORY(Testing)
+-ENDIF()
+\ No newline at end of file
++ENDIF()
