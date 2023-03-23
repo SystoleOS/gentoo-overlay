@@ -1,0 +1,25 @@
+From f42a5ad3c4f75b06c3ce8ab6269d778a7986af99 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 23 Mar 2023 10:42:45 +0100
+Subject: [PATCH] GOOD-ENH: Add installation of generated Qt header files
+
+This adds the installation of the `ui_*.h` files as development files (headers)
+---
+ CMake/SlicerMacroBuildModuleQtLibrary.cmake | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/CMake/SlicerMacroBuildModuleQtLibrary.cmake b/CMake/SlicerMacroBuildModuleQtLibrary.cmake
+index 2047af0a4f..2ae42aca7f 100644
+--- a/CMake/SlicerMacroBuildModuleQtLibrary.cmake
++++ b/CMake/SlicerMacroBuildModuleQtLibrary.cmake
+@@ -211,6 +211,7 @@ macro(SlicerMacroBuildModuleQtLibrary)
+     file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
+     install(FILES
+       ${headers}
++      ${MODULEQTLIBRARY_UI_CXX}
+       ${dynamicHeaders}
+       DESTINATION ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/${MODULEQTLIBRARY_NAME} COMPONENT Development
+       )
+-- 
+2.39.2
+

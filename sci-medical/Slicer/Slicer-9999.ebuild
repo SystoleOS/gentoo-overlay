@@ -92,6 +92,7 @@ PATCHES=(
 	${FILESDIR}/0027-ENH-Disable-variable-setting-in-UseSlicer.cmake.in.patch
 	${FILESDIR}/0028-COMP-Fix-missing-QSslConfiguration-include.patch
 	${FILESDIR}/0029-BAD-ENH-Enable-installation-of-utility-scripts.patch
+	${FILESDIR}/0030-GOOD-ENH-Add-installation-of-generated-Qt-header-fil.patch
 )
 
 src_prepare() {
