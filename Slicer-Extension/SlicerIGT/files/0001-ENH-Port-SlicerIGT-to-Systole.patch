@@ -1,0 +1,808 @@
+From 290081a518915d04a893cd3be4608d8fd8c4183a Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ous-research.no>
+Date: Thu, 23 Mar 2023 13:44:09 +0100
+Subject: [PATCH] ENH: Port SlicerIGT to Systole
+
+---
+ BreachWarning/CMakeLists.txt                  |   6 +-
+ BreachWarning/Logic/CMakeLists.txt            |   1 +
+ BreachWarning/MRML/CMakeLists.txt             |   5 +-
+ CMakeLists.txt                                |  10 +-
+ CollectPoints/CMakeLists.txt                  |   3 +
+ CollectPoints/Logic/CMakeLists.txt            |   3 +
+ CollectPoints/MRML/CMakeLists.txt             |   3 +
+ CreateModels/CMakeLists.txt                   | 124 +++++++++---------
+ FiducialRegistrationWizard/CMakeLists.txt     |   6 +
+ .../Logic/CMakeLists.txt                      |   4 +
+ .../MRML/CMakeLists.txt                       |   5 +-
+ .../Widgets/CMakeLists.txt                    |   2 +
+ LandmarkDetection/CMakeLists.txt              |   5 +
+ LandmarkDetection/Logic/CMakeLists.txt        |   5 +-
+ LandmarkDetection/MRML/CMakeLists.txt         |   6 +-
+ PathExplorer/CMakeLists.txt                   |   7 +-
+ PathExplorer/Logic/CMakeLists.txt             |   3 +
+ PathExplorer/MRML/CMakeLists.txt              |   3 +
+ .../SubjectHierarchyPlugins/CMakeLists.txt    |  19 ++-
+ PathExplorer/Widgets/CMakeLists.txt           |   4 +
+ PivotCalibration/CMakeLists.txt               |   3 +
+ PivotCalibration/Logic/CMakeLists.txt         |   1 +
+ TransformProcessor/CMakeLists.txt             |   2 +
+ UltrasoundSnapshots/CMakeLists.txt            |   2 +
+ VolumeReconstruction/CMakeLists.txt           |   2 +
+ VolumeReconstruction/Logic/CMakeLists.txt     |   8 +-
+ VolumeReconstruction/MRML/CMakeLists.txt      |   8 +-
+ VolumeResliceDriver/Logic/CMakeLists.txt      |   3 +
+ VolumeResliceDriver/Widgets/CMakeLists.txt    |   3 +-
+ Watchdog/CMakeLists.txt                       |   3 +
+ 30 files changed, 172 insertions(+), 87 deletions(-)
+
+diff --git a/BreachWarning/CMakeLists.txt b/BreachWarning/CMakeLists.txt
+index 4a553fe..2e4bc66 100644
+--- a/BreachWarning/CMakeLists.txt
++++ b/BreachWarning/CMakeLists.txt
+@@ -1,3 +1,4 @@
++find_package(Qt5 REQUIRED COMPONENTS Multimedia)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME "BreachWarning") # Do not use 'project()'
+@@ -37,6 +38,9 @@ set(MODULE_UI_SRCS
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  Qt5::Multimedia
++  ${CTK_LIBRARIES}
++  qMRMLWidgets
+   )
+ 
+ set(MODULE_RESOURCES
+@@ -44,7 +48,7 @@ set(MODULE_RESOURCES
+   )
+ 
+ #-----------------------------------------------------------------------------
+-slicerMacroBuildQtModule(
++slicerMacroBuildLoadableModule(
+   NAME ${MODULE_NAME}
+   TITLE ${MODULE_TITLE}
+   EXPORT_DIRECTIVE ${MODULE_EXPORT_DIRECTIVE}
+diff --git a/BreachWarning/Logic/CMakeLists.txt b/BreachWarning/Logic/CMakeLists.txt
+index d789dd0..613ba0f 100644
+--- a/BreachWarning/Logic/CMakeLists.txt
++++ b/BreachWarning/Logic/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+diff --git a/BreachWarning/MRML/CMakeLists.txt b/BreachWarning/MRML/CMakeLists.txt
+index 3c2bebd..5e5d731 100644
+--- a/BreachWarning/MRML/CMakeLists.txt
++++ b/BreachWarning/MRML/CMakeLists.txt
+@@ -6,6 +6,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT"
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${Slicer_Base_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ # --------------------------------------------------------------------------
+@@ -21,6 +22,8 @@ SET (${KIT}_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "" FORCE)
+ # --------------------------------------------------------------------------
+ # Build the library
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ set(${KIT}_TARGET_LIBRARIES
+   ${ITK_LIBRARIES}
+   ${MRML_LIBRARIES}
+@@ -35,4 +38,4 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
+-  )
+\ No newline at end of file
++  )
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index aa1159a..b2733b2 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -20,13 +20,7 @@ set(EXTENSION_DEPENDS SlicerIGSIO)
+ # Extension dependencies
+ find_package(Slicer REQUIRED)
+ include(${Slicer_USE_FILE})
+-
+-if (NOT DEFINED Slicer_EXTENSION_SOURCE_DIRS)
+-  find_package(SlicerIGSIO REQUIRED) 
+-else()
+-  # Allow usage if dependent extension is bundled
+-  find_package(IGSIO REQUIRED) 
+-endif()
++find_package(IGSIO REQUIRED)
+ 
+ #-----------------------------------------------------------------------------
+ # Extension modules
+@@ -54,4 +48,4 @@ endif(SLICERIGT_ENABLE_EXPERIMENTAL_MODULES)
+ 
+ #-----------------------------------------------------------------------------
+ include(${Slicer_EXTENSION_GENERATE_CONFIG})
+-include(${Slicer_EXTENSION_CPACK})
++# include(${Slicer_EXTENSION_CPACK})
+diff --git a/CollectPoints/CMakeLists.txt b/CollectPoints/CMakeLists.txt
+index 2aa4ef7..670b59f 100644
+--- a/CollectPoints/CMakeLists.txt
++++ b/CollectPoints/CMakeLists.txt
+@@ -18,6 +18,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${CMAKE_CURRENT_BINARY_DIR}/Logic
+   ${CMAKE_CURRENT_SOURCE_DIR}/MRML
+   ${CMAKE_CURRENT_BINARY_DIR}/MRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(MODULE_SRCS
+@@ -38,6 +39,8 @@ set(MODULE_UI_SRCS
+ 
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/CollectPoints/Logic/CMakeLists.txt b/CollectPoints/Logic/CMakeLists.txt
+index 1fb950a..193495c 100644
+--- a/CollectPoints/Logic/CMakeLists.txt
++++ b/CollectPoints/Logic/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -18,6 +19,8 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerMarkupsModuleMRML
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+diff --git a/CollectPoints/MRML/CMakeLists.txt b/CollectPoints/MRML/CMakeLists.txt
+index c503478..6f007c3 100644
+--- a/CollectPoints/MRML/CMakeLists.txt
++++ b/CollectPoints/MRML/CMakeLists.txt
+@@ -6,6 +6,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT"
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${Slicer_Base_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ # --------------------------------------------------------------------------
+@@ -21,6 +22,8 @@ SET (${KIT}_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "" FORCE)
+ # --------------------------------------------------------------------------
+ # Build the library
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ set(${KIT}_TARGET_LIBRARIES
+   ${MRML_LIBRARIES}
+   vtkSlicerMarkupsModuleMRML
+diff --git a/CreateModels/CMakeLists.txt b/CreateModels/CMakeLists.txt
+index f7eb852..ab4f9e8 100644
+--- a/CreateModels/CMakeLists.txt
++++ b/CreateModels/CMakeLists.txt
+@@ -1,61 +1,63 @@
+-
+-#-----------------------------------------------------------------------------
+-set(MODULE_NAME "CreateModels")
+-set(MODULE_TITLE "Create Models")
+-
+-string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
+-
+-#-----------------------------------------------------------------------------
+-add_subdirectory(Logic)
+-
+-#-----------------------------------------------------------------------------
+-set(MODULE_EXPORT_DIRECTIVE "Q_SLICER_QTMODULES_${MODULE_NAME_UPPER}_EXPORT")
+-
+-# Current_{source,binary} and Slicer_{Libs,Base} already included
+-set(MODULE_INCLUDE_DIRECTORIES
+-  ${CMAKE_CURRENT_SOURCE_DIR}/Logic
+-  ${CMAKE_CURRENT_BINARY_DIR}/Logic
+-  )
+-
+-set(MODULE_SRCS
+-  qSlicer${MODULE_NAME}Module.cxx
+-  qSlicer${MODULE_NAME}Module.h
+-  qSlicer${MODULE_NAME}ModuleWidget.cxx
+-  qSlicer${MODULE_NAME}ModuleWidget.h
+-  )
+-
+-set(MODULE_MOC_SRCS
+-  qSlicer${MODULE_NAME}Module.h
+-  qSlicer${MODULE_NAME}ModuleWidget.h
+-  )
+-
+-set(MODULE_UI_SRCS
+-  Resources/UI/qSlicer${MODULE_NAME}Module.ui
+-  )
+-
+-set(MODULE_TARGET_LIBRARIES
+-  vtkSlicer${MODULE_NAME}ModuleLogic
+-  )
+-
+-set(MODULE_RESOURCES
+-  Resources/qSlicer${MODULE_NAME}Module.qrc
+-  )
+-
+-#-----------------------------------------------------------------------------
+-slicerMacroBuildQtModule(
+-  NAME ${MODULE_NAME}
+-  TITLE ${MODULE_TITLE}
+-  EXPORT_DIRECTIVE ${MODULE_EXPORT_DIRECTIVE}
+-  INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
+-  SRCS ${MODULE_SRCS}
+-  MOC_SRCS ${MODULE_MOC_SRCS}
+-  UI_SRCS ${MODULE_UI_SRCS}
+-  TARGET_LIBRARIES ${MODULE_TARGET_LIBRARIES}
+-  RESOURCES ${MODULE_RESOURCES}
+-  )
+-
+-#-----------------------------------------------------------------------------
+-if(BUILD_TESTING)
+-  add_subdirectory(Testing)
+-endif()
+-
++
++#-----------------------------------------------------------------------------
++set(MODULE_NAME "CreateModels")
++set(MODULE_TITLE "Create Models")
++
++string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
++
++#-----------------------------------------------------------------------------
++add_subdirectory(Logic)
++
++#-----------------------------------------------------------------------------
++set(MODULE_EXPORT_DIRECTIVE "Q_SLICER_QTMODULES_${MODULE_NAME_UPPER}_EXPORT")
++
++# Current_{source,binary} and Slicer_{Libs,Base} already included
++set(MODULE_INCLUDE_DIRECTORIES
++  ${CMAKE_CURRENT_SOURCE_DIR}/Logic
++  ${CMAKE_CURRENT_BINARY_DIR}/Logic
++  )
++
++set(MODULE_SRCS
++  qSlicer${MODULE_NAME}Module.cxx
++  qSlicer${MODULE_NAME}Module.h
++  qSlicer${MODULE_NAME}ModuleWidget.cxx
++  qSlicer${MODULE_NAME}ModuleWidget.h
++  )
++
++set(MODULE_MOC_SRCS
++  qSlicer${MODULE_NAME}Module.h
++  qSlicer${MODULE_NAME}ModuleWidget.h
++  )
++
++set(MODULE_UI_SRCS
++  Resources/UI/qSlicer${MODULE_NAME}Module.ui
++  )
++
++set(MODULE_TARGET_LIBRARIES
++  vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
++  ${CTK_LIBRARIES}
++  )
++
++set(MODULE_RESOURCES
++  Resources/qSlicer${MODULE_NAME}Module.qrc
++  )
++
++#-----------------------------------------------------------------------------
++slicerMacroBuildQtModule(
++  NAME ${MODULE_NAME}
++  TITLE ${MODULE_TITLE}
++  EXPORT_DIRECTIVE ${MODULE_EXPORT_DIRECTIVE}
++  INCLUDE_DIRECTORIES ${MODULE_INCLUDE_DIRECTORIES}
++  SRCS ${MODULE_SRCS}
++  MOC_SRCS ${MODULE_MOC_SRCS}
++  UI_SRCS ${MODULE_UI_SRCS}
++  TARGET_LIBRARIES ${MODULE_TARGET_LIBRARIES}
++  RESOURCES ${MODULE_RESOURCES}
++  )
++
++#-----------------------------------------------------------------------------
++if(BUILD_TESTING)
++  add_subdirectory(Testing)
++endif()
++
+diff --git a/FiducialRegistrationWizard/CMakeLists.txt b/FiducialRegistrationWizard/CMakeLists.txt
+index 50690ae..447d7f3 100644
+--- a/FiducialRegistrationWizard/CMakeLists.txt
++++ b/FiducialRegistrationWizard/CMakeLists.txt
+@@ -20,6 +20,9 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${CMAKE_CURRENT_SOURCE_DIR}/Widgets
+   ${CMAKE_CURRENT_BINARY_DIR}/Widgets
+   ${qSlicerMarkupsModuleWidgets_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerMarkupsModuleWidgets
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleLogic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(MODULE_SRCS
+@@ -51,6 +54,9 @@ set(MODULE_RESOURCES
+   )
+ 
+ #-----------------------------------------------------------------------------
++
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ slicerMacroBuildQtModule(
+   NAME ${MODULE_NAME}
+   TITLE ${MODULE_TITLE}
+diff --git a/FiducialRegistrationWizard/Logic/CMakeLists.txt b/FiducialRegistrationWizard/Logic/CMakeLists.txt
+index 5cce11f..b29be65 100644
+--- a/FiducialRegistrationWizard/Logic/CMakeLists.txt
++++ b/FiducialRegistrationWizard/Logic/CMakeLists.txt
+@@ -5,6 +5,8 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleLogic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -25,6 +27,8 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerMarkupsModuleLogic
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+diff --git a/FiducialRegistrationWizard/MRML/CMakeLists.txt b/FiducialRegistrationWizard/MRML/CMakeLists.txt
+index 437662e..05d0740 100644
+--- a/FiducialRegistrationWizard/MRML/CMakeLists.txt
++++ b/FiducialRegistrationWizard/MRML/CMakeLists.txt
+@@ -6,6 +6,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT"
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${Slicer_Base_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ # --------------------------------------------------------------------------
+@@ -21,6 +22,8 @@ SET (${KIT}_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "" FORCE)
+ # --------------------------------------------------------------------------
+ # Build the library
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ set(${KIT}_TARGET_LIBRARIES
+   ${ITK_LIBRARIES}
+   ${MRML_LIBRARIES}
+@@ -34,4 +37,4 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
+-  )
+\ No newline at end of file
++  )
+diff --git a/FiducialRegistrationWizard/Widgets/CMakeLists.txt b/FiducialRegistrationWizard/Widgets/CMakeLists.txt
+index 78282ef..ce086bb 100644
+--- a/FiducialRegistrationWizard/Widgets/CMakeLists.txt
++++ b/FiducialRegistrationWizard/Widgets/CMakeLists.txt
+@@ -28,6 +28,8 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   qSlicerMarkupsModuleWidgets
++  qMRMLWidgets
++  ${Slicer_Base_LIBRARIES}
+   )
+ 
+ #-----------------------------------------------------------------------------
+diff --git a/LandmarkDetection/CMakeLists.txt b/LandmarkDetection/CMakeLists.txt
+index e12455f..c297b73 100644
+--- a/LandmarkDetection/CMakeLists.txt
++++ b/LandmarkDetection/CMakeLists.txt
+@@ -18,6 +18,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${CMAKE_CURRENT_BINARY_DIR}/MRML
+   ${CMAKE_CURRENT_SOURCE_DIR}/Logic
+   ${CMAKE_CURRENT_BINARY_DIR}/Logic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(MODULE_SRCS
+@@ -39,12 +40,16 @@ set(MODULE_UI_SRCS
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+   Resources/qSlicer${MODULE_NAME}Module.qrc
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ slicerMacroBuildLoadableModule(
+   NAME ${MODULE_NAME}
+diff --git a/LandmarkDetection/Logic/CMakeLists.txt b/LandmarkDetection/Logic/CMakeLists.txt
+index e9d6c0d..3547218 100644
+--- a/LandmarkDetection/Logic/CMakeLists.txt
++++ b/LandmarkDetection/Logic/CMakeLists.txt
+@@ -5,7 +5,8 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+-  ${VTKIGSIOCalibration_INCLUDE_DIRS}
++  ${VTKIGSIOCALIBRATION_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -20,6 +21,8 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkIGSIOCalibration
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+diff --git a/LandmarkDetection/MRML/CMakeLists.txt b/LandmarkDetection/MRML/CMakeLists.txt
+index 3bcbdd6..43cdef4 100644
+--- a/LandmarkDetection/MRML/CMakeLists.txt
++++ b/LandmarkDetection/MRML/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -17,6 +18,9 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerMarkupsModuleMRML
+   )
+ 
++
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ # --------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+@@ -24,4 +28,4 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
+-  )
+\ No newline at end of file
++  )
+diff --git a/PathExplorer/CMakeLists.txt b/PathExplorer/CMakeLists.txt
+index ab57aef..0233ece 100644
+--- a/PathExplorer/CMakeLists.txt
++++ b/PathExplorer/CMakeLists.txt
+@@ -20,9 +20,10 @@ set(MODULE_INCLUDE_DIRECTORIES
+   ${CMAKE_CURRENT_BINARY_DIR}/Logic
+   ${CMAKE_CURRENT_SOURCE_DIR}/Widgets
+   ${CMAKE_CURRENT_BINARY_DIR}/Widgets
+-  ${qSlicerMarkupsModuleWidgets_INCLUDE_DIRS} 
+-  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
+   ${qSlicerPathExplorerSubjectHierarchyPlugins_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerMarkupsModuleWidgets
+   )
+ 
+ set(MODULE_SRCS
+@@ -54,6 +55,8 @@ set(MODULE_RESOURCES
+   Resources/qSlicer${MODULE_NAME}Module.qrc
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ slicerMacroBuildQtModule(
+   NAME ${MODULE_NAME}
+diff --git a/PathExplorer/Logic/CMakeLists.txt b/PathExplorer/Logic/CMakeLists.txt
+index 8e9bd17..754a7bb 100644
+--- a/PathExplorer/Logic/CMakeLists.txt
++++ b/PathExplorer/Logic/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -17,6 +18,8 @@ set(${KIT}_TARGET_LIBRARIES
+   ${ITK_LIBRARIES}
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+diff --git a/PathExplorer/MRML/CMakeLists.txt b/PathExplorer/MRML/CMakeLists.txt
+index 8c3fcfe..9331643 100644
+--- a/PathExplorer/MRML/CMakeLists.txt
++++ b/PathExplorer/MRML/CMakeLists.txt
+@@ -7,6 +7,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT"
+ set(${KIT}_INCLUDE_DIRECTORIES
+   #${vtkSlicerMarkupsModuleMRML_SOURCE_DIR}
+   #${vtkSlicerMarkupsModuleMRML_BINARY_DIR}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -20,6 +21,8 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerMarkupsModuleMRML
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+diff --git a/PathExplorer/SubjectHierarchyPlugins/CMakeLists.txt b/PathExplorer/SubjectHierarchyPlugins/CMakeLists.txt
+index afc243a..7c113e9 100644
+--- a/PathExplorer/SubjectHierarchyPlugins/CMakeLists.txt
++++ b/PathExplorer/SubjectHierarchyPlugins/CMakeLists.txt
+@@ -6,12 +6,13 @@ set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_${MODULE_NAME_UPPER}_SUBJECT_HIERARCHY_PLU
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${vtkSlicerPathExplorerModuleLogic_INCLUDE_DIRS}
+-  ${qSlicerSubjectHierarchyModuleWidgets_INCLUDE_DIRS}
+-  ${vtkSlicerSubjectHierarchyModuleLogic_INCLUDE_DIRS}
+-  ${qMRMLWidgets_INCLUDE_DIRS}
+-  ${MRMLLogic_INCLUDE_DIRS}
+-  ${MRMLCore_INCLUDE_DIRS}
+-  ${Slicer_DIR}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSubjectHierarchyModuleLogic
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/qSlicerSubjectHierarchyModuleWidgets
++  ${MRML_INCLUDE_DIRS}
++  ${Slicer_INCLUDE_DIR}
++  ${Slicer_Base_INCLUDE_DIRS}
++  ${vtkAddon_INCLUDE_DIRS}
++  ${Slicer_Libs_INCLUDE_DIRS}
+   )
+ 
+ set(${KIT}_SRCS
+@@ -39,8 +40,14 @@ set(${KIT}_TARGET_LIBRARIES
+   qMRMLWidgets
+   MRMLLogic
+   MRMLCore
++  vtkAddon
++  ${VTK_LIBRARIES}
++  Qt5::Xml
++  ${CTK_LIBRARIES}
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleQtLibrary(
+   NAME ${KIT}
+diff --git a/PathExplorer/Widgets/CMakeLists.txt b/PathExplorer/Widgets/CMakeLists.txt
+index 177e7ee..e8fc3ab 100644
+--- a/PathExplorer/Widgets/CMakeLists.txt
++++ b/PathExplorer/Widgets/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "Q_SLICER_MODULE_${MODULE_NAME_UPPER}_WIDGETS_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -26,8 +27,11 @@ set(${KIT}_RESOURCES
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
+   vtkSlicerMarkupsModuleMRML
++  ${Slicer_Base_LIBRARIES}
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleWidgets(
+   NAME ${KIT}
+diff --git a/PivotCalibration/CMakeLists.txt b/PivotCalibration/CMakeLists.txt
+index 7b10178..4c03251 100644
+--- a/PivotCalibration/CMakeLists.txt
++++ b/PivotCalibration/CMakeLists.txt
+@@ -35,6 +35,9 @@ set(MODULE_UI_SRCS
+ 
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  vtkIGSIOCalibration
++  ${CTK_LIBRARIES}
++  qMRMLWidgets
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/PivotCalibration/Logic/CMakeLists.txt b/PivotCalibration/Logic/CMakeLists.txt
+index d46e310..8b04616 100644
+--- a/PivotCalibration/Logic/CMakeLists.txt
++++ b/PivotCalibration/Logic/CMakeLists.txt
+@@ -5,6 +5,7 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
++  ${VTKIGSIOCALIBRATION_INCLUDE_DIRS}
+   )
+ 
+ set(${KIT}_SRCS
+diff --git a/TransformProcessor/CMakeLists.txt b/TransformProcessor/CMakeLists.txt
+index 38d4161..ccd6d95 100644
+--- a/TransformProcessor/CMakeLists.txt
++++ b/TransformProcessor/CMakeLists.txt
+@@ -37,6 +37,8 @@ set(MODULE_UI_SRCS
+ 
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/UltrasoundSnapshots/CMakeLists.txt b/UltrasoundSnapshots/CMakeLists.txt
+index 2ca42d9..b528cb5 100644
+--- a/UltrasoundSnapshots/CMakeLists.txt
++++ b/UltrasoundSnapshots/CMakeLists.txt
+@@ -34,6 +34,8 @@ set(MODULE_UI_SRCS
+ 
+ set(MODULE_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/VolumeReconstruction/CMakeLists.txt b/VolumeReconstruction/CMakeLists.txt
+index 0d3c986..b94e81c 100644
+--- a/VolumeReconstruction/CMakeLists.txt
++++ b/VolumeReconstruction/CMakeLists.txt
+@@ -52,6 +52,8 @@ set(MODULE_TARGET_LIBRARIES
+   vtkVolumeReconstruction
+   vtkSlicerIGSIOCommon
+   vtkSlicerSequencesModuleMRML
++  qMRMLWidgets
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+diff --git a/VolumeReconstruction/Logic/CMakeLists.txt b/VolumeReconstruction/Logic/CMakeLists.txt
+index 9447551..cf1f70a 100644
+--- a/VolumeReconstruction/Logic/CMakeLists.txt
++++ b/VolumeReconstruction/Logic/CMakeLists.txt
+@@ -5,8 +5,9 @@ set(KIT "${PROJECT_NAME}")
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT")
+ set(${KIT}_INCLUDE_DIRECTORIES
+   ${vtkSlicer${MODULE_NAME}ModuleMRML_INCLUDE_DIRS}
+-  ${vtkSlicerSequencesModuleMRML_INCLUDE_DIRS}
+-  ${vtkSlicerAnnotationModuleMRML_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerAnnotationsModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
+   ${VTKVOLUMERECONSTRUCTION_INCLUDE_DIRS}
+   )
+ 
+@@ -20,8 +21,11 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleMRML
+   vtkSlicerMarkupsModuleMRML
+   vtkVolumeReconstruction
++  vtkIGSIOCommon
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+diff --git a/VolumeReconstruction/MRML/CMakeLists.txt b/VolumeReconstruction/MRML/CMakeLists.txt
+index 20b30b4..bed700d 100644
+--- a/VolumeReconstruction/MRML/CMakeLists.txt
++++ b/VolumeReconstruction/MRML/CMakeLists.txt
+@@ -5,8 +5,10 @@ set(KIT ${PROJECT_NAME})
+ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_MRML_EXPORT")
+ 
+ set(${KIT}_INCLUDE_DIRECTORIES
+-  ${vtkSlicerSequencesModuleMRML_INCLUDE_DIRS}
+   ${VTKVOLUMERECONSTRUCTION_INCLUDE_DIRS}
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerAnnotationsModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
++  ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerSequencesModuleMRML
+   )
+ 
+ set(${KIT}_SRCS
+@@ -21,6 +23,8 @@ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicerAnnotationsModuleMRML
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
+ # --------------------------------------------------------------------------
+ SlicerMacroBuildModuleMRML(
+   NAME ${KIT}
+@@ -28,4 +32,4 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
+-  )
+\ No newline at end of file
++  )
+diff --git a/VolumeResliceDriver/Logic/CMakeLists.txt b/VolumeResliceDriver/Logic/CMakeLists.txt
+index 29bb4ee..a003aa4 100644
+--- a/VolumeResliceDriver/Logic/CMakeLists.txt
++++ b/VolumeResliceDriver/Logic/CMakeLists.txt
+@@ -11,6 +11,8 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT
+ 
+ # Additional directories to include
+ set(${KIT}_INCLUDE_DIRECTORIES
++    ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerMarkupsModuleMRML
++    ${Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR}/vtkSlicerAnnotationsModuleMRML
+   )
+ 
+ # Source files
+@@ -26,6 +28,7 @@ set(${KIT}_TARGET_LIBRARIES
+   ${ITK_LIBRARIES}
+   )
+ 
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
+ 
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+diff --git a/VolumeResliceDriver/Widgets/CMakeLists.txt b/VolumeResliceDriver/Widgets/CMakeLists.txt
+index 2a8b41a..a7fd949 100644
+--- a/VolumeResliceDriver/Widgets/CMakeLists.txt
++++ b/VolumeResliceDriver/Widgets/CMakeLists.txt
+@@ -27,6 +27,7 @@ set(${KIT}_RESOURCES
+ 
+ set(${KIT}_TARGET_LIBRARIES
+   vtkSlicer${MODULE_NAME}ModuleLogic
++  qMRMLWidgets
+   )
+ 
+ #-----------------------------------------------------------------------------
+@@ -43,4 +44,4 @@ SlicerMacroBuildModuleWidgets(
+   )
+ 
+ #-----------------------------------------------------------------------------
+-add_subdirectory(DesignerPlugins)
+\ No newline at end of file
++add_subdirectory(DesignerPlugins)
+diff --git a/Watchdog/CMakeLists.txt b/Watchdog/CMakeLists.txt
+index 9e04f90..c7621e4 100644
+--- a/Watchdog/CMakeLists.txt
++++ b/Watchdog/CMakeLists.txt
+@@ -1,3 +1,4 @@
++find_package(Qt5 REQUIRED COMPONENTS Multimedia)
+ 
+ #-----------------------------------------------------------------------------
+ set(MODULE_NAME "Watchdog")
+@@ -44,6 +45,8 @@ set(MODULE_TARGET_LIBRARIES
+   MRMLLogic
+   MRMLDisplayableManager
+   qSlicerBaseQTCore
++  Qt5::Multimedia
++  ${CTK_LIBRARIES}
+   )
+ 
+ set(MODULE_RESOURCES
+-- 
+2.39.2
+
