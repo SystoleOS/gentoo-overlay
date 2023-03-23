@@ -93,6 +93,7 @@ PATCHES=(
 	${FILESDIR}/0028-COMP-Fix-missing-QSslConfiguration-include.patch
 	${FILESDIR}/0029-BAD-ENH-Enable-installation-of-utility-scripts.patch
 	${FILESDIR}/0030-GOOD-ENH-Add-installation-of-generated-Qt-header-fil.patch
+	${FILESDIR}/0031-GOOD-ENH-Enable-installation-of-resources.patch
 )
 
 src_prepare() {
