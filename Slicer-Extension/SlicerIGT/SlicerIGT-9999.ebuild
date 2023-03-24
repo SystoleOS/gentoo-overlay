@@ -28,6 +28,7 @@ REQUIRED_USE="
 
 PATCHES=(
 	${FILESDIR}/0001-ENH-Port-SlicerIGT-to-Systole.patch
+	${FILESDIR}/0002-ENH-Add-missing-includes-for-standard-Qt-components.patch
 )
 
 src_configure(){

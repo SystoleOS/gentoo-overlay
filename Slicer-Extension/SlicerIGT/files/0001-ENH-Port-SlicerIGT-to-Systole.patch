@@ -1,7 +1,7 @@
 From 290081a518915d04a893cd3be4608d8fd8c4183a Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 23 Mar 2023 13:44:09 +0100
-Subject: [PATCH] ENH: Port SlicerIGT to Systole
+Subject: [PATCH 1/2] ENH: Port SlicerIGT to Systole
 
 ---
  BreachWarning/CMakeLists.txt                  |   6 +-
