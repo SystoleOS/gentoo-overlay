@@ -1,0 +1,12 @@
+[Unit]
+Description=PlusServer service
+After=network.target
+
+[Service]
+User=plusserver
+Group=plusserver
+ExecStart=/usr/bin/PlusServer --config-file=/etc/PlusServer/current-config.xml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

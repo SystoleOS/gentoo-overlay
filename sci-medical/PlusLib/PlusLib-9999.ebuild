@@ -1,6 +1,6 @@
 EAPI=7
 
-inherit cmake git-r3
+inherit cmake git-r3 systemd
 
 DESCRIPTION="Software library for data acquisition, pre-processing, and calibration for navigated image-guided interventions"
 HOMEPAGE="https://www.plustoolkit.org/"
@@ -10,14 +10,19 @@ EGIT_BRANCH="master"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="OpenIGTLink tools widgets"
+IUSE="OpenIGTLink systemd tools widgets"
 
 DEPEND="
 	>=sci-libs/vtk-9.1.0[qt5,rendering,gl2ps]
 	sci-libs/vtkAddon
 	sci-medical/IGSIO[volume-reconstruction]
 	sci-medical/OpenIGTLink
-	tools? ( sci-libs/vtk[stl] )
+	tools? (
+		acct-group/plusserver
+		acct-user/plusserver
+		sys-apps/systemd
+		sci-libs/vtk[stl]
+		)
 "
 
 RDEPEND="
@@ -54,4 +59,18 @@ src_configure(){
 		fi
 
 	cmake_src_configure
+}
+
+src_install() {
+
+	cmake_src_install
+
+	# Install the simulated-tracker.xml configuration file
+	insinto /etc/PlusServer
+	doins "${FILESDIR}"/simulated-tracker.xml
+	dosym /etc/PlusServer/simulated-tracker.xml /etc/PlusServer/current-config.xml
+
+	if use systemd; then
+		systemd_dounit "${FILESDIR}"/PlusServer.service
+	fi
 }
