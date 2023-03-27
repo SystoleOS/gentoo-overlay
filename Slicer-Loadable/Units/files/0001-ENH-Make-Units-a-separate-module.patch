@@ -1,13 +1,13 @@
-From 3ae5877d75b4b83cd301c1837a47e1c435f495a6 Mon Sep 17 00:00:00 2001
+From 3f2bd7b41dfd2f4c0fb4ce71c0b1d79decd8dcfc Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Feb 2023 18:56:52 +0100
 Subject: [PATCH] ENH: Make Units a separate module
 
 ---
  Modules/Loadable/Units/CMakeLists.txt         | 13 +++++++++++++
- Modules/Loadable/Units/Logic/CMakeLists.txt   |  1 +
+ Modules/Loadable/Units/Logic/CMakeLists.txt   |  6 ++++++
  Modules/Loadable/Units/Widgets/CMakeLists.txt |  1 +
- 3 files changed, 15 insertions(+)
+ 3 files changed, 20 insertions(+)
 
 diff --git a/Modules/Loadable/Units/CMakeLists.txt b/Modules/Loadable/Units/CMakeLists.txt
 index aa90d14847..7552636cc5 100644
@@ -39,17 +39,24 @@ index aa90d14847..7552636cc5 100644
  add_subdirectory(Logic)
  add_subdirectory(Widgets)
 diff --git a/Modules/Loadable/Units/Logic/CMakeLists.txt b/Modules/Loadable/Units/Logic/CMakeLists.txt
-index 46e6e415af..2dc7a63df9 100644
+index 46e6e415af..4a5f2fc85b 100644
 --- a/Modules/Loadable/Units/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/Units/Logic/CMakeLists.txt
-@@ -33,6 +33,7 @@ set(${KIT}_SRCS
+@@ -33,8 +33,14 @@ set(${KIT}_SRCS
    )
  
  set(${KIT}_TARGET_LIBRARIES
 +  ${Python3_LIBRARIES}
++  ${VTK_LIBRARIES}
++  MRMLLogic
++  MRMLCore
    )
  
++link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
++
  #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
 diff --git a/Modules/Loadable/Units/Widgets/CMakeLists.txt b/Modules/Loadable/Units/Widgets/CMakeLists.txt
 index 5bc23589d3..1fd0117d7e 100644
 --- a/Modules/Loadable/Units/Widgets/CMakeLists.txt
