@@ -1,22 +1,22 @@
-From 80477a465b85a11b6d3236730b8a3d03bea5e8fe Mon Sep 17 00:00:00 2001
+From f42f2b3c9f9ff313fac4f9fd62d30b41e1f32196 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 10 Feb 2023 22:42:24 +0100
 Subject: [PATCH] ENH: Make VolumeRendering a separate module
 
 ---
  .../Loadable/VolumeRendering/CMakeLists.txt   | 11 +++++++++-
- .../VolumeRendering/Logic/CMakeLists.txt      |  1 +
- .../VolumeRendering/MRML/CMakeLists.txt       | 12 ++++++----
- .../VolumeRendering/MRMLDM/CMakeLists.txt     |  6 +++--
+ .../VolumeRendering/Logic/CMakeLists.txt      |  9 ++++++++
+ .../VolumeRendering/MRML/CMakeLists.txt       | 22 +++++++++++++++----
+ .../VolumeRendering/MRMLDM/CMakeLists.txt     | 15 +++++++++++--
  .../SubjectHierarchyPlugins/CMakeLists.txt    | 22 ++++++++++++++-----
  .../VolumeRendering/Widgets/CMakeLists.txt    |  4 ++++
- 6 files changed, 43 insertions(+), 13 deletions(-)
+ 6 files changed, 70 insertions(+), 13 deletions(-)
 
 diff --git a/Modules/Loadable/VolumeRendering/CMakeLists.txt b/Modules/Loadable/VolumeRendering/CMakeLists.txt
-index f381184bc8..ec6992ba73 100644
+index d0ad892ab0..d237c9243a 100644
 --- a/Modules/Loadable/VolumeRendering/CMakeLists.txt
 +++ b/Modules/Loadable/VolumeRendering/CMakeLists.txt
-@@ -1,3 +1,8 @@
+@@ -1,9 +1,18 @@
 +#-----------------------------------------------------------------------------
 +cmake_minimum_required(VERSION 3.16.3...3.19.7 FATAL_ERROR)
 +
@@ -25,7 +25,6 @@ index f381184bc8..ec6992ba73 100644
  
  #-----------------------------------------------------------------------------
  set(MODULE_NAME VolumeRendering)
-@@ -5,6 +10,10 @@ set(MODULE_TITLE "Volume Rendering")
  
  string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
  
@@ -36,7 +35,7 @@ index f381184bc8..ec6992ba73 100644
  #-----------------------------------------------------------------------------
  add_subdirectory(MRML)
  add_subdirectory(Logic)
-@@ -25,7 +34,7 @@ set(MODULE_INCLUDE_DIRECTORIES
+@@ -24,7 +33,7 @@ set(MODULE_INCLUDE_DIRECTORIES
    ${CMAKE_CURRENT_BINARY_DIR}/Widgets
    ${CMAKE_CURRENT_SOURCE_DIR}/SubjectHierarchyPlugins
    ${CMAKE_CURRENT_BINARY_DIR}/SubjectHierarchyPlugins
@@ -46,7 +45,7 @@ index f381184bc8..ec6992ba73 100644
  
  set(MODULE_SRCS
 diff --git a/Modules/Loadable/VolumeRendering/Logic/CMakeLists.txt b/Modules/Loadable/VolumeRendering/Logic/CMakeLists.txt
-index 3abd91f13e..0451cadc65 100644
+index 3abd91f13e..07f708f19b 100644
 --- a/Modules/Loadable/VolumeRendering/Logic/CMakeLists.txt
 +++ b/Modules/Loadable/VolumeRendering/Logic/CMakeLists.txt
 @@ -7,6 +7,7 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_LOGIC_EXPORT
@@ -57,8 +56,30 @@ index 3abd91f13e..0451cadc65 100644
    )
  
  set(${KIT}_SRCS
+@@ -25,6 +26,13 @@ if(Slicer_VTK_RENDERING_USE_OpenGL_BACKEND)
+     )
+ endif()
+ 
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if(Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES
++    ${Python3_LIBRARIES}
++  )
++endif()
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+@@ -32,6 +40,7 @@ SlicerMacroBuildModuleLogic(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
+ 
+ configure_file(
 diff --git a/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt b/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
-index cf89b7fc5f..05bb222010 100644
+index cf89b7fc5f..cb29a972f4 100644
 --- a/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
 +++ b/Modules/Loadable/VolumeRendering/MRML/CMakeLists.txt
 @@ -4,11 +4,13 @@ set(KIT ${PROJECT_NAME})
@@ -77,7 +98,7 @@ index cf89b7fc5f..05bb222010 100644
    )
  
  set(${KIT}_SRCS
-@@ -32,11 +34,13 @@ set(${KIT}_SRCS
+@@ -32,11 +34,22 @@ set(${KIT}_SRCS
  
  set(${KIT}_TARGET_LIBRARIES
    ${ITK_LIBRARIES}
@@ -88,13 +109,28 @@ index cf89b7fc5f..05bb222010 100644
    vtkSlicerMarkupsModuleMRML
    )
  
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if(Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES
++    ${Python3_LIBRARIES}
++  )
++endif()
++
++
 +link_directories(${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR})
 +
  #-----------------------------------------------------------------------------
  SlicerMacroBuildModuleMRML(
    NAME ${KIT}
+@@ -44,4 +57,5 @@ SlicerMacroBuildModuleMRML(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
 diff --git a/Modules/Loadable/VolumeRendering/MRMLDM/CMakeLists.txt b/Modules/Loadable/VolumeRendering/MRMLDM/CMakeLists.txt
-index daf55b602c..b3b283f3a0 100644
+index daf55b602c..739d3e59bd 100644
 --- a/Modules/Loadable/VolumeRendering/MRMLDM/CMakeLists.txt
 +++ b/Modules/Loadable/VolumeRendering/MRMLDM/CMakeLists.txt
 @@ -9,6 +9,7 @@ set(${KIT}_INCLUDE_DIRECTORIES
@@ -117,6 +153,27 @@ index daf55b602c..b3b283f3a0 100644
    )
  
  set(${KIT}_TARGET_LIBRARIES
+@@ -41,6 +43,14 @@ set(${KIT}_TARGET_LIBRARIES
+   ${${KIT}_VTK_LIBRARIES}
+   )
+ 
++set(DISABLE_WRAP_PYTHON DISABLE_WRAP_PYTHON)
++if(Slicer_USE_PYTHONQT)
++  set(DISABLE_WRAP_PYTHON)
++  list(APPEND ${KIT}_TARGET_LIBRARIES
++    ${Python3_LIBRARIES}
++  )
++endif()
++
+ #-----------------------------------------------------------------------------
+ SlicerMacroBuildModuleLogic(
+   NAME ${KIT}
+@@ -48,4 +58,5 @@ SlicerMacroBuildModuleLogic(
+   INCLUDE_DIRECTORIES ${${KIT}_INCLUDE_DIRECTORIES}
+   SRCS ${${KIT}_SRCS}
+   TARGET_LIBRARIES ${${KIT}_TARGET_LIBRARIES}
++  ${DISABLE_WRAP_PYTHON}
+   )
 diff --git a/Modules/Loadable/VolumeRendering/SubjectHierarchyPlugins/CMakeLists.txt b/Modules/Loadable/VolumeRendering/SubjectHierarchyPlugins/CMakeLists.txt
 index 146b222821..efb8953810 100644
 --- a/Modules/Loadable/VolumeRendering/SubjectHierarchyPlugins/CMakeLists.txt
@@ -182,5 +239,5 @@ index 7b89e265d9..75c2da3855 100644
  
  #-----------------------------------------------------------------------------
 -- 
-2.39.1
+2.39.2
 

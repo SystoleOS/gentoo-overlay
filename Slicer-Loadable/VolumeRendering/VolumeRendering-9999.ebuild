@@ -21,8 +21,9 @@ IUSE="python"
 
 DEPEND="
 	sci-medical/Slicer[python?]
-	Slicer-Loadable/SubjectHierarchy[python?]
 	Slicer-Loadable/Annotations[python?]
+	Slicer-Loadable/Markups[python?]
+	Slicer-Loadable/SubjectHierarchy[python?]
 	Slicer-Loadable/Volumes[python?]
 "
 
