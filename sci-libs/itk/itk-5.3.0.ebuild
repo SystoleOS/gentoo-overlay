@@ -49,7 +49,7 @@ DEPEND="
 	sys-libs/zlib:0=
 	media-libs/libjpeg-turbo:0=
 	fftw? ( sci-libs/fftw:3.0= )
-	vtkglue? ( >=sci-libs/vtk-9.1.0[rendering,python?] )
+	vtkglue? ( sci-libs/vtk:=[rendering,python?] )
 	sci-medical/gdcm
 	dev-cpp/eigen
 "
