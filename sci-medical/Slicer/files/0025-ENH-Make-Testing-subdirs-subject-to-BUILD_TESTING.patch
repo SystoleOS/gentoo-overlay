@@ -1,7 +1,7 @@
-From 6544140a50b4a3bed2821862681cffcc84c3d832 Mon Sep 17 00:00:00 2001
+From ed4400abbaee2b14592ae9934023255a314762c2 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 28 Feb 2023 13:02:15 +0100
-Subject: [PATCH 25/29] ENH: Make Testing subdirs subject to `BUILD_TESTING`
+Subject: [PATCH 25/32] ENH: Make Testing subdirs subject to `BUILD_TESTING`
 
 This makes QTCore and QTGUI `Testing` depend on the `BUILD_TESTING`
 CMake variable.

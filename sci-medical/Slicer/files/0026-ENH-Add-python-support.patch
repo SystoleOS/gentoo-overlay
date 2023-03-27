@@ -1,27 +1,29 @@
-From 63a64be756b8a9c4315077ed05d75f72c7b54658 Mon Sep 17 00:00:00 2001
+From 6fa2d8cd6501a38d90b8b71e0b77b3bf7da73cea Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
-Subject: [PATCH 26/29] ENH: Add python support
+Subject: [PATCH 26/32] ENH: Add python support
 
 ---
  Base/Logic/CMakeLists.txt                     |  2 +-
  Base/Python/CMakeLists.txt                    | 61 ++++++++++++-------
+ Base/Python/mrml.py                           |  8 ++-
  Base/QTApp/CMakeLists.txt                     |  6 +-
  Base/QTGUI/qSlicerPythonManager.cxx           |  3 +-
  CMake/SlicerDirectories.cmake                 | 14 +++--
- CMake/SlicerMacroBuildModuleQtLibrary.cmake   |  4 +-
+ CMake/SlicerMacroBuildModuleQtLibrary.cmake   |  5 +-
  CMake/SlicerMacroBuildScriptedModule.cmake    | 15 ++++-
- ...licerMacroPythonWrapModuleVTKLibrary.cmake |  7 +--
+ ...licerMacroPythonWrapModuleVTKLibrary.cmake |  8 +--
  CMakeLists.txt                                | 30 ++++-----
  Libs/MRML/Core/CMakeLists.txt                 |  1 +
  Libs/MRML/DisplayableManager/CMakeLists.txt   |  2 +-
  .../DisplayableManager/Python/CMakeLists.txt  |  3 +-
+ .../vtkSegmentationConverterFactory.h         |  1 +
  Libs/vtkTeem/CMakeLists.txt                   |  9 ++-
  Templates/SlicerInstallConfig.cmake.in        |  5 ++
  Templates/UseSlicer.cmake.in                  |  1 +
  Templates/vtkSlicerConfigure.h.in             |  1 +
  Templates/vtkSlicerInstallConfigure.h.in      |  2 +
- 17 files changed, 103 insertions(+), 63 deletions(-)
+ 19 files changed, 115 insertions(+), 62 deletions(-)
 
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
 index 3d5d78c469..3822e358d9 100644
@@ -112,6 +114,25 @@ index 13f2ae2f77..3dd6008093 100644
 +  PATTERN "*.py"
 +  PATTERN "*.pyc"
 +)
+diff --git a/Base/Python/mrml.py b/Base/Python/mrml.py
+index 52ae8c4c31..31362af66d 100644
+--- a/Base/Python/mrml.py
++++ b/Base/Python/mrml.py
+@@ -1,7 +1,13 @@
+ """ This module loads all the classes from the MRML library into its
+ namespace."""
+ 
+-from MRMLCLIPython import *
++# HACK Ideally constant from vtkSlicerConfigure should be wrapped,
++#      that way the following try/except could be avoided.
++try:
++    from MRMLCLIPython import *
++except:
++    pass
++
+ from MRMLCorePython import *
+ from MRMLDisplayableManagerPython import *
+ from MRMLLogicPython import *
 diff --git a/Base/QTApp/CMakeLists.txt b/Base/QTApp/CMakeLists.txt
 index 819e0e3277..652d5b99ba 100644
 --- a/Base/QTApp/CMakeLists.txt
@@ -203,20 +224,27 @@ index 020af1695c..ef46730629 100644
  # --------------------------------------------------------------------------
  # ThirdParty: Used to superbuild projects built in Slicer extension.
 diff --git a/CMake/SlicerMacroBuildModuleQtLibrary.cmake b/CMake/SlicerMacroBuildModuleQtLibrary.cmake
-index 8d83a5534b..2047af0a4f 100644
+index 8d83a5534b..e552e656bf 100644
 --- a/CMake/SlicerMacroBuildModuleQtLibrary.cmake
 +++ b/CMake/SlicerMacroBuildModuleQtLibrary.cmake
-@@ -235,8 +235,8 @@ macro(SlicerMacroBuildModuleQtLibrary)
+@@ -235,13 +235,16 @@ macro(SlicerMacroBuildModuleQtLibrary)
        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_BIN_DIR}"
        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
 -      INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR}
--      INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-+      INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
-+      INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
++      INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
+       INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
        ${MODULEQTLIBRARY_NO_INSTALL_OPTION}
        )
      if(NOT "${MODULEQTLIBRARY_FOLDER}" STREQUAL "")
+       set_target_properties(${lib_name}PythonQt PROPERTIES FOLDER ${MODULEQTLIBRARY_FOLDER})
+     endif()
++
++  set_target_properties(${lib_name}PythonQt PROPERTIES INSTALL_RPATH "${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}")
++
+   endif()
+ 
+ endmacro()
 diff --git a/CMake/SlicerMacroBuildScriptedModule.cmake b/CMake/SlicerMacroBuildScriptedModule.cmake
 index 3cf67d4653..49069c065f 100644
 --- a/CMake/SlicerMacroBuildScriptedModule.cmake
@@ -244,10 +272,10 @@ index 3cf67d4653..49069c065f 100644
  
    if(BUILD_TESTING AND MY_SLICER_WITH_GENERIC_TESTS)
 diff --git a/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake b/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
-index c2bf8e3d98..fcb0cb0e85 100644
+index c2bf8e3d98..aea4c41c89 100644
 --- a/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
 +++ b/CMake/SlicerMacroPythonWrapModuleVTKLibrary.cmake
-@@ -73,11 +73,8 @@ macro(SlicerMacroPythonWrapModuleVTKLibrary)
+@@ -73,12 +73,12 @@ macro(SlicerMacroPythonWrapModuleVTKLibrary)
    vtkMacroKitPythonWrap(
      KIT_NAME ${PYTHONWRAPMODULEVTKLIBRARY_NAME}
      KIT_SRCS ${PYTHONWRAPMODULEVTKLIBRARY_SRCS}
@@ -255,12 +283,15 @@ index c2bf8e3d98..fcb0cb0e85 100644
 -    KIT_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
 -    KIT_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${Slicer_QTLOADABLEMODULES_LIB_DIR}"
 -    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR}
--    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
-+    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_BIN_DIR}
-+    KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_LIB_DIR}
++    KIT_INSTALL_BIN_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
+     KIT_INSTALL_LIB_DIR ${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}
      KIT_PYTHON_LIBRARIES ${PYTHONWRAPMODULEVTKLIBRARY_Wrapped_LIBRARIES}
      )
  
++  set_target_properties(${PYTHONWRAPMODULEVTKLIBRARY_NAME} PROPERTIES INSTALL_RPATH "${Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR}")
++
++
+ endmacro()
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index fc342c2611..6035613ce8 100644
 --- a/CMakeLists.txt
@@ -368,6 +399,18 @@ index 9e5501cde2..5624624060 100644
    DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python
 -  INSTALL_DIR ${Slicer_INSTALL_BIN_DIR}
    )
+diff --git a/Libs/vtkSegmentationCore/vtkSegmentationConverterFactory.h b/Libs/vtkSegmentationCore/vtkSegmentationConverterFactory.h
+index b4f9fb2e24..9efee6fb09 100644
+--- a/Libs/vtkSegmentationCore/vtkSegmentationConverterFactory.h
++++ b/Libs/vtkSegmentationCore/vtkSegmentationConverterFactory.h
+@@ -61,6 +61,7 @@ public:
+   void UnregisterConverterRule(vtkSegmentationConverterRule* rule);
+ 
+   /// Get all registered converter rules
++  VTK_WRAPEXCLUDE
+   const RuleListType& GetConverterRules();
+ 
+   /// Disable a converter rule, preventing it from being used. Achieved by unregistering the rule
 diff --git a/Libs/vtkTeem/CMakeLists.txt b/Libs/vtkTeem/CMakeLists.txt
 index c8ac7a7ef9..0eeb3cccf3 100644
 --- a/Libs/vtkTeem/CMakeLists.txt
@@ -397,10 +440,10 @@ index c8ac7a7ef9..0eeb3cccf3 100644
  endif()
  
 diff --git a/Templates/SlicerInstallConfig.cmake.in b/Templates/SlicerInstallConfig.cmake.in
-index 4fe61b0b39..67cf9a556c 100644
+index 7635e75d24..158dcc354e 100644
 --- a/Templates/SlicerInstallConfig.cmake.in
 +++ b/Templates/SlicerInstallConfig.cmake.in
-@@ -139,6 +139,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
+@@ -156,6 +156,11 @@ set(Slicer_INSTALL_QTLOADABLEMODULES_LIB_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_
  set(Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_INCLUDE_DIR@")
  set(Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR "@Slicer_INSTALL_QTLOADABLEMODULES_SHARE_DIR@")
  

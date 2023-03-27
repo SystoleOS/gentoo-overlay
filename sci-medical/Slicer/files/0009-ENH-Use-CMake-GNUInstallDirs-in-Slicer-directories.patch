@@ -1,7 +1,7 @@
-From dbd2bc2e0d273a41432574719c038f83834997a5 Mon Sep 17 00:00:00 2001
+From d3d986da84b5cbad0e01637d6e03fdc511e425fb Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 19:26:38 +0100
-Subject: [PATCH 09/29] ENH: Use CMake GNUInstallDirs in Slicer directories
+Subject: [PATCH 09/32] ENH: Use CMake GNUInstallDirs in Slicer directories
 
 ---
  CMake/SlicerDirectories.cmake | 47 ++++++++++++++++++++++-------------

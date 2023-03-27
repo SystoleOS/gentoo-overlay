@@ -1,7 +1,7 @@
-From 26866a8b4cc4c555104739d1803dcbad7877fe2b Mon Sep 17 00:00:00 2001
+From 721594ef663da514ce0bd072e027363abd239014 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 14 Mar 2023 16:34:32 +0100
-Subject: [PATCH] BAD-ENH: Enable installation of utility scripts
+Subject: [PATCH 29/32] BAD-ENH: Enable installation of utility scripts
 
 ---
  CMake/SlicerDirectories.cmake | 3 +++

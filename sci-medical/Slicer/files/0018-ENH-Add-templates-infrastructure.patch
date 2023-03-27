@@ -1,7 +1,7 @@
-From cf6efa2240706605438cd90b9db4ff3e83c9a55e Mon Sep 17 00:00:00 2001
+From 0e0fb623b7e14e4e24f9853251b1a236b13f12d4 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 10:40:33 +0100
-Subject: [PATCH 18/29] ENH: Add templates infrastructure
+Subject: [PATCH 18/32] ENH: Add templates infrastructure
 
 ---
  CMake/ExternalData.cmake                      |  2 +-
@@ -77,10 +77,10 @@ index 072b9fb247..d54278e6d3 100644
 -include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
 +#include(${Slicer_SOURCE_DIR}/CMake/SlicerCPack.cmake)
 diff --git a/CMake/SlicerCPack.cmake b/CMake/SlicerCPack.cmake
-index 93107a7857..e43bf2d1f5 100644
+index 13d992421a..a0ff242b27 100644
 --- a/CMake/SlicerCPack.cmake
 +++ b/CMake/SlicerCPack.cmake
-@@ -218,7 +218,7 @@ if(Slicer_SUPERBUILD)
+@@ -220,7 +220,7 @@ if(Slicer_SUPERBUILD)
      set(fixup_path @rpath)
      set(slicer_cpack_bundle_fixup_directory ${Slicer_BINARY_DIR}/CMake/SlicerCPackBundleFixup)
      configure_file(

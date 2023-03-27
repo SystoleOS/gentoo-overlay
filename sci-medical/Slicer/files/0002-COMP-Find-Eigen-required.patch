@@ -1,7 +1,7 @@
-From bff3bb8dfb4b1935ecb5b9cb123d027e19796cce Mon Sep 17 00:00:00 2001
+From b689d17216a0bb564af2859dd3b8e3ad0e016a8e Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 09:55:32 +0100
-Subject: [PATCH 02/29] COMP: Find Eigen (required)
+Subject: [PATCH 02/32] COMP: Find Eigen (required)
 
 ---
  CMakeLists.txt | 5 +++++

@@ -1,7 +1,7 @@
-From adaaa11a4260b154800ea02585a6b4b035a3e997 Mon Sep 17 00:00:00 2001
+From 5257d54e447cb1544b21a915858168b5c754b187 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 16:31:51 +0100
-Subject: [PATCH 22/29] ENH: Provide an install version of vtkSlicerConfigure.h
+Subject: [PATCH 22/32] ENH: Provide an install version of vtkSlicerConfigure.h
 
 ---
  CMakeLists.txt                           |  13 ++-

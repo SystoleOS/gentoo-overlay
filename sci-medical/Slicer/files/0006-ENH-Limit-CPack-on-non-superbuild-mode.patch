@@ -1,7 +1,7 @@
-From 98a651e142dee4c981881bfedc505a49f909b2ce Mon Sep 17 00:00:00 2001
+From 6150fbcc4a339eded24fd9cc99f36c2a989d6382 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:37:17 +0100
-Subject: [PATCH 06/29] ENH: Limit CPack on non-superbuild mode
+Subject: [PATCH 06/32] ENH: Limit CPack on non-superbuild mode
 
 The current CPack infrastructure is thought with the superbuild mode in
 mind. This commit limits the packages considered in non-superbuild mode.
@@ -10,10 +10,10 @@ mind. This commit limits the packages considered in non-superbuild mode.
  1 file changed, 113 insertions(+), 110 deletions(-)
 
 diff --git a/CMake/SlicerCPack.cmake b/CMake/SlicerCPack.cmake
-index 0d25939f89..93107a7857 100644
+index a67d9f94a7..13d992421a 100644
 --- a/CMake/SlicerCPack.cmake
 +++ b/CMake/SlicerCPack.cmake
-@@ -129,130 +129,133 @@ if(NOT "${CTK_DIR}" STREQUAL "" AND EXISTS "${CTK_DIR}/CTK-build/CMakeCache.txt"
+@@ -131,130 +131,133 @@ if(NOT "${CTK_DIR}" STREQUAL "" AND EXISTS "${CTK_DIR}/CTK-build/CMakeCache.txt"
    set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${CTK_DIR}/CTK-build;CTK;RuntimePlugins;/")
  endif()
  

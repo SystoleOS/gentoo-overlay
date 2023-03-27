@@ -45,7 +45,7 @@ DEPEND="
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 	sci-libs/itk[vtkglue,deprecated]
 	sitk? ( sci-libs/SimpleITK )
-	>=sci-libs/vtk-9.1.0[qt5,rendering,gl2ps]
+	sci-libs/vtk:0=
 "
 
 RDEPEND="
@@ -94,6 +94,7 @@ PATCHES=(
 	${FILESDIR}/0029-BAD-ENH-Enable-installation-of-utility-scripts.patch
 	${FILESDIR}/0030-GOOD-ENH-Add-installation-of-generated-Qt-header-fil.patch
 	${FILESDIR}/0031-GOOD-ENH-Enable-installation-of-resources.patch
+	${FILESDIR}/0032-UGLY-ENH-Fix-python-wrap-conditionals.patch
 )
 
 src_prepare() {

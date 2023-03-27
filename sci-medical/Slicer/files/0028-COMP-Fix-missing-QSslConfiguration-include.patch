@@ -1,7 +1,7 @@
-From cd975d51113238b23bcb52489bbb60a47ddd8263 Mon Sep 17 00:00:00 2001
+From b202e5d64da84466773612c40c9204208fa92431 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 14 Mar 2023 13:50:25 +0100
-Subject: [PATCH 28/29] COMP: Fix missing QSslConfiguration include
+Subject: [PATCH 28/32] COMP: Fix missing QSslConfiguration include
 
 ---
  Base/QTCore/qSlicerCoreApplication.cxx | 1 +
