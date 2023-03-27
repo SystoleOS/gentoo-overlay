@@ -22,7 +22,7 @@ IUSE="python"
 DEPEND="
 	sci-medical/ctk[python?]
 	sci-medical/Slicer[python?]
-	Slicer-Loadable/Terminologies
+	Slicer-Loadable/Terminologies[python?]
 "
 
 RDEPEND="
