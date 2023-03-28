@@ -1,4 +1,4 @@
-From 8824851e382fcb802ec09f1d06c96d8c2284b594 Mon Sep 17 00:00:00 2001
+From 7c97d663a69e928e2441661b14277c7d412fadab Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 24 Mar 2023 11:50:48 +0100
 Subject: [PATCH 2/2] ENH: Add missing includes for standard Qt components

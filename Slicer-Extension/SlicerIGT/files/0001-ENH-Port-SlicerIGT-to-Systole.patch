@@ -1,4 +1,4 @@
-From 290081a518915d04a893cd3be4608d8fd8c4183a Mon Sep 17 00:00:00 2001
+From 9fcfe19784941a18b6a91cfe76517bb9bf5892de Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 23 Mar 2023 13:44:09 +0100
 Subject: [PATCH 1/2] ENH: Port SlicerIGT to Systole
@@ -33,8 +33,9 @@ Subject: [PATCH 1/2] ENH: Port SlicerIGT to Systole
  VolumeReconstruction/MRML/CMakeLists.txt      |   8 +-
  VolumeResliceDriver/Logic/CMakeLists.txt      |   3 +
  VolumeResliceDriver/Widgets/CMakeLists.txt    |   3 +-
+ .../Widgets/DesignerPlugins/CMakeLists.txt    |   2 +-
  Watchdog/CMakeLists.txt                       |   3 +
- 30 files changed, 172 insertions(+), 87 deletions(-)
+ 31 files changed, 173 insertions(+), 88 deletions(-)
 
 diff --git a/BreachWarning/CMakeLists.txt b/BreachWarning/CMakeLists.txt
 index 4a553fe..2e4bc66 100644
@@ -785,6 +786,19 @@ index 2a8b41a..a7fd949 100644
 -add_subdirectory(DesignerPlugins)
 \ No newline at end of file
 +add_subdirectory(DesignerPlugins)
+diff --git a/VolumeResliceDriver/Widgets/DesignerPlugins/CMakeLists.txt b/VolumeResliceDriver/Widgets/DesignerPlugins/CMakeLists.txt
+index 604a013..531aa74 100644
+--- a/VolumeResliceDriver/Widgets/DesignerPlugins/CMakeLists.txt
++++ b/VolumeResliceDriver/Widgets/DesignerPlugins/CMakeLists.txt
+@@ -21,7 +21,7 @@ set(${KIT}_TARGET_LIBRARIES
+ #-----------------------------------------------------------------------------
+ # Designer plugins have to be installed at the some location as other
+ # Slicer core designer plugins
+-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${Slicer_DIR}/bin)
++set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+ 
+ ctkMacroBuildQtDesignerPlugin(
+   NAME ${KIT}
 diff --git a/Watchdog/CMakeLists.txt b/Watchdog/CMakeLists.txt
 index 9e04f90..c7621e4 100644
 --- a/Watchdog/CMakeLists.txt
