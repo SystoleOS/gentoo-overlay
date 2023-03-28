@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="volume-reconstruction"
 
 DEPEND="
-	>=sci-libs/vtk-9.1.0
+	sci-libs/vtk:0=
 "
 
 RDEPEND="
@@ -32,7 +32,7 @@ src_configure(){
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
 		# TODO: This should be fixed in VTK so we don't need to specify the VTK_DIR or ITK_DIR
-		-DVTK_DIR:STRING=/usr/lib64/cmake/vtk-9.1
+		-DVTK_DIR:STRING=/usr/lib64/cmake/vtk-9.2
 		-DITK_DIR:STRING=/usr/lib64/cmake/ITK-5.4
 		-DIGSIO_SUPERBUILD:BOOL=OFF
 		-DIGSIO_INSTALL_LIB_DIR:FILEPATH=$(get_libdir)
