@@ -13,15 +13,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE="OpenIGTLink systemd tools widgets"
 
 DEPEND="
-	>=sci-libs/vtk-9.1.0[qt5,rendering,gl2ps]
+	sci-libs/vtk:0=
 	sci-libs/vtkAddon
 	sci-medical/IGSIO[volume-reconstruction]
 	sci-medical/OpenIGTLink
+	sci-medical/OpenIGTLinkIO
 	tools? (
 		acct-group/plusserver
 		acct-user/plusserver
 		sys-apps/systemd
-		sci-libs/vtk[stl]
 		)
 "
 
