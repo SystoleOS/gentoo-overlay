@@ -1,22 +1,23 @@
-From 6deee4739e39f2d295de64c65ad507e2d2875187 Mon Sep 17 00:00:00 2001
+From ee853b939431264dda202001944e8f7a82eded16 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 24 Mar 2023 14:16:58 +0100
 Subject: [PATCH] ENH: Port SlicerOpenIGTLink to Systole Slicer
 
 ---
- CMakeLists.txt                                 | 2 +-
- OpenIGTLinkIF/Logic/CMakeLists.txt             | 1 +
- OpenIGTLinkIF/MRML/CMakeLists.txt              | 5 +++++
- OpenIGTLinkIF/Widgets/CMakeLists.txt           | 1 +
- OpenIGTLinkRemote/CMakeLists.txt               | 2 ++
- OpenIGTLinkRemote/MRML/CMakeLists.txt          | 2 ++
- OpenIGTLinkRemote/Widgets/CMakeLists.txt       | 2 ++
- PlusRemote/CMakeLists.txt                      | 5 +++++
- PlusRemote/Logic/CMakeLists.txt                | 4 ++++
- PlusRemote/MRML/CMakeLists.txt                 | 6 +++++-
- PlusRemote/Widgets/CMakeLists.txt              | 3 ++-
- UltrasoundRemoteControl/Widgets/CMakeLists.txt | 1 +
- 12 files changed, 31 insertions(+), 3 deletions(-)
+ CMakeLists.txt                                    | 2 +-
+ OpenIGTLinkIF/Logic/CMakeLists.txt                | 1 +
+ OpenIGTLinkIF/MRML/CMakeLists.txt                 | 5 +++++
+ OpenIGTLinkIF/Widgets/CMakeLists.txt              | 1 +
+ OpenIGTLinkRemote/CMakeLists.txt                  | 2 ++
+ OpenIGTLinkRemote/MRML/CMakeLists.txt             | 2 ++
+ OpenIGTLinkRemote/Widgets/CMakeLists.txt          | 2 ++
+ PlusRemote/CMakeLists.txt                         | 5 +++++
+ PlusRemote/Logic/CMakeLists.txt                   | 4 ++++
+ PlusRemote/MRML/CMakeLists.txt                    | 6 +++++-
+ PlusRemote/Widgets/CMakeLists.txt                 | 3 ++-
+ PlusRemote/Widgets/DesignerPlugins/CMakeLists.txt | 2 +-
+ UltrasoundRemoteControl/Widgets/CMakeLists.txt    | 1 +
+ 13 files changed, 32 insertions(+), 4 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index be6cf02..48b1536 100644
@@ -213,6 +214,19 @@ index 125fb2e..1273121 100644
 -add_subdirectory(DesignerPlugins)
 \ No newline at end of file
 +add_subdirectory(DesignerPlugins)
+diff --git a/PlusRemote/Widgets/DesignerPlugins/CMakeLists.txt b/PlusRemote/Widgets/DesignerPlugins/CMakeLists.txt
+index 1074962..66f64b1 100644
+--- a/PlusRemote/Widgets/DesignerPlugins/CMakeLists.txt
++++ b/PlusRemote/Widgets/DesignerPlugins/CMakeLists.txt
+@@ -26,7 +26,7 @@ set(${KIT}_TARGET_LIBRARIES
+ #-----------------------------------------------------------------------------
+ # Designer plugins have to be installed at the same location as other
+ # Slicer core designer plugins
+-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${Slicer_DIR}/bin)
++set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/bin)
+ 
+ ctkMacroBuildQtDesignerPlugin(
+   NAME ${KIT}
 diff --git a/UltrasoundRemoteControl/Widgets/CMakeLists.txt b/UltrasoundRemoteControl/Widgets/CMakeLists.txt
 index 865aa5a..7506f71 100644
 --- a/UltrasoundRemoteControl/Widgets/CMakeLists.txt
