@@ -1,5 +1,5 @@
-# Copyright 1999-2022 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
+# Copyright @ 2019-2023 Oslo University Hospital
+# Distributed under the terms of the BSD 3 Clause License
 
 EAPI=7
 
@@ -22,11 +22,11 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
 
 PATCHES=(
-    ${FILESDIR}/0001-Fix-install-when-TEEM_LIB_INSTALL_DIR-is-set.patch
-    ${FILESDIR}/0002-Remove-creation-of-TeemLibraryDepends.cmake.patch
-    ${FILESDIR}/0003-Replace-TEEM-by-Teem-in-CMake-variables.patch
-    ${FILESDIR}/0004-Change-CMake-files-installation-path.patch
-    ${FILESDIR}/0005-Modify-INSTALL_RPATH-and-INSTALL_NAME_DIR-for-instal.patch
+	${FILESDIR}/0001-Fix-install-when-TEEM_LIB_INSTALL_DIR-is-set.patch
+	${FILESDIR}/0002-Remove-creation-of-TeemLibraryDepends.cmake.patch
+	${FILESDIR}/0003-Replace-TEEM-by-Teem-in-CMake-variables.patch
+	${FILESDIR}/0004-Change-CMake-files-installation-path.patch
+	${FILESDIR}/0005-Modify-INSTALL_RPATH-and-INSTALL_NAME_DIR-for-instal.patch
  )
 
 src_unpack(){

@@ -1,4 +1,7 @@
-EAPI="7"
+# Copyright @ 2019-2023 Oslo University Hospital
+# Distributed under the terms of the BSD 3 Clause License
+
+EAPI=7
 
 PYTHON_COMPAT=( python3_{9..10} )
 

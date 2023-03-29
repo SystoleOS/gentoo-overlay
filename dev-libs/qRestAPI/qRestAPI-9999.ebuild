@@ -1,3 +1,6 @@
+# Copyright @ 2019-2023 Oslo University Hospital
+# Distributed under the terms of the BSD 3 Clause License
+
 EAPI=8
 
 inherit cmake git-r3
@@ -14,19 +17,19 @@ EGIT_BRANCH="master"
 
 DEPEND="
 	dev-qt/qtcore
-    dev-qt/qtgui
-    dev-qt/qtnetwork
-    dev-qt/qtscript
-    dev-qt/qttest
+	dev-qt/qtgui
+	dev-qt/qtnetwork
+	dev-qt/qtscript
+	dev-qt/qttest
 "
 RDEPEND="
 	${DEPEND}
 "
 
 PATCHES=(
-    ${FILESDIR}/0001-ENH-Update-cmake-requirements.patch
-    ${FILESDIR}/0002-ENH-Remove-the-use-of-Qt4.patch
-    ${FILESDIR}/0003-ENH-Refactor-CMake-project-definition.patch
+	${FILESDIR}/0001-ENH-Update-cmake-requirements.patch
+	${FILESDIR}/0002-ENH-Remove-the-use-of-Qt4.patch
+	${FILESDIR}/0003-ENH-Refactor-CMake-project-definition.patch
 )
 
 src_configure(){
@@ -34,9 +37,9 @@ src_configure(){
 	local mycmakeargs=()
 
 	mycmakeargs+=(
-        -DqRestAPI_INSTALL_CMAKE_DIR:PATH=$(get_libdir)/cmake/qRestAPI
-        -DqRestAPI_INSTALL_LIB_DIR:PATH=$(get_libdir)
-        -DqRestAPI_INSTALL_NO_DEVELOPMENT:BOOL=OFF
-        )
+		-DqRestAPI_INSTALL_CMAKE_DIR:PATH=$(get_libdir)/cmake/qRestAPI
+		-DqRestAPI_INSTALL_LIB_DIR:PATH=$(get_libdir)
+		-DqRestAPI_INSTALL_NO_DEVELOPMENT:BOOL=OFF
+		)
 	cmake_src_configure
 }

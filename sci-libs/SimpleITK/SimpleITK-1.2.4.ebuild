@@ -1,5 +1,5 @@
-# Copyright 1999-2022 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
+# Copyright @ 2019-2023 Oslo University Hospital
+# Distributed under the terms of the BSD 3 Clause License
 
 EAPI=7
 
