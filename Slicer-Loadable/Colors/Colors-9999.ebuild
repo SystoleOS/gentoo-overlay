@@ -43,7 +43,7 @@ REQUIRED_USE="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-colors-a-separate-module.patch
+	"${FILESDIR}/0001-ENH-Make-colors-a-separate-module.patch"
 )
 
 pkg_setup() {

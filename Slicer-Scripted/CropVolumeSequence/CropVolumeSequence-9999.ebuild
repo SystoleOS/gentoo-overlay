@@ -35,7 +35,7 @@ BDEPEND="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-CropVolumeSequence-a-separate-volume.patch
+	"${FILESDIR}/0001-ENH-Make-CropVolumeSequence-a-separate-volume.patch"
 )
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"

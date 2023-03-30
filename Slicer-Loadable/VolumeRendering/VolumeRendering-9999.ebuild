@@ -42,7 +42,7 @@ REQUIRED_USE="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-VolumeRendering-a-separate-module.patch
+	"${FILESDIR}/0001-ENH-Make-VolumeRendering-a-separate-module.patch"
 )
 
 pkg_setup() {

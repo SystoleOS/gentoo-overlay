@@ -27,9 +27,9 @@ RDEPEND="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Update-cmake-requirements.patch
-	${FILESDIR}/0002-ENH-Remove-the-use-of-Qt4.patch
-	${FILESDIR}/0003-ENH-Refactor-CMake-project-definition.patch
+	"${FILESDIR}/0001-ENH-Update-cmake-requirements.patch"
+	"${FILESDIR}/0002-ENH-Remove-the-use-of-Qt4.patch"
+	"${FILESDIR}/0003-ENH-Refactor-CMake-project-definition.patch"
 )
 
 src_configure(){

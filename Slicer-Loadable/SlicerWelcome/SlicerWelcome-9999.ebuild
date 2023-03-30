@@ -38,7 +38,7 @@ REQUIRED_USE="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-Welcome-a-separate-module.patch
+	"${FILESDIR}/0001-ENH-Make-Welcome-a-separate-module.patch"
 )
 
 src_configure(){

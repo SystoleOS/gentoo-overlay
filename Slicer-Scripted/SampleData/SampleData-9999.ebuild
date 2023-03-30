@@ -37,7 +37,7 @@ BDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-SampleData-a-separate-module.patch
+	"${FILESDIR}/0001-ENH-Make-SampleData-a-separate-module.patch"
 )
 
 src_configure(){

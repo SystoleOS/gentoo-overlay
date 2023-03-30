@@ -29,7 +29,7 @@ RDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Adding-installation-directory-for-python-module.patch
+	"${FILESDIR}/0001-ENH-Adding-installation-directory-for-python-module.patch"
 )
 
 src_unpack() {

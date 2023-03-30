@@ -34,7 +34,7 @@ BDEPEND="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-DMRIInstall-a-separate-module.patch
+	"${FILESDIR}/0001-ENH-Make-DMRIInstall-a-separate-module.patch"
 )
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"

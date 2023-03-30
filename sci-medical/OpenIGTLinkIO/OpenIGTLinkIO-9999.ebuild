@@ -25,7 +25,7 @@ RDEPEND="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Enable-installation-of-development-files.patch
+	"${FILESDIR}/0001-ENH-Enable-installation-of-development-files.patch"
 )
 
 src_configure(){

@@ -35,7 +35,7 @@ REQUIRED_USE="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Port-SlicerIGSIO-to-Systole-Slicer.patch
+	"${FILESDIR}/0001-ENH-Port-SlicerIGSIO-to-Systole-Slicer.patch"
 )
 
 pkg_setup() {

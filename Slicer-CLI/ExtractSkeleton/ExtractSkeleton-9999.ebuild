@@ -26,7 +26,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-the-ExtractSkeleton-CLI-module-a-separate-m.patch
+	"${FILESDIR}/0001-ENH-Make-the-ExtractSkeleton-CLI-module-a-separate-m.patch"
 )
 
 src_configure(){

@@ -29,7 +29,7 @@ REQUIRED_USE="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Port-SlicerOpenIGTLink-to-Systole-Slicer.patch
+	"${FILESDIR}/0001-ENH-Port-SlicerOpenIGTLink-to-Systole-Slicer.patch"
 )
 
 src_configure(){

@@ -25,7 +25,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-COMP-Make-ModelMaker-a-separate-module.patch
+	"${FILESDIR}/0001-COMP-Make-ModelMaker-a-separate-module.patch"
 )
 
 src_configure(){

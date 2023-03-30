@@ -24,8 +24,8 @@ RDEPEND="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Remove-include-vtkAddonTargets.cmake.patch
-	${FILESDIR}/0002-ENH-Enable-install-tree.patch
+	"${FILESDIR}/0001-ENH-Remove-include-vtkAddonTargets.cmake.patch"
+	"${FILESDIR}/0002-ENH-Enable-install-tree.patch"
 )
 
 src_configure(){

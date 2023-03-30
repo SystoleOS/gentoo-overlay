@@ -56,13 +56,13 @@ BDEPEND="
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Include-missing-files.patch
-	${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch
-	${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch
-	${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch
-	${FILESDIR}/0005-ENH-Enable-more-selective-installation-of-python-fil.patch
-	${FILESDIR}/0006-ENH-Modernize-Python-detection.patch
-	${FILESDIR}/0007-ENH-Remove-installation-step-from-ctkMacroCompilePyt.patch
+	"${FILESDIR}/0001-ENH-Include-missing-files.patch"
+	"${FILESDIR}/0002-ENH-Change-installation-path-for-python-wrapped-file.patch"
+	"${FILESDIR}/0003-ENH-Include-missing-ctkFunctionExtractOptimizedLibra.patch"
+	"${FILESDIR}/0004-ENH-Make-use-of-CMake-GNUInstallDirs-module.patch"
+	"${FILESDIR}/0005-ENH-Enable-more-selective-installation-of-python-fil.patch"
+	"${FILESDIR}/0006-ENH-Modernize-Python-detection.patch"
+	"${FILESDIR}/0007-ENH-Remove-installation-step-from-ctkMacroCompilePyt.patch"
 )
 
 src_unpack() {

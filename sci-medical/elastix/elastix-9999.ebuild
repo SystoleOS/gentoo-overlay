@@ -25,7 +25,7 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Removing-limitation-for-only-STATIC-libraries.patch
+	"${FILESDIR}/0001-ENH-Removing-limitation-for-only-STATIC-libraries.patch"
 )
 
 src_prepare() {

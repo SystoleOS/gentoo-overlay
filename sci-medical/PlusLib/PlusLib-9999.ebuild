@@ -33,8 +33,8 @@ RDEPEND="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Fix-compile-using-install-tree-of-dependencies.patch
-	${FILESDIR}/0002-ENH-Modify-loading-of-configuration-to-fit-system-in.patch
+	"${FILESDIR}/0001-ENH-Fix-compile-using-install-tree-of-dependencies.patch"
+	"${FILESDIR}/0002-ENH-Modify-loading-of-configuration-to-fit-system-in.patch"
 )
 
 src_configure(){

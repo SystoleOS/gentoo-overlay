@@ -34,9 +34,9 @@ RDEPEND="
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 PATCHES=(
-	${FILESDIR}/0001-COMP-Adapt-vmtk-to-ITK-5.1.patch
-	${FILESDIR}/0002-COMP-Remove-install-sentence-for-VMTK-Targets.patch
-	${FILESDIR}/0003-ENH-Change-variables-definition-check.patch
+	"${FILESDIR}/0001-COMP-Adapt-vmtk-to-ITK-5.1.patch"
+	"${FILESDIR}/0002-COMP-Remove-install-sentence-for-VMTK-Targets.patch"
+	"${FILESDIR}/0003-ENH-Change-variables-definition-check.patch"
 )
 
 src_prepare() {

@@ -22,11 +22,11 @@ RDEPEND="${DEPEND}"
 BDEPEND="app-arch/unzip"
 
 PATCHES=(
-	${FILESDIR}/0001-Fix-install-when-TEEM_LIB_INSTALL_DIR-is-set.patch
-	${FILESDIR}/0002-Remove-creation-of-TeemLibraryDepends.cmake.patch
-	${FILESDIR}/0003-Replace-TEEM-by-Teem-in-CMake-variables.patch
-	${FILESDIR}/0004-Change-CMake-files-installation-path.patch
-	${FILESDIR}/0005-Modify-INSTALL_RPATH-and-INSTALL_NAME_DIR-for-instal.patch
+	"${FILESDIR}/0001-Fix-install-when-TEEM_LIB_INSTALL_DIR-is-set.patch"
+	"${FILESDIR}/0002-Remove-creation-of-TeemLibraryDepends.cmake.patch"
+	"${FILESDIR}/0003-Replace-TEEM-by-Teem-in-CMake-variables.patch"
+	"${FILESDIR}/0004-Change-CMake-files-installation-path.patch"
+	"${FILESDIR}/0005-Modify-INSTALL_RPATH-and-INSTALL_NAME_DIR-for-instal.patch"
  )
 
 src_unpack(){

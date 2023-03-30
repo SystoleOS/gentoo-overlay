@@ -39,7 +39,7 @@ REQUIRED_USE="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-Make-Cameras-module-a-separate-package.patch
+	"${FILESDIR}/0001-Make-Cameras-module-a-separate-package.patch"
 )
 
 pkg_setup() {

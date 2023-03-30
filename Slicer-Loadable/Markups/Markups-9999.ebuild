@@ -41,7 +41,7 @@ REQUIRED_USE="
 "
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Make-Markups-a-separate-module.patch
+	"${FILESDIR}/0001-ENH-Make-Markups-a-separate-module.patch"
 )
 
 pkg_setup() {

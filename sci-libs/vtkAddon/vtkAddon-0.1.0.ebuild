@@ -36,9 +36,9 @@ RDEPEND="
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
 PATCHES=(
-	${FILESDIR}/0001-ENH-Add-versioning-and-use-of-CMake-GNUInstallDirs.patch
-	${FILESDIR}/0002-ENH-Add-CMake-directory-to-CMAKE_MODULE_PATH.patch
-	${FILESDIR}/0003-ENH-Modernize-Python-finding.patch
+	"${FILESDIR}/0001-ENH-Add-versioning-and-use-of-CMake-GNUInstallDirs.patch"
+	"${FILESDIR}/0002-ENH-Add-CMake-directory-to-CMAKE_MODULE_PATH.patch"
+	"${FILESDIR}/0003-ENH-Modernize-Python-finding.patch"
 )
 
 src_unpack(){
