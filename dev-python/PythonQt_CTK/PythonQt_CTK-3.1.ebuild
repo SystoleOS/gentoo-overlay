@@ -11,10 +11,10 @@ DESCRIPTION="PyhtonQt for CTK"
 
 HOMEPAGE="https://github.com/commontk/PythonQt"
 
-SRC_URI="https://github.com/commontk/PythonQt/archive/c4a5a155b2942d4b003862c3317105b4a1ea6755.zip -> ${P}.zip"
+SRC_URI="https://github.com/commontk/PythonQt/archive/c4a5a155b2942d4b003862c3317105b4a1ea6755.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD LGPL-2"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 
 DEPEND="
@@ -29,7 +29,6 @@ RDEPEND="
 "
 BDEPEND="
 	${RDEPEND}
-	app-arch/unzip
 "
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
