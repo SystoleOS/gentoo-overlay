@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    The IGSIO library provides a lightweight, cross-platform C++ library for parsing and serializing OpenIGTLink messages. OpenIGTLink is an open source network communication protocol for image-guided therapy applications, allowing real-time exchange of imaging, tracking, and other patient data between devices and software systems.
+
+    The IGSIO library supports the parsing and serializing of all message types defined in the OpenIGTLink protocol specification, including image messages, transform messages, status messages, and more. It also includes a number of utility classes and functions for working with OpenIGTLink messages, such as IgsioXmlString and IgsioTransformName.
+
+    This library is intended for developers who are building image-guided therapy applications that require real-time exchange of data between devices and software systems using the OpenIGTLink protocol. It is compatible with a wide range of platforms and operating systems, and can be used with both C++ and Python programming languages.
+  </longdescription>
+  <use>
+    <flag name="volume-reconstruction">Builds the volume reconstruction module</flag>
+  </use>
+</pkgmetadata>
