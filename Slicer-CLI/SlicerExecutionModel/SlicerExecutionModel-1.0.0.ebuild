@@ -6,7 +6,7 @@ EAPI=7
 inherit cmake
 
 # Short one-line description of this package.
-DESCRIPTION=" Macros and associated tools for the easy building of 3D Slicer command line interface (CLI) modules."
+DESCRIPTION=" Macros and associated tools for building of 3D Slicer command line interface (CLI) modules."
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/SlicerExecutionModel/"
@@ -14,9 +14,8 @@ HOMEPAGE="https://github.com/Slicer/SlicerExecutionModel/"
 COMMIT="1788b378ed2e4928cded2bc9ecdc2b37c7f2af5f"
 
 SRC_URI="https://github.com/Slicer/SlicerExecutionModel/archive/${COMMIT}.tar.gz -> ${PN}-${PV}.tar.gz"
-
 LICENSE="BSD"
-
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 
 IUSE=""
