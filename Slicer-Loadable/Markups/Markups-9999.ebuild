@@ -29,13 +29,14 @@ DEPEND="
 
 RDEPEND="
 	${DEPEND}
-	${PYTHON_DEPS}
-"
-
-RDEPEND="
-	${DEPEND}
 	python? (
 		${PYTHON_DEPS}
+		)
+"
+
+REQUIRED_USE="
+	python? (
+		${PYTHON_REQUIRED_USE}
 		)
 "
 
