@@ -6,14 +6,14 @@ EAPI=7
 inherit cmake
 
 # Short one-line description of this package.
-DESCRIPTION="Insight Segmentation and Registratio Toolkit for Slicer"
+DESCRIPTION=" Macros and associated tools for the easy building of 3D Slicer command line interface (CLI) modules."
 
 # Homepage, not used by Portage directly but handy for developer reference
-HOMEPAGE="https://github.com/Slicer/ITK/"
+HOMEPAGE="https://github.com/Slicer/SlicerExecutionModel/"
 
 COMMIT="1788b378ed2e4928cded2bc9ecdc2b37c7f2af5f"
 
-SRC_URI="https://github.com/Slicer/SlicerExecutionModel/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
+SRC_URI="https://github.com/Slicer/SlicerExecutionModel/archive/${COMMIT}.tar.gz -> ${PN}-${PV}.tar.gz"
 
 LICENSE="BSD"
 
@@ -21,7 +21,8 @@ SLOT="0"
 
 IUSE=""
 
-DEPEND="sci-libs/itk app-arch/unzip"
+DEPEND="sci-libs/itk"
+
 RDEPEND="${DEPEND}"
 
 PATCHES=(
@@ -70,8 +71,8 @@ src_configure(){
 		-DSlicerExecutionModel_INSTALL_BIN_DIR=/usr/bin
 		-DSlicerExecutionModel_INSTALL_LIB_DIR=/usr/lib64/SlicerExecutionModel-1.0.0
 		-DSlicerExecutionModel_INSTALL_NO_DEVELOPMENT=OFF
-		-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION=lib64
-		-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_ARCHIVE_DESTINATION=lib64
+		-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_LIBRARY_DESTINATION=$(get_libdir)
+		-DSlicerExecutionModel_DEFAULT_CLI_INSTALL_ARCHIVE_DESTINATION=$(get_libdir)
 	)
 
 	cmake_src_configure
@@ -79,6 +80,8 @@ src_configure(){
 
 pkg_postinst(){
 
+	# TODO: This should probably be removed in favor
+	# of direct installation in the right place
 	libraries=$(find /usr/lib64/${P} -name "*.so")
 	for i in ${libraries}
 	do
