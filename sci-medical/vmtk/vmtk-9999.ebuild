@@ -17,6 +17,7 @@ EGIT_BRANCH="master"
 HOMEPAGE="http://vmtk.org/"
 
 LICENSE="BSD"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 

@@ -16,6 +16,7 @@ HOMEPAGE="https://github.com/Slicer/vtkAddon"
 SRC_URI="https://github.com/Slicer/vtkAddon/archive/4413fde380b744ab221f7beb4410e11a5158b496.tar.gz -> vtkAddon.tar.gz"
 
 LICENSE="BSD"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 

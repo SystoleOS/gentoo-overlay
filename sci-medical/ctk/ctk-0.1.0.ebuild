@@ -18,6 +18,7 @@ COMMIT="95dac75b80562b81db10555db5807648f4d17dee"
 SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
 
 LICENSE="Apache-2.0"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 

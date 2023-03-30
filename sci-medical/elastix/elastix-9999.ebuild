@@ -15,6 +15,7 @@ EGIT_BRANCH="develop"
 HOMEPAGE="http://elastix.isi.uu.nl/"
 
 LICENSE="Apache-2.0"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 

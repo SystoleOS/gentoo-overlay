@@ -17,6 +17,7 @@ EGIT_BRANCH="main"
 HOMEPAGE="https://www.slicer.org/"
 
 LICENSE="BSD"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 IUSE="python"
