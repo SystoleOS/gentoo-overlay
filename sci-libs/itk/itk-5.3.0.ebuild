@@ -30,8 +30,8 @@ HOMEPAGE="http://www.itk.org"
 
 EGIT_REPO_URI="https://github.com/InsightSoftwareConsortium/ITK.git"
 EGIT_TAG="v5.3rc03"
-
 LICENSE="Apache-2.0"
+KEYWORDS="~amd64 ~x86"
 
 SLOT="0"
 
