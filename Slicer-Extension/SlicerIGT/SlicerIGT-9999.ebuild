@@ -7,9 +7,9 @@ PYTHON_COMPAT=( python3_{9..10} )
 
 inherit cmake python-single-r1 git-r3
 
-DESCRIPTION="Utility extension for 3D Slicer, containing tools and algorithms for building image guided surgery applications"
+DESCRIPTION="3D Slicer Extension, containing tools and algorithms for building image guided surgery applications"
 HOMEPAGE="https://github.com/SlicerIGT/SlicerIGT"
-EGIT_REPO_URI="https://github.com/SlicerIGT/SlicerIGT"
+EGIT_REPO_URI="https://github.com/SlicerIGT/SlicerIGT.git"
 EGIT_BRANCH="master"
 
 LICENSE="BSD"
