@@ -15,9 +15,8 @@ EGIT_BRANCH="main"
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.slicer.org/"
-
 LICENSE="BSD"
-
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 
 IUSE="python cli DICOM sitk"
