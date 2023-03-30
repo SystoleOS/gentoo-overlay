@@ -50,8 +50,7 @@ src_unpack() {
 	if [ "${A}"  != "" ]; then
 		unpack ${A}
 	fi
-	mv ${WORKDIR}/${PN}-${COMMIT} ${WORKDIR}/${PN}-${PV}
-
+	mv "${WORKDIR}/${PN}-${COMMIT}" "${WORKDIR}/${PN}-${PV}"
 }
 
 src_prepare() {
