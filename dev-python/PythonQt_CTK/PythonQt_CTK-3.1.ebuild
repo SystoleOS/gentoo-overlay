@@ -22,7 +22,6 @@ DEPEND="
 	dev-qt/qtmultimedia
 	dev-qt/qtsvg
 	dev-qt/designer
-	!dev-python/PythonQt
 "
 RDEPEND="
 	${DEPEND}
