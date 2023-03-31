@@ -3,22 +3,25 @@
 
 EAPI=8
 
-PYTHON_COMPAT=( python3_{9,10})
+PYTHON_COMPAT=( python3_{9..11})
 
 inherit python-single-r1 cmake
 
 # Short one-line description of this package.
-DESCRIPTION="A set of common support code for medical imaging, surgical navigation, and related purposes"
+DESCRIPTION="Support code for medical imaging and surgical navigation"
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.commontk.org/"
 
 COMMIT="95dac75b80562b81db10555db5807648f4d17dee"
 
-SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.zip -> ${PN}-${PV}.zip"
+SRC_URI="https://github.com/commontk/CTK/archive/${COMMIT}.tar.gz -> ${PN}-${PV}.tar.gz"
 
 LICENSE="Apache-2.0"
-KEYWORDS="~amd64 ~x86"
+
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 
@@ -29,18 +32,17 @@ DEPEND="
 		dev-python/PythonQt_CTK
 		sci-libs/vtk:=[python,qt5,rendering] )
 	!python? ( sci-libs/vtk:=[qt5,rendering] )
-	dev-qt/designer
-	dev-qt/qtconcurrent
-	dev-qt/qtcore
-	dev-qt/qtgui
-	dev-qt/qtmultimedia
-	dev-qt/qtnetwork
-	dev-qt/qtopengl
-	dev-qt/qtsql
-	dev-qt/qttest
-	dev-qt/qtwidgets
-	dev-qt/qtxmlpatterns
-	dev-qt/qtxml
+	>=dev-qt/qtcore-5.15:5
+	>=dev-qt/qtconcurrent-5.15:5
+	>=dev-qt/qtgui-5.15:5
+	>=dev-qt/qtmultimedia-5.15:5
+	>=dev-qt/qtnetwork-5.15:5
+	>=dev-qt/qtopengl-5.15:5
+	>=dev-qt/qtsql-5.15:5
+	>=dev-qt/qttest-5.15:5
+	>=dev-qt/qtwidgets-5.15:5
+	>=dev-qt/qtxmlpatterns-5.15:5
+	>=dev-qt/qtxml-5.15:5
 	sci-libs/itk[DICOM?]
 "
 
@@ -50,11 +52,12 @@ RDEPEND="
 "
 
 BDEPEND="
-	app-arch/unzip
 	${RDEPEND}
 "
 
-REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+REQUIRED_USE="
+	python? ( ${PYTHON_REQUIRED_USE} )
+"
 
 PATCHES=(
 	"${FILESDIR}/0001-ENH-Include-missing-files.patch"
@@ -71,9 +74,8 @@ src_unpack() {
 		unpack ${A}
 	fi
 
-	mv ${WORKDIR}/CTK-${COMMIT} ${WORKDIR}/${PN}-${PV} || die
+	mv "${WORKDIR}"/CTK-${COMMIT} "${WORKDIR}"/${PN}-${PV} || die
 }
-
 
 pkg_setup() {
 	use python && python-single-r1_pkg_setup

@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1 git-r3
 
@@ -15,7 +15,9 @@ EGIT_BRANCH="main"
 
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.slicer.org/"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 LICENSE="BSD"
 SLOT="0"
 IUSE="python"

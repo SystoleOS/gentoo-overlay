@@ -5,7 +5,19 @@
     <email>rafael.palomar@rr-research.no</email>
     <name>Rafael Palomar (The Intervention Centre)</name>
   </maintainer>
+  <longdescription>
+    ctk (Common Toolkit) is a free, open-source library for medical image processing and visualization. It is designed to facilitate the development of custom medical imaging applications and support interoperability between different medical imaging systems.
+
+    The library includes a range of features and modules for medical image processing and visualization, including support for basic image filtering, segmentation, registration, and feature extraction. It also includes support for a range of medical imaging modalities, including CT, MRI, PET, and ultrasound.
+
+    ctk is built on top of the Qt application development framework, providing access to a range of advanced features and tools for developing cross-platform applications. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+  </longdescription>
   <use>
     <flag name="python">Build python support</flag>
+    <flag name="DICOM">Build DICOM support</flag>
   </use>
+  <upstream>
+    <remote-id type="github">commontk/ctk</remote-id>
+    <bugs-to>https://github.com/commontk/ctk/issues</bugs-to>
+  </upstream>
 </pkgmetadata>

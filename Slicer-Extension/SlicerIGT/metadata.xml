@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@rr-research.no</email>
+    <name>Rafael Palomar</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">SlicerIGT/SlicerIGT</remote-id>
+    <bugs-to>https://github.com/SlicerIGT/SlicerIGT/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

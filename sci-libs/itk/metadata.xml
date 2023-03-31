@@ -2,11 +2,7 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="project">
-		<email>maintainer-wanted@gentoo.org</email>
-	</maintainer>
-	<maintainer type="project">
-		<email>sci-biology@gentoo.org</email>
-		<name>Gentoo Biology Project</name>
+		<email>rafael.palomar@ous-research.no</email>
 	</maintainer>
 	<longdescription lang="en">
 		Insight Segmentation and Registration Toolkit (ITK) is a library
@@ -17,9 +13,10 @@
 		<flag name="review">Enable compilation of methods under review</flag>
 		<flag name="vtkglue">Build vtkGlue support</flag>
 		<flag name="deprecated">Build deprecated modules</flag>
-		<flag name="dicom">Build dicom support</flag>
+		<flag name="DICOM">Build dicom support</flag>
 	</use>
 	<upstream>
-		<remote-id type="sourceforge">itk</remote-id>
+		<remote-id type="github">InsightSoftwareConsortium/ITK</remote-id>
+		<bugs-to>https://github.com/InsightSoftwareConsortium/ITK/issues</bugs-to>
 	</upstream>
 </pkgmetadata>

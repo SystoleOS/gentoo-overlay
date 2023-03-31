@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    SimpleITK is a free, open-source library that provides a simplified interface to the Insight Toolkit (ITK), a powerful image analysis and processing library. SimpleITK is designed to facilitate rapid prototyping and development of custom image analysis applications using ITK.
+
+    The library includes a range of features and modules for image analysis and processing, including support for basic image filtering, registration, segmentation, and feature extraction. It also includes support for a wide range of image file formats, including DICOM and Nifti, as well as integration with other popular image analysis tools such as VTK and OpenCV.
+
+    SimpleITK is built on top of ITK, providing access to a range of advanced features and algorithms for medical image analysis and visualization. It also includes an easy-to-use interface that simplifies the process of developing custom image analysis applications, without sacrificing the power and flexibility of ITK.
+
+    The library has a user-friendly interface that supports both novice and advanced users, with features such as interactive documentation, Python and R bindings, and a range of examples and tutorials. It also includes a range of advanced features for power users, including multithreading support, GPU acceleration, and integration with other scientific computing libraries.
+
+    Overall, SimpleITK is a powerful and versatile tool for developing custom image analysis applications, with a strong user community and ongoing development support.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">IGSIO/IGSIO</remote-id>
+    <bugs-to>https://github.com/IGSIO/IGSIO/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

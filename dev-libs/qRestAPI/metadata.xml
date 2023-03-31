@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@rr-research.no</email>
+    <name>Rafael Palomar</name>
+  </maintainer>
+  <longdescription>
+    qRestAPI is a free, open-source library for developing RESTful web services with Qt. It is designed to facilitate the development of custom web services for a wide range of applications, including medical imaging, scientific research, and industrial automation.
+
+    The library includes a range of features and modules for developing RESTful web services, including support for HTTP request handling, routing, and parameter parsing. It also includes support for a range of data formats, including JSON and XML, as well as authentication and security features.
+
+    qRestAPI is built on top of the Qt framework, providing access to a range of advanced features and tools for developing cross-platform applications. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+
+    The library has a user-friendly interface that supports both novice and advanced users, with features such as customizable layouts, interactive documentation, and code generation tools. It also includes a range of advanced features for power users, including scripting, batch processing, and database integration.
+
+    Overall, qRestAPI is a powerful and versatile tool for developing RESTful web services with Qt, with a strong user community and ongoing development support.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">commontk/qRestAPI</remote-id>
+    <bugs-to>https://github.com/commontk/qRestAPI/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

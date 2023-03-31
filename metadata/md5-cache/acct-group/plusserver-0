@@ -1,0 +1,8 @@
+DEFINED_PHASES=install preinst pretend
+DESCRIPTION=Group for PlusServer
+EAPI=7
+INHERIT=acct-group
+KEYWORDS=alpha amd64 arm arm64 hppa ia64 m68k ppc ppc64 s390 sparc x86
+SLOT=0
+_eclasses_=user-info	83547b4df3e1ba5a6bf91a0837eaa664	acct-group	5dce8ccf5b0a32ce06979fd804f7cded
+_md5_=b320502b324e59e1dac20ed099d7c0ca

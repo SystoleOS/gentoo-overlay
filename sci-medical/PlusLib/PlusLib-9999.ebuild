@@ -5,14 +5,16 @@ EAPI=7
 
 inherit cmake git-r3 systemd
 
-DESCRIPTION="Software library for data acquisition, pre-processing, and calibration for navigated image-guided interventions"
+DESCRIPTION="Library for image-guided intervention data acquisition and pre-processing"
 HOMEPAGE="https://www.plustoolkit.org/"
 EGIT_REPO_URI="https://github.com/PlusToolkit/PlusLib"
 EGIT_BRANCH="master"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 IUSE="OpenIGTLink systemd tools widgets"
 
 DEPEND="
@@ -24,8 +26,8 @@ DEPEND="
 	tools? (
 		acct-group/plusserver
 		acct-user/plusserver
-		sys-apps/systemd
 		)
+	systemd? ( sys-apps/systemd )
 "
 
 RDEPEND="
@@ -71,7 +73,7 @@ src_install() {
 	# Install the simulated-tracker.xml configuration file
 	insinto /etc/PlusServer
 	doins "${FILESDIR}"/simulated-tracker.xml
-	dosym /etc/PlusServer/simulated-tracker.xml /etc/PlusServer/current-config.xml
+	dosym ${root%/}/etc/PlusServer/simulated-tracker.xml /etc/PlusServer/current-config.xml
 
 	if use systemd; then
 		systemd_dounit "${FILESDIR}"/PlusServer.service

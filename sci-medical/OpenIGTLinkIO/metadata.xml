@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+<longdescription>
+OpenIGTLinkIO is a free, open-source library for interfacing with the OpenIGTLink protocol, which provides real-time communication between medical devices and software. It is designed to simplify and streamline the process of developing custom applications for surgical planning, navigation, and intervention using medical imaging data.
+
+The library includes a range of features and modules for real-time communication with medical devices, including support for sending and receiving image data, tracking information, and other surgical data. It also includes support for a range of imaging modalities, including ultrasound, CT, and MRI.
+</longdescription>
+  <upstream>
+    <remote-id type="github">IGSIO/OpenIGTLinkIO</remote-id>
+    <bugs-to>https://github.com/IGSIO/OpenIGTLinkIO/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

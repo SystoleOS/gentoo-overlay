@@ -7,7 +7,9 @@ DESCRIPTION="Bundle package for 3D Slicer"
 HOMEPAGE="https://slicer.org"
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 IUSE="python"
 

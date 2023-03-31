@@ -15,4 +15,8 @@
   <use>
     <flag name="volume-reconstruction">Builds the volume reconstruction module</flag>
   </use>
+  <upstream>
+    <remote-id type="github">IGSIO/IGSIO</remote-id>
+    <bugs-to>https://github.com/IGSIO/IGSIO/issues</bugs-to>
+  </upstream>
 </pkgmetadata>

@@ -5,7 +5,7 @@ EAPI=7
 
 inherit cmake git-r3
 
-DESCRIPTION="Library for interfacing to openigtlink/OpenIGTLink, dependent on VTK and Qt. Based on openigtlink/OpenIGTLinkIF"
+DESCRIPTION="Library for interfacing with OpenIGTLink using VTK and Qt"
 HOMEPAGE="https://github.com/IGSIO/OpenIGTLinkIO"
 
 EGIT_REPO_URI="https://github.com/IGSIO/OpenIGTLinkIO"
@@ -13,10 +13,13 @@ EGIT_BRANCH="master"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 DEPEND="
-	>=sci-libs/vtk-9.1.0
+	>=sci-libs/vtk-9.2.0
 	sci-medical/OpenIGTLink
 "
 
@@ -35,7 +38,7 @@ src_configure(){
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
 		# TODO: This should be fixed in VTK so we don't need to specify the VTK_DIR or ITK_DIR
-		-DVTK_DIR:STRING=/usr/lib64/cmake/vtk-9.1
+		-DVTK_DIR:STRING=/usr/lib64/cmake/vtk-9.2
 		-DOpenIGTLink_DIR:FILEPATH=/usr/lib64/cmake/igtl-3.1
 		-DOpenIGTLinkIO_LIBRARY_INSTALL:STRING=$(get_libdir)
 		-DOpenIGTLinkIO_NO_INSTALL_DEVELOPMENT:BOOL=OFF

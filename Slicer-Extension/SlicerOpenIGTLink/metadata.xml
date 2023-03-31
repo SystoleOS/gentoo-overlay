@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@rr-research.no</email>
+    <name>Rafael Palomar</name>
+  </maintainer>
+<longdescription>
+SlicerOpenIGTLink is a free, open-source extension of 3D Slicer that provides support for the OpenIGTLink protocol for real-time communication between medical devices and software. It is designed to facilitate the development of custom applications for surgical planning, navigation, and intervention using medical imaging data.
+
+The software includes a range of features and modules for real-time communication with medical devices, including support for sending and receiving image data, tracking information, and other surgical data. It also includes support for a range of imaging modalities, including ultrasound, CT, and MRI.
+
+SlicerOpenIGTLink is built on top of the 3D Slicer platform, providing access to a range of advanced features and algorithms for medical image analysis and visualization. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+
+The software has a user-friendly interface that supports both novice and advanced users, with features such as customizable layouts, interactive slice viewers, and 3D rendering. It also includes a range of advanced features for power users, including scripting, batch processing, and GPU acceleration.
+
+Overall, SlicerOpenIGTLink is a powerful and versatile tool for real-time communication with medical devices, with a strong user community and ongoing development support.
+</longdescription>
+  <upstream>
+    <remote-id type="github">IGSIO/SlicerIGSIO</remote-id>
+    <bugs-to>https://github.com/IGSIO/SlicerIGSIO/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

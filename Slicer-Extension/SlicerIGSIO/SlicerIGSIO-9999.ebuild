@@ -3,18 +3,20 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1 git-r3
 
-DESCRIPTION="Extension for 3D Slicer, containing tools and algorithms for building image guided surgery applications"
+DESCRIPTION="3D Slicer Extension with image-guided surgery tools and algorithms."
 HOMEPAGE="https://github.com/SystoleOS/SlicerIGSIO"
 EGIT_REPO_URI="https://github.com/SystoleOS/SlicerIGSIO.git"
 EGIT_BRANCH="master"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 IUSE="python"
 
 DEPEND="

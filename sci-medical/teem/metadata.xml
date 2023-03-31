@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    teem is a free, open-source library for scientific data analysis and visualization. It is designed to simplify and streamline the process of working with volumetric and geometric data, including medical imaging and computer graphics data.
+
+    The library includes a range of features and modules for scientific data analysis and visualization, including support for basic image filtering, registration, segmentation, and feature extraction. It also includes support for a range of volumetric and geometric data formats, including DICOM, NIfTI, and VTK, as well as integration with other popular scientific data analysis and visualization tools.
+
+    teem is built on top of the C programming language, providing a high level of performance and scalability. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">Slicer/teem</remote-id>
+    <bugs-to>https://github.com/Slicer/teem/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

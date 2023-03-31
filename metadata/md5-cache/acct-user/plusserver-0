@@ -1,0 +1,9 @@
+DEFINED_PHASES=install postinst preinst prerm pretend
+DESCRIPTION=User for PlusServer
+EAPI=7
+INHERIT=acct-user
+KEYWORDS=alpha amd64 arm arm64 hppa ia64 m68k ppc ppc64 s390 sparc x86
+RDEPEND=acct-group/plusserver
+SLOT=0
+_eclasses_=user-info	83547b4df3e1ba5a6bf91a0837eaa664	acct-user	e0a8307fcba2b1c2ec2914c064c50a7f
+_md5_=e9362ed392b644c27bd3444d4e4477d8

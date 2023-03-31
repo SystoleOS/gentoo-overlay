@@ -4,12 +4,14 @@
 EAPI=7
 
 DESCRIPTION="Eselect module for managing PlusServer configuration files"
-HOMEPAGE=""
+HOMEPAGE="https://github.com/SystoleOS"
 SRC_URI=""
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 S="${WORKDIR}"
 

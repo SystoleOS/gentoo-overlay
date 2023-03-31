@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+ PlusLib is an open-source C++ library for image-guided therapy research and development. It provides a modular and extensible framework for rapid prototyping of image-guided therapy software and applications.
+
+    PlusLib includes a variety of modules for image acquisition, processing, visualization, and interaction, as well as modules for interfacing with various imaging devices and software systems. It also includes a set of command-line tools and GUI applications for testing and demonstrating the functionality of the library.
+
+    The library is designed to be easy to use and easy to extend, with a consistent and well-documented API that allows developers to focus on their research and application development without getting bogged down in low-level details.
+
+    This library is intended for researchers and developers who are working on image-guided therapy applications, such as surgical navigation, biopsy guidance, or radiation therapy planning. It is compatible with a wide range of platforms and operating systems, and can be used with both C++ and Python programming languages.
+  </longdescription>
+  <use>
+    <flag name="OpenIGTLink">Builds OpenIGTLink support</flag>
+    <flag name="tools">Build additional tools like the PlusServer</flag>
+    <flag name="widgets">Build UI</flag>
+  </use>
+</pkgmetadata>

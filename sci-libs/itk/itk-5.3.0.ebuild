@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1 git-r3
 
@@ -19,10 +19,14 @@ ITKMorphologicalContourInterpolator_HASH="44854a462309ca902d2d21a18dca50f777b9f6
 
 # source code URIs
 SRC_URI="
-	https://github.com/ntustison/ITKAdaptiveDenoising/archive/${ITKAdaptiveDenoising_HASH}.zip -> ITKAdaptiveDenoising.zip
-	https://github.com/InsightSoftwareConsortium/itkMGHImageIO/archive/${ITKMGHImageIO_HASH}.zip -> ITKMGHImageIO.zip
-	https://github.com/KitwareMedical/ITKIOScanco/archive/${ITKIOScanco_HASH}.zip -> ITKIOScanco.zip
-	https://github.com/KitwareMedical/ITKMorphologicalContourInterpolation/archive/${ITKMorphologicalContourInterpolator_HASH}.zip -> ITKMorphologicalContourInterpolator.zip
+	https://github.com/ntustison/ITKAdaptiveDenoising/archive/${ITKAdaptiveDenoising_HASH}.tar.gz \
+		-> ITKAdaptiveDenoising.tar.gz
+	https://github.com/InsightSoftwareConsortium/itkMGHImageIO/archive/${ITKMGHImageIO_HASH}.tar.gz \
+		-> ITKMGHImageIO.tar.gz
+	https://github.com/KitwareMedical/ITKIOScanco/archive/${ITKIOScanco_HASH}.tar.gz \
+		-> ITKIOScanco.tar.gz
+	https://github.com/KitwareMedical/ITKMorphologicalContourInterpolation/archive/${ITKMorphologicalContourInterpolator_HASH}.tar.gz \
+		-> ITKMorphologicalContourInterpolator.tar.gz
 "
 
 DESCRIPTION="NLM Insight Segmentation and Registration Toolkit"
@@ -31,7 +35,9 @@ HOMEPAGE="http://www.itk.org"
 EGIT_REPO_URI="https://github.com/InsightSoftwareConsortium/ITK.git"
 EGIT_TAG="v5.3rc03"
 LICENSE="Apache-2.0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 
@@ -57,12 +63,12 @@ RDEPEND="${DEPEND}
 	sys-apps/coreutils
 	python? (
 		>=dev-lang/swig-2.0:0
-		dev-cpp/castxml
+		dev-libs/castxml
 		${PYTHON_DEPS}
 		)
 	doc? ( app-doc/doxygen )
 "
-BDEPEND="app-arch/unzip"
+BDEPEND=""
 
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
@@ -72,10 +78,10 @@ PATCHES=()
 
 src_unpack() {
 	#Unpack ITKAdaptiveDenoising
-	 unzip ${DISTDIR}/ITKAdaptiveDenoising.zip || die
-	 unzip ${DISTDIR}/ITKMGHImageIO.zip || die
-	 unzip ${DISTDIR}/ITKIOScanco.zip || die
-	 unzip ${DISTDIR}/ITKMorphologicalContourInterpolator.zip || die
+	 tar xzf ${DISTDIR}/ITKAdaptiveDenoising.tar.gz || die
+	 tar xzf ${DISTDIR}/ITKMGHImageIO.tar.gz || die
+	 tar xzf ${DISTDIR}/ITKIOScanco.tar.gz || die
+	 tar xzf ${DISTDIR}/ITKMorphologicalContourInterpolator.tar.gz || die
 
 	#NOTE: This ebuild has the particularity that it uses both git and source
 	#files. Therefore we need to call the src_unpack function from the git module

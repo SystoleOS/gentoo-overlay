@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    PythonQt is a free, open-source library that provides a bridge between the Python programming language and the Qt application development framework. It is designed to simplify and streamline the process of developing custom graphical user interfaces (GUIs) using Python and Qt.
+
+    The library includes a range of features and modules for building GUIs using Python, including support for widget creation, event handling, and layout management. It also includes support for a range of Qt features, such as signals and slots, model-view programming, and resource management.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">MeVisLab/PythonQt</remote-id>
+    <bugs-to>https://github.com/MeVisLab/PythonQt/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

@@ -5,14 +5,18 @@ EAPI=7
 
 inherit cmake git-r3
 
-DESCRIPTION="Software applications that makes Plus library's data acquisition, calibration, and real-time straming features available to end-users."
+DESCRIPTION="Software for end-users to access Plus library's features"
 HOMEPAGE="https://www.plustoolkit.org/"
 EGIT_REPO_URI="https://github.com/PlusToolkit/PlusApp"
 EGIT_BRANCH="master"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
+
 IUSE="fCal OpenIGTLink"
 
 DEPEND="
@@ -42,10 +46,4 @@ src_configure(){
 	)
 
 	cmake_src_configure
-}
-
-
-src_install(){
-
-	cmake_src_install
 }

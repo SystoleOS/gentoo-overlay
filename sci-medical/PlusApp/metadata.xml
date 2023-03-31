@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+   <longdescription>
+     PlusApp is an open-source software application for image-guided therapy research and development. It provides a graphical user interface (GUI) for configuring and running image-guided therapy experiments and applications using the PlusLib library.
+
+     PlusApp includes a variety of tools and modules for configuring and managing image acquisition, processing, visualization, and interaction, as well as modules for interfacing with various imaging devices and software systems. It also includes a set of built-in experiment templates and workflows for common image-guided therapy applications.
+
+     The application is designed to be easy to use and easy to extend, with a flexible and customizable GUI that allows researchers and developers to focus on their experiments and application development without getting bogged down in low-level details.
+
+     This application is intended for researchers and developers who are working on image-guided therapy applications, such as surgical navigation, biopsy guidance, or radiation therapy planning. It is compatible with a wide range of platforms and operating systems, and can be used with the PlusLib library and other third-party libraries and tools.
+  </longdescription>
+  <use>
+    <flag name="OpenIGTLink">Builds OpenIGTLink support</flag>
+    <flag name="fCal">Build support for fCal calibration support</flag>
+  </use>
+</pkgmetadata>

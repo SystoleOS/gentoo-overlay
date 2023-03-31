@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-  <maintainer type="project">
+  <maintainer type="person">
     <email>rafael.palomar@rr-research.no</email>
-    <name>Rafael Palomar (The Intervention Centre)</name>
+    <name>Rafael Palomar</name>
   </maintainer>
+  <longdescription>
+    3D Slicer is a free, open source software package for visualization and analysis of medical images, including MRI, CT, PET, and ultrasound. It is used by researchers and clinicians worldwide for a wide range of applications, including image-guided surgery, radiation therapy planning, neuroimaging, and cardiac imaging.
+
+    The software provides a comprehensive set of tools and algorithms for image analysis, segmentation, registration, and visualization, as well as support for a wide range of file formats, including DICOM. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+
+    3D Slicer has a user-friendly interface that supports both novice and advanced users, with features such as customizable layouts, interactive slice viewers, and 3D rendering. It also includes a range of advanced features for power users, including scripting, batch processing, and GPU acceleration.
+
+    Overall, 3D Slicer is a powerful and versatile tool for medical image analysis and visualization, with a strong user community and ongoing development support.
+  </longdescription>
   <use>
     <flag name="python">Build python support</flag>
     <flag name="cli">Build command-line-interface support</flag>
-    <flag name="sitk">Build support for SimpleITK</flag>
+    <flag name="DICOM">Build DICOM support</flag>
   </use>
+  <upstream>
+    <remote-id type="github">Slicer/Slicer</remote-id>
+    <bugs-to>https://github.com/Slicer/Slicer/issues</bugs-to>
+  </upstream>
 </pkgmetadata>

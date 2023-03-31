@@ -15,7 +15,9 @@ EGIT_BRANCH="main"
 HOMEPAGE="https://www.slicer.org/"
 
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 

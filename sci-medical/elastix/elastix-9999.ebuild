@@ -15,7 +15,9 @@ EGIT_BRANCH="develop"
 HOMEPAGE="http://elastix.isi.uu.nl/"
 
 LICENSE="Apache-2.0"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 

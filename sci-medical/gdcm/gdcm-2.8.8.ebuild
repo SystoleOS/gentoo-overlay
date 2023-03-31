@@ -11,13 +11,13 @@ DESCRIPTION="Implementation of the DICOM standard"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="http://gdcm.sourceforge.net/"
 
-SRC_URI="https://sourceforge.net/projects/gdcm/files/gdcm%202.x/GDCM%202.8.8/gdcm-2.8.8.tar.gz/download -> ${PN}-${PV}.tar.gz"
+SRC_URI="https://sourceforge.net/projects/gdcm/files/gdcm%202.x/GDCM%202.8.8/${PN}-${PV}/download -> ${PN}-${PV}.tar.gz"
 
 LICENSE="Apache-2.0"
-
 SLOT="0"
-
-KEYWORDS="~amd64"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 IUSE=""
 
@@ -38,7 +38,7 @@ src_unpack() {
 		unpack ${A}
 	fi
 
-	mv ${WORKDIR}/gdcm-${PV} ${WORKDIR}/${PN}-${PV}
+	mv "${WORKDIR}"/gdcm-"${PV}" "${WORKDIR}"/"${PN}"-"${PV}"
 }
 
 src_prepare() {
@@ -59,7 +59,7 @@ src_configure(){
 		-DGDCM_BUILD_TESTING=0FF
 		-DGDCM_USE_VTK=OFF
 		-DGDCM_USE_SYSTEM_OPENJPEG=ON
-		-DGDCM_INSTALL_LIB_DIR=lib64
+		-DGDCM_INSTALL_LIB_DIR=$(get_libdir)
 	)
 
 	cmake_src_configure

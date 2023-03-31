@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    gdcm (Grassroots DICOM) is a free, open-source library for reading, writing, and manipulating DICOM (Digital Imaging and Communications in Medicine) files. It is designed to facilitate the development of custom medical imaging applications and support interoperability between different medical imaging systems.
+
+    The library includes a range of features and modules for DICOM file I/O, including support for a wide range of transfer syntaxes, image compression schemes, and DICOM tags. It also includes support for a range of medical imaging modalities, including CT, MRI, PET, and ultrasound.
+
+    gdcm is built on top of the C++ Standard Template Library (STL), providing a high level of flexibility and scalability. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+  </longdescription>
+  <upstream>
+    <remote-id type="sourceforge">gdcm</remote-id>
+    <bugs-to>https://sourceforge.net/p/gdcm/bugs</bugs-to>
+  </upstream>
+</pkgmetadata>

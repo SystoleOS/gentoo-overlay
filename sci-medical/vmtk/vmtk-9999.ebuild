@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-r1 git-r3
 
@@ -17,14 +17,17 @@ EGIT_BRANCH="master"
 HOMEPAGE="http://vmtk.org/"
 
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 
 DEPEND="
 	dev-lang/python[tk]
 	>=sci-libs/itk-5.0
-	>=sci-libs/vtk-9.1
+	>=sci-libs/vtk-9.2
 "
 
 RDEPEND="
@@ -50,21 +53,20 @@ src_configure(){
 	local mycmakeargs=()
 
 	mycmakeargs+=(
-		-DCMAKE_CXX_STANDARD=11
-		-DCMAKE_INSTALL_PREFIX=/usr
-		-DVMTK_USE_SUPERBUILD=OFF
-		-DVMTK_BUILD_TESTING=OFF
-		-DVMTK_INSTALL_LIB_DIR=lib64
-		-DVTK_VMTK_INSTALL_LIB_DIR=lib64
-		-DVMTK_SCRIPTS_INSTALL_LIB_DIR=lib64/python3.6/site-packages/vmtk
-		-DVMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR=lib64/python3.6/site-packages/vmtk
-		-DPYPES_MODULE_INSTALL_LIB_DIR=lib64/python3.6/site-packages/vmtk
-		-DVMTK_SCRIPTS_ENABLED=ON
-		-DVMTK_MINIMAL_INSTALL=ON
-		-DVTK_VMTK_WRAP_PYTHON=ON
-		-DVMTK_WRAP_PYTHON=ON
-		-DVTK_VMTK_CONTRIB=ON
-		-DVMTK_USE_RENDERING=ON
+		-DCMAKE_CXX_STANDARD:STRING="17"
+		-DVMTK_USE_SUPERBUILD:BOOL=OFF
+		-DVMTK_BUILD_TESTING:BOOL=OFF
+		-DVMTK_INSTALL_LIB_DIR:FILEPATH=$(get_libdir)
+		-DVTK_VMTK_INSTALL_LIB_DIR:FILEPATH=$(get_libdir)
+		-DVMTK_SCRIPTS_INSTALL_LIB_DIR:FILEPATH=$(python_get_sitedir)/vmtk
+		-DVMTK_CONTRIB_SCRIPTS_INSTALL_LIB_DIR:FILEPATH=$(python_get_sitedir)/vmtk
+		-DPYPES_MODULE_INSTALL_LIB_DIR:FILEPATH=$(python_get_sitedir)/vmtk
+		-DVMTK_SCRIPTS_ENABLED:BOOL=ON
+		-DVMTK_MINIMAL_INSTALL:BOOL=ON
+		-DVTK_VMTK_WRAP_PYTHON:BOOL=ON
+		-DVMTK_WRAP_PYTHON:BOOL=ON
+		-DVTK_VMTK_CONTRIB:BOOL=ON
+		-DVMTK_USE_RENDERING:BOOL=ON
 	)
 
 	cmake_src_configure
@@ -72,6 +74,7 @@ src_configure(){
 
 pkg_postinst() {
 
+	# TODO: This probably needs to be replaced by proper installation of files
 	vmtk_python_files=$(find /usr/lib64 -name "vmtk*.py")
 
 	pushd /usr/bin

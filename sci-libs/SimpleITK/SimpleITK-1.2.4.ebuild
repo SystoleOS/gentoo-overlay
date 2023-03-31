@@ -3,18 +3,20 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1
 
-DESCRIPTION="A layer built on top of the Insight Toolkit (ITK), intended to simplify and facilitate ITK's use in rapid prototyping."
+DESCRIPTION="SimpleITK: Simplifying and facilitating rapid prototyping with ITK"
 
 HOMEPAGE="https://github.com/SimpleITK/SimpleITK"
 
-SRC_URI="https://github.com/SimpleITK/SimpleITK/archive/v1.2.4.tar.gz -> ${PN}-${PV}.tar.gz"
+SRC_URI="https://github.com/SimpleITK/${PN}/archive/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 
 LICENSE="Apache-2.0"
-KEYWORDS="~amd64"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 SLOT="0"
 
 DEPEND="
@@ -38,7 +40,7 @@ src_unpack() {
 	if [ "${A}"  != "" ]; then
 		unpack ${A}
 	fi
-	mv ${WORKDIR}/${PN}-${COMMIT} ${WORKDIR}/${PN}-${PV}
+	mv "${WORKDIR}"/"${PN}"-"${COMMIT}" "${WORKDIR}"/"${PN}"-"${PV}"
 }
 
 src_configure() {

@@ -1,0 +1,8 @@
+DEFINED_PHASES=install unpack
+DESCRIPTION=Eselect module for managing PlusServer configuration files
+EAPI=7
+HOMEPAGE=https://github.com/SystoleOS
+KEYWORDS=~amd64 ~x86
+LICENSE=BSD
+SLOT=0
+_md5_=9fc0baa1e1942836bfe165d61f9f799e

@@ -5,22 +5,26 @@ EAPI=8
 
 inherit cmake git-r3
 
-DESCRIPTION="Simple Qt library allowing to synchronously or asynchronously query a REST server"
+DESCRIPTION="qRestAPI: Tools for developing RESTful web services with Qt"
 HOMEPAGE="https://github.com/commontk/qRestAPI"
 LICENSE="Apache-2.0"
 
 SLOT="0"
-KEYWORDS="~amd64"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 EGIT_REPO_URI="https://github.com/commontk/qRestAPI.git"
 EGIT_BRANCH="master"
 
+QTMIN=5.15.8
+
 DEPEND="
-	dev-qt/qtcore
-	dev-qt/qtgui
-	dev-qt/qtnetwork
-	dev-qt/qtscript
-	dev-qt/qttest
+	>=dev-qt/qtcore-${QTMIN}:5
+	>=dev-qt/qtgui-${QTMIN}:5
+	>=dev-qt/qtnetwork-${QTMIN}:5
+	>=dev-qt/qtscript-${QTMIN}:5
+	>=dev-qt/qttest-${QTMIN}:5
 "
 RDEPEND="
 	${DEPEND}

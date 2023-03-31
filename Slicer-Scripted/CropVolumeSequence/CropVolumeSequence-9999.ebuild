@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1 git-r3
 
@@ -17,7 +17,9 @@ EGIT_BRANCH="main"
 HOMEPAGE="https://www.slicer.org/"
 
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 
@@ -50,7 +52,7 @@ src_configure(){
 		-DCMAKE_CXX_STANDARD:STRING="17"
 		-DCMAKE_BUILD_WITH_INSTALL_RPATH:BOOL=ON
 		-DPYTHON_INCLUDE_DIR:STRING="$(python_get_sitedir)"
-		-DSlicer_VTK_WRAP_HIERARCHY_DIR=${WORKDIR}
+		-DSlicer_VTK_WRAP_HIERARCHY_DIR="${WORKDIR}"
 	)
 
 	CMAKE_USE_DIR="${WORKDIR}/${P}/Modules/Scripted/${PN}"

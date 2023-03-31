@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9..10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1 git-r3
 
@@ -15,7 +15,9 @@ HOMEPAGE="https://www.slicer.org/"
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
 EGIT_BRANCH="main"
 
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 LICENSE="BSD"
 SLOT="0"
 IUSE="python"

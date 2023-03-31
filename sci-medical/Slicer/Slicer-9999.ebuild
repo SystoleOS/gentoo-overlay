@@ -3,12 +3,12 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9,10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1 git-r3
 
 # Short one-line description of this package.
-DESCRIPTION="3D Slicer is an open source software for medical image processing and visualization"
+DESCRIPTION="Open source medical image processing and visualization software"
 
 EGIT_REPO_URI="https://github.com/Slicer/Slicer.git"
 EGIT_BRANCH="main"
@@ -16,27 +16,31 @@ EGIT_BRANCH="main"
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://www.slicer.org/"
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
+
 SLOT="0"
 
-IUSE="python cli DICOM sitk"
+IUSE="python cli DICOM"
 
 DEPEND="
 	sci-medical/ctk[python?,DICOM?]
 	sci-libs/vtkAddon[python?]
-	dev-qt/qtcore
-	dev-qt/linguist-tools
-	dev-qt/qtmultimedia[widgets]
-	dev-qt/qtopengl
-	dev-qt/qtsql
-	dev-qt/qtxmlpatterns
-	dev-qt/qtx11extras
-	dev-qt/qtsvg
-	dev-qt/qtwebengine
-	dev-qt/qtwebchannel
-	dev-qt/qtnetwork
-	dev-qt/qtscript
-	dev-qt/designer
+	dev-qt/qtcore:5
+	dev-qt/linguist-tools:5
+	dev-qt/qtmultimedia:5[widgets]
+	dev-qt/qtopengl:5
+	dev-qt/qtsql:5
+	dev-qt/qtxmlpatterns:5
+	dev-qt/qtx11extras:5
+	dev-qt/qtsvg:5
+	dev-qt/qtwebengine:5
+	dev-qt/qtwebchannel:5
+	dev-qt/qtnetwork:5
+	dev-qt/qtscript:5
+	dev-qt/designer:5
 	dev-libs/rapidjson
 	dev-libs/jsoncpp
 	dev-libs/qRestAPI
@@ -44,7 +48,6 @@ DEPEND="
 	sci-medical/teem
 	cli? ( Slicer-CLI/SlicerExecutionModel )
 	sci-libs/itk[vtkglue,deprecated]
-	sitk? ( sci-libs/SimpleITK )
 	sci-libs/vtk:0=
 "
 
@@ -60,6 +63,12 @@ RDEPEND="
 # NOTE: This is due to incompatibilities with some versions of cmake
 # for reference see https://github.com/Slicer/Slicer/pull/6852
 BDEPEND="<dev-util/cmake-3.25"
+
+REQUIRED_USE="
+	python? (
+		${PYTHON_REQUIRED_USE}
+		)
+"
 
 PATCHES=(
 	"${FILESDIR}/0001-COMP-Add-vtk-CommonSystem-component-as-requirement.patch"
@@ -100,7 +109,7 @@ PATCHES=(
 src_prepare() {
 
 	cmake_src_prepare
-	cp ${FILESDIR}/FindPythonQt.cmake ${S}/CMake
+	cp "${FILESDIR}"/FindPythonQt.cmake "${S}"/CMake
 }
 
 pkg_setup() {
@@ -141,7 +150,7 @@ src_configure(){
 		-DjqPlot_DIR:STRING="/usr/share/jqPlot"
 		-DSlicer_VTK_WRAP_HIERARCHY_DIR:STRING="${BUILD_DIR}"
 		-DSlicer_BUILD_vtkAddon:BOOL=OFF
-		-DSlicer_USE_SimpleITK:BOOL=$(usex sitk ON OFF)
+		-DSlicer_USE_SimpleITK:BOOL=OFF
 	)
 
 	if use python; then
@@ -158,7 +167,7 @@ src_configure(){
 src_install(){
 
 	cmake_src_install
-	dobin ${FILESDIR}/Slicer
+	dobin "${FILESDIR}"/Slicer
 
 	# insinto /etc/Slicer
 	# doins ${FILESDIR}/SlicerLauncherSettings.ini

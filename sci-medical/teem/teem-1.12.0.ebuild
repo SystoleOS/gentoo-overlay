@@ -5,21 +5,22 @@ EAPI=7
 
 inherit cmake
 
-DESCRIPTION="Set of libraries for representing, processing and visualizing scientific raster data (3D Slicer maintained)"
+DESCRIPTION="Scientific raster data processing and visualization libraries"
 
 HOMEPAGE="https://teem.sourceforge.net"
 
-SRC_URI="https://github.com/Slicer/teem/archive/e4746083c0e1dc0c137124c41eca5d23adf73bfa.zip -> ${P}.zip"
+SRC_URI="https://github.com/Slicer/teem/archive/e4746083c0e1dc0c137124c41eca5d23adf73bfa.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 
-KEYWORDS="~amd64"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 
 DEPEND="sys-libs/zlib"
 RDEPEND="${DEPEND}"
-BDEPEND="app-arch/unzip"
 
 PATCHES=(
 	"${FILESDIR}/0001-Fix-install-when-TEEM_LIB_INSTALL_DIR-is-set.patch"
@@ -27,13 +28,13 @@ PATCHES=(
 	"${FILESDIR}/0003-Replace-TEEM-by-Teem-in-CMake-variables.patch"
 	"${FILESDIR}/0004-Change-CMake-files-installation-path.patch"
 	"${FILESDIR}/0005-Modify-INSTALL_RPATH-and-INSTALL_NAME_DIR-for-instal.patch"
- )
+)
 
 src_unpack(){
 
 	default
 
-	mv ${WORKDIR}/* ${WORKDIR}/${P}
+	mv "${WORKDIR}"/* "${WORKDIR}"/"${P}"
 }
 
 src_configure() {

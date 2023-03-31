@@ -3,15 +3,20 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9..10} )
+DISTUTILS_USE_PEP517=setuptools
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit distutils-r1
 
 DESCRIPTION="Python package for parsing of DICOM files"
 HOMEPAGE="https://pydicom.github.io"
-SRC_URI="https://github.com/pydicom/pydicom/archive/refs/tags/v2.3.1.tar.gz"
+SRC_URI="https://github.com/pydicom/pydicom/archive/refs/tags/v${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
 
 LICENSE="pydicom-MIT"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
+
 IUSE=""

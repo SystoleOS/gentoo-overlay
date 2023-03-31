@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9,10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1
 
@@ -13,10 +13,12 @@ DESCRIPTION="General-purpose features that may be integrated into VTK library in
 # Homepage, not used by Portage directly but handy for developer reference
 HOMEPAGE="https://github.com/Slicer/vtkAddon"
 
-SRC_URI="https://github.com/Slicer/vtkAddon/archive/4413fde380b744ab221f7beb4410e11a5158b496.tar.gz -> vtkAddon.tar.gz"
+SRC_URI="https://github.com/Slicer/vtkAddon/archive/4413fde380b744ab221f7beb4410e11a5158b496.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 
 SLOT="0"
 
@@ -44,7 +46,7 @@ PATCHES=(
 
 src_unpack(){
 	default
-	mv ${WORKDIR}/* ${WORKDIR}/${P}
+	mv "${WORKDIR}"/* "${WORKDIR}"/"${P}"
 }
 
 pkg_setup() {
@@ -73,10 +75,8 @@ src_configure(){
 	cmake_src_configure
 }
 
-
 src_install(){
 
 	cmake_src_install
 	use python && python_optimize "${D}"$(python_get_sitedir)
-
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    CTKAppLauncherLib is a free, open-source library that provides support for launching and managing applications on a variety of platforms. It is designed to simplify and streamline the process of launching and managing applications, especially those in the medical imaging and surgical navigation domains.
+
+    The library includes a range of features and modules for launching and managing applications, including support for command-line arguments, environment variables, and application dependencies. It also includes support for a range of platforms, including Windows, macOS, and Linux, as well as integration with other popular medical imaging and surgical navigation tools.
+
+    CTKAppLauncherLib is built on top of the Common Toolkit (CTK), a collection of libraries and tools for medical imaging research and development. It provides access to a range of advanced features and algorithms for medical image analysis and visualization, as well as a highly customizable and extensible architecture for launching and managing applications.
+
+    The library has a user-friendly interface that supports both novice and advanced users, with features such as interactive documentation, code examples, and tutorials. It also includes a range of advanced features for power users, including support for scripting, logging, and application profiling.
+
+    Overall, CTKAppLauncherLib is a powerful and versatile tool for launching and managing applications in the medical imaging and surgical navigation domains, with a strong user community and ongoing development support.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">commontk/AppLauncher</remote-id>
+    <bugs-to>https://github.com/commontk/APPLauncher/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

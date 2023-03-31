@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>rafael.palomar@ous-research.no</email>
+    <description>Primary maintainer</description>
+  </maintainer>
+  <longdescription>
+    vtkAddon is a free, open-source library that provides a collection of additional tools and algorithms for the Visualization Toolkit (VTK). It is designed to extend the capabilities of VTK and facilitate the development of custom visualization and analysis applications.
+
+    vtkAddon is built on top of VTK, providing access to a range of advanced features and algorithms for scientific visualization and analysis. It also includes an extensible architecture that allows for the development of custom modules and extensions, making it highly customizable and adaptable to a wide range of use cases.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">Slicer/vtkAddon</remote-id>
+    <bugs-to>https://github.com/Slicer/vtkAddon/issues</bugs-to>
+  </upstream>
+</pkgmetadata>

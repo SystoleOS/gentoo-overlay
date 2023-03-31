@@ -3,7 +3,7 @@
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{9,10} )
+PYTHON_COMPAT=( python3_{9..11} )
 
 inherit cmake python-single-r1
 
@@ -14,14 +14,16 @@ HOMEPAGE="https://github.com/commontk/PythonQt"
 SRC_URI="https://github.com/commontk/PythonQt/archive/c4a5a155b2942d4b003862c3317105b4a1ea6755.tar.gz -> ${P}.tar.gz"
 
 LICENSE="BSD LGPL-2"
-KEYWORDS="~amd64 ~x86"
+if [[ ${PV} != *9999* ]]; then
+	KEYWORDS="~amd64 ~x86"
+fi
 SLOT="0"
 
 DEPEND="
 	dev-qt/qtcore:5
-	dev-qt/qtmultimedia
-	dev-qt/qtsvg
-	dev-qt/designer
+	dev-qt/qtmultimedia:5
+	dev-qt/qtsvg:5
+	dev-qt/designer:5
 "
 RDEPEND="
 	${DEPEND}
@@ -42,7 +44,7 @@ src_unpack(){
 
 	default
 
-	mv ${WORKDIR}/* ${WORKDIR}/${P}
+	mv "${WORKDIR}"/* "${WORKDIR}"/${P}
 }
 
 pkg_setup() {
