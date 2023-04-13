@@ -1,4 +1,4 @@
-From 0e0fb623b7e14e4e24f9853251b1a236b13f12d4 Mon Sep 17 00:00:00 2001
+From 1b9871cafa8d39037bb53e64e72e00b6309ce2ce Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 10:40:33 +0100
 Subject: [PATCH 18/32] ENH: Add templates infrastructure

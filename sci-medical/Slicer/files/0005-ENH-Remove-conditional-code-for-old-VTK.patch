@@ -1,4 +1,4 @@
-From df92a072206ef3f3bd4c02c8eae0e5650e443954 Mon Sep 17 00:00:00 2001
+From 329c037999febdd430579996ad5c00b69694689d Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:16:32 +0100
 Subject: [PATCH 05/32] ENH: Remove conditional code for old VTK

@@ -1,4 +1,4 @@
-From 43ba7593920f102ade9a1763232b7bc3f01e884b Mon Sep 17 00:00:00 2001
+From a677787f2243ebe7774f1ba032bd3fb97d2da442 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Fri, 27 Jan 2023 09:39:53 +0100
 Subject: [PATCH 17/32] ENH: Installation and setup qSlicerExport.h.in

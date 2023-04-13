@@ -1,4 +1,4 @@
-From 9529e21a8e0e1e69af02af60ff77aa9ef02599d7 Mon Sep 17 00:00:00 2001
+From e5db94e4c92df75686cf0333cc875587aa309d43 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Sat, 28 Jan 2023 07:53:06 +0100
 Subject: [PATCH 19/32] ENH: Update SlicerInstallConfig

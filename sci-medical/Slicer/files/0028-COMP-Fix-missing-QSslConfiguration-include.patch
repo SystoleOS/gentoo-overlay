@@ -1,4 +1,4 @@
-From b202e5d64da84466773612c40c9204208fa92431 Mon Sep 17 00:00:00 2001
+From 8f8de56af510de1c4b22dd581876e4b4672496b7 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 14 Mar 2023 13:50:25 +0100
 Subject: [PATCH 28/32] COMP: Fix missing QSslConfiguration include

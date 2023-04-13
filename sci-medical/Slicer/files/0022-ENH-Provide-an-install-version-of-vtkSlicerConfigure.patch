@@ -1,4 +1,4 @@
-From 5257d54e447cb1544b21a915858168b5c754b187 Mon Sep 17 00:00:00 2001
+From d34fc7310edbb7c4e148a604cbf36da30bce0a44 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 16:31:51 +0100
 Subject: [PATCH 22/32] ENH: Provide an install version of vtkSlicerConfigure.h

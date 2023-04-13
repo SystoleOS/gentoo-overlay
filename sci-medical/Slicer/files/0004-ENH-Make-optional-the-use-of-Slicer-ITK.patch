@@ -1,4 +1,4 @@
-From c913aa5c0a83c63cab2922d247e231c628c1554a Mon Sep 17 00:00:00 2001
+From 26f401dc397072340392698db8c8b4b7614f6568 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 11:46:12 +0100
 Subject: [PATCH 04/32] ENH: Make optional the use of Slicer ITK

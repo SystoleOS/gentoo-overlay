@@ -1,11 +1,11 @@
-From 6fa2d8cd6501a38d90b8b71e0b77b3bf7da73cea Mon Sep 17 00:00:00 2001
+From 33dc8543132f0436f8c5c87b0b4ec414261fa849 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
 Subject: [PATCH 26/32] ENH: Add python support
 
 ---
  Base/Logic/CMakeLists.txt                     |  2 +-
- Base/Python/CMakeLists.txt                    | 61 ++++++++++++-------
+ Base/Python/CMakeLists.txt                    | 63 ++++++++++++-------
  Base/Python/mrml.py                           |  8 ++-
  Base/QTApp/CMakeLists.txt                     |  6 +-
  Base/QTGUI/qSlicerPythonManager.cxx           |  3 +-
@@ -23,7 +23,7 @@ Subject: [PATCH 26/32] ENH: Add python support
  Templates/UseSlicer.cmake.in                  |  1 +
  Templates/vtkSlicerConfigure.h.in             |  1 +
  Templates/vtkSlicerInstallConfigure.h.in      |  2 +
- 19 files changed, 115 insertions(+), 62 deletions(-)
+ 19 files changed, 116 insertions(+), 63 deletions(-)
 
 diff --git a/Base/Logic/CMakeLists.txt b/Base/Logic/CMakeLists.txt
 index 3d5d78c469..3822e358d9 100644
@@ -39,13 +39,14 @@ index 3d5d78c469..3822e358d9 100644
  endif()
  
 diff --git a/Base/Python/CMakeLists.txt b/Base/Python/CMakeLists.txt
-index 13f2ae2f77..3dd6008093 100644
+index 13f8fc56dd..b755d9b3bc 100644
 --- a/Base/Python/CMakeLists.txt
 +++ b/Base/Python/CMakeLists.txt
-@@ -1,27 +1,27 @@
+@@ -1,28 +1,28 @@
  
  set(Slicer_PYTHON_SCRIPTS
 -  slicer/__init__
+-  slicer/i18n
 -  slicer/logic
 -  slicer/parameterNodeWrapper/__init__
 -  slicer/parameterNodeWrapper/default
@@ -68,6 +69,7 @@ index 13f2ae2f77..3dd6008093 100644
 -  vtkSegmentationCore
 -  vtkTeem
 +  slicer/__init__.py
++  slicer/i18n.py
 +  slicer/logic.py
 +  slicer/parameterNodeWrapper/__init__.py
 +  slicer/parameterNodeWrapper/default.py
@@ -92,7 +94,7 @@ index 13f2ae2f77..3dd6008093 100644
    )
  
  set(Slicer_PYTHON_MODULES_CONFIG "
-@@ -71,5 +71,20 @@ ctkMacroCompilePythonScript(
+@@ -72,5 +72,20 @@ ctkMacroCompilePythonScript(
    SCRIPTS "${Slicer_PYTHON_SCRIPTS}"
    RESOURCES "${Slicer_PYTHON_RESOURCES}"
    DESTINATION_DIR ${Slicer_BINARY_DIR}/bin/Python

@@ -1,4 +1,4 @@
-From e4341c1cfe12bce96315bc53c026b0a14417b94c Mon Sep 17 00:00:00 2001
+From 61251074ab43bfd1b851a5d223ec8eb9b2a5cfd6 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 09:51:51 +0100
 Subject: [PATCH 01/32] COMP: Add vtk CommonSystem component as requirement

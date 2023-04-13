@@ -1,4 +1,4 @@
-From 28615a493ee8f1e142d621ee6ed30bd57b687c44 Mon Sep 17 00:00:00 2001
+From 4856518453a5f959768790c04f69e2cae4ff6d42 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 10:58:45 +0100
 Subject: [PATCH 11/32] ENH: Add variable install dirs for Libs dev files
