@@ -11,6 +11,8 @@ HOMEPAGE="http://openigtlink.org"
 EGIT_REPO_URI="https://github.com/openigtlink/OpenIGTLink"
 EGIT_BRANCH="master"
 
+IUSE="v2 v3"
+
 LICENSE="BSD"
 SLOT="0"
 if [[ ${PV} != *9999* ]]; then
@@ -34,6 +36,9 @@ src_configure(){
 	mycmakeargs+=(
 		-DBUILD_TESTING:BOOL=OFF
 		-DCMAKE_BUILD_TYPE:STRING=Release
+		-DOpenIGTLink_INSTALL_LIB_DIR:STRING=$(get_libdir)
+		-DOpenIGTLink_PROTOCOL_VERSION_2:BOOL=$(usex v2 ON OFF)
+		-DOpenIGTLink_PROTOCOL_VERSION_3:BOOL=$(usex v3 ON OFF)
 		-DOpenIGTLink_INSTALL_LIB_DIR:STRING=$(get_libdir)
 	)
 
