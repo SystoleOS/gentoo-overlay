@@ -21,6 +21,8 @@ fi
 DEPEND="
 	>=sci-libs/vtk-9.2.0
 	sci-medical/OpenIGTLink
+	dev-qt/qtcore:5
+	dev-qt/qtwidgets:5
 "
 
 RDEPEND="
