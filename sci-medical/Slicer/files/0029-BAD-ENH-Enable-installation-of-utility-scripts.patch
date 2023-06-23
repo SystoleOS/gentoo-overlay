@@ -1,4 +1,4 @@
-From 1019a690fe492bed7c4dc1835bcc18d9189508bb Mon Sep 17 00:00:00 2001
+From 78b893c35f3503a67e652593207a3ca59525b6ac Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 14 Mar 2023 16:34:32 +0100
 Subject: [PATCH 29/32] BAD-ENH: Enable installation of utility scripts
@@ -20,10 +20,10 @@ index ef46730629..cbed306a26 100644
 +set(Slicer_UTILITY_SCRIPTS_DIR "${CMAKE_SOURCE_DIR}/Utilities/Scripts")
 +set(Slicer_INSTALL_UTILITY_SCRIPTS_DIR "${Slicer_INSTALL_LIBEXEC_DIR}/Utilities/Scripts")
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6035613ce8..7a989e5433 100644
+index 7f295fec6b..89a9359d9b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1275,6 +1275,13 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1299,6 +1299,13 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
      )
  endif()
  
@@ -38,5 +38,5 @@ index 6035613ce8..7a989e5433 100644
  # Create target to download data from the <Slicer_ExternalData_DATA_MANAGEMENT_TARGET> group.
  # This must come after all tests have been added that reference the group, so we put it last.
 -- 
-2.39.2
+2.39.3
 

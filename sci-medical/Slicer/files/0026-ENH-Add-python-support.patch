@@ -1,4 +1,4 @@
-From 33dc8543132f0436f8c5c87b0b4ec414261fa849 Mon Sep 17 00:00:00 2001
+From 536deda53e2adb2949e01c8890640c04502ed69b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 15:17:05 +0100
 Subject: [PATCH 26/32] ENH: Add python support
@@ -295,10 +295,10 @@ index c2bf8e3d98..aea4c41c89 100644
 +
  endmacro()
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index fc342c2611..6035613ce8 100644
+index feaed49f41..7f295fec6b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -157,6 +157,10 @@ mark_as_superbuild(GIT_EXECUTABLE)
+@@ -181,6 +181,10 @@ mark_as_superbuild(GIT_EXECUTABLE)
  find_package(Patch REQUIRED)
  mark_as_superbuild(Patch_EXECUTABLE)
  
@@ -309,7 +309,7 @@ index fc342c2611..6035613ce8 100644
  #-----------------------------------------------------------------------------
  # Qt requirements
  #-----------------------------------------------------------------------------
-@@ -771,14 +775,6 @@ foreach(dep QT ${Slicer_DEPENDENCIES})
+@@ -795,14 +799,6 @@ foreach(dep QT ${Slicer_DEPENDENCIES})
    endif()
  endforeach()
  
@@ -324,7 +324,7 @@ index fc342c2611..6035613ce8 100644
  #-----------------------------------------------------------------------------
  # Folders
  #-----------------------------------------------------------------------------
-@@ -901,18 +897,11 @@ include(ctkFunctionAddExecutableUtf8)
+@@ -925,18 +921,11 @@ include(ctkFunctionAddExecutableUtf8)
  # Set Slicer_PYTHON_VERSION and Slicer_PYTHON_VERSION_DOT
  #-----------------------------------------------------------------------------
  if(Slicer_USE_PYTHONQT)
@@ -346,7 +346,7 @@ index fc342c2611..6035613ce8 100644
    function(_python_sys_attribute attribute varname)
      execute_process(
        COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.${attribute})"
-@@ -953,6 +942,11 @@ if(Slicer_USE_PYTHONQT)
+@@ -977,6 +966,11 @@ if(Slicer_USE_PYTHONQT)
    set(Slicer_VTK_WRAP_HIERARCHY_DIR ${Slicer_BINARY_DIR})
  endif()
  
@@ -495,5 +495,5 @@ index bda250a648..ed9f94b975 100644
  #define Slicer_QTLOADABLEMODULES_SUBDIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_QTLOADABLEMODULES_SUBDIR@"
  #define Slicer_QTLOADABLEMODULES_BIN_DIR "@CMAKE_INSTALL_PREFIX@/@Slicer_INSTALL_QTLOADABLEMODULES_BIN_DIR@"
 -- 
-2.39.2
+2.39.3
 

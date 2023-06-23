@@ -1,4 +1,4 @@
-From 26f401dc397072340392698db8c8b4b7614f6568 Mon Sep 17 00:00:00 2001
+From 772eaff2aa3a30699ef1d436a9fdf93aa45cbbe5 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 11:46:12 +0100
 Subject: [PATCH 04/32] ENH: Make optional the use of Slicer ITK
@@ -15,10 +15,10 @@ other flavours of ITK (e.g., official ITK).
  5 files changed, 22 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 546e5d2acd..92fe7bb493 100644
+index a38abbb0fa..52511c4658 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -366,6 +366,14 @@ option(Slicer_USE_QtTesting    "Integrate QtTesting framework into Slicer." ON)
+@@ -390,6 +390,14 @@ option(Slicer_USE_QtTesting    "Integrate QtTesting framework into Slicer." ON)
  mark_as_advanced(Slicer_USE_QtTesting)
  mark_as_superbuild(Slicer_USE_QtTesting)
  
@@ -94,5 +94,5 @@ index 785472ee33..0ce8ac3678 100644
  #include "vtkITKNumericTraits.h"
  
 -- 
-2.39.2
+2.39.3
 

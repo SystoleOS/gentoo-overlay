@@ -1,4 +1,4 @@
-From 67d00426355c964a091fc3cc037239be6a76b54b Mon Sep 17 00:00:00 2001
+From 5875892c7ec8f3a61bc2df34a39bb08a0de759e8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:41:00 +0100
 Subject: [PATCH 07/32] ENH: Install testing data only with testing support
@@ -11,10 +11,10 @@ is not built.
  2 files changed, 49 insertions(+), 47 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 92fe7bb493..a4ef60f21a 100644
+index 52511c4658..3dc66fe365 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1200,17 +1200,18 @@ endif()
+@@ -1224,17 +1224,18 @@ endif()
  #-----------------------------------------------------------------------------
  if(BUILD_TESTING)
    add_subdirectory(Testing)
@@ -137,5 +137,5 @@ index 540721fe4f..45b69783e4 100644
  # Set INCLUDE_DIRS variable
  # --------------------------------------------------------------------------
 -- 
-2.39.2
+2.39.3
 

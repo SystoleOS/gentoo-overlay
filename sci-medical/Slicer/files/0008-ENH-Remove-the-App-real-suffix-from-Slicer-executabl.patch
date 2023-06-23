@@ -1,4 +1,4 @@
-From 9b2088719960666daae0bd25fd11f904463af522 Mon Sep 17 00:00:00 2001
+From 1920adc532c3591f5d8466d992b2630bca244663 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 11:08:38 +0100
 Subject: [PATCH 08/32] ENH: Remove the 'App-real' suffix from Slicer
@@ -22,5 +22,5 @@ index 637659c6fe..5ce01cd67d 100644
    endif()
    message(STATUS "Setting ${SLICERAPP_APPLICATION_NAME} executable name to '${executable_name}${CMAKE_EXECUTABLE_SUFFIX}'")
 -- 
-2.39.2
+2.39.3
 

@@ -1,4 +1,4 @@
-From bbb7ac71ddd7b73642882bf13814f11921838407 Mon Sep 17 00:00:00 2001
+From 45069a0fdfba493fe73b5c4b90e02f6e71eb9af3 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@rr-research.no>
 Date: Thu, 3 Oct 2019 10:13:12 +0200
 Subject: [PATCH 12/32] ENH: Generate and Install SlicerConfig (install tree)
@@ -22,10 +22,10 @@ index de7e1ce779..d2370a532b 100644
 +  ${Slicer_SOURCE_DIR}/CMake/SlicerInstallConfig.cmake.in
 +  ${Slicer_BINARY_DIR}/install/SlicerConfig.cmake @ONLY)
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f4c56967c9..e9cfb67100 100644
+index 9a6ffbaa60..3c111695ea 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1252,7 +1252,7 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1276,7 +1276,7 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
  
    install(FILES
      ${Slicer_BINARY_DIR}/UseSlicer.cmake
@@ -35,5 +35,5 @@ index f4c56967c9..e9cfb67100 100644
      DESTINATION ${Slicer_INSTALL_CMAKE_DIR}
      COMPONENT Development
 -- 
-2.39.2
+2.39.3
 

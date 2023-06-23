@@ -1,4 +1,4 @@
-From 61251074ab43bfd1b851a5d223ec8eb9b2a5cfd6 Mon Sep 17 00:00:00 2001
+From ebeb82a8f3cc280c8dd1975a2e789fd9e4f87e2b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 09:51:51 +0100
 Subject: [PATCH 01/32] COMP: Add vtk CommonSystem component as requirement
@@ -8,10 +8,10 @@ Subject: [PATCH 01/32] COMP: Add vtk CommonSystem component as requirement
  1 file changed, 1 insertion(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index f62422becd..96df9bc8d8 100644
+index d4d0f244ba..76df451209 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -564,6 +564,7 @@ message(STATUS "  Slicer_VTK_VERSION_MAJOR is ${Slicer_VTK_VERSION_MAJOR}")
+@@ -588,6 +588,7 @@ message(STATUS "  Slicer_VTK_VERSION_MAJOR is ${Slicer_VTK_VERSION_MAJOR}")
  # Slicer_VTK_COMPONENTS
  #-----------------------------------------------------------------------------
  set(Slicer_VTK_COMPONENTS
@@ -20,5 +20,5 @@ index f62422becd..96df9bc8d8 100644
    FiltersFlowPaths
    FiltersGeometry
 -- 
-2.39.2
+2.39.3
 

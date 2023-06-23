@@ -1,4 +1,4 @@
-From 6c08373bdfbe9d6733a1154e633cdbfe17058ec9 Mon Sep 17 00:00:00 2001
+From 464a18e2d39ddd8c2ca07f37a29648de62940fc0 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 11:15:28 +0100
 Subject: [PATCH 21/32] ENH: Fix qt-loadable-modules installation dirs
@@ -49,5 +49,5 @@ index 6be6f44fe3..526ab4ce25 100644
    set(Slicer_INSTALL_QTSCRIPTEDMODULES_BIN_DIR "${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_QTSCRIPTEDMODULES_BIN_DIR}")
    set(Slicer_INSTALL_QTSCRIPTEDMODULES_LIB_DIR "${Slicer_INSTALL_ROOT}${Slicer_BUNDLE_EXTENSIONS_LOCATION}${Slicer_QTSCRIPTEDMODULES_LIB_DIR}")
 -- 
-2.39.2
+2.39.3
 

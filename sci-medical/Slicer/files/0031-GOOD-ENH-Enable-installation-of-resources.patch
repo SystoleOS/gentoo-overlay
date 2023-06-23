@@ -1,4 +1,4 @@
-From 2a21840ec95416202a4c359637ddbf8603069e37 Mon Sep 17 00:00:00 2001
+From edd8a627ae37bbba6b67958391cde9e6ef43fd4b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 23 Mar 2023 16:33:43 +0100
 Subject: [PATCH 31/32] GOOD-ENH: Enable installation of resources
@@ -23,10 +23,10 @@ index cbed306a26..082150a3ec 100644
 +set(Slicer_RESOURCES_DIR "${CMAKE_SOURCE_DIR}/Resources")
 +set(Slicer_INSTALL_RESOURCES_DIR "${Slicer_INSTALL_SHARE_DIR}/Resources")
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 7a989e5433..3ceb675cc1 100644
+index 89a9359d9b..027b55cdc2 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -126,13 +126,6 @@ endif()
+@@ -150,13 +150,6 @@ endif()
  include(SlicerInitializeBuildType)
  include(SlicerInitializeReleaseType)
  
@@ -40,7 +40,7 @@ index 7a989e5433..3ceb675cc1 100644
  #-----------------------------------------------------------------------------
  # Platform checks
  #-----------------------------------------------------------------------------
-@@ -508,6 +501,14 @@ include(SlicerBlockCXXRequiredFlags)
+@@ -532,6 +525,14 @@ include(SlicerBlockCXXRequiredFlags)
  #-----------------------------------------------------------------------------
  include(SlicerDirectories)
  
@@ -55,7 +55,7 @@ index 7a989e5433..3ceb675cc1 100644
  # SlicerExecutionModel output directories
  if(Slicer_SUPERBUILD)
    set(_sem_output_dir ${CMAKE_BINARY_DIR}/${Slicer_BINARY_INNER_SUBDIR})
-@@ -1282,6 +1283,16 @@ endif()
+@@ -1306,6 +1307,16 @@ endif()
  install(PROGRAMS ${Slicer_QRCC_SCRIPT}
    DESTINATION ${Slicer_INSTALL_UTILITY_SCRIPTS_DIR})
  
@@ -83,5 +83,5 @@ index 158dcc354e..2454815bbd 100644
 +
 +set(Slicer_LOGOS_RESOURCE "@Slicer_LOGOS_INSTALL_RESOURCE@")
 -- 
-2.39.2
+2.39.3
 

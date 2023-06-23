@@ -1,4 +1,4 @@
-From 66cab1010250898212da06d49ecd94221d756c51 Mon Sep 17 00:00:00 2001
+From 2e3494269b3314383a622713e852cf0df5f7bf13 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 7 Mar 2023 19:04:09 +0100
 Subject: [PATCH 27/32] ENH: Disable variable setting in UseSlicer.cmake.in
@@ -75,5 +75,5 @@ index 4431e1f483..ca2191d087 100644
  # These variables can be used when configuring extension external projects in
  # two different scenarios: (1) bundled extensions and (2) regular extensions.
 -- 
-2.39.2
+2.39.3
 

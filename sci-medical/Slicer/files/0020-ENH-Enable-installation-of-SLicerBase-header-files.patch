@@ -1,4 +1,4 @@
-From dcfe1502ea4ab33a2aaac148bb118f8438ddfaea Mon Sep 17 00:00:00 2001
+From 18b5dd07c06fa8097f8b8df0d786f2ab7e8ebe12 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Mon, 30 Jan 2023 13:39:41 +0100
 Subject: [PATCH 20/32] ENH: Enable installation of SLicerBase header files
@@ -178,5 +178,5 @@ index d5413d555d..333b39c955 100644
  # Slicer icon engine
  #-----------------------------------------------------------------------------
 -- 
-2.39.2
+2.39.3
 

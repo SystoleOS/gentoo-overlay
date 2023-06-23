@@ -1,4 +1,4 @@
-From a645e9c38a0a10b6d777d9331bd8543d084e104d Mon Sep 17 00:00:00 2001
+From 3c8e0802cb0e1db53bcb9a74ff31290c33d04b79 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 21 Feb 2023 07:08:46 +0100
 Subject: [PATCH 24/32] ENH: Enable installation of Libs dev files
@@ -30,10 +30,10 @@ index 6f5c27bea9..ad290bb494 100644
  endif()
  
 diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
-index 0232af47cd..1d87600ac6 100644
+index 25eabf41b4..c3c63c4091 100644
 --- a/Libs/MRML/Widgets/CMakeLists.txt
 +++ b/Libs/MRML/Widgets/CMakeLists.txt
-@@ -431,8 +431,36 @@ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+@@ -434,8 +434,36 @@ if(NOT DEFINED ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
  endif()
  if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
@@ -106,5 +106,5 @@ index 4873578b55..97487ef003 100644
  endif()
  
 -- 
-2.39.2
+2.39.3
 

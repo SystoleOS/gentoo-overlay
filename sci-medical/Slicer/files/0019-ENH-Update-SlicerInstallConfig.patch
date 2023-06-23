@@ -1,4 +1,4 @@
-From e5db94e4c92df75686cf0333cc875587aa309d43 Mon Sep 17 00:00:00 2001
+From 8ef479dba1898df836a5dc499056feaaa4dab3dd Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Sat, 28 Jan 2023 07:53:06 +0100
 Subject: [PATCH 19/32] ENH: Update SlicerInstallConfig
@@ -10,10 +10,10 @@ This closes SystoleOS/gentoo-overlay#76.
  2 files changed, 100 insertions(+), 60 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 51e8cb1aac..2ad5a3572e 100644
+index 0c89ea71f9..954fd722f9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1078,6 +1078,7 @@ configure_file(
+@@ -1102,6 +1102,7 @@ configure_file(
    ${Slicer_BINARY_DIR}/SlicerConfigVersion.cmake @ONLY)
  
  set(Slicer_EXTENSION_GENERATE_CONFIG ${Slicer_SOURCE_DIR}/CMake/SlicerExtensionGenerateConfig.cmake)
@@ -224,5 +224,5 @@ index ce3e9451e4..7635e75d24 100644
 +
 +set(Slicer_EXTENSION_GENERATE_CONFIG "@Slicer_EXTENSION_INSTALL_GENERATE_CONFIG@")
 -- 
-2.39.2
+2.39.3
 

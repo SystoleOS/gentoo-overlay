@@ -1,4 +1,4 @@
-From 8f8de56af510de1c4b22dd581876e4b4672496b7 Mon Sep 17 00:00:00 2001
+From f08015a3dc06229dca3b79548b4ea82c77fac64c Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 14 Mar 2023 13:50:25 +0100
 Subject: [PATCH 28/32] COMP: Fix missing QSslConfiguration include
@@ -8,7 +8,7 @@ Subject: [PATCH 28/32] COMP: Fix missing QSslConfiguration include
  1 file changed, 1 insertion(+)
 
 diff --git a/Base/QTCore/qSlicerCoreApplication.cxx b/Base/QTCore/qSlicerCoreApplication.cxx
-index 3838be3d25..ddd5c15cb6 100644
+index 80ea645981..b1ba69a5c4 100644
 --- a/Base/QTCore/qSlicerCoreApplication.cxx
 +++ b/Base/QTCore/qSlicerCoreApplication.cxx
 @@ -34,6 +34,7 @@
@@ -20,5 +20,5 @@ index 3838be3d25..ddd5c15cb6 100644
  // For:
  //  - Slicer_QTLOADABLEMODULES_LIB_DIR
 -- 
-2.39.2
+2.39.3
 

@@ -1,4 +1,4 @@
-From 887c2f04353a8952020ec738c6f2252d057d18c5 Mon Sep 17 00:00:00 2001
+From 74f14e67b98e91b4d5b39715cfcaf5e0545a9314 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 28 Feb 2023 13:02:15 +0100
 Subject: [PATCH 25/32] ENH: Make Testing subdirs subject to `BUILD_TESTING`
@@ -57,5 +57,5 @@ index 333b39c955..3db0072693 100644
 +  add_subdirectory(Testing)
 +endif()
 -- 
-2.39.2
+2.39.3
 

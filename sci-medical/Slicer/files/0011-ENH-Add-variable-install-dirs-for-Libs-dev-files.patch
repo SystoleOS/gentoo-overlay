@@ -1,4 +1,4 @@
-From 4856518453a5f959768790c04f69e2cae4ff6d42 Mon Sep 17 00:00:00 2001
+From 576d876347f7a95b9bc9299180971e50abd79077 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Wed, 25 Jan 2023 10:58:45 +0100
 Subject: [PATCH 11/32] ENH: Add variable install dirs for Libs dev files
@@ -100,10 +100,10 @@ index 1a28d303d5..d9f47ac67b 100644
  
  # --------------------------------------------------------------------------
 diff --git a/Libs/MRML/Widgets/CMakeLists.txt b/Libs/MRML/Widgets/CMakeLists.txt
-index 53d82dce39..0232af47cd 100644
+index f9162928c3..25eabf41b4 100644
 --- a/Libs/MRML/Widgets/CMakeLists.txt
 +++ b/Libs/MRML/Widgets/CMakeLists.txt
-@@ -433,7 +433,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
+@@ -436,7 +436,7 @@ if(NOT ${PROJECT_NAME}_INSTALL_NO_DEVELOPMENT)
    file(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/*.h")
    install(
      FILES ${headers}
@@ -175,5 +175,5 @@ index a30ea518b3..c8ac7a7ef9 100644
  
  # --------------------------------------------------------------------------
 -- 
-2.39.2
+2.39.3
 

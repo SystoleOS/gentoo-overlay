@@ -1,4 +1,4 @@
-From b6a957de48d87e5467c95f62a7d31133bea33f06 Mon Sep 17 00:00:00 2001
+From 0ee1ebaa49a98f6ffee11e131dba2d7ed8635070 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 12:37:17 +0100
 Subject: [PATCH 06/32] ENH: Limit CPack on non-superbuild mode
@@ -258,5 +258,5 @@ index a67d9f94a7..13d992421a 100644
  # Install Slicer
  set(CPACK_INSTALL_CMAKE_PROJECTS "${CPACK_INSTALL_CMAKE_PROJECTS};${Slicer_BINARY_DIR};Slicer;RuntimeLibraries;/")
 -- 
-2.39.2
+2.39.3
 

@@ -1,4 +1,4 @@
-From ede6be5e9ad05d7c0bd9dc6892b4bbecf0fcb1ae Mon Sep 17 00:00:00 2001
+From 785aaaf6c904a082d2973fc8a9a4d911c661aba8 Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 26 Jan 2023 12:16:14 +0100
 Subject: [PATCH 13/32] ENH: Make installed CMake files available
@@ -41,5 +41,5 @@ index 4d13a50a23..7955913b98 100644
 +
 +list(APPEND CMAKE_MODULE_PATH "@Slicer_INSTALL_CMAKE_DIR@")
 -- 
-2.39.2
+2.39.3
 

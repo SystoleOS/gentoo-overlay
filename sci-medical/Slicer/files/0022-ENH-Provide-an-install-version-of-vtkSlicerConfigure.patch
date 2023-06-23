@@ -1,4 +1,4 @@
-From d34fc7310edbb7c4e148a604cbf36da30bce0a44 Mon Sep 17 00:00:00 2001
+From 3266691eb043f30c7c8a8ff1dd419b915636cf8b Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Thu, 2 Feb 2023 16:31:51 +0100
 Subject: [PATCH 22/32] ENH: Provide an install version of vtkSlicerConfigure.h
@@ -10,10 +10,10 @@ Subject: [PATCH 22/32] ENH: Provide an install version of vtkSlicerConfigure.h
  create mode 100644 Templates/vtkSlicerInstallConfigure.h.in
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 2ad5a3572e..fc342c2611 100644
+index 954fd722f9..feaed49f41 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1181,12 +1181,21 @@ foreach(f ${files})
+@@ -1205,12 +1205,21 @@ foreach(f ${files})
      )
  endforeach()
  
@@ -32,7 +32,7 @@ index 2ad5a3572e..fc342c2611 100644
 -list(APPEND files vtkSlicerVersionConfigure.h)
 +set(files vtkSlicerVersionConfigure.h)
 +list(APPEND files
-+  vtkSlicerVersionConfigureInternal.h
++  vtkSlicerVersionConfigureMinimal.h
 +  install/vtkSlicerConfigure.h)
  
  if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
@@ -175,5 +175,5 @@ index 0000000000..bda250a648
 +
 +#endif //__vtkSlicerConfigure_h
 -- 
-2.39.2
+2.39.3
 

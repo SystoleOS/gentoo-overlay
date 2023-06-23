@@ -1,4 +1,4 @@
-From 859b12d954837dc621ae85a2e1737c0fbb60b566 Mon Sep 17 00:00:00 2001
+From bca7c7272c3078748549defa4fe87de989bc9eac Mon Sep 17 00:00:00 2001
 From: Rafael Palomar <rafael.palomar@ous-research.no>
 Date: Tue, 24 Jan 2023 19:26:38 +0100
 Subject: [PATCH 09/32] ENH: Use CMake GNUInstallDirs in Slicer directories
@@ -83,10 +83,10 @@ index 6c15bcf9ae..29aa4f7a14 100644
  #-----------------------------------------------------------------------------
  # Qt Loadable Modules relative directories
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a4ef60f21a..f4c56967c9 100644
+index 3dc66fe365..9a6ffbaa60 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -1247,14 +1247,14 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
+@@ -1271,14 +1271,14 @@ if(NOT Slicer_INSTALL_NO_DEVELOPMENT)
    file(GLOB cmake_files "${CMAKE_CURRENT_SOURCE_DIR}/CMake/*.cmake")
    install(
      FILES ${cmake_files}
@@ -118,5 +118,5 @@ index ee716f7b8e..a31c8d013f 100644
    set(${dir_noslash}_EXPORT_FILE ${Slicer_BINARY_DIR}/SlicerTargets.cmake)
    set(${dir_noslash}_FOLDER Core-Libs/${dir_noslash})
 -- 
-2.39.2
+2.39.3
 
