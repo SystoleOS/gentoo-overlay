@@ -1,24 +1,19 @@
-From 8ca27867d250432e39fc539f74c00e346e06ca2f Mon Sep 17 00:00:00 2001
-From: Rafael Palomar <rafael.palomar@ous-research.no>
-Date: Wed, 21 Dec 2022 13:41:42 +0100
-Subject: [PATCH 3/3] ENH: Refactor CMake project definition
+From 53f41c40c0388a35d53a15aea874c9533c24ae65 Mon Sep 17 00:00:00 2001
+From: Rafael Palomar <rafael.palomar@ntnu.no>
+Date: Sat, 13 Jan 2024 13:16:42 +0100
+Subject: [PATCH] ENH: Refactor CMake project infrastructure
 
-This does a refactoring of the cmake project definition taking
-inspiration on the vtkAddon cmake project layout. The following changes
-have been introduced:
-
-  - Remove the use UseqRestAPI.cmake.in and derivatives. Now everything is set in the `qRestAPIConfig.cmake.in` and derivatives
-  - Integrate the generation of configuration files (earlier in `CMake/GenerateqRestAPIConfig.cmake`) into the main `CMakeLists.txt`.
-  - Add generation of install-tree config template file `qRestAPIInstallConfig.cmake.in`
-  - Add installation of cmake files, header files and libraries.
+- Removed old configuration and use CMake files in favor of`qRestAPIConfig.cmake.in`
+- Enable install configuration through implementation of qRestAPIInstallConfig.cmake.in
+- Enabled installation of development files.
 ---
  CMake/GenerateqRestAPIConfig.cmake |  20 -----
  CMake/UseqRestAPI.cmake.in         |  16 ----
  CMake/qRestAPIConfig.cmake.in      |  14 ----
- CMakeLists.txt                     | 121 +++++++++++++++++++++++++++--
+ CMakeLists.txt                     | 118 ++++++++++++++++++++++++++++-
  qRestAPIConfig.cmake.in            |   5 ++
  qRestAPIInstallConfig.cmake.in     |   3 +
- 6 files changed, 124 insertions(+), 55 deletions(-)
+ 6 files changed, 124 insertions(+), 52 deletions(-)
  delete mode 100644 CMake/GenerateqRestAPIConfig.cmake
  delete mode 100644 CMake/UseqRestAPI.cmake.in
  delete mode 100644 CMake/qRestAPIConfig.cmake.in
@@ -94,17 +89,22 @@ index ee15dd2..0000000
 -# The location of the UseqRestAPI.cmake file.
 -set(qRestAPI_USE_FILE "@qRestAPI_USE_FILE_CONFIG@")
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 713c6fc..2ba9158 100644
+index 9c3e905..29fe52b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -6,26 +6,85 @@ set(CMAKE_INCLUDE_CURRENT_DIR 1)
+@@ -2,13 +2,45 @@ cmake_minimum_required(VERSION 3.5.0)
+ 
+ project(qRestAPI)
+ 
++# --------------------------------------------------------------------------
++# CMake variables
++# --------------------------------------------------------------------------
+ set(CMAKE_INCLUDE_CURRENT_DIR 1)
  set(CMAKE_INCLUDE_CURRENT_DIR_IN_INTERFACE 1)
  set(CMAKE_POSITION_INDEPENDENT_CODE 1)
  
--option(BUILD_SHARED_LIBS "Build shared library" ON)
--option(BUILD_TESTING "Test the project" ON)
 +# --------------------------------------------------------------------------
-+# Set directories
++# Directories
 +# --------------------------------------------------------------------------
 +#
 +# CMake
@@ -121,29 +121,24 @@ index 713c6fc..2ba9158 100644
 +#
 +set(${PROJECT_NAME}_LIBRARY_DIRS ${CMAKE_CURRENT_BINARY_DIR}
 +  CACHE INTERNAL "${PROJECT_NAME} library dirs" FORCE)
++
++# --------------------------------------------------------------------------
++# Options
++# --------------------------------------------------------------------------
+ option(BUILD_SHARED_LIBS "Build shared library" ON)
+ option(BUILD_TESTING "Test the project" ON)
  
 +# --------------------------------------------------------------------------
 +# Dependencies
 +# --------------------------------------------------------------------------
 +
 +#
-+# Qt5
++# Qt
 +#
- set(QT5_INSTALL_PREFIX "" CACHE PATH "The install location of Qt5")
- set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT5_INSTALL_PREFIX})
- 
- set(qRestAPI_QT5_COMPONENTS Core Gui Network Script Test)
- find_package(Qt5 COMPONENTS ${qRestAPI_QT5_COMPONENTS} REQUIRED)
- 
-+# --------------------------------------------------------------------------
-+# Options
-+# --------------------------------------------------------------------------
-+option(BUILD_SHARED_LIBS "Build shared library" ON)
-+option(BUILD_TESTING "Test the project" ON)
-+
- if(BUILD_SHARED_LIBS)
-   set(qRestAPI_STATIC OFF)
- else()
+ set(qRestAPI_QT_VERSION "4" CACHE STRING "Expected Qt version")
+ mark_as_advanced(qRestAPI_QT_VERSION)
+ set_property(CACHE qRestAPI_QT_VERSION PROPERTY STRINGS 4 5 6)
+@@ -36,6 +68,9 @@ else()
    set(qRestAPI_STATIC ON)
  endif()
  
@@ -153,6 +148,8 @@ index 713c6fc..2ba9158 100644
  configure_file(
    qRestAPI_Export.h.in
    ${CMAKE_CURRENT_BINARY_DIR}/qRestAPI_Export.h
+@@ -53,6 +88,34 @@ set(KIT_SRCS
+   qRestResult.h
    )
  
 +# --------------------------------------------------------------------------
@@ -182,21 +179,25 @@ index 713c6fc..2ba9158 100644
 +# --------------------------------------------------------------------------
 +# Sources
 +# --------------------------------------------------------------------------
- set(KIT_SRCS
-   qGirderAPI.cpp
++
+ set(KIT_MOC_SRCS
    qGirderAPI.h
-@@ -48,12 +107,64 @@ set(KIT_MOC_SRCS
- 
- qt5_wrap_cpp(KIT_MOC_OUTPUT ${KIT_MOC_SRCS})
+   qMidasAPI.h
+@@ -69,6 +132,9 @@ else()
+   QT4_WRAP_CPP(KIT_MOC_OUTPUT ${KIT_MOC_SRCS})
+ endif()
  
 +# --------------------------------------------------------------------------
-+# Build library
++# Build qRestAPI library
 +# --------------------------------------------------------------------------
  add_library(${PROJECT_NAME} ${KIT_SRCS} ${KIT_MOC_OUTPUT})
- target_link_libraries(${PROJECT_NAME} Qt5::Gui Qt5::Network Qt5::Script)
+ if(qRestAPI_QT_VERSION VERSION_GREATER "4")
+   target_link_libraries(${PROJECT_NAME} Qt${qRestAPI_QT_VERSION}::Gui Qt${qRestAPI_QT_VERSION}::Network Qt${qRestAPI_QT_VERSION}::Qml)
+@@ -76,9 +142,57 @@ else()
+   target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
+ endif()
  
 -include(CTest)
-+
 +# --------------------------------------------------------------------------
 +# Install library
 +# --------------------------------------------------------------------------
@@ -246,12 +247,11 @@ index 713c6fc..2ba9158 100644
 +
 +# --------------------------------------------------------------------------
 +# Testing
-+# --------------------------------------------------------------------------
  if(BUILD_TESTING)
-+  include(CTest)
++include(CTest)
    add_subdirectory(Testing)
  endif()
--
+ 
 -include(CMake/GenerateqRestAPIConfig.cmake)
 diff --git a/qRestAPIConfig.cmake.in b/qRestAPIConfig.cmake.in
 new file mode 100644
@@ -274,5 +274,5 @@ index 0000000..87be75d
 +set(qRestAPI_INCLUDE_DIRS "@CMAKE_INSTALL_PREFIX@/@qRestAPI_INSTALL_INCLUDE_DIR@")
 +set(qRestAPI_LIB_DIR "@CMAKE_INSTALL_PREFIX@/@qRestAPI_INSTALL_LIB_DIR@")
 -- 
-2.34.1
+2.43.0
 

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit cmake git-r3
+inherit cmake git-r3 virtualx
 
 DESCRIPTION="qRestAPI: Tools for developing RESTful web services with Qt"
 HOMEPAGE="https://github.com/commontk/qRestAPI"
@@ -14,6 +14,8 @@ if [[ ${PV} != *9999* ]]; then
 	KEYWORDS="~amd64 ~x86"
 fi
 
+IUSE="-test"
+RESTRICT="!test? ( test )"
 EGIT_REPO_URI="https://github.com/commontk/qRestAPI.git"
 EGIT_BRANCH="master"
 
@@ -25,25 +27,25 @@ DEPEND="
 	>=dev-qt/qtnetwork-${QTMIN}:5
 	>=dev-qt/qtscript-${QTMIN}:5
 	>=dev-qt/qttest-${QTMIN}:5
+	>=dev-qt/qtdeclarative-${QTMIN}:5
 "
-RDEPEND="
-	${DEPEND}
-"
+RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/0001-ENH-Update-cmake-requirements.patch"
-	"${FILESDIR}/0002-ENH-Remove-the-use-of-Qt4.patch"
-	"${FILESDIR}/0003-ENH-Refactor-CMake-project-definition.patch"
+	"${FILESDIR}/0001-ENH-Refactor-CMake-project-infrastructure.patch"
 )
 
-src_configure(){
-
-	local mycmakeargs=()
-
-	mycmakeargs+=(
+src_configure() {
+	local mycmakeargs=(
 		-DqRestAPI_INSTALL_CMAKE_DIR:PATH=$(get_libdir)/cmake/qRestAPI
 		-DqRestAPI_INSTALL_LIB_DIR:PATH=$(get_libdir)
 		-DqRestAPI_INSTALL_NO_DEVELOPMENT:BOOL=OFF
-		)
+		-DqRestAPI_QT_VERSION:STRING=5
+		-DBUILD_TESTING=$(usex test)
+	)
 	cmake_src_configure
+}
+
+src_test() {
+	virtx cmake_src_test
 }
